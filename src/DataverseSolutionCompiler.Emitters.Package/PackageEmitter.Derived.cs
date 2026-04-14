@@ -40,24 +40,23 @@ public sealed partial class PackageEmitter
     {
         var rootComponents = BuildRootComponents(model);
         var manifest = new XElement("ImportExportXml",
-            new XAttribute("version", "9.2.0.0"),
+            new XAttribute("version", "9.2.26033.170"),
             new XAttribute("SolutionPackageVersion", "9.2"),
             new XAttribute("languagecode", "1033"),
-            new XAttribute("generatedBy", "DataverseSolutionCompiler"),
+            new XAttribute("generatedBy", "CrmLive"),
             new XAttribute(XNamespace.Xmlns + "xsi", XsiNamespace),
+            new XAttribute("OrganizationVersion", "9.2.26033.170"),
+            new XAttribute("OrganizationSchemaType", "Standard"),
+            new XAttribute("CRMServerServiceabilityVersion", "9.2.26033.00170"),
             new XElement("SolutionManifest",
                 new XElement("UniqueName", model.Identity.UniqueName),
                 CreateLocalizedNames(model.Identity.DisplayName),
                 CreateDescriptions(GetSolutionDescription(model)),
                 new XElement("Version", model.Identity.Version),
                 new XElement("Managed", model.Identity.LayeringIntent == LayeringIntent.ManagedRelease ? "1" : "0"),
-                new XElement("Publisher",
-                    new XElement("UniqueName", model.Publisher.UniqueName),
-                    CreateLocalizedNames(model.Publisher.DisplayName),
-                    CreateDescriptions(GetPublisherDescription(model)),
-                    new XElement("CustomizationPrefix", model.Publisher.Prefix),
-                    new XElement("CustomizationOptionValuePrefix", "72727")),
-                new XElement("RootComponents", rootComponents)));
+                CreatePublisherElement(model),
+                new XElement("RootComponents", rootComponents),
+                new XElement("MissingDependencies")));
 
         WriteXml(
             packageRoot,
@@ -71,9 +70,21 @@ public sealed partial class PackageEmitter
             "Other/Customizations.xml",
             new XElement("ImportExportXml",
                 new XAttribute(XNamespace.Xmlns + "xsi", XsiNamespace),
+                new XAttribute("OrganizationVersion", "9.2.26033.170"),
+                new XAttribute("OrganizationSchemaType", "Standard"),
+                new XAttribute("CRMServerServiceabilityVersion", "9.2.26033.00170"),
                 new XElement("Entities"),
                 new XElement("Roles"),
-                new XElement("Workflows")),
+                new XElement("Workflows"),
+                new XElement("FieldSecurityProfiles"),
+                new XElement("Templates"),
+                new XElement("EntityMaps"),
+                new XElement("EntityRelationships"),
+                new XElement("OrganizationSettings"),
+                new XElement("optionsets"),
+                new XElement("CustomControls"),
+                new XElement("EntityDataProviders"),
+                new XElement("Languages", new XElement("Language", "1033"))),
             emittedFiles,
             "Minimal customizations shell for derived compiler intent.");
     }
@@ -159,7 +170,7 @@ public sealed partial class PackageEmitter
                     entitySchemaName),
                 new XElement("EntityInfo",
                     new XElement("entity",
-                        new XAttribute("Name", entityLogicalName),
+                        new XAttribute("Name", entitySchemaName),
                         CreateLocalizedNames(table.DisplayName ?? entitySchemaName),
                         new XElement("LocalizedCollectionNames",
                             new XElement("LocalizedCollectionName",
@@ -167,10 +178,72 @@ public sealed partial class PackageEmitter
                                 new XAttribute("languagecode", "1033"))),
                         CreateDescriptions(GetProperty(table, ArtifactPropertyKeys.Description)),
                         new XElement("EntitySetName", GetProperty(table, ArtifactPropertyKeys.EntitySetName) ?? $"{entityLogicalName}s"),
+                        new XElement("IsDuplicateCheckSupported", "0"),
+                        new XElement("IsBusinessProcessEnabled", "0"),
+                        new XElement("IsRequiredOffline", "0"),
+                        new XElement("IsInteractionCentricEnabled", "0"),
+                        new XElement("IsCollaboration", "0"),
+                        new XElement("AutoRouteToOwnerQueue", "0"),
+                        new XElement("IsConnectionsEnabled", "0"),
+                        new XElement("IsDocumentManagementEnabled", "0"),
+                        new XElement("AutoCreateAccessTeams", "0"),
+                        new XElement("IsOneNoteIntegrationEnabled", "0"),
+                        new XElement("IsKnowledgeManagementEnabled", "0"),
+                        new XElement("IsSLAEnabled", "0"),
+                        new XElement("IsDocumentRecommendationsEnabled", "0"),
+                        new XElement("IsBPFEntity", "0"),
                         new XElement("OwnershipTypeMask", GetProperty(table, ArtifactPropertyKeys.OwnershipTypeMask) ?? "UserOwned"),
+                        new XElement("IsAuditEnabled", "0"),
+                        new XElement("IsRetrieveAuditEnabled", "0"),
+                        new XElement("IsRetrieveMultipleAuditEnabled", "0"),
+                        new XElement("IsActivity", "0"),
+                        new XElement("ActivityTypeMask"),
+                        new XElement("IsActivityParty", "0"),
+                        new XElement("IsReplicated", "0"),
+                        new XElement("IsReplicationUserFiltered", "0"),
+                        new XElement("IsMailMergeEnabled", "0"),
+                        new XElement("IsVisibleInMobile", "0"),
+                        new XElement("IsVisibleInMobileClient", "0"),
+                        new XElement("IsReadOnlyInMobileClient", "0"),
+                        new XElement("IsOfflineInMobileClient", "0"),
+                        new XElement("DaysSinceRecordLastModified", "0"),
+                        new XElement("MobileOfflineFilters"),
+                        new XElement("IsMapiGridEnabled", "1"),
+                        new XElement("IsReadingPaneEnabled", "1"),
+                        new XElement("IsQuickCreateEnabled", "0"),
+                        new XElement("SyncToExternalSearchIndex", "0"),
+                        new XElement("IntroducedVersion", "1.0.0.0"),
                         new XElement("IsCustomizable", string.Equals(GetProperty(table, ArtifactPropertyKeys.IsCustomizable), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+                        new XElement("IsRenameable", "1"),
+                        new XElement("IsMappable", "1"),
+                        new XElement("CanModifyAuditSettings", "1"),
+                        new XElement("CanModifyMobileVisibility", "1"),
+                        new XElement("CanModifyMobileClientVisibility", "1"),
+                        new XElement("CanModifyMobileClientReadOnly", "1"),
+                        new XElement("CanModifyMobileClientOffline", "1"),
+                        new XElement("CanModifyConnectionSettings", "1"),
+                        new XElement("CanModifyDuplicateDetectionSettings", "1"),
+                        new XElement("CanModifyMailMergeSettings", "1"),
+                        new XElement("CanModifyQueueSettings", "1"),
+                        new XElement("CanCreateAttributes", "1"),
+                        new XElement("CanCreateForms", "1"),
+                        new XElement("CanCreateCharts", "1"),
+                        new XElement("CanCreateViews", "1"),
+                        new XElement("CanModifyAdditionalSettings", "1"),
+                        new XElement("CanEnableSyncToExternalSearchIndex", "1"),
+                        new XElement("EnforceStateTransitions", "0"),
+                        new XElement("CanChangeHierarchicalRelationship", "1"),
+                        new XElement("EntityHelpUrlEnabled", "0"),
+                        new XElement("ChangeTrackingEnabled", "0"),
+                        new XElement("CanChangeTrackingBeEnabled", "1"),
+                        new XElement("IsEnabledForExternalChannels", "0"),
+                        new XElement("IsMSTeamsIntegrationEnabled", "0"),
+                        new XElement("IsSolutionAware", "0"),
                         new XElement("attributes", columns.Select(column => BuildAttributeElement(column, localOptionSets))),
-                        keys.Length == 0 ? null : new XElement("keys", keys.Select(BuildEntityKeyElement)))));
+                        keys.Length == 0 ? null : new XElement("keys", keys.Select(BuildEntityKeyElement)))),
+                new XElement("FormXml"),
+                new XElement("SavedQueries"),
+                new XElement("RibbonDiffXml"));
 
             WriteXml(
                 packageRoot,
@@ -200,16 +273,39 @@ public sealed partial class PackageEmitter
         var logicalName = column.LogicalName.Split('|').Last();
         var schemaName = GetProperty(column, ArtifactPropertyKeys.SchemaName) ?? logicalName;
         var attributeType = NormalizeGeneratedAttributeType(GetProperty(column, ArtifactPropertyKeys.AttributeType));
+        var isPrimaryKey = string.Equals(GetProperty(column, ArtifactPropertyKeys.IsPrimaryKey), "true", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(attributeType, "primarykey", StringComparison.OrdinalIgnoreCase);
+        var isPrimaryName = string.Equals(GetProperty(column, ArtifactPropertyKeys.IsPrimaryName), "true", StringComparison.OrdinalIgnoreCase);
         var element = new XElement("attribute",
             new XAttribute("PhysicalName", schemaName),
             new XElement("Type", attributeType),
             new XElement("Name", logicalName),
             new XElement("LogicalName", logicalName),
-            new XElement("RequiredLevel", "none"),
+            new XElement("RequiredLevel", isPrimaryKey ? "systemrequired" : "none"),
             new XElement("DisplayMask", BuildDisplayMask(column)),
+            new XElement("ImeMode", "auto"),
+            new XElement("ValidForUpdateApi", isPrimaryKey ? "0" : "1"),
+            new XElement("ValidForReadApi", "1"),
+            new XElement("ValidForCreateApi", "1"),
             new XElement("IsCustomField", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsCustomField), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+            new XElement("IsAuditEnabled", isPrimaryKey ? "0" : "1"),
             new XElement("IsSecured", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsSecured), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
             new XElement("IsCustomizable", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsCustomizable), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+            new XElement("IsRenameable", "1"),
+            new XElement("CanModifySearchSettings", "1"),
+            new XElement("CanModifyRequirementLevelSettings", isPrimaryKey ? "0" : "1"),
+            new XElement("CanModifyAdditionalSettings", "1"),
+            new XElement("SourceType", "0"),
+            new XElement("IsGlobalFilterEnabled", "0"),
+            new XElement("IsSortableEnabled", "0"),
+            new XElement("CanModifyGlobalFilterSettings", "1"),
+            new XElement("CanModifyIsSortableSettings", "1"),
+            new XElement("IsDataSourceSecret", "0"),
+            new XElement("AutoNumberFormat"),
+            new XElement("IsSearchable", isPrimaryName ? "1" : "0"),
+            new XElement("IsFilterable", isPrimaryKey ? "1" : "0"),
+            new XElement("IsRetrievable", "1"),
+            new XElement("IsLocalizable", "0"),
             new XElement("IsLogical", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsLogical), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
             new XElement("IntroducedVersion", "1.0.0.0"),
             new XElement("displaynames",
@@ -217,6 +313,20 @@ public sealed partial class PackageEmitter
                     new XAttribute("description", column.DisplayName ?? schemaName),
                     new XAttribute("languagecode", "1033"))),
             CreateDescriptions(GetProperty(column, ArtifactPropertyKeys.Description)));
+
+        if (string.Equals(attributeType, "nvarchar", StringComparison.OrdinalIgnoreCase))
+        {
+            element.Add(
+                new XElement("Format", "text"),
+                new XElement("MaxLength", isPrimaryName ? "200" : "100"),
+                new XElement("Length", isPrimaryName ? "400" : "200"));
+        }
+        else if (string.Equals(attributeType, "ntext", StringComparison.OrdinalIgnoreCase))
+        {
+            element.Add(
+                new XElement("Format", "textarea"),
+                new XElement("MaxLength", "2000"));
+        }
 
         if (localOptionSets.TryGetValue(column.LogicalName, out var localOptionSet))
         {
@@ -659,6 +769,51 @@ public sealed partial class PackageEmitter
 
     private static XElement CreateDescriptions(string? description) =>
         new("Descriptions", new XElement("Description", new XAttribute("description", description ?? string.Empty), new XAttribute("languagecode", "1033")));
+
+    private static XElement CreatePublisherElement(CanonicalSolution model) =>
+        new("Publisher",
+            new XElement("UniqueName", model.Publisher.UniqueName),
+            CreateLocalizedNames(model.Publisher.DisplayName),
+            CreateDescriptions(GetPublisherDescription(model)),
+            CreateNilElement("EMailAddress"),
+            CreateNilElement("SupportingWebsiteUrl"),
+            new XElement("CustomizationPrefix", model.Publisher.Prefix),
+            new XElement("CustomizationOptionValuePrefix", "72727"),
+            new XElement("Addresses",
+                CreatePublisherAddress("1"),
+                CreatePublisherAddress("2")));
+
+    private static XElement CreatePublisherAddress(string addressNumber) =>
+        new("Address",
+            new XElement("AddressNumber", addressNumber),
+            new XElement("AddressTypeCode", "1"),
+            CreateNilElement("City"),
+            CreateNilElement("County"),
+            CreateNilElement("Country"),
+            CreateNilElement("Fax"),
+            CreateNilElement("FreightTermsCode"),
+            CreateNilElement("ImportSequenceNumber"),
+            CreateNilElement("Latitude"),
+            CreateNilElement("Line1"),
+            CreateNilElement("Line2"),
+            CreateNilElement("Line3"),
+            CreateNilElement("Longitude"),
+            CreateNilElement("Name"),
+            CreateNilElement("PostalCode"),
+            CreateNilElement("PostOfficeBox"),
+            CreateNilElement("PrimaryContactName"),
+            new XElement("ShippingMethodCode", "1"),
+            CreateNilElement("StateOrProvince"),
+            CreateNilElement("Telephone1"),
+            CreateNilElement("Telephone2"),
+            CreateNilElement("Telephone3"),
+            CreateNilElement("TimeZoneRuleVersionNumber"),
+            CreateNilElement("UPSZone"),
+            CreateNilElement("UTCOffset"),
+            CreateNilElement("UTCConversionTimeZoneCode"));
+
+    private static XElement CreateNilElement(string name) =>
+        new(name, new XAttribute(XsiNamespace + "nil", "true"));
 
     private static string BuildDisplayMask(FamilyArtifact column)
     {

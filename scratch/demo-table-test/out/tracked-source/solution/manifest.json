@@ -1,0 +1,12 @@
+{
+  "UniqueName": "DemoTableToolTest",
+  "DisplayName": "Demo Table Tool Test",
+  "Version": "1.0.0.0",
+  "layeringIntent": "UnmanagedDevelopment",
+  "publisher": {
+    "UniqueName": "demo",
+    "Prefix": "demo",
+    "CustomizationPrefix": "demo",
+    "DisplayName": "Demo Publisher"
+  }
+}

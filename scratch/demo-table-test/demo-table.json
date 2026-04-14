@@ -1,0 +1,64 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "DemoTableToolTest",
+    "displayName": "Demo Table Tool Test",
+    "description": "Local dry-run test for one table, one text column, and one main form.",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "demo",
+    "prefix": "demo",
+    "displayName": "Demo Publisher",
+    "description": "Local test publisher."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [
+    {
+      "logicalName": "demo_note",
+      "schemaName": "demo_Note",
+      "displayName": "Demo Note",
+      "description": "A small test table created from JSON intent.",
+      "entitySetName": "demo_notes",
+      "ownershipTypeMask": "UserOwned",
+      "columns": [
+        {
+          "logicalName": "demo_extratext",
+          "schemaName": "demo_ExtraText",
+          "displayName": "Extra Text",
+          "description": "Custom extra text column for the form test.",
+          "type": "string"
+        }
+      ],
+      "forms": [
+        {
+          "name": "Demo Note Main",
+          "type": "main",
+          "tabs": [
+            {
+              "name": "summary",
+              "label": "Summary",
+              "sections": [
+                {
+                  "name": "overview",
+                  "label": "Overview",
+                  "fields": [
+                    "demo_notename",
+                    "demo_extratext"
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": [
+            "demo_notename"
+          ]
+        }
+      ],
+      "views": []
+    }
+  ]
+}
