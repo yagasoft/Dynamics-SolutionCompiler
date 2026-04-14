@@ -1,0 +1,53 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "Column",
+    "Form",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "View",
+      "artifact": "demo_note|Active Demo Notes",
+      "reason": "View \u0027Active Demo Notes\u0027 references fields outside the supported reverse-generated column set for table \u0027demo_note\u0027."
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Demo Note Advanced Find View",
+      "reason": "Only savedquery views are supported, but \u0027demo_note|Demo Note Advanced Find View\u0027 reported queryType \u00271\u0027."
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Demo Note Associated View",
+      "reason": "Only savedquery views are supported, but \u0027demo_note|Demo Note Associated View\u0027 reported queryType \u00272\u0027."
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Demo Note Lookup View",
+      "reason": "Only savedquery views are supported, but \u0027demo_note|Demo Note Lookup View\u0027 reported queryType \u002764\u0027."
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Inactive Demo Notes",
+      "reason": "View \u0027Inactive Demo Notes\u0027 references fields outside the supported reverse-generated column set for table \u0027demo_note\u0027."
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|My Demo Notes",
+      "reason": "Only savedquery views are supported, but \u0027demo_note|My Demo Notes\u0027 reported queryType \u00278192\u0027."
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Quick Find Active Demo Notes",
+      "reason": "Only savedquery views are supported, but \u0027demo_note|Quick Find Active Demo Notes\u0027 reported queryType \u00274\u0027."
+    }
+  ],
+  "preservedIdsIncluded": [
+    {
+      "family": "Form",
+      "artifact": "demo_note|main|fa05dc3b-444c-49b4-d07c-4d7940d22d44",
+      "id": "fa05dc3b-444c-49b4-d07c-4d7940d22d44"
+    }
+  ]
+}

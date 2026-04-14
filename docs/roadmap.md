@@ -63,8 +63,15 @@ Exit criteria:
 
 Goal:
 - expand breadth while keeping the compiler trustworthy
+- harden the reverse-authoring loop so supported tracked-source JSON can be edited and rebuilt through compiler-native intent
+
+Current hardening baseline:
+- `emit --layout intent-spec` now reverse-generates the supported tracked-source subset into one editable compiler-native intent-spec JSON document plus a machine-readable omission report
+- preserved form and view IDs now flow through the intent surface when reverse generation needs them for rebuild fidelity
+- tracked-source remains the primary reverse-authoring path, while XML/ZIP and existing intent input can also emit normalized intent-spec output
+- unsupported families and unsupported shapes stay out of the authoring surface and are reported explicitly rather than silently dropped
 
 Exit criteria:
 - family coverage grows without weakening the difference between source evidence, readback evidence, and package evidence
+- reverse-generation remains canonical-first and partial-intent safe as family coverage grows
 - the docs spine remains short enough for a fresh thread to use in one pass
-

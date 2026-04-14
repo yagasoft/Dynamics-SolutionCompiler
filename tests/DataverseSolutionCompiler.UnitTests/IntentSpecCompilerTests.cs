@@ -7,6 +7,7 @@ using DataverseSolutionCompiler.Domain.Emission;
 using DataverseSolutionCompiler.Domain.Live;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Planning;
+using DataverseSolutionCompiler.Emitters.TrackedSource;
 using DataverseSolutionCompiler.Emitters.Package;
 using DataverseSolutionCompiler.Readers.Xml;
 using Xunit;
@@ -274,6 +275,99 @@ public sealed class IntentSpecCompilerTests
             if (Directory.Exists(outputRoot))
             {
                 Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Compile_reads_tracked_source_subset_into_supported_canonical_solution()
+    {
+        var trackedSourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-tracked-source-subset-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(IntentFixturePath, Array.Empty<string>()));
+            new TrackedSourceEmitter().Emit(compiled.Solution, new EmitRequest(trackedSourceRoot, EmitLayout.TrackedSource)).Success.Should().BeTrue();
+
+            var reread = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(trackedSourceRoot, "tracked-source"), Array.Empty<string>()));
+
+            reread.Success.Should().BeTrue();
+            reread.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "source-kind-detected" && diagnostic.Message.Contains("TrackedSource", StringComparison.Ordinal));
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Table && artifact.LogicalName == "cdxmeta_workitem");
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Column && artifact.LogicalName == "cdxmeta_workitem|cdxmeta_externalcode");
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Key && artifact.LogicalName == "cdxmeta_workitem|cdxmeta_workitem_externalcode");
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Form && artifact.DisplayName == "Work Item Main");
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.View && artifact.DisplayName == "Active Work Items");
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.AppModule && artifact.LogicalName == "codex_metadata_intent_shell");
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.SiteMap && artifact.LogicalName == "codex_metadata_intent_shell");
+            reread.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.EnvironmentVariableDefinition && artifact.LogicalName == "cdxmeta_AppShellMode");
+        }
+        finally
+        {
+            if (Directory.Exists(trackedSourceRoot))
+            {
+                Directory.Delete(trackedSourceRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Tracked_source_can_reverse_generate_intent_and_round_trip_without_blocking_drift()
+    {
+        var trackedSourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-tracked-source-reverse-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-reverse-intent-out-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-reverse-package-out-{Guid.NewGuid():N}");
+
+        try
+        {
+            var original = new CompilerKernel().Compile(new CompilationRequest(IntentFixturePath, Array.Empty<string>()));
+            new TrackedSourceEmitter().Emit(original.Solution, new EmitRequest(trackedSourceRoot, EmitLayout.TrackedSource)).Success.Should().BeTrue();
+
+            var tracked = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(trackedSourceRoot, "tracked-source"), Array.Empty<string>()));
+            tracked.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(tracked.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reversedIntentPath = Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json");
+            File.Exists(reversedIntentPath).Should().BeTrue();
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(reversedIntentPath, Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+
+            var reread = new XmlSolutionReader().Read(new Domain.Read.ReadRequest(Path.Combine(packageOutputRoot, "package-inputs")));
+            var snapshot = new LiveSnapshot(
+                new EnvironmentProfile("reverse-roundtrip"),
+                reversed.Solution.Identity.UniqueName,
+                reread.Artifacts,
+                reread.Diagnostics);
+            var report = new StableOverlapDriftComparer().Compare(reversed.Solution, snapshot, new CompareRequest());
+
+            report.HasBlockingDrift.Should().BeFalse();
+            report.Findings.Should().BeEmpty();
+
+            var reverseDocument = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(reversedIntentPath))!.AsObject();
+            reverseDocument["tables"]!.AsArray()[0]!["forms"]!.AsArray()[0]!["id"]!.GetValue<string>().Should().NotBeNullOrWhiteSpace();
+            reverseDocument["tables"]!.AsArray()[0]!["views"]!.AsArray()[0]!["id"]!.GetValue<string>().Should().NotBeNullOrWhiteSpace();
+        }
+        finally
+        {
+            if (Directory.Exists(trackedSourceRoot))
+            {
+                Directory.Delete(trackedSourceRoot, recursive: true);
+            }
+
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
             }
         }
     }

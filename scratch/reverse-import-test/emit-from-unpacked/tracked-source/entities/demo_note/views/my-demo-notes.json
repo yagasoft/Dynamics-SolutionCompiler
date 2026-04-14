@@ -1,0 +1,50 @@
+{
+  "Family": 10,
+  "LogicalName": "demo_note|My Demo Notes",
+  "DisplayName": "My Demo Notes",
+  "metadataSourcePath": "Entities/demo_Note/SavedQueries/{a9c5f6e8-3d38-f111-88b3-0022489b9600}.xml",
+  "properties": {
+    "comparisonSignature": "f226dcddcea8af5a0eca91da9699ca6212e69badbee020f08b92878424b5e373",
+    "entityLogicalName": "demo_note",
+    "fetchAttributesJson": [
+      "demo_noteid"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "ownerid",
+        "operator": "eq-userid",
+        "value": ""
+      },
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "layoutColumnsJson": [],
+    "ordersJson": [],
+    "queryType": "8192",
+    "summaryJson": {
+      "targetEntity": "demo_note",
+      "layoutColumns": [],
+      "fetchAttributes": [
+        "demo_noteid"
+      ],
+      "filters": [
+        {
+          "attribute": "ownerid",
+          "operator": "eq-userid",
+          "value": ""
+        },
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": []
+    },
+    "targetEntity": "demo_note",
+    "viewId": "a9c5f6e8-3d38-f111-88b3-0022489b9600"
+  }
+}

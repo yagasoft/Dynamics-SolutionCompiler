@@ -1,0 +1,73 @@
+{
+  "Family": 9,
+  "LogicalName": "demo_note|main|fa05dc3b-444c-49b4-d07c-4d7940d22d44",
+  "DisplayName": "Demo Note Main",
+  "metadataSourcePath": "Entities/demo_Note/FormXml/main/{fa05dc3b-444c-49b4-d07c-4d7940d22d44}.xml",
+  "properties": {
+    "comparisonSignature": "35a9cdbc8d88e8308bee28968e4bb52ea78227a378bd06df1e220c0154d93a46",
+    "controlCount": "3",
+    "controlDescriptionCount": "3",
+    "entityLogicalName": "demo_note",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Demo Note Main",
+      "description": null,
+      "type": "main",
+      "tabs": [
+        {
+          "name": "summary",
+          "label": "Summary",
+          "sections": [
+            {
+              "name": "overview",
+              "label": "Overview",
+              "fields": [
+                "demo_notename",
+                "demo_extratext"
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": [
+        "demo_notename"
+      ]
+    },
+    "formId": "fa05dc3b-444c-49b4-d07c-4d7940d22d44",
+    "formType": "main",
+    "formTypeCode": "1",
+    "headerControlCount": "1",
+    "quickFormCount": "0",
+    "sectionCount": "1",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "main",
+      "formId": "fa05dc3b-444c-49b4-d07c-4d7940d22d44",
+      "tabCount": 1,
+      "sectionCount": 1,
+      "controlCount": 3,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 1,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "demo_extratext",
+          "dataFieldName": "demo_extratext",
+          "role": "field"
+        },
+        {
+          "id": "demo_notename",
+          "dataFieldName": "demo_notename",
+          "role": "field"
+        },
+        {
+          "id": "header_demo_notename",
+          "dataFieldName": "demo_notename",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

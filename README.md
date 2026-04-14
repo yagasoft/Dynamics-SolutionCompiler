@@ -16,6 +16,7 @@ This repository is the persistent knowledge base and implementation workspace fo
 - A typed domain model and compiler contracts in [C:\Git\Dataverse-Solution-KB\src\DataverseSolutionCompiler.Domain](C:\Git\Dataverse-Solution-KB\src\DataverseSolutionCompiler.Domain).
 - A source-backed compiler core and capability registry in [C:\Git\Dataverse-Solution-KB\src\DataverseSolutionCompiler.Compiler](C:\Git\Dataverse-Solution-KB\src\DataverseSolutionCompiler.Compiler).
 - Typed XML/ZIP readers, a compiler-native JSON intent reader, library-first live Dataverse Web API readback, family-semantic drift comparison, deterministic tracked-source emission, dual-mode package-input emission, and real PAC pack/import/check execution under [C:\Git\Dataverse-Solution-KB\src](C:\Git\Dataverse-Solution-KB\src).
+- A reverse-authoring loop for the supported subset: tracked-source JSON can now be read back into the canonical IR and emitted as one editable compiler-native intent-spec JSON document plus a machine-readable omission report through `emit --layout intent-spec`.
 - A source-first Phase 4 foothold beyond canvas apps: neutral import-map and child data-source-mapping proof through source parsing, tracked-source emission, package-input copying, and an explicit permanent best-effort live/diff boundary in the neutral corpus.
 - A second Phase 4 foothold for environment/config breadth: compact entity-analytics proof through typed source parsing, deterministic tracked/package emission, real `entityanalyticsconfigs` live projection, and stable-overlap drift on compare-safe fields.
 - A third compact Phase 4 foothold for AI families: source-backed `AI Project Type`, `AI Project`, and `AI Configuration` proof through typed parsing, deterministic tracked/package emission, live readback, and stable-overlap drift, with `AI Configuration` anchored to the official `msdyn_aiconfiguration` Dataverse surface.
@@ -27,6 +28,7 @@ This repository is the persistent knowledge base and implementation workspace fo
 - A schema-detail proof slice for `ImageConfiguration`: compact entity-image plus attribute-image coverage through typed source parsing, deterministic tracked/package emission, real live metadata readback, and stable-overlap drift, with managed-property proof intentionally scoped to stable `isCustomizable` flags on owning table and column artifacts rather than a new standalone public family.
 - An operational CLI release path for `emit`, `readback`, `diff`, `pack`, `import`, `publish`, `check`, `read`, and `plan` in [C:\Git\Dataverse-Solution-KB\src\DataverseSolutionCompiler.Cli](C:\Git\Dataverse-Solution-KB\src\DataverseSolutionCompiler.Cli).
 - A first greenfield compiler milestone that can read JSON intent, project it into the canonical IR, emit tracked-source, synthesize PAC-packable unpacked solution input, and round-trip back through the XML reader for the supported v1 families, now including table-owned alternate keys.
+- A supported reverse-generation hardening slice that can take compiler-emitted tracked-source JSON, reconstruct the supported canonical subset, preserve form and view IDs where needed for rebuild fidelity, and round-trip that reconstructed intent back through package-inputs and XML reread without blocking drift for the supported subset.
 - Bootstrap apply and agent orchestration entry points that still remain intentionally partial.
 - Unit, golden, integration, and end-to-end tests under [C:\Git\Dataverse-Solution-KB\tests](C:\Git\Dataverse-Solution-KB\tests).
 - A copied seed corpus under [C:\Git\Dataverse-Solution-KB\fixtures\skill-corpus](C:\Git\Dataverse-Solution-KB\fixtures\skill-corpus).
@@ -36,12 +38,19 @@ This repository is the persistent knowledge base and implementation workspace fo
 - `src/DataverseSolutionCompiler.Domain`: canonical IR, diagnostics, requests/results, and public interfaces.
 - `src/DataverseSolutionCompiler.Compiler`: capability registry, bootstrap planner, explanation service, and kernel orchestration.
 - `src/DataverseSolutionCompiler.Readers.*`: compiler-native JSON intent, unpacked XML, tracked-source, and live readback entry points.
-- `src/DataverseSolutionCompiler.Emitters.*`: tracked-source and packaging output entry points.
+- `src/DataverseSolutionCompiler.Emitters.*`: tracked-source, intent-spec, and packaging output entry points.
 - `src/DataverseSolutionCompiler.Apply`: direct `Dev` apply placeholder.
 - `src/DataverseSolutionCompiler.Diff`: stable-overlap drift comparison bootstrap.
 - `src/DataverseSolutionCompiler.Packaging.Pac`: PAC wrapper bootstrap.
 - `src/DataverseSolutionCompiler.Agent`: compiler-backed orchestration entry point.
 - `src/DataverseSolutionCompiler.Cli`: CLI surface with `read`, `plan`, `emit`, `apply-dev`, `readback`, `diff`, `pack`, `import`, `publish`, `check`, `doctor`, and `explain`.
+
+## Reverse Authoring
+
+- `emit --layout tracked-source` produces the deterministic review/archive JSON tree.
+- `emit --layout intent-spec` reverse-generates the supported subset into `intent-spec/intent-spec.json`.
+- Unsupported families and unsupported shapes are never silently dropped; they are listed in `intent-spec/reverse-generation-report.json`.
+- The first reverse-generation slice is intentionally subset-only. It covers the current JSON intent v1 families and keeps later families out of the authoring surface until they have the same proof bar.
 
 ## Working Commands
 

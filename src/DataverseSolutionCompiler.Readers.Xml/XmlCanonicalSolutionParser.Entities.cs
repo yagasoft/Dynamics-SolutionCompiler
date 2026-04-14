@@ -82,6 +82,15 @@ internal sealed partial class XmlCanonicalSolutionParser
                 var attributeSchemaName = Text(attribute.ElementLocal("Name")) ?? attributeLogicalName;
                 var attributeType = Text(attribute.ElementLocal("Type")) ?? "unknown";
                 var attributeDisplayName = LocalizedDescription(attribute.ElementLocal("displaynames")) ?? attributeSchemaName;
+                var optionSet = attribute.ElementLocal("optionset");
+                var optionSetType = optionSet is null ? null : (Text(optionSet.ElementLocal("OptionSetType")) ?? attributeType);
+                var isGlobalOptionSet = optionSet is null ? null : NormalizeBoolean(Text(optionSet.ElementLocal("IsGlobal")));
+                var optionSetName = optionSet is null
+                    ? null
+                    : optionSet.AttributeValue("Name")
+                        ?? (string.Equals(isGlobalOptionSet, "true", StringComparison.OrdinalIgnoreCase)
+                            ? null
+                            : attributeLogicalName);
 
                 AddArtifact(
                     ComponentFamily.Column,
@@ -98,7 +107,10 @@ internal sealed partial class XmlCanonicalSolutionParser
                         (ArtifactPropertyKeys.IsPrimaryKey, primaryIdAttribute is not null && attributeLogicalName!.Equals(primaryIdAttribute, StringComparison.OrdinalIgnoreCase) ? "true" : "false"),
                         (ArtifactPropertyKeys.IsPrimaryName, primaryNameAttribute is not null && attributeLogicalName!.Equals(primaryNameAttribute, StringComparison.OrdinalIgnoreCase) ? "true" : "false"),
                         (ArtifactPropertyKeys.IsLogical, NormalizeBoolean(Text(attribute.ElementLocal("IsLogical")))),
-                        (ArtifactPropertyKeys.IsCustomizable, NormalizeBoolean(Text(attribute.ElementLocal("IsCustomizable"))))));
+                        (ArtifactPropertyKeys.IsCustomizable, NormalizeBoolean(Text(attribute.ElementLocal("IsCustomizable")))),
+                        (ArtifactPropertyKeys.OptionSetName, optionSetName),
+                        (ArtifactPropertyKeys.OptionSetType, optionSetType),
+                        (ArtifactPropertyKeys.IsGlobal, isGlobalOptionSet)));
             }
 
             foreach (var optionArtifact in ParseAttributeOptionSets(logicalName!, entityPath, attributes))

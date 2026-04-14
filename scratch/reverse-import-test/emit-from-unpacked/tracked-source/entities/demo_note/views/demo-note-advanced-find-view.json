@@ -1,0 +1,48 @@
+{
+  "Family": 10,
+  "LogicalName": "demo_note|Demo Note Advanced Find View",
+  "DisplayName": "Demo Note Advanced Find View",
+  "metadataSourcePath": "Entities/demo_Note/SavedQueries/{5ed45e57-42f0-4e68-82f5-18e835c4c4cd}.xml",
+  "properties": {
+    "comparisonSignature": "a9ecfca4caf5f2a525766a8c41a0802a10631fc7075cfa6e7314a57c20693d7f",
+    "entityLogicalName": "demo_note",
+    "fetchAttributesJson": [
+      "demo_noteid",
+      "demo_notename",
+      "createdon"
+    ],
+    "filtersJson": [],
+    "layoutColumnsJson": [
+      "demo_notename",
+      "createdon"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "demo_notename",
+        "descending": "false"
+      }
+    ],
+    "queryType": "1",
+    "summaryJson": {
+      "targetEntity": "demo_note",
+      "layoutColumns": [
+        "demo_notename",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "demo_noteid",
+        "demo_notename",
+        "createdon"
+      ],
+      "filters": [],
+      "orders": [
+        {
+          "attribute": "demo_notename",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "demo_note",
+    "viewId": "5ed45e57-42f0-4e68-82f5-18e835c4c4cd"
+  }
+}

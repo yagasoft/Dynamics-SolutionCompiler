@@ -343,6 +343,11 @@ public sealed class IntentSpecReader : ISolutionReader
                 var formPath = $"{tablePath}.forms[{formIndex}]";
                 ValidateUnexpectedProperties(form.ExtensionData, formPath, sourcePath, diagnostics);
                 RequireValue(form.Name, $"{formPath}.name", sourcePath, diagnostics);
+                if (!string.IsNullOrWhiteSpace(form.Id) && !Guid.TryParse(form.Id, out _))
+                {
+                    diagnostics.Add(CreateError(sourcePath, $"{formPath}.id", "Form ids must be valid GUID values when supplied."));
+                }
+
                 if (!string.Equals(form.Type, "main", StringComparison.OrdinalIgnoreCase))
                 {
                     diagnostics.Add(CreateError(sourcePath, $"{formPath}.type", "JSON v1 supports main forms only."));
@@ -391,6 +396,11 @@ public sealed class IntentSpecReader : ISolutionReader
                 var viewPath = $"{tablePath}.views[{viewIndex}]";
                 ValidateUnexpectedProperties(view.ExtensionData, viewPath, sourcePath, diagnostics);
                 RequireValue(view.Name, $"{viewPath}.name", sourcePath, diagnostics);
+                if (!string.IsNullOrWhiteSpace(view.Id) && !Guid.TryParse(view.Id, out _))
+                {
+                    diagnostics.Add(CreateError(sourcePath, $"{viewPath}.id", "View ids must be valid GUID values when supplied."));
+                }
+
                 if (!string.IsNullOrWhiteSpace(view.Type)
                     && !string.Equals(view.Type, "savedquery", StringComparison.OrdinalIgnoreCase))
                 {
@@ -848,7 +858,7 @@ public sealed class IntentSpecReader : ISolutionReader
 
     private static FamilyArtifact CreateFormArtifact(string entityLogicalName, FormSpec form, string sourcePath)
     {
-        var formId = CreateDeterministicGuid(entityLogicalName, "form", form.Name!);
+        var formId = NormalizeGuid(form.Id) ?? CreateDeterministicGuid(entityLogicalName, "form", form.Name!);
         var controlDescriptions = BuildFormControlDescriptions(form);
         var summary = new
         {
@@ -949,6 +959,7 @@ public sealed class IntentSpecReader : ISolutionReader
             })
             .ToArray();
         var viewId = CreateDeterministicGuid(entityLogicalName, "view", view.Name!);
+        viewId = NormalizeGuid(view.Id) ?? viewId;
         var summaryJson = SerializeJson(new
         {
             targetEntity = entityLogicalName,
@@ -1121,6 +1132,9 @@ public sealed class IntentSpecReader : ISolutionReader
 
     private static string? NormalizeLogicalName(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToLowerInvariant();
+
+    private static string? NormalizeGuid(string? value) =>
+        Guid.TryParse(value, out var guid) ? guid.ToString("D") : null;
 
     private static LayeringIntent ParseLayeringIntent(string value) =>
         Enum.Parse<LayeringIntent>(value, ignoreCase: true);
@@ -1572,6 +1586,9 @@ internal sealed record OptionItemSpec
 
 internal sealed record FormSpec
 {
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
     [JsonPropertyName("name")]
     public string? Name { get; init; }
 
@@ -1623,6 +1640,9 @@ internal sealed record FormSectionSpec
 
 internal sealed record ViewSpec
 {
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
     [JsonPropertyName("name")]
     public string? Name { get; init; }
 

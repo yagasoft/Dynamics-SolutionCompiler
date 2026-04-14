@@ -163,6 +163,9 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                         isPrimaryKey = GetBoolProperty(artifact, ArtifactPropertyKeys.IsPrimaryKey),
                         isPrimaryName = GetBoolProperty(artifact, ArtifactPropertyKeys.IsPrimaryName),
                         isLogical = GetBoolProperty(artifact, ArtifactPropertyKeys.IsLogical),
+                        optionSetName = GetProperty(artifact, ArtifactPropertyKeys.OptionSetName),
+                        optionSetType = GetProperty(artifact, ArtifactPropertyKeys.OptionSetType),
+                        isGlobal = GetBoolProperty(artifact, ArtifactPropertyKeys.IsGlobal),
                         optionSet = optionSet is null ? null : new
                         {
                             optionSet.DisplayName,

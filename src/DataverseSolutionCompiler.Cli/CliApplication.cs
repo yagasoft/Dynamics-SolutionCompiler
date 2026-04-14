@@ -8,6 +8,7 @@ using DataverseSolutionCompiler.Domain.Live;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Packaging;
 using DataverseSolutionCompiler.Domain.Planning;
+using DataverseSolutionCompiler.Emitters.TrackedSource;
 
 namespace DataverseSolutionCompiler.Cli;
 
@@ -118,9 +119,12 @@ public static class CliApplication
         }
 
         var outputRoot = ResolveOutputRoot(options);
-        var emitter = options.Layout == EmitLayout.PackageInputs
-            ? runtime.PackageEmitter
-            : runtime.TrackedSourceEmitter;
+        var emitter = options.Layout switch
+        {
+            EmitLayout.PackageInputs => runtime.PackageEmitter,
+            EmitLayout.IntentSpec => new IntentSpecEmitter(),
+            _ => runtime.TrackedSourceEmitter
+        };
         var emitted = emitter.Emit(result.Solution, new EmitRequest(outputRoot, options.Layout));
 
         output.WriteLine($"Emit layout: {options.Layout}");
@@ -383,7 +387,7 @@ public static class CliApplication
 
         output.WriteLine("Common options:");
         output.WriteLine("  --output <path>");
-        output.WriteLine("  --layout tracked-source|package-inputs");
+        output.WriteLine("  --layout tracked-source|intent-spec|package-inputs");
         output.WriteLine("  --environment <absolute Dataverse URL>");
         output.WriteLine("  --tenant <tenant id>");
         output.WriteLine("  --solution <solution unique name>");
@@ -506,6 +510,7 @@ public static class CliApplication
             value.ToLowerInvariant() switch
             {
                 "tracked-source" => EmitLayout.TrackedSource,
+                "intent-spec" => EmitLayout.IntentSpec,
                 "package-inputs" => EmitLayout.PackageInputs,
                 _ => throw new ArgumentException($"Unknown emit layout: {value}")
             };

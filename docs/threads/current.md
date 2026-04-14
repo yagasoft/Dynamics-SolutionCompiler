@@ -2,7 +2,7 @@
 
 ## Thread State
 
-- Purpose: continue the approved `.NET 10` compiler roadmap after the first JSON-driven greenfield generator milestone.
+- Purpose: continue the approved `.NET 10` compiler roadmap after the reverse-authoring hardening slice that can reconstruct supported intent-spec JSON from tracked-source output.
 - Scope: source/readback canonicalization, generator breadth, release-path operation, docs, and tests.
 - Roadmap boundary: approved `.NET 10` direction.
 
@@ -15,9 +15,11 @@
   - typed domain contracts and canonical IR
   - capability registry and source-backed planner/kernel
   - compiler-native JSON intent ingestion for the supported v1 greenfield families
+  - supported reverse generation from tracked-source JSON back into compiler-native intent-spec JSON through `emit --layout intent-spec`, including deterministic `reverse-generation-report.json` omissions and preserved form/view IDs when rebuild fidelity depends on them
   - operational CLI command surface for `read`, `plan`, `emit`, `readback`, `diff`, `pack`, `import`, `publish`, `check`, `doctor`, and `explain`
   - typed XML/ZIP readers for the strongest proven source families
   - deterministic tracked-source materialization for the same first-family slice
+  - a real tracked-source subset reader for the supported reverse-generation families, so tracked-source output is no longer only a review surface for that subset
   - source-first import-map and child data-source-mapping proof through typed XML parsing, deterministic tracked-source emission, deterministic package-input copying, and an explicit permanent best-effort live/diff boundary in the neutral corpus
   - dedicated alternate-key proof through typed XML parsing, solution-aware live `Keys(...)` readback, stable-overlap drift that ignores operational key-index state, deterministic tracked-source emission, source-backed package-input preservation, and JSON-intent generation for table-owned alternate keys
   - compact image-configuration proof through typed XML parsing, solution-aware live image metadata readback with component-type `431` / `432` discovery plus fallback diagnostics, deterministic tracked/package emission, and stable-overlap drift over entity-image plus attribute-image linkage
@@ -43,10 +45,12 @@
 ## What Still Needs Attention
 
 - Deepen typed reader coverage into later partial families such as ribbon, web resources beyond metadata-only handling, richer process-policy/security breadth beyond the current definition slices, and any remaining code-extensibility artifacts beyond the neutral plugin-registration plus integration-endpoint slices.
+- Extend reverse-generation beyond the current supported subset so later proven families can move from tracked-source review surfaces into editable intent-spec authoring without silent omission.
 - Continue schema-detail breadth beyond the alternate-key and image-config slices, especially any broader managed-property surface that can be captured honestly without overclaiming a standalone family.
 - Extend Phase 4 beyond the current canvas-app, explicit source-first import-map boundary, entity-analytics, and compact AI footholds by choosing the next honest environment/config family that can clear the same seed/readback/drift bar without overclaiming parity.
 - Broaden the JSON intent / generator surface beyond the current v1 families while preserving the same proof bar:
   - intent read
+  - tracked-source reverse-generation
   - tracked/package emit
   - XML reread
   - stable-overlap compare

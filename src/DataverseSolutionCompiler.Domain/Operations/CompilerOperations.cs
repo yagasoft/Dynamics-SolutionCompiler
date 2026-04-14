@@ -72,6 +72,7 @@ namespace DataverseSolutionCompiler.Domain.Emission
     public enum EmitLayout
     {
         TrackedSource,
+        IntentSpec,
         PackageInputs,
         AcceptanceEvidence
     }
@@ -79,6 +80,7 @@ namespace DataverseSolutionCompiler.Domain.Emission
     public enum EmittedArtifactRole
     {
         TrackedSource,
+        IntentSpec,
         PackageInput,
         DeploymentSetting,
         AcceptanceEvidence

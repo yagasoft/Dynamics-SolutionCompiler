@@ -26,7 +26,9 @@ internal sealed partial class XmlCanonicalSolutionParser
             var formId = NormalizeGuid(Text(systemForm.ElementLocal("formid")));
             var formType = Path.GetFileName(Path.GetDirectoryName(file) ?? string.Empty).ToLowerInvariant();
             var displayName = LocalizedDescription(systemForm.ElementLocal("LocalizedNames")) ?? formId;
+            var description = LocalizedDescription(systemForm.ElementLocal("Descriptions"));
             var controls = form.Descendants().Where(element => element.Name.LocalName.Equals("control", StringComparison.OrdinalIgnoreCase)).ToArray();
+            var formDefinitionJson = SerializeJson(BuildFormDefinition(form, displayName, description, formType));
             var summary = new
             {
                 formType,
@@ -61,7 +63,8 @@ internal sealed partial class XmlCanonicalSolutionParser
                     (ArtifactPropertyKeys.FormType, formType),
                     (ArtifactPropertyKeys.FormTypeCode, Text(systemForm.ElementLocal("FormPresentation"))),
                     (ArtifactPropertyKeys.FormId, formId),
-                    (ArtifactPropertyKeys.Description, LocalizedDescription(systemForm.ElementLocal("Descriptions"))),
+                    (ArtifactPropertyKeys.Description, description),
+                    (ArtifactPropertyKeys.FormDefinitionJson, formDefinitionJson),
                     (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(file)),
                     (ArtifactPropertyKeys.TabCount, summary.tabCount.ToString(CultureInfo.InvariantCulture)),
                     (ArtifactPropertyKeys.SectionCount, summary.sectionCount.ToString(CultureInfo.InvariantCulture)),
@@ -278,4 +281,56 @@ internal sealed partial class XmlCanonicalSolutionParser
 
         return "field";
     }
+
+    private static object BuildFormDefinition(System.Xml.Linq.XElement form, string? displayName, string? description, string formType)
+    {
+        var tabs = form
+            .Descendants()
+            .Where(element => element.Name.LocalName.Equals("tab", StringComparison.OrdinalIgnoreCase))
+            .Select((tab, tabIndex) => new
+            {
+                name = tab.AttributeValue("name") ?? $"tab_{tabIndex + 1}",
+                label = LocalizedDescription(tab.ElementLocal("labels")) ?? tab.AttributeValue("name") ?? $"Tab {tabIndex + 1}",
+                sections = tab
+                    .Descendants()
+                    .Where(element => element.Name.LocalName.Equals("section", StringComparison.OrdinalIgnoreCase))
+                    .Select((section, sectionIndex) => new
+                    {
+                        name = section.AttributeValue("name") ?? $"section_{sectionIndex + 1}",
+                        label = LocalizedDescription(section.ElementLocal("labels")) ?? section.AttributeValue("name") ?? $"Section {sectionIndex + 1}",
+                        fields = section
+                            .Descendants()
+                            .Where(element => element.Name.LocalName.Equals("control", StringComparison.OrdinalIgnoreCase))
+                            .Select(ExtractFormFieldLogicalName)
+                            .Where(value => !string.IsNullOrWhiteSpace(value))
+                            .Select(value => value!)
+                            .Distinct(StringComparer.OrdinalIgnoreCase)
+                            .ToArray()
+                    })
+                    .ToArray()
+            })
+            .ToArray();
+
+        var headerFields = form.ElementLocal("header")
+            ?.Descendants()
+            .Where(element => element.Name.LocalName.Equals("control", StringComparison.OrdinalIgnoreCase))
+            .Select(ExtractFormFieldLogicalName)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray()
+            ?? [];
+
+        return new
+        {
+            name = displayName,
+            description,
+            type = formType,
+            tabs,
+            headerFields
+        };
+    }
+
+    private static string? ExtractFormFieldLogicalName(System.Xml.Linq.XElement control) =>
+        NormalizeLogicalName(control.AttributeValue("datafieldname"));
 }

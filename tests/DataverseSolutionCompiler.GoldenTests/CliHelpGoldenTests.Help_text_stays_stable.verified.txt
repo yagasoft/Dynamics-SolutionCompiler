@@ -14,7 +14,7 @@ Registered commands:
   explain <path> [capabilities...] [options]
 Common options:
   --output <path>
-  --layout tracked-source|package-inputs
+  --layout tracked-source|intent-spec|package-inputs
   --environment <absolute Dataverse URL>
   --tenant <tenant id>
   --solution <solution unique name>

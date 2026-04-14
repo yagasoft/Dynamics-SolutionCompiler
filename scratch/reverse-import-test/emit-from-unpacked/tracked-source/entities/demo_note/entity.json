@@ -1,0 +1,12 @@
+{
+  "logicalName": "demo_note",
+  "DisplayName": "Demo Note",
+  "schemaName": "demo_Note",
+  "description": "A small test table created from JSON intent.",
+  "entitySetName": "demo_notes",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "demo_noteid",
+  "primaryNameAttribute": "demo_notename",
+  "isCustomizable": true,
+  "shellOnly": false
+}

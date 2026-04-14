@@ -12,6 +12,7 @@ using DataverseSolutionCompiler.Domain.Live;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Packaging;
 using DataverseSolutionCompiler.Domain.Planning;
+using DataverseSolutionCompiler.Emitters.TrackedSource;
 using Xunit;
 
 namespace DataverseSolutionCompiler.UnitTests;
@@ -131,7 +132,7 @@ public sealed class CliApplicationTests
         exitCode.Should().Be(0);
         output.ToString().Should().Contain("Registered commands");
         output.ToString().Should().Contain("read <path> [capabilities...] [options]");
-        output.ToString().Should().Contain("--layout tracked-source|package-inputs");
+        output.ToString().Should().Contain("--layout tracked-source|intent-spec|package-inputs");
         output.ToString().Should().Contain("--environment <absolute Dataverse URL>");
     }
 
@@ -195,6 +196,28 @@ public sealed class CliApplicationTests
     }
 
     [Fact]
+    public void Emit_command_can_write_intent_spec_from_unpacked_xml_input()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-xml-intent-{Guid.NewGuid():N}");
+
+        try
+        {
+            var exitCode = CliApplication.Run(["emit", SeedCorePath, "--layout", "intent-spec", "--output", outputRoot], new StringWriter(), new StringWriter());
+
+            exitCode.Should().Be(0);
+            File.Exists(Path.Combine(outputRoot, "intent-spec", "intent-spec.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "intent-spec", "reverse-generation-report.json")).Should().BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
     public void Read_and_plan_commands_accept_json_intent_input()
     {
         var readOutput = new StringWriter();
@@ -237,6 +260,77 @@ public sealed class CliApplicationTests
             if (Directory.Exists(packageOutputRoot))
             {
                 Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emit_command_can_write_intent_spec_from_json_intent_input()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-intent-spec-{Guid.NewGuid():N}");
+
+        try
+        {
+            var exitCode = CliApplication.Run(["emit", IntentSpecPath, "--layout", "intent-spec", "--output", outputRoot], new StringWriter(), new StringWriter());
+
+            exitCode.Should().Be(0);
+            var intentSpecPath = Path.Combine(outputRoot, "intent-spec", "intent-spec.json");
+            var reportPath = Path.Combine(outputRoot, "intent-spec", "reverse-generation-report.json");
+            File.Exists(intentSpecPath).Should().BeTrue();
+            File.Exists(reportPath).Should().BeTrue();
+
+            var intentDocument = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(intentSpecPath))!.AsObject();
+            intentDocument["specVersion"]!.GetValue<string>().Should().Be("1.0");
+            intentDocument["tables"]!.AsArray()[0]!["forms"]!.AsArray()[0]!["id"]!.GetValue<string>().Should().NotBeNullOrWhiteSpace();
+            intentDocument["tables"]!.AsArray()[0]!["views"]!.AsArray()[0]!["id"]!.GetValue<string>().Should().NotBeNullOrWhiteSpace();
+
+            var report = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(reportPath))!.AsObject();
+            report["isPartial"]!.GetValue<bool>().Should().BeFalse();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emit_command_can_reverse_generate_partial_intent_from_tracked_source_input()
+    {
+        var trackedOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-process-policy-tracked-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-process-policy-intent-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(SeedProcessPolicyPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+            new TrackedSourceEmitter().Emit(compiled.Solution, new EmitRequest(trackedOutputRoot, EmitLayout.TrackedSource)).Success.Should().BeTrue();
+
+            var exitCode = CliApplication.Run(
+                ["emit", Path.Combine(trackedOutputRoot, "tracked-source"), "--layout", "intent-spec", "--output", intentOutputRoot],
+                new StringWriter(),
+                new StringWriter());
+
+            exitCode.Should().Be(0);
+            var reportPath = Path.Combine(intentOutputRoot, "intent-spec", "reverse-generation-report.json");
+            File.Exists(reportPath).Should().BeTrue();
+            var report = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(reportPath))!.AsObject();
+            report["inputKind"]!.GetValue<string>().Should().Be("tracked-source");
+            report["isPartial"]!.GetValue<bool>().Should().BeTrue();
+            report["unsupportedFamiliesOmitted"]!.ToJsonString().Should().Contain("DuplicateRule");
+        }
+        finally
+        {
+            if (Directory.Exists(trackedOutputRoot))
+            {
+                Directory.Delete(trackedOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
             }
         }
     }

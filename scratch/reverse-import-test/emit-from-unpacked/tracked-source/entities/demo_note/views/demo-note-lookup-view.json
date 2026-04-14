@@ -1,0 +1,50 @@
+{
+  "Family": 10,
+  "LogicalName": "demo_note|Demo Note Lookup View",
+  "DisplayName": "Demo Note Lookup View",
+  "metadataSourcePath": "Entities/demo_Note/SavedQueries/{7540bedd-98df-4d98-8ef1-7d5dcc8b1566}.xml",
+  "properties": {
+    "comparisonSignature": "2a266c1c31581acb36ef01d472750e1078eebd9025e463150073d42dcd260e5c",
+    "entityLogicalName": "demo_note",
+    "fetchAttributesJson": [
+      "demo_noteid",
+      "demo_notename",
+      "createdon"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "layoutColumnsJson": [
+      "demo_notename",
+      "createdon"
+    ],
+    "ordersJson": [],
+    "queryType": "64",
+    "summaryJson": {
+      "targetEntity": "demo_note",
+      "layoutColumns": [
+        "demo_notename",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "demo_noteid",
+        "demo_notename",
+        "createdon"
+      ],
+      "filters": [
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": []
+    },
+    "targetEntity": "demo_note",
+    "viewId": "7540bedd-98df-4d98-8ef1-7d5dcc8b1566"
+  }
+}

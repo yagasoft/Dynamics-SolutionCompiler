@@ -1,0 +1,53 @@
+[
+  {
+    "logicalName": "demo_extratext",
+    "DisplayName": "Extra Text",
+    "schemaName": "demo_extratext",
+    "description": "Custom extra text column for the form test.",
+    "attributeType": "nvarchar",
+    "isSecured": false,
+    "isCustomField": true,
+    "isCustomizable": true,
+    "isPrimaryKey": false,
+    "isPrimaryName": false,
+    "isLogical": false,
+    "optionSetName": null,
+    "optionSetType": null,
+    "isGlobal": false,
+    "optionSet": null
+  },
+  {
+    "logicalName": "demo_noteid",
+    "DisplayName": "Demo Note Id",
+    "schemaName": "demo_noteid",
+    "description": "A small test table created from JSON intent.",
+    "attributeType": "primarykey",
+    "isSecured": false,
+    "isCustomField": false,
+    "isCustomizable": true,
+    "isPrimaryKey": true,
+    "isPrimaryName": false,
+    "isLogical": false,
+    "optionSetName": null,
+    "optionSetType": null,
+    "isGlobal": false,
+    "optionSet": null
+  },
+  {
+    "logicalName": "demo_notename",
+    "DisplayName": "Demo Note",
+    "schemaName": "demo_notename",
+    "description": "A small test table created from JSON intent.",
+    "attributeType": "nvarchar",
+    "isSecured": false,
+    "isCustomField": true,
+    "isCustomizable": true,
+    "isPrimaryKey": false,
+    "isPrimaryName": true,
+    "isLogical": false,
+    "optionSetName": null,
+    "optionSetType": null,
+    "isGlobal": false,
+    "optionSet": null
+  }
+]

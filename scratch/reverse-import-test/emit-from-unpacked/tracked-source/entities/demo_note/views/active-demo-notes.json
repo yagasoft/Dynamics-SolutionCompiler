@@ -1,0 +1,60 @@
+{
+  "Family": 10,
+  "LogicalName": "demo_note|Active Demo Notes",
+  "DisplayName": "Active Demo Notes",
+  "metadataSourcePath": "Entities/demo_Note/SavedQueries/{33c04501-9fa0-4a69-bd48-66364d0ff2d9}.xml",
+  "properties": {
+    "comparisonSignature": "abb628bb558829d6da0e56a3c51c6cd8467554060ab07473989578b9ab7ebc9d",
+    "entityLogicalName": "demo_note",
+    "fetchAttributesJson": [
+      "demo_noteid",
+      "demo_notename",
+      "createdon"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "layoutColumnsJson": [
+      "demo_notename",
+      "createdon"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "demo_notename",
+        "descending": "false"
+      }
+    ],
+    "queryType": "0",
+    "summaryJson": {
+      "targetEntity": "demo_note",
+      "layoutColumns": [
+        "demo_notename",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "demo_noteid",
+        "demo_notename",
+        "createdon"
+      ],
+      "filters": [
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": [
+        {
+          "attribute": "demo_notename",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "demo_note",
+    "viewId": "33c04501-9fa0-4a69-bd48-66364d0ff2d9"
+  }
+}

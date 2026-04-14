@@ -1,0 +1,18 @@
+{
+  "solution": {
+    "UniqueName": "6737f8bafaf7429fbe14deda4bc2a2f1",
+    "DisplayName": "6737f8bafaf7429fbe14deda4bc2a2f1",
+    "Version": "0.1.0",
+    "layeringIntent": "Hybrid"
+  },
+  "publisher": {
+    "UniqueName": "dsc",
+    "Prefix": "dsc",
+    "CustomizationPrefix": "dsc",
+    "DisplayName": "Dataverse Solution Compiler"
+  },
+  "files": [
+    "tracked-source/manifest.json",
+    "tracked-source/solution/manifest.json"
+  ]
+}

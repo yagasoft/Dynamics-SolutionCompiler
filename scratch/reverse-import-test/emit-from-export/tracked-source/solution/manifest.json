@@ -1,0 +1,12 @@
+{
+  "UniqueName": "908fede2d5464fe392a0a1130eea64fa",
+  "DisplayName": "908fede2d5464fe392a0a1130eea64fa",
+  "Version": "0.1.0",
+  "layeringIntent": "Hybrid",
+  "publisher": {
+    "UniqueName": "dsc",
+    "Prefix": "dsc",
+    "CustomizationPrefix": "dsc",
+    "DisplayName": "Dataverse Solution Compiler"
+  }
+}

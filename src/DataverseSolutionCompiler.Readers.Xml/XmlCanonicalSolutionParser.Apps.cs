@@ -116,6 +116,7 @@ internal sealed partial class XmlCanonicalSolutionParser
             var groupCount = siteMap?.Descendants().Count(element => element.Name.LocalName.Equals("Group", StringComparison.OrdinalIgnoreCase)) ?? 0;
             var subAreas = siteMap?.Descendants().Where(element => element.Name.LocalName.Equals("SubArea", StringComparison.OrdinalIgnoreCase)).ToArray() ?? [];
             var webResourceSubAreaCount = subAreas.Count(subArea => (subArea.AttributeValue("Url") ?? string.Empty).StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase));
+            var siteMapDefinitionJson = SerializeJson(BuildSiteMapDefinition(siteMap));
             var summaryJson = SerializeJson(new
             {
                 areaCount,
@@ -135,6 +136,7 @@ internal sealed partial class XmlCanonicalSolutionParser
                     (ArtifactPropertyKeys.GroupCount, groupCount.ToString(CultureInfo.InvariantCulture)),
                     (ArtifactPropertyKeys.SubAreaCount, subAreas.Length.ToString(CultureInfo.InvariantCulture)),
                     (ArtifactPropertyKeys.WebResourceSubAreaCount, webResourceSubAreaCount.ToString(CultureInfo.InvariantCulture)),
+                    (ArtifactPropertyKeys.SiteMapDefinitionJson, siteMapDefinitionJson),
                     (ArtifactPropertyKeys.SummaryJson, summaryJson),
                     (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
         }
@@ -337,5 +339,44 @@ internal sealed partial class XmlCanonicalSolutionParser
 
         var candidate = Path.Combine(Path.GetDirectoryName(metadataFile) ?? string.Empty, fileName);
         return File.Exists(candidate) ? candidate : null;
+    }
+
+    private static object BuildSiteMapDefinition(System.Xml.Linq.XElement? siteMap)
+    {
+        var areas = siteMap?
+            .Elements()
+            .Where(element => element.Name.LocalName.Equals("Area", StringComparison.OrdinalIgnoreCase))
+            .Select((area, areaIndex) => new
+            {
+                id = area.AttributeValue("Id") ?? area.AttributeValue("id") ?? $"area_{areaIndex + 1}",
+                title = area.AttributeValue("Title") ?? area.AttributeValue("title") ?? $"Area {areaIndex + 1}",
+                groups = area
+                    .Elements()
+                    .Where(element => element.Name.LocalName.Equals("Group", StringComparison.OrdinalIgnoreCase))
+                    .Select((group, groupIndex) => new
+                    {
+                        id = group.AttributeValue("Id") ?? group.AttributeValue("id") ?? $"group_{groupIndex + 1}",
+                        title = group.AttributeValue("Title") ?? group.AttributeValue("title") ?? $"Group {groupIndex + 1}",
+                        subAreas = group
+                            .Elements()
+                            .Where(element => element.Name.LocalName.Equals("SubArea", StringComparison.OrdinalIgnoreCase))
+                            .Select((subArea, subAreaIndex) => new
+                            {
+                                id = subArea.AttributeValue("Id") ?? subArea.AttributeValue("id") ?? $"subarea_{subAreaIndex + 1}",
+                                title = subArea.AttributeValue("Title") ?? subArea.AttributeValue("title") ?? $"Sub Area {subAreaIndex + 1}",
+                                entity = NormalizeLogicalName(subArea.AttributeValue("Entity") ?? subArea.AttributeValue("entity")),
+                                url = subArea.AttributeValue("Url") ?? subArea.AttributeValue("url")
+                            })
+                            .ToArray()
+                    })
+                    .ToArray()
+            })
+            .ToArray()
+            ?? [];
+
+        return new
+        {
+            areas
+        };
     }
 }

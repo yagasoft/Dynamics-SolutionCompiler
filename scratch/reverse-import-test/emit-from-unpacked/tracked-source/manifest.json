@@ -1,0 +1,29 @@
+{
+  "solution": {
+    "UniqueName": "DemoTableToolTest",
+    "DisplayName": "Demo Table Tool Test",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "demo",
+    "Prefix": "demo",
+    "CustomizationPrefix": "demo",
+    "DisplayName": "Demo Publisher"
+  },
+  "files": [
+    "tracked-source/entities/demo_note/attributes.json",
+    "tracked-source/entities/demo_note/entity.json",
+    "tracked-source/entities/demo_note/forms/demo-note-main.json",
+    "tracked-source/entities/demo_note/relationships.json",
+    "tracked-source/entities/demo_note/views/active-demo-notes.json",
+    "tracked-source/entities/demo_note/views/demo-note-advanced-find-view.json",
+    "tracked-source/entities/demo_note/views/demo-note-associated-view.json",
+    "tracked-source/entities/demo_note/views/demo-note-lookup-view.json",
+    "tracked-source/entities/demo_note/views/inactive-demo-notes.json",
+    "tracked-source/entities/demo_note/views/my-demo-notes.json",
+    "tracked-source/entities/demo_note/views/quick-find-active-demo-notes.json",
+    "tracked-source/manifest.json",
+    "tracked-source/solution/manifest.json"
+  ]
+}
