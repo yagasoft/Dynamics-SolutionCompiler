@@ -1,0 +1,75 @@
+{
+  "LogicalName": "cdxmeta_photoasset",
+  "SchemaName": "cdxmeta_PhotoAsset",
+  "DisplayName": "Photo Asset",
+  "EntitySetName": "cdxmeta_photoassets",
+  "PrimaryIdAttribute": "cdxmeta_photoassetid",
+  "PrimaryNameAttribute": "cdxmeta_photoassetname",
+  "PrimaryImageAttribute": "cdxmeta_profileimage",
+  "OwnershipTypeMask": "UserOwned",
+  "IsCustomizable": {
+    "Value": true
+  },
+  "Attributes": [
+    {
+      "LogicalName": "cdxmeta_photoassetid",
+      "DisplayName": "Photo Asset Id",
+      "AttributeType": "Uniqueidentifier",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_PhotoAssetId",
+      "IsPrimaryName": false,
+      "IsLogical": false,
+      "IsCustomAttribute": false,
+      "IsCustomizable": {
+        "Value": false
+      }
+    },
+    {
+      "LogicalName": "cdxmeta_photoassetname",
+      "DisplayName": "Photo Asset",
+      "AttributeType": "String",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_PhotoAssetName",
+      "IsPrimaryName": true,
+      "IsLogical": false,
+      "IsCustomAttribute": true,
+      "IsCustomizable": {
+        "Value": true
+      }
+    },
+    {
+      "LogicalName": "cdxmeta_caption",
+      "DisplayName": "Caption",
+      "AttributeType": "String",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_Caption",
+      "IsPrimaryName": false,
+      "IsLogical": false,
+      "IsCustomAttribute": true,
+      "IsCustomizable": {
+        "Value": false
+      }
+    },
+    {
+      "LogicalName": "cdxmeta_profileimage",
+      "DisplayName": "Profile Image",
+      "AttributeType": "Image",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_ProfileImage",
+      "IsPrimaryName": false,
+      "IsLogical": false,
+      "IsCustomAttribute": true,
+      "IsCustomizable": {
+        "Value": true
+      },
+      "CanStoreFullImage": true,
+      "IsPrimaryImage": true
+    }
+  ],
+  "Relationships": {
+    "many_to_one": [],
+    "one_to_many": [],
+    "many_to_many": []
+  },
+  "OptionSets": []
+}

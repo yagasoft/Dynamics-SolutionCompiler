@@ -29,10 +29,16 @@ public enum ComponentFamily
     SiteMap,
     WebResource,
     EnvironmentVariable,
+    EnvironmentVariableDefinition,
+    EnvironmentVariableValue,
     AppSetting,
     CanvasApp,
     ImportMap,
     DataSourceMapping,
+    EntityAnalyticsConfiguration,
+    AiProjectType,
+    AiProject,
+    AiConfiguration,
     PluginAssembly,
     PluginType,
     PluginStep,
@@ -41,10 +47,14 @@ public enum ComponentFamily
     Connector,
     Workflow,
     DuplicateRule,
+    DuplicateRuleCondition,
     RoutingRule,
+    RoutingRuleItem,
     Sla,
+    SlaItem,
     SimilarityRule,
     MobileOfflineProfile,
+    MobileOfflineProfileItem,
     Role,
     RolePrivilege,
     FieldSecurityProfile,
@@ -163,7 +173,8 @@ public sealed record CanonicalSolution(
                 new FamilyArtifact(ComponentFamily.AppModule, "model-driven-app"),
                 new FamilyArtifact(ComponentFamily.SiteMap, "site-map"),
                 new FamilyArtifact(ComponentFamily.WebResource, "web-resource"),
-                new FamilyArtifact(ComponentFamily.EnvironmentVariable, "environment-variable"),
+                new FamilyArtifact(ComponentFamily.EnvironmentVariableDefinition, "environment-variable-definition"),
+                new FamilyArtifact(ComponentFamily.EnvironmentVariableValue, "environment-variable-value"),
                 new FamilyArtifact(ComponentFamily.AppSetting, "app-setting")
             ],
             CapabilityKind.CodeAndExtensibility =>
@@ -171,16 +182,22 @@ public sealed record CanonicalSolution(
                 new FamilyArtifact(ComponentFamily.PluginAssembly, "plugin-assembly"),
                 new FamilyArtifact(ComponentFamily.PluginType, "plugin-type"),
                 new FamilyArtifact(ComponentFamily.PluginStep, "plugin-step"),
-                new FamilyArtifact(ComponentFamily.ServiceEndpoint, "service-endpoint")
+                new FamilyArtifact(ComponentFamily.PluginStepImage, "plugin-step-image"),
+                new FamilyArtifact(ComponentFamily.ServiceEndpoint, "service-endpoint"),
+                new FamilyArtifact(ComponentFamily.Connector, "connector")
             ],
             CapabilityKind.ProcessAndServicePolicy =>
             [
                 new FamilyArtifact(ComponentFamily.Workflow, "workflow"),
                 new FamilyArtifact(ComponentFamily.DuplicateRule, "duplicate-rule"),
+                new FamilyArtifact(ComponentFamily.DuplicateRuleCondition, "duplicate-rule-condition"),
                 new FamilyArtifact(ComponentFamily.RoutingRule, "routing-rule"),
+                new FamilyArtifact(ComponentFamily.RoutingRuleItem, "routing-rule-item"),
                 new FamilyArtifact(ComponentFamily.Sla, "sla"),
+                new FamilyArtifact(ComponentFamily.SlaItem, "sla-item"),
                 new FamilyArtifact(ComponentFamily.SimilarityRule, "similarity-rule"),
-                new FamilyArtifact(ComponentFamily.MobileOfflineProfile, "mobile-offline-profile")
+                new FamilyArtifact(ComponentFamily.MobileOfflineProfile, "mobile-offline-profile"),
+                new FamilyArtifact(ComponentFamily.MobileOfflineProfileItem, "mobile-offline-profile-item")
             ],
             CapabilityKind.SecurityAndAccess =>
             [
@@ -194,7 +211,11 @@ public sealed record CanonicalSolution(
             [
                 new FamilyArtifact(ComponentFamily.CanvasApp, "canvas-app"),
                 new FamilyArtifact(ComponentFamily.ImportMap, "import-map"),
-                new FamilyArtifact(ComponentFamily.DataSourceMapping, "data-source-mapping")
+                new FamilyArtifact(ComponentFamily.DataSourceMapping, "data-source-mapping"),
+                new FamilyArtifact(ComponentFamily.EntityAnalyticsConfiguration, "entity-analytics-configuration"),
+                new FamilyArtifact(ComponentFamily.AiProjectType, "ai-project-type"),
+                new FamilyArtifact(ComponentFamily.AiProject, "ai-project"),
+                new FamilyArtifact(ComponentFamily.AiConfiguration, "ai-configuration")
             ],
             CapabilityKind.ReportingAndLegacy =>
             [

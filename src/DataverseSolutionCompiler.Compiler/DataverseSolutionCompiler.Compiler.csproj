@@ -5,5 +5,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataverseSolutionCompiler.Domain\DataverseSolutionCompiler.Domain.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Readers.Intent\DataverseSolutionCompiler.Readers.Intent.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Readers.TrackedSource\DataverseSolutionCompiler.Readers.TrackedSource.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Readers.Xml\DataverseSolutionCompiler.Readers.Xml.csproj" />
   </ItemGroup>
 </Project>

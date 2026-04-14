@@ -19,7 +19,10 @@
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Domain\DataverseSolutionCompiler.Domain.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Compiler\DataverseSolutionCompiler.Compiler.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Cli\DataverseSolutionCompiler.Cli.csproj" />
+    <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Emitters.Package\DataverseSolutionCompiler.Emitters.Package.csproj" />
+    <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Readers.Live\DataverseSolutionCompiler.Readers.Live.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Readers.Xml\DataverseSolutionCompiler.Readers.Xml.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Diff\DataverseSolutionCompiler.Diff.csproj" />
+    <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Packaging.Pac\DataverseSolutionCompiler.Packaging.Pac.csproj" />
   </ItemGroup>
 </Project>

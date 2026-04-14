@@ -1,0 +1,12 @@
+[
+  {
+    "entitykeymetadataid": "5bf4f37c-b2ff-4dc4-bd26-8850b85811f7",
+    "logical_name": "cdxmeta_workitem|cdxmeta_workitem_externalcode",
+    "schemaname": "cdxmeta_WorkItem_ExternalCode",
+    "entitylogicalname": "cdxmeta_workitem",
+    "keyattributes": [
+      "cdxmeta_externalcode"
+    ],
+    "entitykeyindexstatus": "Active"
+  }
+]

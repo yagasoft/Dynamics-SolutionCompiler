@@ -1,0 +1,1579 @@
+using System.Net;
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json.Nodes;
+using Azure.Core;
+using Azure.Identity;
+using FluentAssertions;
+using DataverseSolutionCompiler.Diff;
+using DataverseSolutionCompiler.Domain.Diff;
+using DataverseSolutionCompiler.Domain.Live;
+using DataverseSolutionCompiler.Domain.Model;
+using DataverseSolutionCompiler.Domain.Planning;
+using DataverseSolutionCompiler.Domain.Read;
+using DataverseSolutionCompiler.Readers.Live;
+using DataverseSolutionCompiler.Readers.Xml;
+using Xunit;
+
+namespace DataverseSolutionCompiler.UnitTests;
+
+public sealed class WebApiLiveSnapshotProviderTests
+{
+    [Fact]
+    public async Task ReadAsync_projects_seed_core_schema_and_option_set_families()
+    {
+        var harness = LiveFixtureHarness.Create("seed-core", pageSolutionComponents: true);
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.SolutionShell,
+            ComponentFamily.Table,
+            ComponentFamily.Column,
+            ComponentFamily.Relationship,
+            ComponentFamily.OptionSet);
+
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Table && artifact.LogicalName == "cdxmeta_workitem");
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Column && artifact.LogicalName == "cdxmeta_workitem|cdxmeta_details");
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Relationship && artifact.LogicalName == "cdxmeta_category_workitem");
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.OptionSet && artifact.LogicalName == "cdxmeta_priorityband");
+        harness.Requests.Should().Contain(request => request.Contains("$skiptoken=page2", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_alternate_key_family()
+    {
+        var harness = LiveFixtureHarness.Create("seed-alternate-key");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Key);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.Key
+            && artifact.LogicalName == "cdxmeta_workitem|cdxmeta_workitem_externalcode");
+        var key = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Key);
+        key.Properties![ArtifactPropertyKeys.EntityLogicalName].Should().Be("cdxmeta_workitem");
+        key.Properties![ArtifactPropertyKeys.SchemaName].Should().Be("cdxmeta_WorkItem_ExternalCode");
+        key.Properties![ArtifactPropertyKeys.KeyAttributesJson].Should().Be("[\"cdxmeta_externalcode\"]");
+        harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("$expand=Keys", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_image_configuration_family()
+    {
+        var harness = LiveFixtureHarness.Create("seed-image-config");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.Table,
+            ComponentFamily.Column,
+            ComponentFamily.ImageConfiguration);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.ImageConfiguration
+            && artifact.LogicalName == "cdxmeta_photoasset|entity-image");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.ImageConfiguration
+            && artifact.LogicalName == "cdxmeta_photoasset|cdxmeta_profileimage|attribute-image");
+
+        var table = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Table && artifact.LogicalName == "cdxmeta_photoasset");
+        table.Properties![ArtifactPropertyKeys.IsCustomizable].Should().Be("true");
+
+        var imageColumn = snapshot.Artifacts.Single(artifact =>
+            artifact.Family == ComponentFamily.Column
+            && artifact.LogicalName == "cdxmeta_photoasset|cdxmeta_profileimage");
+        imageColumn.Properties![ArtifactPropertyKeys.IsCustomizable].Should().Be("true");
+
+        harness.Requests.Should().Contain(request => request.Contains("ImageAttributeMetadata", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_falls_back_to_entity_scoped_image_configuration_when_solution_scope_underreports()
+    {
+        var harness = LiveFixtureHarness.Create("seed-image-config", omitImageConfigurationScope: true);
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.ImageConfiguration);
+
+        snapshot.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "live-readback-image-config-fallback");
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.ImageConfiguration && artifact.LogicalName == "cdxmeta_photoasset|entity-image");
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.ImageConfiguration && artifact.LogicalName == "cdxmeta_photoasset|cdxmeta_profileimage|attribute-image");
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_app_shell_and_canvas_app_families()
+    {
+        var advancedUiHarness = LiveFixtureHarness.Create("seed-advanced-ui");
+        var advancedUi = await advancedUiHarness.ReadAsync(
+            ComponentFamily.AppModule,
+            ComponentFamily.AppSetting,
+            ComponentFamily.SiteMap,
+            ComponentFamily.EnvironmentVariableDefinition,
+            ComponentFamily.EnvironmentVariableValue);
+
+        advancedUi.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.AppModule && artifact.LogicalName == "codex_metadata_advanced_ui_924e69cb");
+        advancedUi.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.AppSetting && artifact.LogicalName == "codex_metadata_advanced_ui_924e69cb|AppChannel");
+        advancedUi.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.SiteMap && artifact.LogicalName == "codex_metadata_advanced_ui_924e69cb");
+        advancedUi.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.EnvironmentVariableDefinition && artifact.LogicalName == "cdxmeta_advanceduimode");
+        advancedUi.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.EnvironmentVariableValue && artifact.LogicalName == "cdxmeta_advanceduimode");
+
+        var environmentHarness = LiveFixtureHarness.Create("seed-environment");
+        var environment = await environmentHarness.ReadAsync(ComponentFamily.CanvasApp);
+
+        environment.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.CanvasApp && artifact.LogicalName == "cat_overview_3dbf5");
+        environment.Artifacts.Single(artifact => artifact.Family == ComponentFamily.CanvasApp).Properties![ArtifactPropertyKeys.AppVersion]
+            .Should().Be("2023-09-06T20:22:07Z");
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_entity_analytics_configuration_family()
+    {
+        var harness = LiveFixtureHarness.Create("seed-entity-analytics");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.EntityAnalyticsConfiguration);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.EntityAnalyticsConfiguration
+            && artifact.LogicalName == "contact");
+        var artifact = snapshot.Artifacts.Single(item => item.Family == ComponentFamily.EntityAnalyticsConfiguration);
+        artifact.Properties![ArtifactPropertyKeys.EntityDataSource].Should().Be("dataverse");
+        artifact.Properties![ArtifactPropertyKeys.IsEnabledForAdls].Should().Be("true");
+        artifact.Properties![ArtifactPropertyKeys.IsEnabledForTimeSeries].Should().Be("false");
+        harness.Requests.Should().Contain(request => request.Contains("/entityanalyticsconfigs", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_ai_families()
+    {
+        var harness = LiveFixtureHarness.Create("seed-ai-families");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.AiProjectType,
+            ComponentFamily.AiProject,
+            ComponentFamily.AiConfiguration);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.AiProjectType && artifact.LogicalName == "document_automation");
+        snapshot.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.AiProject && artifact.LogicalName == "invoice_processing");
+        snapshot.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.AiConfiguration && artifact.LogicalName == "invoice_processing_training");
+        harness.Requests.Should().Contain(request => request.Contains("/msdyn_aiprojecttypes", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/msdyn_aiprojects", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/msdyn_aiconfigurations", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_plugin_registration_families()
+    {
+        var harness = LiveFixtureHarness.Create("seed-plugin-registration");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.PluginAssembly,
+            ComponentFamily.PluginType,
+            ComponentFamily.PluginStep,
+            ComponentFamily.PluginStepImage);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.PluginAssembly
+            && artifact.LogicalName == "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.PluginType
+            && artifact.LogicalName == "Codex.Metadata.Plugins.AccountUpdateTrace");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.PluginStep
+            && artifact.LogicalName == "Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.PluginStepImage
+            && artifact.LogicalName == "Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step|Account PreImage|preimage|0");
+        harness.Requests.Should().Contain(request => request.Contains("/pluginassemblies", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/plugintypes", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/sdkmessageprocessingsteps", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/sdkmessageprocessingstepimages", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/sdkmessages", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/sdkmessagefilters", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_service_endpoint_and_connector_families()
+    {
+        var harness = LiveFixtureHarness.Create("seed-service-endpoint-connector");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.ServiceEndpoint,
+            ComponentFamily.Connector);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.ServiceEndpoint
+            && artifact.LogicalName == "codex_webhook_endpoint");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.Connector
+            && artifact.LogicalName == "shared-offerings-connector");
+
+        var serviceEndpoint = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.ServiceEndpoint);
+        serviceEndpoint.Properties![ArtifactPropertyKeys.NamespaceAddress].Should().Be("https://hooks.contoso.example");
+        serviceEndpoint.Properties![ArtifactPropertyKeys.EndpointPath].Should().Be("/dataverse/codex");
+
+        var connector = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Connector);
+        connector.DisplayName.Should().Be("Codex Shared Connector");
+        connector.Properties![ArtifactPropertyKeys.ConnectorInternalId].Should().Be("shared-offerings-connector");
+        connector.Properties![ArtifactPropertyKeys.CapabilitiesJson].Should().Be("[\"actions\",\"cloud\"]");
+
+        harness.Requests.Should().Contain(request => request.Contains("/serviceendpoints", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/connectors", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_process_policy_families()
+    {
+        var harness = LiveFixtureHarness.Create("seed-process-policy");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.DuplicateRule,
+            ComponentFamily.DuplicateRuleCondition,
+            ComponentFamily.RoutingRule,
+            ComponentFamily.RoutingRuleItem,
+            ComponentFamily.MobileOfflineProfile,
+            ComponentFamily.MobileOfflineProfileItem);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.DuplicateRule
+            && artifact.LogicalName == "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.DuplicateRuleCondition
+            && artifact.LogicalName == "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367|name|name|0");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.RoutingRule
+            && artifact.LogicalName == "codex metadata routing rule");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.RoutingRuleItem
+            && artifact.LogicalName == "codex metadata routing rule|route all");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.MobileOfflineProfile
+            && artifact.LogicalName == "codex metadata mobile offline profile");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.MobileOfflineProfileItem
+            && artifact.LogicalName == "codex metadata mobile offline profile|account");
+
+        harness.Requests.Should().Contain(request => request.Contains("/duplicaterules", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/duplicateruleconditions", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/routingrules", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/routingruleitems", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/mobileofflineprofiles", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/mobileofflineprofileitems", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_security_definition_families_and_reports_role_privileges_as_best_effort()
+    {
+        var harness = LiveFixtureHarness.Create("seed-process-security");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.Role,
+            ComponentFamily.RolePrivilege,
+            ComponentFamily.FieldSecurityProfile,
+            ComponentFamily.FieldPermission,
+            ComponentFamily.ConnectionRole);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.Role
+            && artifact.LogicalName == "codex metadata seed role");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.FieldSecurityProfile
+            && artifact.LogicalName == "codex metadata seed field security");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.FieldPermission
+            && artifact.LogicalName == "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.ConnectionRole
+            && artifact.LogicalName == "codex metadata seed connection role");
+        snapshot.Artifacts.Should().NotContain(artifact => artifact.Family == ComponentFamily.RolePrivilege);
+        snapshot.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "live-readback-role-privilege-best-effort");
+
+        harness.Requests.Should().Contain(request => request.Contains("/roles", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/fieldsecurityprofiles", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/fieldpermissions", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/connectionroles", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_falls_back_to_entity_scoped_forms_and_views_when_solution_scope_underreports()
+    {
+        var harness = LiveFixtureHarness.Create("seed-forms", entityOnlyUiScope: true);
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Form, ComponentFamily.View);
+
+        snapshot.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "live-readback-form-fallback");
+        snapshot.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "live-readback-view-fallback");
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Form && artifact.LogicalName == "cdxmeta_workitem|main|c67be8a4-c475-4041-90e6-78e3ed79b018");
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.View && artifact.LogicalName == "cdxmeta_workitem|Active Work Items");
+        harness.Requests.Should().Contain(request => request.Contains("objecttypecode eq 'cdxmeta_workitem'", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("returnedtypecode eq 'cdxmeta_workitem'", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_returns_error_when_solution_is_missing()
+    {
+        var harness = LiveFixtureHarness.Create("seed-core", missingSolution: true);
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Table);
+
+        snapshot.Artifacts.Should().BeEmpty();
+        snapshot.Diagnostics.Should().ContainSingle(diagnostic => diagnostic.Code == "live-readback-solution-not-found");
+    }
+
+    [Fact]
+    public async Task ReadAsync_returns_error_when_authentication_fails()
+    {
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            "CodexMetadataSeedCore",
+            [ComponentFamily.Table]);
+        using var client = new HttpClient(new StaticResponseHandler(_ => new HttpResponseMessage(HttpStatusCode.OK)));
+        var reader = new DataverseWebApiLiveReader(client, new ThrowingTokenCredential());
+
+        var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+        snapshot.Artifacts.Should().BeEmpty();
+        snapshot.Diagnostics.Should().ContainSingle(diagnostic => diagnostic.Code == "live-readback-auth-failure");
+    }
+
+    [Fact]
+    public async Task ReadAsync_keeps_partial_artifacts_when_one_family_endpoint_fails()
+    {
+        var harness = LiveFixtureHarness.Create("seed-core", failingPathFragment: "/ManyToOneRelationships");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Table, ComponentFamily.Relationship);
+
+        snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Table && artifact.LogicalName == "cdxmeta_workitem");
+        snapshot.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "live-readback-http-failure" && diagnostic.Message.Contains("Relationship", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_reports_import_map_families_as_unsupported_without_false_drift()
+    {
+        var source = ReadSourceFixture("seed-import-map") with
+        {
+            Artifacts = ReadSourceFixture("seed-import-map").Artifacts
+                .Where(artifact => artifact.Family is ComponentFamily.ImportMap or ComponentFamily.DataSourceMapping)
+                .ToArray()
+        };
+        var harness = LiveFixtureHarness.Create("seed-import-map");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.ImportMap, ComponentFamily.DataSourceMapping);
+        var report = new StableOverlapDriftComparer().Compare(source, snapshot, new CompareRequest());
+
+        snapshot.Artifacts.Should().BeEmpty();
+        snapshot.Diagnostics.Should().Contain(diagnostic =>
+            diagnostic.Code == "live-readback-import-map-source-first"
+            && diagnostic.Message.Contains("ImportMap", StringComparison.OrdinalIgnoreCase));
+        report.HasBlockingDrift.Should().BeFalse();
+        report.Findings.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task ReadAsync_reports_similarity_and_sla_families_as_source_first_without_false_drift()
+    {
+        var source = ReadSourceFixture("source-only-sla") with
+        {
+            Artifacts = ReadSourceFixture("source-only-sla").Artifacts
+                .Where(artifact => artifact.Family is ComponentFamily.Sla or ComponentFamily.SlaItem)
+                .Concat(ReadSourceFixture("source-only-similarity-rule").Artifacts
+                    .Where(artifact => artifact.Family == ComponentFamily.SimilarityRule))
+                .ToArray()
+        };
+        var harness = LiveFixtureHarness.Create("seed-process-policy");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Sla, ComponentFamily.SlaItem, ComponentFamily.SimilarityRule);
+        var report = new StableOverlapDriftComparer().Compare(source, snapshot, new CompareRequest());
+
+        snapshot.Artifacts.Should().BeEmpty();
+        snapshot.Diagnostics.Should().Contain(diagnostic =>
+            diagnostic.Code == "live-readback-source-first-process-policy"
+            && diagnostic.Message.Contains("Sla", StringComparison.OrdinalIgnoreCase));
+        report.HasBlockingDrift.Should().BeFalse();
+        report.Findings.Should().BeEmpty();
+    }
+
+    [Theory]
+    [InlineData("seed-alternate-key")]
+    [InlineData("seed-core")]
+    [InlineData("seed-forms")]
+    [InlineData("seed-advanced-ui")]
+    [InlineData("seed-environment")]
+    [InlineData("seed-entity-analytics")]
+    [InlineData("seed-ai-families")]
+    [InlineData("seed-image-config")]
+    [InlineData("seed-plugin-registration")]
+    [InlineData("seed-process-policy")]
+    [InlineData("seed-process-security")]
+    [InlineData("seed-service-endpoint-connector")]
+    public async Task Source_and_live_overlap_compare_cleanly_for_supported_families(string fixtureName)
+    {
+        var source = ReadSourceFixture(fixtureName);
+        var filteredSource = FilterSourceToSupportedFamilies(source, fixtureName);
+        var requestedFamilies = filteredSource.Artifacts
+            .Select(artifact => artifact.Family)
+            .Distinct()
+            .ToArray();
+        var harness = LiveFixtureHarness.Create(fixtureName, sourceScope: filteredSource);
+        var snapshot = await harness.ReadAsync(requestedFamilies);
+
+        var report = new StableOverlapDriftComparer().Compare(filteredSource, snapshot, new CompareRequest());
+
+        report.HasBlockingDrift.Should().BeFalse();
+    }
+
+    private static CanonicalSolution ReadSourceFixture(string fixtureName)
+    {
+        var reader = new XmlSolutionReader();
+        return reader.Read(new ReadRequest(Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            fixtureName,
+            "unpacked")));
+    }
+
+    private static CanonicalSolution FilterSourceToSupportedFamilies(CanonicalSolution source, string fixtureName)
+    {
+        var supportedFamilies = fixtureName switch
+        {
+            "seed-advanced-ui" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.AppModule,
+                ComponentFamily.AppSetting,
+                ComponentFamily.SiteMap,
+                ComponentFamily.EnvironmentVariableDefinition,
+                ComponentFamily.EnvironmentVariableValue
+            },
+            "seed-environment" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.CanvasApp
+            },
+            "seed-alternate-key" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.Table,
+                ComponentFamily.Column,
+                ComponentFamily.Key
+            },
+            "seed-entity-analytics" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.EntityAnalyticsConfiguration
+            },
+            "seed-image-config" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.Table,
+                ComponentFamily.Column,
+                ComponentFamily.ImageConfiguration
+            },
+            "seed-ai-families" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.AiProjectType,
+                ComponentFamily.AiProject,
+                ComponentFamily.AiConfiguration
+            },
+            "seed-plugin-registration" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.PluginAssembly,
+                ComponentFamily.PluginType,
+                ComponentFamily.PluginStep,
+                ComponentFamily.PluginStepImage
+            },
+            "seed-process-policy" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.DuplicateRule,
+                ComponentFamily.DuplicateRuleCondition,
+                ComponentFamily.RoutingRule,
+                ComponentFamily.RoutingRuleItem,
+                ComponentFamily.MobileOfflineProfile,
+                ComponentFamily.MobileOfflineProfileItem
+            },
+            "seed-process-security" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.Role,
+                ComponentFamily.FieldSecurityProfile,
+                ComponentFamily.FieldPermission,
+                ComponentFamily.ConnectionRole
+            },
+            "seed-service-endpoint-connector" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.ServiceEndpoint,
+                ComponentFamily.Connector
+            },
+            _ => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.Table,
+                ComponentFamily.Column,
+                ComponentFamily.Relationship,
+                ComponentFamily.OptionSet,
+                ComponentFamily.Form,
+                ComponentFamily.View
+            }
+        };
+
+        return source with
+        {
+            Artifacts = source.Artifacts.Where(artifact => supportedFamilies.Contains(artifact.Family)).ToArray()
+        };
+    }
+}
+
+internal sealed class LiveFixtureHarness
+{
+    private readonly string _fixtureName;
+    private readonly JsonObject _readback;
+    private readonly JsonObject? _solution;
+    private readonly CanonicalSolution? _sourceScope;
+    private readonly bool _entityOnlyUiScope;
+    private readonly bool _pageSolutionComponents;
+    private readonly bool _omitImageConfigurationScope;
+    private readonly bool _missingSolution;
+    private readonly string? _failingPathFragment;
+    private readonly Dictionary<string, Guid> _entityIds = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, Guid> _globalOptionSetIds = new(StringComparer.OrdinalIgnoreCase);
+
+    private LiveFixtureHarness(
+        string fixtureName,
+        JsonObject readback,
+        JsonObject? solution,
+        CanonicalSolution? sourceScope,
+        bool entityOnlyUiScope,
+        bool pageSolutionComponents,
+        bool omitImageConfigurationScope,
+        bool missingSolution,
+        string? failingPathFragment)
+    {
+        _fixtureName = fixtureName;
+        _readback = readback;
+        _solution = solution;
+        _sourceScope = sourceScope;
+        _entityOnlyUiScope = entityOnlyUiScope;
+        _pageSolutionComponents = pageSolutionComponents;
+        _omitImageConfigurationScope = omitImageConfigurationScope;
+        _missingSolution = missingSolution;
+        _failingPathFragment = failingPathFragment;
+    }
+
+    public List<string> Requests { get; } = [];
+
+    public static LiveFixtureHarness Create(
+        string fixtureName,
+        CanonicalSolution? sourceScope = null,
+        bool entityOnlyUiScope = false,
+        bool pageSolutionComponents = false,
+        bool omitImageConfigurationScope = false,
+        bool missingSolution = false,
+        string? failingPathFragment = null)
+    {
+        var root = Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            fixtureName,
+            "readback");
+
+        var readback = ParseObject(Path.Combine(root, "readback.json"));
+        var solutionPath = Path.Combine(root, "solution.json");
+        var solution = File.Exists(solutionPath) ? ParseObject(solutionPath) : readback["solution"]?.DeepClone() as JsonObject;
+
+        return new LiveFixtureHarness(
+            fixtureName,
+            readback,
+            solution,
+            sourceScope,
+            entityOnlyUiScope,
+            pageSolutionComponents,
+            omitImageConfigurationScope,
+            missingSolution,
+            failingPathFragment);
+    }
+
+    public async Task<LiveSnapshot> ReadAsync(params ComponentFamily[] families)
+    {
+        using var client = new HttpClient(new FixtureHandler(this))
+        {
+            BaseAddress = new Uri("https://example.crm.dynamics.com/")
+        };
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            _solution?["uniquename"]?.GetValue<string>(),
+            families.Length == 0 ? null : families);
+
+        var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+        return await reader.ReadAsync(request, CancellationToken.None);
+    }
+
+    internal HttpResponseMessage Handle(HttpRequestMessage request)
+    {
+        Requests.Add(Uri.UnescapeDataString(request.RequestUri!.PathAndQuery));
+
+        if (!string.IsNullOrWhiteSpace(_failingPathFragment)
+            && request.RequestUri.PathAndQuery.Contains(_failingPathFragment, StringComparison.OrdinalIgnoreCase))
+        {
+            return JsonResponse(HttpStatusCode.InternalServerError, new JsonObject
+            {
+                ["error"] = new JsonObject
+                {
+                    ["message"] = "Fixture-injected failure."
+                }
+            });
+        }
+
+        var path = request.RequestUri.AbsolutePath;
+        var query = Uri.UnescapeDataString(request.RequestUri.Query);
+
+        if (path.EndsWith("/solutions", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(_missingSolution || _solution is null ? [] : [_solution.DeepClone()]);
+        }
+
+        if (path.EndsWith("/solutioncomponents", StringComparison.OrdinalIgnoreCase))
+        {
+            return HandleSolutionComponents(request.RequestUri);
+        }
+
+        if (path.EndsWith("/EntityDefinitions", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetEntityDefinitionRows());
+        }
+
+        if (TryExtractEntityLogicalName(path, out var entityLogicalName))
+        {
+            return HandleEntityRequest(entityLogicalName, path, query);
+        }
+
+        if (path.EndsWith("/GlobalOptionSetDefinitions", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetGlobalOptionSets());
+        }
+
+        if (path.EndsWith("/systemforms", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetForms(query));
+        }
+
+        if (path.EndsWith("/savedqueries", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetViews(query));
+        }
+
+        if (path.EndsWith("/appmodules", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("app-modules.json", "app_modules"));
+        }
+
+        if (path.EndsWith("/appsettings", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("app-settings.json", "app_settings"));
+        }
+
+        if (path.EndsWith("/sitemaps", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("site-maps.json", "site_maps"));
+        }
+
+        if (path.EndsWith("/environmentvariabledefinitions", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("environment-variable-definitions.json", "environment_variable_definitions"));
+        }
+
+        if (path.EndsWith("/environmentvariablevalues", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("environment-variable-values.json", "environment_variable_values"));
+        }
+
+        if (path.EndsWith("/canvasapps", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("canvas-apps.json", "canvas_apps"));
+        }
+
+        if (path.EndsWith("/entityanalyticsconfigs", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("entity-analytics-configurations.json", "entity_analytics_configurations"));
+        }
+
+        if (path.EndsWith("/msdyn_aiprojecttypes", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("ai-project-types.json", "ai_project_types"));
+        }
+
+        if (path.EndsWith("/msdyn_aiprojects", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("ai-projects.json", "ai_projects"));
+        }
+
+        if (path.EndsWith("/msdyn_aiconfigurations", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("ai-configurations.json", "ai_configurations"));
+        }
+
+        if (path.EndsWith("/pluginassemblies", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("plugin-assemblies.json", "plugin_assemblies"));
+        }
+
+        if (path.EndsWith("/plugintypes", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("plugin-types.json", "plugin_types"));
+        }
+
+        if (path.EndsWith("/sdkmessageprocessingsteps", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("plugin-steps.json", "plugin_steps"));
+        }
+
+        if (path.EndsWith("/sdkmessageprocessingstepimages", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("plugin-step-images.json", "plugin_step_images"));
+        }
+
+        if (path.EndsWith("/sdkmessages", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("sdkmessages.json", "sdkmessages"));
+        }
+
+        if (path.EndsWith("/sdkmessagefilters", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("sdkmessagefilters.json", "sdkmessagefilters"));
+        }
+
+        if (path.EndsWith("/serviceendpoints", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("service-endpoints.json", "service_endpoints"));
+        }
+
+        if (path.EndsWith("/connectors", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("connectors.json", "connectors"));
+        }
+
+        if (path.EndsWith("/duplicaterules", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("duplicate-rules.json", "duplicate_rules"));
+        }
+
+        if (path.EndsWith("/duplicateruleconditions", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("duplicate-rule-conditions.json", "duplicate_rule_conditions"));
+        }
+
+        if (path.EndsWith("/routingrules", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("routing-rules.json", "routing_rules"));
+        }
+
+        if (path.EndsWith("/routingruleitems", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("routing-rule-items.json", "routing_rule_items"));
+        }
+
+        if (path.EndsWith("/mobileofflineprofiles", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("mobile-offline-profiles.json", "mobile_offline_profiles"));
+        }
+
+        if (path.EndsWith("/mobileofflineprofileitems", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("mobile-offline-profile-items.json", "mobile_offline_profile_items"));
+        }
+
+        if (path.EndsWith("/roles", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("roles.json", "roles"));
+        }
+
+        if (path.EndsWith("/fieldsecurityprofiles", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("field-security-profiles.json", "field_security_profiles"));
+        }
+
+        if (path.EndsWith("/fieldpermissions", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("field-permissions.json", "field_permissions"));
+        }
+
+        if (path.EndsWith("/connectionroles", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("connection-roles.json", "connection_roles"));
+        }
+
+        return JsonResponse(HttpStatusCode.NotFound, new JsonObject
+        {
+            ["error"] = new JsonObject
+            {
+                ["message"] = $"{request.RequestUri.PathAndQuery} was not mapped by the fixture handler."
+            }
+        });
+    }
+
+    private HttpResponseMessage HandleSolutionComponents(Uri uri)
+    {
+        var rows = BuildSolutionComponentRows();
+        if (_pageSolutionComponents && !uri.Query.Contains("$skiptoken=page2", StringComparison.OrdinalIgnoreCase))
+        {
+            var firstPage = new JsonArray();
+            foreach (var row in rows.Take(3))
+            {
+                firstPage.Add(row.DeepClone());
+            }
+
+            return JsonResponse(HttpStatusCode.OK, new JsonObject
+            {
+                ["value"] = firstPage,
+                ["@odata.nextLink"] = "https://example.crm.dynamics.com/api/data/v9.2/solutioncomponents?$skiptoken=page2"
+            });
+        }
+
+        if (_pageSolutionComponents && uri.Query.Contains("$skiptoken=page2", StringComparison.OrdinalIgnoreCase))
+        {
+            rows = rows.Skip(3).ToArray();
+        }
+
+        return Envelope(rows);
+    }
+
+    private JsonNode[] BuildSolutionComponentRows()
+    {
+        var rows = new List<JsonNode>();
+        var entities = GetEntityNames();
+        foreach (var entity in entities)
+        {
+            var id = StableGuid($"entity:{entity}");
+            _entityIds[entity] = id;
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 1,
+                ["objectid"] = id.ToString("D"),
+                ["logicalname"] = entity
+            });
+        }
+
+        foreach (var optionSet in GetGlobalOptionSets().OfType<JsonObject>())
+        {
+            var name = optionSet["option_set_name"]?.GetValue<string>();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                continue;
+            }
+
+            var id = StableGuid($"global-option-set:{name}");
+            _globalOptionSetIds[name] = id;
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 9,
+                ["objectid"] = id.ToString("D"),
+                ["name"] = name
+            });
+        }
+
+        foreach (var key in FilterRowsBySourceScope(GetArtifactArray("entity-keys.json", "entity_keys"), ComponentFamily.Key, row => row["entitykeymetadataid"]?.GetValue<string>(), row => row["logical_name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 14,
+                ["objectid"] = key["entitykeymetadataid"]!.GetValue<string>(),
+                ["logicalname"] = key["logical_name"]?.GetValue<string>(),
+                ["schemaname"] = key["schemaname"]?.GetValue<string>()
+            });
+        }
+
+        if (!_entityOnlyUiScope)
+        {
+            foreach (var form in FilterRowsBySourceScope(GetAllForms(), ComponentFamily.Form, row => row["formid"]?.GetValue<string>(), row => $"{row["objecttypecode"]?.GetValue<string>()}|{row["name"]?.GetValue<string>()}"))
+            {
+                rows.Add(new JsonObject
+                {
+                    ["componenttype"] = 60,
+                    ["objectid"] = form["formid"]!.GetValue<string>()
+                });
+            }
+
+            foreach (var view in FilterRowsBySourceScope(GetAllViews(), ComponentFamily.View, row => row["savedqueryid"]?.GetValue<string>(), row => $"{row["returnedtypecode"]?.GetValue<string>()}|{row["name"]?.GetValue<string>()}"))
+            {
+                rows.Add(new JsonObject
+                {
+                    ["componenttype"] = 26,
+                    ["objectid"] = view["savedqueryid"]!.GetValue<string>()
+                });
+            }
+        }
+
+        foreach (var appModule in FilterRowsBySourceScope(GetArtifactArray("app-modules.json", "app_modules"), ComponentFamily.AppModule, row => row["appmoduleid"]?.GetValue<string>(), row => row["uniquename"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 80,
+                ["objectid"] = appModule["appmoduleid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var siteMap in FilterRowsBySourceScope(GetArtifactArray("site-maps.json", "site_maps"), ComponentFamily.SiteMap, row => row["sitemapid"]?.GetValue<string>(), row => row["sitemapnameunique"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 62,
+                ["objectid"] = siteMap["sitemapid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var definition in FilterRowsBySourceScope(GetArtifactArray("environment-variable-definitions.json", "environment_variable_definitions"), ComponentFamily.EnvironmentVariableDefinition, row => row["environmentvariabledefinitionid"]?.GetValue<string>(), row => row["schemaname"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 380,
+                ["objectid"] = definition["environmentvariabledefinitionid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var value in FilterRowsBySourceScope(GetArtifactArray("environment-variable-values.json", "environment_variable_values"), ComponentFamily.EnvironmentVariableValue, row => row["environmentvariablevalueid"]?.GetValue<string>(), row => row["schemaname"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 381,
+                ["objectid"] = value["environmentvariablevalueid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var canvasApp in FilterRowsBySourceScope(GetArtifactArray("canvas-apps.json", "canvas_apps"), ComponentFamily.CanvasApp, row => row["canvasappid"]?.GetValue<string>(), row => row["name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 300,
+                ["objectid"] = canvasApp["canvasappid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var analyticsConfiguration in FilterRowsBySourceScope(GetArtifactArray("entity-analytics-configurations.json", "entity_analytics_configurations"), ComponentFamily.EntityAnalyticsConfiguration, row => row["entityanalyticsconfigid"]?.GetValue<string>(), row => row["parententitylogicalname"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 430,
+                ["objectid"] = analyticsConfiguration["entityanalyticsconfigid"]!.GetValue<string>()
+            });
+        }
+
+        if (!_omitImageConfigurationScope)
+        {
+            foreach (var entity in entities)
+            {
+                var metadata = GetEntityMetadata(entity);
+                if (metadata is null)
+                {
+                    continue;
+                }
+
+                var primaryImageAttribute = metadata["PrimaryImageAttribute"]?.GetValue<string>();
+                if (!string.IsNullOrWhiteSpace(primaryImageAttribute))
+                {
+                    rows.Add(new JsonObject
+                    {
+                        ["componenttype"] = 432,
+                        ["objectid"] = StableGuid($"entity-image:{entity}").ToString("D"),
+                        ["logical_name"] = $"{entity}|entity-image",
+                        ["parententitylogicalname"] = entity
+                    });
+                }
+
+                foreach (var imageAttribute in GetEntityImageAttributeRows(entity, metadata).OfType<JsonObject>())
+                {
+                    var attributeLogicalName = imageAttribute["LogicalName"]?.GetValue<string>();
+                    if (string.IsNullOrWhiteSpace(attributeLogicalName))
+                    {
+                        continue;
+                    }
+
+                    rows.Add(new JsonObject
+                    {
+                        ["componenttype"] = 431,
+                        ["objectid"] = StableGuid($"attribute-image:{entity}|{attributeLogicalName}").ToString("D"),
+                        ["logical_name"] = $"{entity}|{attributeLogicalName}|attribute-image",
+                        ["parententitylogicalname"] = entity,
+                        ["attributelogicalname"] = attributeLogicalName
+                    });
+                }
+            }
+        }
+
+        foreach (var aiProjectType in FilterRowsBySourceScope(GetArtifactArray("ai-project-types.json", "ai_project_types"), ComponentFamily.AiProjectType, row => row["msdyn_aiprojecttypeid"]?.GetValue<string>(), row => row["msdyn_uniquename"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 400,
+                ["objectid"] = aiProjectType["msdyn_aiprojecttypeid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var aiProject in FilterRowsBySourceScope(GetArtifactArray("ai-projects.json", "ai_projects"), ComponentFamily.AiProject, row => row["msdyn_aiprojectid"]?.GetValue<string>(), row => row["msdyn_uniquename"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 401,
+                ["objectid"] = aiProject["msdyn_aiprojectid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var aiConfiguration in FilterRowsBySourceScope(GetArtifactArray("ai-configurations.json", "ai_configurations"), ComponentFamily.AiConfiguration, row => row["msdyn_aiconfigurationid"]?.GetValue<string>(), row => row["msdyn_uniquename"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 402,
+                ["objectid"] = aiConfiguration["msdyn_aiconfigurationid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var assembly in FilterRowsBySourceScope(GetArtifactArray("plugin-assemblies.json", "plugin_assemblies"), ComponentFamily.PluginAssembly, row => row["pluginassemblyid"]?.GetValue<string>(), row => row["logical_name"]?.GetValue<string>() ?? row["full_name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 91,
+                ["objectid"] = assembly["pluginassemblyid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var pluginType in FilterRowsBySourceScope(GetArtifactArray("plugin-types.json", "plugin_types"), ComponentFamily.PluginType, row => row["plugintypeid"]?.GetValue<string>(), row => row["logical_name"]?.GetValue<string>() ?? row["typename"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 90,
+                ["objectid"] = pluginType["plugintypeid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var step in FilterRowsBySourceScope(GetArtifactArray("plugin-steps.json", "plugin_steps"), ComponentFamily.PluginStep, row => row["sdkmessageprocessingstepid"]?.GetValue<string>(), row => row["logical_name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 92,
+                ["objectid"] = step["sdkmessageprocessingstepid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var image in FilterRowsBySourceScope(GetArtifactArray("plugin-step-images.json", "plugin_step_images"), ComponentFamily.PluginStepImage, row => row["sdkmessageprocessingstepimageid"]?.GetValue<string>(), row => row["logical_name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 93,
+                ["objectid"] = image["sdkmessageprocessingstepimageid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var serviceEndpoint in FilterRowsBySourceScope(GetArtifactArray("service-endpoints.json", "service_endpoints"), ComponentFamily.ServiceEndpoint, row => row["serviceendpointid"]?.GetValue<string>(), row => row["logical_name"]?.GetValue<string>() ?? row["name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 95,
+                ["objectid"] = serviceEndpoint["serviceendpointid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var connector in FilterRowsBySourceScope(GetArtifactArray("connectors.json", "connectors"), ComponentFamily.Connector, row => row["connectorid"]?.GetValue<string>(), row => row["logical_name"]?.GetValue<string>() ?? row["connectorinternalid"]?.GetValue<string>() ?? row["name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = connector["solution_component_type"]?.GetValue<int>() ?? 371,
+                ["objectid"] = connector["connectorid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var duplicateRule in FilterRowsBySourceScope(GetArtifactArray("duplicate-rules.json", "duplicate_rules"), ComponentFamily.DuplicateRule, row => row["duplicateruleid"]?.GetValue<string>(), row => row["uniquename"]?.GetValue<string>() ?? row["name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 44,
+                ["objectid"] = duplicateRule["duplicateruleid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var routingRule in FilterRowsBySourceScope(GetArtifactArray("routing-rules.json", "routing_rules"), ComponentFamily.RoutingRule, row => row["routingruleid"]?.GetValue<string>(), row => NormalizeLogicalName(row["name"]?.GetValue<string>())))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 150,
+                ["objectid"] = routingRule["routingruleid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var mobileOfflineProfile in FilterRowsBySourceScope(GetArtifactArray("mobile-offline-profiles.json", "mobile_offline_profiles"), ComponentFamily.MobileOfflineProfile, row => row["mobileofflineprofileid"]?.GetValue<string>(), row => NormalizeLogicalName(row["name"]?.GetValue<string>())))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 161,
+                ["objectid"] = mobileOfflineProfile["mobileofflineprofileid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var role in FilterRowsBySourceScope(GetArtifactArray("roles.json", "roles"), ComponentFamily.Role, row => row["roleid"]?.GetValue<string>(), row => NormalizeLogicalName(row["name"]?.GetValue<string>())))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 20,
+                ["objectid"] = role["roleid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var fieldSecurityProfile in FilterRowsBySourceScope(GetArtifactArray("field-security-profiles.json", "field_security_profiles"), ComponentFamily.FieldSecurityProfile, row => row["fieldsecurityprofileid"]?.GetValue<string>(), row => NormalizeLogicalName(row["name"]?.GetValue<string>())))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 70,
+                ["objectid"] = fieldSecurityProfile["fieldsecurityprofileid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var connectionRole in FilterRowsBySourceScope(GetArtifactArray("connection-roles.json", "connection_roles"), ComponentFamily.ConnectionRole, row => row["connectionroleid"]?.GetValue<string>(), row => NormalizeLogicalName(row["name"]?.GetValue<string>())))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 63,
+                ["objectid"] = connectionRole["connectionroleid"]!.GetValue<string>()
+            });
+        }
+
+        return rows.ToArray();
+    }
+
+    private HttpResponseMessage HandleEntityRequest(string entityLogicalName, string path, string query)
+    {
+        var metadata = GetEntityMetadata(entityLogicalName);
+        if (metadata is null)
+        {
+            return Envelope([]);
+        }
+
+        if (path.Contains("/Attributes/Microsoft.Dynamics.CRM.ImageAttributeMetadata", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetEntityImageAttributeRows(entityLogicalName, metadata));
+        }
+
+        if (path.Contains("/Attributes/Microsoft.Dynamics.CRM.", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetEntityOptionSetRows(entityLogicalName, metadata, path));
+        }
+
+        if (path.EndsWith("/Attributes", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(metadata["Attributes"] as JsonArray ?? new JsonArray());
+        }
+
+        if (path.EndsWith("/ManyToOneRelationships", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(metadata["Relationships"]?["many_to_one"] as JsonArray ?? new JsonArray());
+        }
+
+        if (path.EndsWith("/OneToManyRelationships", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(metadata["Relationships"]?["one_to_many"] as JsonArray ?? new JsonArray());
+        }
+
+        if (path.EndsWith("/ManyToManyRelationships", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(metadata["Relationships"]?["many_to_many"] as JsonArray ?? new JsonArray());
+        }
+
+        if (query.Contains("$select", StringComparison.OrdinalIgnoreCase))
+        {
+            return JsonResponse(HttpStatusCode.OK, metadata.DeepClone()!);
+        }
+
+        return JsonResponse(HttpStatusCode.OK, metadata.DeepClone()!);
+    }
+
+    private IEnumerable<JsonObject> FilterRowsBySourceScope(
+        JsonArray rows,
+        ComponentFamily family,
+        Func<JsonObject, string?> idSelector,
+        Func<JsonObject, string?> logicalSelector)
+    {
+        if (_sourceScope is null)
+        {
+            return rows.OfType<JsonObject>();
+        }
+
+        var allowedLogicalNames = _sourceScope.Artifacts
+            .Where(artifact => artifact.Family == family)
+            .Select(artifact => artifact.LogicalName)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        var allowedIds = _sourceScope.Artifacts
+            .Where(artifact => artifact.Family == family && artifact.Properties is not null)
+            .Select(artifact => family switch
+            {
+                ComponentFamily.Form => artifact.Properties!.TryGetValue(ArtifactPropertyKeys.FormId, out var formId) ? formId : null,
+                ComponentFamily.View => artifact.Properties!.TryGetValue(ArtifactPropertyKeys.ViewId, out var viewId) ? viewId : null,
+                _ => null
+            })
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        return rows
+            .OfType<JsonObject>()
+            .Where(row =>
+            {
+                var logicalName = logicalSelector(row);
+                var id = idSelector(row);
+                return (!string.IsNullOrWhiteSpace(logicalName) && allowedLogicalNames.Contains(logicalName!))
+                    || (!string.IsNullOrWhiteSpace(id) && allowedIds.Contains(id!));
+            });
+    }
+
+    private JsonArray GetEntityDefinitionRows()
+    {
+        var array = new JsonArray();
+        foreach (var entity in GetEntityNames())
+        {
+            var metadata = GetEntityMetadata(entity);
+            if (metadata is null)
+            {
+                continue;
+            }
+
+            array.Add(new JsonObject
+            {
+                ["LogicalName"] = entity,
+                ["MetadataId"] = StableGuid($"entity:{entity}").ToString("D")
+            });
+        }
+
+        return array;
+    }
+
+    private JsonArray GetGlobalOptionSets() =>
+        GetArtifactArray("global-option-sets.json", "global_option_sets");
+
+    private JsonArray GetAllForms()
+    {
+        var array = new JsonArray();
+        foreach (var entity in GetEntityNames())
+        {
+            foreach (var form in GetFormsForEntity(entity))
+            {
+                if (form is not null)
+                {
+                    array.Add(form.DeepClone());
+                }
+            }
+        }
+
+        return array;
+    }
+
+    private JsonArray GetAllViews()
+    {
+        var array = new JsonArray();
+        foreach (var entity in GetEntityNames())
+        {
+            foreach (var view in GetViewsForEntity(entity))
+            {
+                if (view is not null)
+                {
+                    array.Add(view.DeepClone());
+                }
+            }
+        }
+
+        return array;
+    }
+
+    private JsonArray GetForms(string query)
+    {
+        if (query.Contains("objecttypecode eq", StringComparison.OrdinalIgnoreCase))
+        {
+            var entity = ExtractQuotedValue(query);
+            return GetFormsForEntity(entity);
+        }
+
+        return GetAllForms();
+    }
+
+    private JsonArray GetViews(string query)
+    {
+        if (query.Contains("returnedtypecode eq", StringComparison.OrdinalIgnoreCase))
+        {
+            var entity = ExtractQuotedValue(query);
+            return GetViewsForEntity(entity);
+        }
+
+        return GetAllViews();
+    }
+
+    private JsonArray GetEntityOptionSetRows(string entityLogicalName, JsonObject metadata, string path)
+    {
+        var optionSets = metadata["OptionSets"] as JsonArray ?? new JsonArray();
+        var desiredType = path.Contains("BooleanAttributeMetadata", StringComparison.OrdinalIgnoreCase) ? "boolean"
+            : path.Contains("StateAttributeMetadata", StringComparison.OrdinalIgnoreCase) ? "state"
+            : path.Contains("StatusAttributeMetadata", StringComparison.OrdinalIgnoreCase) ? "status"
+            : "picklist";
+
+        var results = new JsonArray();
+        foreach (var optionSet in optionSets.OfType<JsonObject>().Where(row => string.Equals(row["option_set_type"]?.GetValue<string>(), desiredType, StringComparison.OrdinalIgnoreCase)))
+        {
+            var attributeLogicalName = optionSet["attribute_logical_name"]?.GetValue<string>();
+            var attribute = metadata["Attributes"]?.AsArray().OfType<JsonObject>().FirstOrDefault(candidate =>
+                string.Equals(candidate["LogicalName"]?.GetValue<string>(), attributeLogicalName, StringComparison.OrdinalIgnoreCase));
+
+            var row = attribute?.DeepClone() as JsonObject ?? new JsonObject();
+            row["OptionSet"] = optionSet.DeepClone();
+            if (row["LogicalName"] is null && !string.IsNullOrWhiteSpace(attributeLogicalName))
+            {
+                row["LogicalName"] = attributeLogicalName;
+            }
+
+            results.Add(row);
+        }
+
+        return results;
+    }
+
+    private JsonArray GetEntityImageAttributeRows(string entityLogicalName, JsonObject metadata)
+    {
+        var results = new JsonArray();
+        foreach (var attribute in (metadata["Attributes"] as JsonArray ?? new JsonArray()).OfType<JsonObject>())
+        {
+            var attributeType = attribute["AttributeType"]?.GetValue<string>();
+            if (!string.Equals(attributeType, "Image", StringComparison.OrdinalIgnoreCase)
+                && attribute["CanStoreFullImage"] is null
+                && attribute["IsPrimaryImage"] is null)
+            {
+                continue;
+            }
+
+            results.Add(attribute.DeepClone());
+        }
+
+        return results;
+    }
+
+    private JsonObject? GetEntityMetadata(string entityLogicalName)
+    {
+        var path = Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            _fixtureName,
+            "readback",
+            "entities",
+            entityLogicalName,
+            "metadata.json");
+
+        if (File.Exists(path))
+        {
+            return ParseObject(path);
+        }
+
+        var entity = _readback["entities"]?[entityLogicalName];
+        return entity?.DeepClone() as JsonObject;
+    }
+
+    private IEnumerable<string> GetEntityNames()
+    {
+        var allNames = _readback["entities"] is JsonObject entities
+            ? entities.Select(property => property.Key).OrderBy(name => name, StringComparer.OrdinalIgnoreCase).ToArray()
+            : Array.Empty<string>();
+        if (_sourceScope is null)
+        {
+            return allNames;
+        }
+
+        var sourceEntities = _sourceScope.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.Table)
+            .Select(artifact => artifact.LogicalName)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return allNames.Where(sourceEntities.Contains);
+    }
+
+    private JsonArray GetFormsForEntity(string? entityLogicalName)
+    {
+        if (string.IsNullOrWhiteSpace(entityLogicalName))
+        {
+            return [];
+        }
+
+        var path = Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            _fixtureName,
+            "readback",
+            "entities",
+            entityLogicalName,
+            "forms.json");
+
+        if (File.Exists(path))
+        {
+            return ParseArray(path);
+        }
+
+        return _readback["entities"]?[entityLogicalName]?["forms"]?.DeepClone() as JsonArray ?? new JsonArray();
+    }
+
+    private JsonArray GetViewsForEntity(string? entityLogicalName)
+    {
+        if (string.IsNullOrWhiteSpace(entityLogicalName))
+        {
+            return [];
+        }
+
+        var path = Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            _fixtureName,
+            "readback",
+            "entities",
+            entityLogicalName,
+            "views.json");
+
+        if (File.Exists(path))
+        {
+            return ParseArray(path);
+        }
+
+        return _readback["entities"]?[entityLogicalName]?["views"]?.DeepClone() as JsonArray ?? new JsonArray();
+    }
+
+    private JsonArray GetArtifactArray(string artifactFileName, string aggregatePropertyName)
+    {
+        var root = Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            _fixtureName,
+            "readback",
+            "artifacts",
+            artifactFileName);
+
+        if (File.Exists(root))
+        {
+            return ParseArray(root);
+        }
+
+        return _readback[aggregatePropertyName]?.DeepClone() as JsonArray ?? new JsonArray();
+    }
+
+    private static bool TryExtractEntityLogicalName(string path, out string entityLogicalName)
+    {
+        const string marker = "EntityDefinitions(LogicalName='";
+        var start = path.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+        if (start < 0)
+        {
+            entityLogicalName = string.Empty;
+            return false;
+        }
+
+        start += marker.Length;
+        var end = path.IndexOf("')", start, StringComparison.OrdinalIgnoreCase);
+        if (end < 0)
+        {
+            entityLogicalName = string.Empty;
+            return false;
+        }
+
+        entityLogicalName = path[start..end];
+        return true;
+    }
+
+    private static string? ExtractQuotedValue(string query)
+    {
+        var first = query.IndexOf('\'');
+        var second = query.IndexOf('\'', first + 1);
+        return first >= 0 && second > first ? query[(first + 1)..second] : null;
+    }
+
+    private static string? NormalizeLogicalName(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return value.Trim().ToLowerInvariant();
+    }
+
+    private static JsonObject ParseObject(string path) =>
+        JsonNode.Parse(File.ReadAllText(path))?.AsObject()
+        ?? throw new InvalidOperationException($"Fixture JSON object '{path}' could not be parsed.");
+
+    private static JsonArray ParseArray(string path) =>
+        JsonNode.Parse(File.ReadAllText(path)) switch
+        {
+            JsonArray array => array,
+            JsonObject obj => obj.AsObject().Select(property => property.Value).OfType<JsonArray>().FirstOrDefault()
+                ?? new JsonArray(obj.DeepClone()),
+            _ => throw new InvalidOperationException($"Fixture JSON array '{path}' could not be parsed.")
+        };
+
+    private static Guid StableGuid(string value)
+    {
+        var bytes = MD5.HashData(Encoding.UTF8.GetBytes(value));
+        return new Guid(bytes);
+    }
+
+    private static HttpResponseMessage Envelope(IEnumerable<JsonNode?> rows)
+    {
+        var array = new JsonArray();
+        foreach (var row in rows)
+        {
+            array.Add(row?.DeepClone());
+        }
+
+        return JsonResponse(HttpStatusCode.OK, new JsonObject
+        {
+            ["value"] = array
+        });
+    }
+
+    private static HttpResponseMessage JsonResponse(HttpStatusCode statusCode, JsonNode body) =>
+        new(statusCode)
+        {
+            Content = new StringContent(body.ToJsonString())
+            {
+                Headers =
+                {
+                    ContentType = new MediaTypeHeaderValue("application/json")
+                }
+            }
+        };
+}
+
+internal sealed class FixtureHandler(LiveFixtureHarness harness) : HttpMessageHandler
+{
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
+        Task.FromResult(harness.Handle(request));
+}
+
+internal sealed class StaticResponseHandler(Func<HttpRequestMessage, HttpResponseMessage> responder) : HttpMessageHandler
+{
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
+        Task.FromResult(responder(request));
+}
+
+internal sealed class FakeTokenCredential : TokenCredential
+{
+    public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+        new("fixture-token", DateTimeOffset.UtcNow.AddMinutes(5));
+
+    public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+        ValueTask.FromResult(GetToken(requestContext, cancellationToken));
+}
+
+internal sealed class ThrowingTokenCredential : TokenCredential
+{
+    public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+        throw new AuthenticationFailedException("Fixture auth failure.");
+
+    public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+        throw new AuthenticationFailedException("Fixture auth failure.");
+}

@@ -18,12 +18,13 @@ This reference covers Dataverse process and service-policy artifacts: workflows,
 - mobile offline profiles and the records, tables, or views they include
 
 Current neutral foothold:
-- `references/examples/seed-process-policy/` now proves duplicate-rule definition handling with one compact rule and one condition, plus one routing rule, one routing-rule item, one mobile offline profile, and one mobile offline profile item with stable source normalization plus best-effort live readback
+- `references/examples/seed-process-policy/` now proves duplicate-rule definition handling with one compact rule and one condition, plus one routing rule, one routing-rule item, one mobile offline profile, and one mobile offline profile item through typed source parsing, deterministic tracked-source emission, source-backed package-input copying, live readback, and stable-overlap drift
 - the exported source for that seed materializes under `duplicaterules/<hash>/duplicaterule.xml`, so do not assume process-policy artifacts will always appear inside `Customizations.xml`
 - the same seed also exports routing-rule source under `RoutingRules/<name>.meta.xml`, so this family can mix dedicated folders and thin manifest shells in the same solution
 - the same seed also exports mobile offline source under `MobileOfflineProfiles/<name>.xml`, with child items nested under the owning profile file
-- `references/examples/source-only-similarity-rule/` provides a compact source-only `SimilarityRule` fixture for parser and normalization work when live parity is not available
-- `references/examples/source-only-sla/` provides a compact source-only `SLA` and `SLAItem` fixture for parser and normalization work when a neutral live SLA seed is blocked by service-table prerequisites
+- workflow and queue associations in that neutral seed remain explicit best-effort links, not release-blocking drift dimensions
+- `references/examples/source-only-similarity-rule/` provides the canonical source-first `SimilarityRule` fixture for parser, tracked-source, package-input, and non-blocking drift work when honest neutral live parity is not available
+- `references/examples/source-only-sla/` provides the canonical source-first `SLA` and `SLAItem` fixture for parser, tracked-source, package-input, and non-blocking drift work when a neutral live SLA seed is blocked by service-table prerequisites
 
 ## How To Normalize And Compare
 
@@ -34,8 +35,8 @@ Current neutral foothold:
 - for duplicate rules, compare the rule and the condition separately and normalize boolean flags so `1/0` source values line up with `true/false` readback
 - for routing rules, compare the rule shell and item condition XML directly, but treat workflow links and queue targets as best-effort if the unpacked source omits them
 - for mobile offline profiles, compare the profile shell plus the nested item shell, but treat richer live-only booleans as secondary when the export only preserves the stable profile, item, entity, and ownership/distribution overlap
-- for similarity rules, normalize rule identity plus targeting fields such as base entity, matching entity, inactive-record handling, `maxkeywords`, and `ngramsize`, but keep the family best-effort if the Web API surface does not expose normal create or list operations for the table
-- for SLAs, normalize the SLA shell separately from its SLA items and compare stable fields such as applicable-from, default flag, pause or resume allowance, applicable entity, and any action-flow unique name before treating deeper service automation details as drift
+- for similarity rules, normalize rule identity plus targeting fields such as base entity, matching entity, inactive-record handling, `maxkeywords`, and `ngramsize`, and keep the family explicitly source-first if the Web API surface does not expose normal create or list operations for the table
+- for SLAs, normalize the SLA shell separately from its SLA items and compare stable fields such as applicable-from, default flag, pause or resume allowance, applicable entity, and any action-flow unique name before treating deeper service automation details as drift; keep the family explicitly source-first when a neutral live seed is blocked
 
 ## Direct Dev Versus Tracked Release
 
@@ -45,7 +46,7 @@ Current neutral foothold:
 - use a neutral standard-table rule when the environment refuses duplicate detection on a custom seed table; record that choice as an assumption instead of blocking the skill
 - use a neutral queue plus an explicitly recorded workflow assumption when routing-rule proof is possible in `Dev` but the exported source does not preserve those live links
 - use a neutral mobile-offline profile on a standard table when the environment exposes a compact profile and nested-item export; record any live-only flags as best-effort instead of forcing false drift
-- if similarity-rule metadata exposes writable fields but the practical Web API surface still omits normal create or list operations, treat the family as source-first or record-id-based best-effort rather than inventing unsupported parity
+- if similarity-rule metadata exposes writable fields but the practical Web API surface still omits normal create or list operations, treat the family as source-first by design rather than inventing unsupported parity
 - if SLA creation is rejected because the table is not `IsSLAEnabled`, defer the neutral SLA seed until a service-capable standard table is available instead of forcing a project-specific workaround
 - when that live SLA constraint blocks unattended neutral seeding, keep moving with the bundled `references/examples/source-only-sla/` parser fixture and label the family source-first until a live seed becomes practical
 

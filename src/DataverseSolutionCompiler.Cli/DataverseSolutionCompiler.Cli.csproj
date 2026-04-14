@@ -7,5 +7,11 @@
   <ItemGroup>
     <ProjectReference Include="..\DataverseSolutionCompiler.Domain\DataverseSolutionCompiler.Domain.csproj" />
     <ProjectReference Include="..\DataverseSolutionCompiler.Compiler\DataverseSolutionCompiler.Compiler.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Apply\DataverseSolutionCompiler.Apply.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Diff\DataverseSolutionCompiler.Diff.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Emitters.Package\DataverseSolutionCompiler.Emitters.Package.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Emitters.TrackedSource\DataverseSolutionCompiler.Emitters.TrackedSource.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Packaging.Pac\DataverseSolutionCompiler.Packaging.Pac.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Readers.Live\DataverseSolutionCompiler.Readers.Live.csproj" />
   </ItemGroup>
 </Project>

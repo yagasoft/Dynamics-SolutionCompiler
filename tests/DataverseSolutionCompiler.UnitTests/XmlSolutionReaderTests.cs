@@ -9,20 +9,344 @@ namespace DataverseSolutionCompiler.UnitTests;
 public sealed class XmlSolutionReaderTests
 {
     [Fact]
-    public void Reader_inventories_known_unpacked_families()
+    public void Reader_parses_seed_core_into_typed_schema_artifacts()
     {
-        var fixtureRoot = Path.Combine(
+        var solution = ReadFixture("seed-core");
+
+        solution.Identity.UniqueName.Should().Be("CodexMetadataSeedCore");
+        solution.Publisher.UniqueName.Should().Be("CodexMetadata");
+
+        var table = FindArtifact(solution, ComponentFamily.Table, "cdxmeta_workitem");
+        table.Properties![ArtifactPropertyKeys.PrimaryIdAttribute].Should().Be("cdxmeta_workitemid");
+        table.Properties![ArtifactPropertyKeys.PrimaryNameAttribute].Should().Be("cdxmeta_workitemname");
+        table.Properties![ArtifactPropertyKeys.OwnershipTypeMask].Should().Be("UserOwned");
+
+        var detailsColumn = FindArtifact(solution, ComponentFamily.Column, "cdxmeta_workitem|cdxmeta_details");
+        detailsColumn.Properties![ArtifactPropertyKeys.AttributeType].Should().Be("ntext");
+        detailsColumn.Properties![ArtifactPropertyKeys.IsSecured].Should().Be("true");
+
+        var relationship = FindArtifact(solution, ComponentFamily.Relationship, "cdxmeta_category_workitem");
+        relationship.Properties![ArtifactPropertyKeys.RelationshipType].Should().Be("OneToMany");
+        relationship.Properties![ArtifactPropertyKeys.ReferencingEntity].Should().Be("cdxmeta_workitem");
+
+        var globalChoice = FindArtifact(solution, ComponentFamily.OptionSet, "cdxmeta_priorityband");
+        globalChoice.Properties![ArtifactPropertyKeys.IsGlobal].Should().Be("true");
+        globalChoice.Properties![ArtifactPropertyKeys.OptionCount].Should().Be("3");
+
+        var localChoice = FindArtifact(solution, ComponentFamily.OptionSet, "cdxmeta_workitem|cdxmeta_stage");
+        localChoice.Properties![ArtifactPropertyKeys.IsGlobal].Should().Be("false");
+        localChoice.Properties![ArtifactPropertyKeys.OptionSetType].Should().Be("picklist");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_alternate_key_into_typed_schema_detail_artifacts()
+    {
+        var solution = ReadFixture("seed-alternate-key");
+
+        solution.Identity.UniqueName.Should().Be("CodexMetadataSeedAlternateKey");
+
+        var key = FindArtifact(solution, ComponentFamily.Key, "cdxmeta_workitem|cdxmeta_workitem_externalcode");
+        key.DisplayName.Should().Be("Work Item External Code");
+        key.Properties![ArtifactPropertyKeys.EntityLogicalName].Should().Be("cdxmeta_workitem");
+        key.Properties![ArtifactPropertyKeys.SchemaName].Should().Be("cdxmeta_WorkItem_ExternalCode");
+        key.Properties![ArtifactPropertyKeys.KeyAttributesJson].Should().Be("[\"cdxmeta_externalcode\"]");
+        key.Properties![ArtifactPropertyKeys.IndexStatus].Should().Be("Active");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_forms_into_semantic_form_and_view_artifacts()
+    {
+        var solution = ReadFixture("seed-forms");
+
+        var form = FindArtifact(solution, ComponentFamily.Form, "cdxmeta_workitem|main|c67be8a4-c475-4041-90e6-78e3ed79b018");
+        form.Properties![ArtifactPropertyKeys.QuickFormCount].Should().Be("1");
+        form.Properties![ArtifactPropertyKeys.SubgridCount].Should().Be("1");
+        form.Properties![ArtifactPropertyKeys.HeaderControlCount].Should().Be("3");
+
+        var view = FindArtifact(solution, ComponentFamily.View, "cdxmeta_workitem|Active Work Items");
+        view.Properties![ArtifactPropertyKeys.TargetEntity].Should().Be("cdxmeta_workitem");
+        view.Properties![ArtifactPropertyKeys.QueryType].Should().Be("0");
+        view.Properties![ArtifactPropertyKeys.LayoutColumnsJson].Should().Be("[\"cdxmeta_workitemname\",\"createdon\"]");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_advanced_ui_app_shell_families()
+    {
+        var solution = ReadFixture("seed-advanced-ui");
+
+        var appModule = FindArtifact(solution, ComponentFamily.AppModule, "codex_metadata_advanced_ui_924e69cb");
+        appModule.Properties![ArtifactPropertyKeys.RoleMapCount].Should().Be("2");
+        appModule.Properties![ArtifactPropertyKeys.AppSettingCount].Should().Be("1");
+
+        var appSetting = FindArtifact(solution, ComponentFamily.AppSetting, "codex_metadata_advanced_ui_924e69cb|AppChannel");
+        appSetting.Properties![ArtifactPropertyKeys.Value].Should().Be("1");
+
+        var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_advanced_ui_924e69cb");
+        siteMap.Properties![ArtifactPropertyKeys.AreaCount].Should().Be("1");
+        siteMap.Properties![ArtifactPropertyKeys.WebResourceSubAreaCount].Should().Be("1");
+
+        var visualization = FindArtifact(solution, ComponentFamily.Visualization, "account|Accounts by Industry");
+        visualization.Properties![ArtifactPropertyKeys.TargetEntity].Should().Be("account");
+        visualization.Properties![ArtifactPropertyKeys.ChartTypesJson].Should().Be("[\"Bar\"]");
+
+        var webResource = FindArtifact(solution, ComponentFamily.WebResource, "cdxmeta_/advancedui/landing.html");
+        webResource.Properties![ArtifactPropertyKeys.AssetSourcePath].Should().Be("WebResources/cdxmeta_/advancedui/landing.html");
+        webResource.Properties![ArtifactPropertyKeys.ContentHash].Should().NotBeNullOrWhiteSpace();
+
+        var definition = FindArtifact(solution, ComponentFamily.EnvironmentVariableDefinition, "cdxmeta_AdvancedUiMode");
+        definition.Properties![ArtifactPropertyKeys.DefaultValue].Should().Be("scaffold");
+        definition.Properties![ArtifactPropertyKeys.ValueSchema].Should().Be("string");
+
+        var value = FindArtifact(solution, ComponentFamily.EnvironmentVariableValue, "cdxmeta_AdvancedUiMode");
+        value.Properties![ArtifactPropertyKeys.Value].Should().Be("seed");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_environment_canvas_app_metadata_and_assets()
+    {
+        var solution = ReadFixture("seed-environment");
+
+        var canvasApp = FindArtifact(solution, ComponentFamily.CanvasApp, "cat_overview_3dbf5");
+        canvasApp.DisplayName.Should().Be("Overview");
+        canvasApp.Properties![ArtifactPropertyKeys.DocumentSourcePath].Should().Be("CanvasApps/cat_overview_3dbf5_DocumentUri.msapp");
+        canvasApp.Properties![ArtifactPropertyKeys.BackgroundSourcePath].Should().Be("CanvasApps/cat_overview_3dbf5_BackgroundImageUri");
+        canvasApp.Properties![ArtifactPropertyKeys.TagsJson].Should().Contain("primaryFormFactor");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_import_map_into_typed_environment_configuration_artifacts()
+    {
+        var solution = ReadFixture("seed-import-map");
+
+        var importMap = FindArtifact(solution, ComponentFamily.ImportMap, "codex_contact_csv_map");
+        importMap.DisplayName.Should().Be("Codex Contact CSV Map");
+        importMap.Properties![ArtifactPropertyKeys.ImportSource].Should().Be("CSV");
+        importMap.Properties![ArtifactPropertyKeys.SourceFormat].Should().Be("text/csv");
+        importMap.Properties![ArtifactPropertyKeys.ImportTargetEntity].Should().Be("contact");
+        importMap.Properties![ArtifactPropertyKeys.MappingCount].Should().Be("2");
+
+        var fullnameMapping = FindArtifact(solution, ComponentFamily.DataSourceMapping, "codex_contact_csv_map|fullname|fullname|1");
+        fullnameMapping.Properties![ArtifactPropertyKeys.ParentImportMapLogicalName].Should().Be("codex_contact_csv_map");
+        fullnameMapping.Properties![ArtifactPropertyKeys.SourceEntityName].Should().Be("contacts.csv");
+        fullnameMapping.Properties![ArtifactPropertyKeys.SourceAttributeName].Should().Be("fullname");
+        fullnameMapping.Properties![ArtifactPropertyKeys.TargetEntityName].Should().Be("contact");
+        fullnameMapping.Properties![ArtifactPropertyKeys.TargetAttributeName].Should().Be("fullname");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_entity_analytics_into_typed_environment_configuration_artifacts()
+    {
+        var solution = ReadFixture("seed-entity-analytics");
+
+        var analytics = FindArtifact(solution, ComponentFamily.EntityAnalyticsConfiguration, "contact");
+        analytics.DisplayName.Should().Be("contact");
+        analytics.Properties![ArtifactPropertyKeys.ParentEntityLogicalName].Should().Be("contact");
+        analytics.Properties![ArtifactPropertyKeys.EntityDataSource].Should().Be("dataverse");
+        analytics.Properties![ArtifactPropertyKeys.IsEnabledForAdls].Should().Be("true");
+        analytics.Properties![ArtifactPropertyKeys.IsEnabledForTimeSeries].Should().Be("false");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_image_config_into_typed_schema_detail_artifacts()
+    {
+        var solution = ReadFixture("seed-image-config");
+
+        var table = FindArtifact(solution, ComponentFamily.Table, "cdxmeta_photoasset");
+        table.Properties![ArtifactPropertyKeys.IsCustomizable].Should().Be("true");
+
+        var caption = FindArtifact(solution, ComponentFamily.Column, "cdxmeta_photoasset|cdxmeta_caption");
+        caption.Properties![ArtifactPropertyKeys.IsCustomizable].Should().Be("false");
+
+        var entityImage = FindArtifact(solution, ComponentFamily.ImageConfiguration, "cdxmeta_photoasset|entity-image");
+        entityImage.Properties![ArtifactPropertyKeys.PrimaryImageAttribute].Should().Be("cdxmeta_profileimage");
+        entityImage.Properties![ArtifactPropertyKeys.ImageConfigurationScope].Should().Be("entity");
+        entityImage.Properties![ArtifactPropertyKeys.CanStoreFullImage].Should().Be("true");
+
+        var attributeImage = FindArtifact(solution, ComponentFamily.ImageConfiguration, "cdxmeta_photoasset|cdxmeta_profileimage|attribute-image");
+        attributeImage.Properties![ArtifactPropertyKeys.ImageAttributeLogicalName].Should().Be("cdxmeta_profileimage");
+        attributeImage.Properties![ArtifactPropertyKeys.ImageConfigurationScope].Should().Be("attribute");
+        attributeImage.Properties![ArtifactPropertyKeys.IsPrimaryImage].Should().Be("true");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_ai_families_into_typed_environment_configuration_artifacts()
+    {
+        var solution = ReadFixture("seed-ai-families");
+
+        var projectType = FindArtifact(solution, ComponentFamily.AiProjectType, "document_automation");
+        projectType.DisplayName.Should().Be("Document Automation");
+        projectType.Properties![ArtifactPropertyKeys.Description].Should().Be("Core AI project type for document workflows.");
+
+        var project = FindArtifact(solution, ComponentFamily.AiProject, "invoice_processing");
+        project.Properties![ArtifactPropertyKeys.ParentAiProjectTypeLogicalName].Should().Be("document_automation");
+        project.Properties![ArtifactPropertyKeys.TargetEntity].Should().Be("invoice");
+
+        var configuration = FindArtifact(solution, ComponentFamily.AiConfiguration, "invoice_processing_training");
+        configuration.Properties![ArtifactPropertyKeys.ParentAiProjectLogicalName].Should().Be("invoice_processing");
+        configuration.Properties![ArtifactPropertyKeys.ConfigurationKind].Should().Be("training");
+        configuration.Properties![ArtifactPropertyKeys.Value].Should().Contain("invoice-train-v1");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_plugin_registration_into_typed_extensibility_artifacts()
+    {
+        var solution = ReadFixture("seed-plugin-registration");
+
+        var assembly = FindArtifact(solution, ComponentFamily.PluginAssembly, "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+        assembly.DisplayName.Should().Be("Codex.Metadata.Plugins");
+        assembly.Properties![ArtifactPropertyKeys.AssemblyFileName].Should().Be("Codex.Metadata.Plugins.dll");
+        assembly.Properties![ArtifactPropertyKeys.AssetSourcePath].Should().Be("PluginAssemblies/CodexMetadataPlugins-2F08B2D4-7F38-4B6F-84C8-5AB6FA4B6D10/Codex.Metadata.Plugins.dll");
+
+        var pluginType = FindArtifact(solution, ComponentFamily.PluginType, "Codex.Metadata.Plugins.AccountUpdateTrace");
+        pluginType.Properties![ArtifactPropertyKeys.AssemblyFullName].Should().Be("Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+        pluginType.Properties![ArtifactPropertyKeys.FriendlyName].Should().Be("Account Update Trace");
+
+        var step = FindArtifact(solution, ComponentFamily.PluginStep, "Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step");
+        step.Properties![ArtifactPropertyKeys.MessageName].Should().Be("Update");
+        step.Properties![ArtifactPropertyKeys.PrimaryEntity].Should().Be("account");
+        step.Properties![ArtifactPropertyKeys.FilteringAttributes].Should().Be("accountnumber,name");
+
+        var image = FindArtifact(solution, ComponentFamily.PluginStepImage, "Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step|Account PreImage|preimage|0");
+        image.Properties![ArtifactPropertyKeys.ParentPluginStepLogicalName].Should().Be("Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step");
+        image.Properties![ArtifactPropertyKeys.MessagePropertyName].Should().Be("Target");
+        image.Properties![ArtifactPropertyKeys.SelectedAttributes].Should().Be("accountnumber,name");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_service_endpoint_connector_into_typed_extensibility_artifacts()
+    {
+        var solution = ReadFixture("seed-service-endpoint-connector");
+
+        var serviceEndpoint = FindArtifact(solution, ComponentFamily.ServiceEndpoint, "codex_webhook_endpoint");
+        serviceEndpoint.DisplayName.Should().Be("codex_webhook_endpoint");
+        serviceEndpoint.Properties![ArtifactPropertyKeys.Contract].Should().Be("8");
+        serviceEndpoint.Properties![ArtifactPropertyKeys.NamespaceAddress].Should().Be("https://hooks.contoso.example");
+        serviceEndpoint.Properties![ArtifactPropertyKeys.EndpointPath].Should().Be("/dataverse/codex");
+
+        var connector = FindArtifact(solution, ComponentFamily.Connector, "shared-offerings-connector");
+        connector.DisplayName.Should().Be("Codex Shared Connector");
+        connector.Properties![ArtifactPropertyKeys.Name].Should().Be("codex_shared_connector");
+        connector.Properties![ArtifactPropertyKeys.ConnectorInternalId].Should().Be("shared-offerings-connector");
+        connector.Properties![ArtifactPropertyKeys.ConnectorType].Should().Be("1");
+        connector.Properties![ArtifactPropertyKeys.CapabilitiesJson].Should().Be("[\"actions\",\"cloud\"]");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_process_policy_into_typed_process_policy_artifacts()
+    {
+        var solution = ReadFixture("seed-process-policy");
+
+        var duplicateRule = FindArtifact(solution, ComponentFamily.DuplicateRule, "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367");
+        duplicateRule.Properties![ArtifactPropertyKeys.BaseEntityName].Should().Be("account");
+        duplicateRule.Properties![ArtifactPropertyKeys.MatchingEntityName].Should().Be("account");
+        duplicateRule.Properties![ArtifactPropertyKeys.ExcludeInactiveRecords].Should().Be("true");
+
+        var duplicateRuleCondition = FindArtifact(solution, ComponentFamily.DuplicateRuleCondition, "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367|name|name|0");
+        duplicateRuleCondition.Properties![ArtifactPropertyKeys.ParentDuplicateRuleLogicalName].Should().Be("dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367");
+        duplicateRuleCondition.Properties![ArtifactPropertyKeys.IgnoreBlankValues].Should().Be("true");
+
+        var routingRule = FindArtifact(solution, ComponentFamily.RoutingRule, "codex metadata routing rule");
+        routingRule.Properties![ArtifactPropertyKeys.Description].Should().Be("Neutral routing rule for Dataverse metadata synthesis.");
+
+        var routingRuleItem = FindArtifact(solution, ComponentFamily.RoutingRuleItem, "codex metadata routing rule|route all");
+        routingRuleItem.Properties![ArtifactPropertyKeys.ParentRoutingRuleLogicalName].Should().Be("codex metadata routing rule");
+        routingRuleItem.Properties![ArtifactPropertyKeys.ConditionXml].Should().Be("<conditions />");
+
+        var mobileOfflineProfile = FindArtifact(solution, ComponentFamily.MobileOfflineProfile, "codex metadata mobile offline profile");
+        mobileOfflineProfile.Properties![ArtifactPropertyKeys.Description].Should().Be("Neutral mobile offline profile for Dataverse metadata synthesis.");
+
+        var mobileOfflineProfileItem = FindArtifact(solution, ComponentFamily.MobileOfflineProfileItem, "codex metadata mobile offline profile|account");
+        mobileOfflineProfileItem.Properties![ArtifactPropertyKeys.ParentMobileOfflineProfileLogicalName].Should().Be("codex metadata mobile offline profile");
+        mobileOfflineProfileItem.Properties![ArtifactPropertyKeys.EntityLogicalName].Should().Be("account");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_process_security_into_typed_security_artifacts()
+    {
+        var solution = ReadFixture("seed-process-security");
+
+        var role = FindArtifact(solution, ComponentFamily.Role, "codex metadata seed role");
+        role.Properties![ArtifactPropertyKeys.PrivilegeCount].Should().Be("9");
+
+        var rolePrivilege = FindArtifact(solution, ComponentFamily.RolePrivilege, "codex metadata seed role|prvReadPluginAssembly|Global");
+        rolePrivilege.Evidence.Should().Be(EvidenceKind.BestEffort);
+        rolePrivilege.Properties![ArtifactPropertyKeys.ParentRoleLogicalName].Should().Be("codex metadata seed role");
+
+        var fieldSecurityProfile = FindArtifact(solution, ComponentFamily.FieldSecurityProfile, "codex metadata seed field security");
+        fieldSecurityProfile.Properties![ArtifactPropertyKeys.ItemCount].Should().Be("1");
+
+        var fieldPermission = FindArtifact(solution, ComponentFamily.FieldPermission, "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details");
+        fieldPermission.Properties![ArtifactPropertyKeys.CanRead].Should().Be("4");
+        fieldPermission.Properties![ArtifactPropertyKeys.CanReadUnmasked].Should().Be("0");
+
+        var connectionRole = FindArtifact(solution, ComponentFamily.ConnectionRole, "codex metadata seed connection role");
+        connectionRole.Properties![ArtifactPropertyKeys.Category].Should().Be("1");
+        connectionRole.Properties![ArtifactPropertyKeys.ObjectTypeMappingsJson].Should().Be("[\"All\"]");
+    }
+
+    [Fact]
+    public void Zip_reader_delegates_to_the_same_typed_parser()
+    {
+        var sourceRoot = FixtureRoot("seed-core");
+        var zipPath = Path.Combine(Path.GetTempPath(), $"seed-core-{Guid.NewGuid():N}.zip");
+
+        try
+        {
+            System.IO.Compression.ZipFile.CreateFromDirectory(sourceRoot, zipPath);
+
+            var reader = new XmlSolutionReader();
+            var solution = reader.Read(new ReadRequest(zipPath, ReadSourceKind.PackedZip));
+
+            solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Table && artifact.LogicalName == "cdxmeta_workitem");
+            solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.OptionSet && artifact.LogicalName == "cdxmeta_priorityband");
+        }
+        finally
+        {
+            if (File.Exists(zipPath))
+            {
+                File.Delete(zipPath);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reader_parses_source_only_similarity_rule_and_sla_families_as_best_effort()
+    {
+        var slaSolution = ReadFixture("source-only-sla");
+        var similaritySolution = ReadFixture("source-only-similarity-rule");
+
+        var similarityRule = FindArtifact(similaritySolution, ComponentFamily.SimilarityRule, "codex metadata account similarity rule");
+        similarityRule.Evidence.Should().Be(EvidenceKind.BestEffort);
+        similarityRule.Properties![ArtifactPropertyKeys.BaseEntityName].Should().Be("account");
+        similarityRule.Properties![ArtifactPropertyKeys.MaxKeywords].Should().Be("5");
+
+        var sla = FindArtifact(slaSolution, ComponentFamily.Sla, "codex metadata account sla");
+        sla.Evidence.Should().Be(EvidenceKind.BestEffort);
+        sla.Properties![ArtifactPropertyKeys.ApplicableFrom].Should().Be("createdon");
+
+        var slaItem = FindArtifact(slaSolution, ComponentFamily.SlaItem, "codex metadata account sla|codex metadata account sla item|account");
+        slaItem.Evidence.Should().Be(EvidenceKind.BestEffort);
+        slaItem.Properties![ArtifactPropertyKeys.ParentSlaLogicalName].Should().Be("codex metadata account sla");
+        slaItem.Properties![ArtifactPropertyKeys.ActionFlowUniqueName].Should().Be("cdxmeta_source_only_sla_action");
+    }
+
+    private static CanonicalSolution ReadFixture(string fixtureName)
+    {
+        var reader = new XmlSolutionReader();
+        return reader.Read(new ReadRequest(FixtureRoot(fixtureName)));
+    }
+
+    private static string FixtureRoot(string fixtureName) =>
+        Path.Combine(
             "C:\\Git\\Dataverse-Solution-KB",
             "fixtures",
             "skill-corpus",
             "examples",
-            "seed-core",
+            fixtureName,
             "unpacked");
 
-        var reader = new XmlSolutionReader();
-        var solution = reader.Read(new ReadRequest(fixtureRoot));
-
-        solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.SolutionShell);
-        solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Table);
-    }
+    private static FamilyArtifact FindArtifact(CanonicalSolution solution, ComponentFamily family, string logicalName) =>
+        solution.Artifacts.Single(artifact =>
+            artifact.Family == family
+            && string.Equals(artifact.LogicalName, logicalName, StringComparison.OrdinalIgnoreCase));
 }

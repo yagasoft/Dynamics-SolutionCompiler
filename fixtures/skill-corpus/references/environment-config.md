@@ -62,26 +62,63 @@ Do not confuse:
 
 ## Import Maps And Data Source Mappings
 
-These families remain thinner-proof than canvas apps and environment variables in the current skill.
+These families remain thinner-proof than canvas apps and environment variables in the current skill, but the copied corpus now includes a compact neutral source-first `importmap` proof point.
 
 Current rule:
 - inventory and normalize source when present
 - prefer source-first reasoning
 - treat live readback as best-effort unless the environment exposes real neutral rows
 
+The current proof point is:
+- `references/examples/seed-import-map/`
+
+What the current skill can do:
+- inventory source import maps and child data-source mappings from unpacked source
+- project them into stable parent/child summaries for tracked-source and deterministic package-input copying
+- keep live readback and drift honest by surfacing explicit best-effort diagnostics when neutral live proof is absent
+
 What to look for:
 - source file or unpacked folder presence
 - connector or external-system bindings
 - tenant-local dependencies that should not be over-normalized into release drift
 
-## AI And Analytics Families
+## Entity Analytics Configuration
 
-`AI Project Type`, `AI Project`, `AI Configuration`, and `Entity Analytics Configuration` are currently cataloged but not strongly seeded.
+`Entity Analytics Configuration` now has a compact neutral proof point in the copied corpus.
+
+The current proof point is:
+- `references/examples/seed-entity-analytics/`
+
+What the current skill can do:
+- inventory unpacked source under `entityanalyticsconfigs/<entity>/entityanalyticsconfig.xml`
+- project stable source summaries around `parententitylogicalname`, `entitydatasource`, `isenabledforadls`, and `isenabledfortimeseries`
+- emit deterministic tracked-source and source-backed package-input copies
+- capture live `entityanalyticsconfigs` readback on the same stable field set
+- compare source and live on the stable overlap without treating solution bookkeeping or timestamps as drift
 
 Current rule:
-- classify them correctly
-- preserve source evidence
-- treat readback and drift as best-effort until a compact neutral seed exists
+- keep the family narrow and compare-safe
+- prefer stable semantic fields over operational bookkeeping
+- avoid pretending the family is broader than the neutral seed proves
+
+## AI Families
+
+`AI Project Type`, `AI Project`, and `AI Configuration` now have a compact neutral proof point in the copied corpus.
+
+The current proof point is:
+- `references/examples/seed-ai-families/`
+
+What the current skill can do:
+- inventory unpacked source under `AIProjectTypes/<logical>/AIProjectType.xml`, `AIProjects/<logical>/AIProject.xml`, and `AIConfigurations/<logical>/AIConfiguration.xml`
+- project stable source summaries for project-type identity, project-to-type linkage, target entity, configuration-to-project linkage, configuration kind, and durable configuration value content
+- emit deterministic tracked-source summaries and source-backed package-input copies for the captured AI directories
+- capture live readback for all three families and compare only the stable overlap between source and live
+
+Current rule:
+- keep the family narrow and compare-safe
+- treat `AI Configuration` as anchored to the official `msdyn_aiconfiguration` table and Web API surface
+- treat `AI Project Type` and `AI Project` live shape as fixture-authoritative until a primary-source table reference is proven
+- exclude timestamps, ownership, counters, and solution bookkeeping from drift
 
 ## Direct Dev Versus Packaged Release
 

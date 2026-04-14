@@ -1,6 +1,6 @@
 # Code Extensibility
 
-Use this reference for Dataverse extensibility families where the durable truth spans plugin registration metadata, SDK message families, and source code.
+Use this reference for Dataverse extensibility families where the durable truth spans plugin registration metadata, SDK message families, integration endpoints, and source code.
 
 ## What Belongs In This Family
 
@@ -64,12 +64,12 @@ When readback is not available, keep the family source-first and say so explicit
 
 ## Service Endpoints And Connectors
 
-Treat `serviceendpoint` and `connector` as adjacent extensibility or integration families, but do not inflate them into proof points without a real artifact.
+Treat `serviceendpoint` and `connector` as adjacent extensibility or integration families with their own durable overlap.
 
-- if they only appear in schema lists or type catalogs, mark them catalog-known
-- if they appear in solution scope or readback, inventory them as their own artifacts
-- if they are referenced only indirectly by code or config, keep them source-first
-- in the current skill corpus, their proof is still thinner than steps and images, so do not over-apply sdk-message registration guidance to them
+- compare service endpoints on stable transport and registration shell fields such as name, contract, connection mode, auth type, namespace/path/url, message format, message charset, introduced version, and stable `isCustomizable`
+- compare connectors on stable identity and descriptive overlap such as internal id, display/name, connector type, normalized capabilities, introduced version, and stable `isCustomizable`
+- keep secrets, auth values, tokens, large payload blobs such as `openApiDefinition`, and tenant-local operational state out of stable drift unless a smaller shared overlap is proven
+- do not rejoin service endpoints to plugin steps or broaden into connection references unless a later neutral seed proves that contract honestly
 
 ## Direct Dev Versus Durable Release
 
@@ -79,6 +79,14 @@ Treat `serviceendpoint` and `connector` as adjacent extensibility or integration
 
 ## Current Proof Points
 
-- `references/examples/dbm-baseline/` proves a real plugin assembly in tracked solution source
+- `references/examples/seed-plugin-registration/` now proves a compact neutral plugin-registration slice across source, tracked-source, package-inputs, live readback, and stable-overlap drift for:
+  - `pluginassembly`
+  - `plugintype`
+  - `sdkmessageprocessingstep`
+  - `sdkmessageprocessingstepimage`
+- `references/examples/seed-service-endpoint-connector/` now proves a compact neutral integration-endpoint slice across source, tracked-source, package-inputs, live readback, and stable-overlap drift for:
+  - `serviceendpoint`
+  - `connector`
+- `references/examples/dbm-baseline/` still provides a real project-specific plugin assembly reference
 - `references/examples/dbm-sdk-registration/` proves a DBM-specific source-first SDK-message registration pattern from code
-- neutral seeds still focus more strongly on schema and UI; code-extensibility remains the family with the heaviest honest use of best-effort or source-first handling
+- code-level SDK registration remains a source-first adjunct rather than a runtime compiler input

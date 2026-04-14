@@ -1,0 +1,13 @@
+{
+  "capture_mode": "web-api",
+  "warnings": [],
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Alternate Key",
+    "uniquename": "CodexMetadataSeedAlternateKey",
+    "version": "1.0.0.0",
+    "solutionid": "cc7d1f0c-4e39-4d8d-a663-d655d46f4bc5"
+  },
+  "entities": {
+    "cdxmeta_workitem": {}
+  }
+}

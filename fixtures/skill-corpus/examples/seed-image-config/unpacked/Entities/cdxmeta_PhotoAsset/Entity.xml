@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Entity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name LocalizedName="Photo Asset" OriginalName="Photo Asset">cdxmeta_PhotoAsset</Name>
+  <EntityInfo>
+    <entity Name="cdxmeta_photoasset">
+      <LocalizedNames>
+        <LocalizedName description="Photo Asset" languagecode="1033" />
+      </LocalizedNames>
+      <LocalizedCollectionNames>
+        <LocalizedCollectionName description="Photo Assets" languagecode="1033" />
+      </LocalizedCollectionNames>
+      <Descriptions>
+        <Description description="Compact photo-asset seed for image configuration and stable managed-flag proof." languagecode="1033" />
+      </Descriptions>
+      <EntitySetName>cdxmeta_photoassets</EntitySetName>
+      <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+      <IsCustomizable>1</IsCustomizable>
+      <PrimaryImageAttribute>cdxmeta_profileimage</PrimaryImageAttribute>
+      <attributes>
+        <attribute PhysicalName="cdxmeta_PhotoAssetId">
+          <Type>primarykey</Type>
+          <Name>cdxmeta_PhotoAssetId</Name>
+          <LogicalName>cdxmeta_photoassetid</LogicalName>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>0</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <displaynames>
+            <displayname description="Photo Asset Id" languagecode="1033" />
+          </displaynames>
+        </attribute>
+        <attribute PhysicalName="cdxmeta_PhotoAssetName">
+          <Type>nvarchar</Type>
+          <Name>cdxmeta_PhotoAssetName</Name>
+          <LogicalName>cdxmeta_photoassetname</LogicalName>
+          <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>1</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <IsCustomizable>1</IsCustomizable>
+          <displaynames>
+            <displayname description="Photo Asset" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Primary name column for the image-configuration seed." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="cdxmeta_Caption">
+          <Type>nvarchar</Type>
+          <Name>cdxmeta_Caption</Name>
+          <LogicalName>cdxmeta_caption</LogicalName>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>1</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <IsCustomizable>0</IsCustomizable>
+          <displaynames>
+            <displayname description="Caption" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Companion text column used to prove blocking managed-flag drift." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="cdxmeta_ProfileImage">
+          <Type>image</Type>
+          <Name>cdxmeta_ProfileImage</Name>
+          <LogicalName>cdxmeta_profileimage</LogicalName>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>1</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <IsCustomizable>1</IsCustomizable>
+          <CanStoreFullImage>1</CanStoreFullImage>
+          <IsPrimaryImage>1</IsPrimaryImage>
+          <displaynames>
+            <displayname description="Profile Image" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Image column used to prove entity-level and attribute-level image configuration." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+      </attributes>
+    </entity>
+  </EntityInfo>
+</Entity>

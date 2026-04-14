@@ -44,6 +44,9 @@ Keys are real schema artifacts, but they behave differently from ordinary column
 Best readback surface:
 - `EntityDefinitions(LogicalName='<entity>')?$expand=Keys(...)`
 
+Best source surface:
+- the captured unpacked `Entities/<entity>/Entity.xml` key container, when the export keeps keys embedded with the owning table shell
+
 Compare keys by:
 - entity
 - key schema or logical name
@@ -54,8 +57,10 @@ Treat these as weaker drift dimensions:
 - transient key-index status while the platform is still building the index
 
 Current skill stance:
-- key readback and normalization are supported
-- unattended key creation can still be environment-dependent, so seed provisioning treats live key creation as best-effort instead of pretending symmetry
+- key readback, normalization, tracked-source emission, package-input emission, and JSON-intent generation are now proven for one dedicated neutral alternate-key slice
+- `EntityKeyIndexStatus` is treated as operational state, not release drift
+- image configuration is now proven through a dedicated neutral seed covering both entity-level and attribute-level image surfaces
+- managed-property proof is now intentionally narrow: compare stable `IsCustomizable` on owning table and column artifacts rather than promoting a new standalone public family
 
 ## Managed Properties And Image Flags
 
@@ -68,16 +73,35 @@ Today it is safest to:
 
 ## Seed Proof
 
-The strongest neutral proof point today is `references/examples/seed-core/`.
+The strongest neutral proof points today are:
+- `references/examples/seed-core/` for local, boolean, and shared global choice metadata
+- `references/examples/seed-alternate-key/` for dedicated alternate-key proof
+- `references/examples/seed-image-config/` for entity-image plus attribute-image proof and narrow managed-flag drift
 
-It now proves:
+`seed-core` now proves:
 - local picklist readback through `cdxmeta_stage`
 - global picklist source and readback through `cdxmeta_priorityband` plus `OptionSets/cdxmeta_priorityband.xml`
 - boolean label readback through `cdxmeta_isblocked`
 - source and readback normalization into per-entity `option-sets.json`
 - top-level `global-option-sets/` normalization for reusable shared choices
 - drift logic that compares authored choice columns while excluding state or status expansion noise
-- an external-code schema shell for future alternate-key coverage rather than a finished live key proof
+- an external-code schema shell that is reused by the dedicated alternate-key seed
+
+`seed-alternate-key` now proves:
+- one authored alternate key embedded in `Entities/cdxmeta_WorkItem/Entity.xml`
+- solution-aware live key discovery through component type `14`
+- `Keys(...)` metadata projection into the shared canonical IR
+- deterministic `tracked-source/entities/<entity>/keys.json`
+- source-backed package-input preservation and derived JSON-intent key synthesis
+- stable-overlap drift on entity plus key name plus normalized attribute set, while ignoring transient index status
+
+`seed-image-config` now proves:
+- one entity-level image configuration through `PrimaryImageAttribute`
+- one attribute-level image configuration through image-attribute metadata
+- live solution-component discovery for types `431` and `432`, with entity-scoped metadata fallback when solution scope under-reports them
+- deterministic `tracked-source/entities/<entity>/image-configurations.json`
+- source-backed package-input preservation with image metadata embedded in `Entities/<entity>/Entity.xml`
+- stable-overlap drift on entity, scope, image linkage, `CanStoreFullImage`, `IsPrimaryImage`, and narrow `IsCustomizable` flags on the owning table and columns
 
 ## Decision Rule
 

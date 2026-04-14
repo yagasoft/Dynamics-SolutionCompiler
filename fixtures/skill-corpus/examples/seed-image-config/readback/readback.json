@@ -1,0 +1,13 @@
+{
+  "capture_mode": "web-api",
+  "warnings": [],
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Image Config",
+    "uniquename": "CodexMetadataSeedImageConfig",
+    "version": "1.0.0.0",
+    "solutionid": "67b95ec0-1ae9-4dbe-9b65-a00f766fa5bf"
+  },
+  "entities": {
+    "cdxmeta_photoasset": {}
+  }
+}

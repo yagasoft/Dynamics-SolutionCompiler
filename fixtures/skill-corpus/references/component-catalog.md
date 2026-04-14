@@ -211,7 +211,10 @@ How to deal with them:
 - Treat values and bindings as environment-specific unless the task explicitly wants fixed shared defaults.
 - Use deployment settings or release-time substitution for values that differ by environment.
 - The current skill now has a real neutral `canvasapp` proof point through `references/examples/seed-environment/`, including unpacked `CanvasApps/*.meta.xml`, preserved `.msapp` asset packaging, live readback, and drift comparison over the stable overlap.
-- `Import Map`, data-source mapping, AI, and analytics families are still thinner-proof than environment variables or canvas apps, so keep them source-first or best-effort until a real neutral artifact set exists.
+- The copied corpus now also has a compact neutral `importmap` source-first proof point through `references/examples/seed-import-map/`, including unpacked `ImportMaps/<name>/ImportMap.xml`, child data-source mapping projection, deterministic tracked/package emission, and explicit best-effort live handling.
+- The copied corpus now also has a compact neutral `entityanalyticsconfig` proof point through `references/examples/seed-entity-analytics/`, including unpacked source under `entityanalyticsconfigs/<entity>/entityanalyticsconfig.xml`, deterministic tracked/package emission, real `entityanalyticsconfigs` live projection, and stable-overlap drift on the compare-safe fields.
+- The copied corpus now also has a compact neutral AI-family proof point through `references/examples/seed-ai-families/`, including source-backed `AIProjectTypes/`, `AIProjects/`, and `AIConfigurations/` parsing, deterministic tracked/package emission, and live stable-overlap proof for `AI Project Type`, `AI Project`, and `AI Configuration`.
+- `Import Map`, data-source mapping, `Entity Analytics Configuration`, and the new AI slice are still thinner-proof than environment variables or canvas apps overall, so keep their scope narrow and family-aware. `AI Configuration` is anchored to the official `msdyn_aiconfiguration` table surface, while `AI Project Type` and `AI Project` still rely on the captured neutral seed as the live-shape authority until a primary-source table reference is proven.
 
 Readback focus:
 - definitions versus current values

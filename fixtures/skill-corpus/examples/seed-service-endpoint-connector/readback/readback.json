@@ -1,0 +1,10 @@
+{
+  "capture_mode": "web-api",
+  "warnings": [],
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Service Endpoint Connector",
+    "uniquename": "CodexMetadataSeedServiceEndpointConnector",
+    "version": "1.0.0.0",
+    "solutionid": "b5a4240a-7af7-4a2f-bb2f-6e2b23422b1f"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "LogicalName": "cdxmeta_workitem",
+  "SchemaName": "cdxmeta_WorkItem",
+  "DisplayName": "Work Item",
+  "EntitySetName": "cdxmeta_workitems",
+  "PrimaryIdAttribute": "cdxmeta_workitemid",
+  "PrimaryNameAttribute": "cdxmeta_workitemname",
+  "OwnershipTypeMask": "UserOwned",
+  "Attributes": [
+    {
+      "LogicalName": "cdxmeta_workitemid",
+      "DisplayName": "Work Item Id",
+      "AttributeType": "Uniqueidentifier",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_WorkItemId",
+      "IsPrimaryName": false,
+      "IsLogical": false,
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "cdxmeta_workitemname",
+      "DisplayName": "Work Item",
+      "AttributeType": "String",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_WorkItemName",
+      "IsPrimaryName": true,
+      "IsLogical": false,
+      "IsCustomAttribute": true
+    },
+    {
+      "LogicalName": "cdxmeta_externalcode",
+      "DisplayName": "External Code",
+      "AttributeType": "String",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_ExternalCode",
+      "IsPrimaryName": false,
+      "IsLogical": false,
+      "IsCustomAttribute": true
+    },
+    {
+      "LogicalName": "cdxmeta_summary",
+      "DisplayName": "Summary",
+      "AttributeType": "String",
+      "IsSecured": false,
+      "SchemaName": "cdxmeta_Summary",
+      "IsPrimaryName": false,
+      "IsLogical": false,
+      "IsCustomAttribute": true
+    }
+  ],
+  "Relationships": {
+    "many_to_one": [],
+    "one_to_many": [],
+    "many_to_many": []
+  },
+  "OptionSets": [],
+  "Keys": [
+    {
+      "MetadataId": "5bf4f37c-b2ff-4dc4-bd26-8850b85811f7",
+      "LogicalName": "cdxmeta_workitem_externalcode",
+      "SchemaName": "cdxmeta_WorkItem_ExternalCode",
+      "KeyAttributes": [
+        "cdxmeta_externalcode"
+      ],
+      "EntityKeyIndexStatus": "Active"
+    }
+  ]
+}

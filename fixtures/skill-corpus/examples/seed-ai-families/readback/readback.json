@@ -1,0 +1,21 @@
+{
+  "solution": {
+    "friendlyname": "Codex Metadata Seed AI Families",
+    "uniquename": "CodexMetadataSeedAiFamilies",
+    "version": "1.0.0.0",
+    "solutionid": "68c66619-a246-4f40-a763-fa7b74e8dfcc"
+  },
+  "capture_mode": "web-api",
+  "entities": {},
+  "global_option_sets": [],
+  "app_modules": [],
+  "app_settings": [],
+  "site_maps": [],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "ai_project_types": [],
+  "ai_projects": [],
+  "ai_configurations": [],
+  "canvas_apps": [],
+  "warnings": []
+}

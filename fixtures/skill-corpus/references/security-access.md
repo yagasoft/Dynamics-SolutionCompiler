@@ -4,13 +4,18 @@ Use this reference for Dataverse security definitions and for deciding how much 
 
 The main rule is simple: compare the definition you own, not the effective access you merely observe. Effective access is shaped by users, teams, business units, hierarchy, ownership, and field security at runtime.
 
+Current neutral foothold:
+- `references/examples/seed-process-security/` now proves the owned-definition slice for role shell, field security profile, field permission, and connection role through typed source parsing, deterministic tracked-source emission, source-backed package-input copying, live readback, and stable-overlap drift
+- `RolePrivilege` in that neutral seed is still definition-adjacent best effort rather than a claim of complete live privilege parity
+- effective user or team access remains a separate runtime question and is intentionally outside this compiler proof surface
+
 ## Roles
 
 Security roles are the definition surface for access grants.
 
 - Source: track the role definition, the privilege set, and any role-component linkage in the unpacked solution or source tree.
 - Direct `Dev` proof: assign the role to a test user or team and validate actual allowed actions in the app.
-- Readback: best-effort for definition parity; effective permissions are environment-specific and should not be treated as a pure source export.
+- Readback: use it for owned-definition parity on the role shell, but keep effective permissions out of scope because they are environment-specific and should not be treated as a pure source export.
 
 ## Role Privileges
 
@@ -18,7 +23,7 @@ Role privileges are the core of access reasoning because they define the operati
 
 - Source: compare by privilege name, object type, and depth rather than by display wording alone.
 - Direct `Dev` proof: use a real secured operation and confirm the role can or cannot execute it.
-- Readback: compare the role definition and privilege list, but do not assume the readback reflects all runtime inheritance or indirect access.
+- Readback: compare the role definition and privilege list when stable rows are present, but keep the family definition-adjacent best effort and do not assume the readback reflects all runtime inheritance or indirect access.
 
 ## Privilege Object Type Codes
 
@@ -34,7 +39,7 @@ Field security profiles define field-level access, and field permissions define 
 
 - Source: track the secured attribute shell, the profile definition, and the per-field permissions separately.
 - Direct `Dev` proof: first ensure the target attribute is actually `IsSecured`, then impersonate a user with the profile and verify the field is hidden, read-only, or editable as expected.
-- Readback: useful for definition drift once both the secured attribute and the profile are in scope, but the real behavior still depends on form design and any business rules that touch the field.
+- Readback: useful for definition drift once both the secured attribute and the profile are in scope, and the neutral seed now proves that owned-definition overlap; the real behavior still depends on form design and any business rules that touch the field.
 - Neutral example: `references/examples/seed-process-security/` now includes a real secured memo attribute plus a matching field permission, so the skill can distinguish definition drift from runtime access questions.
 
 ## Connection Roles
@@ -43,7 +48,7 @@ Connection roles define which relationship patterns are allowed for connections.
 
 - Source: keep the role definition and any related object-type mapping under source control.
 - Direct `Dev` proof: create or edit a connection and confirm the allowed relationship behaves as expected.
-- Readback: best-effort because existing records, security, and org configuration can affect what is visible.
+- Readback: use it for owned-definition overlap and stable object-type mapping summaries, but keep runtime behavior and existing-record visibility out of the compiler drift target.
 
 ## Practical Guidance
 

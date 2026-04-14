@@ -1,0 +1,267 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataIntentV1",
+    "displayName": "Codex Metadata Intent V1",
+    "description": "Compiler-native greenfield JSON intent for the first supported Dataverse generator slice.",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for compiler-generated Dataverse metadata."
+  },
+  "globalOptionSets": [
+    {
+      "logicalName": "cdxmeta_priorityband",
+      "displayName": "Priority Band",
+      "description": "Reusable global priority choice for generated work items.",
+      "optionSetType": "picklist",
+      "options": [
+        { "value": "727270010", "label": "Low" },
+        { "value": "727270011", "label": "Medium" },
+        { "value": "727270012", "label": "High" }
+      ]
+    }
+  ],
+  "environmentVariables": [
+    {
+      "schemaName": "cdxmeta_AppShellMode",
+      "displayName": "App Shell Mode",
+      "description": "Mode selector for the generated model-driven shell.",
+      "type": "text",
+      "defaultValue": "standard",
+      "currentValue": "guided"
+    }
+  ],
+  "appModules": [
+    {
+      "uniqueName": "codex_metadata_intent_shell",
+      "displayName": "Codex Metadata Intent Shell",
+      "description": "Generated model-driven app shell for the JSON intent slice.",
+      "siteMap": {
+        "areas": [
+          {
+            "id": "area_codex_metadata",
+            "title": "Codex Metadata",
+            "groups": [
+              {
+                "id": "group_work",
+                "title": "Work",
+                "subAreas": [
+                  {
+                    "id": "subarea_workitems",
+                    "title": "Work Items",
+                    "entity": "cdxmeta_workitem"
+                  },
+                  {
+                    "id": "subarea_categories",
+                    "title": "Categories",
+                    "entity": "cdxmeta_category"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "tables": [
+    {
+      "logicalName": "cdxmeta_category",
+      "schemaName": "cdxmeta_Category",
+      "displayName": "Category",
+      "description": "Generated category table for lookup and view coverage.",
+      "entitySetName": "cdxmeta_categories",
+      "ownershipTypeMask": "UserOwned",
+      "columns": [
+        {
+          "logicalName": "cdxmeta_summary",
+          "schemaName": "cdxmeta_Summary",
+          "displayName": "Summary",
+          "description": "Short summary for the generated category.",
+          "type": "string"
+        }
+      ],
+      "forms": [
+        {
+          "name": "Category Main",
+          "type": "main",
+          "tabs": [
+            {
+              "name": "summary",
+              "label": "Summary",
+              "sections": [
+                {
+                  "name": "overview",
+                  "label": "Overview",
+                  "fields": [
+                    "cdxmeta_categoryname",
+                    "cdxmeta_summary"
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": [
+            "cdxmeta_categoryname"
+          ]
+        }
+      ],
+      "views": [
+        {
+          "name": "All Categories",
+          "layoutColumns": [
+            "cdxmeta_categoryname",
+            "cdxmeta_summary"
+          ],
+          "fetchAttributes": [
+            "cdxmeta_categoryid",
+            "cdxmeta_categoryname",
+            "cdxmeta_summary"
+          ],
+          "orders": [
+            {
+              "attribute": "cdxmeta_categoryname",
+              "descending": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "logicalName": "cdxmeta_workitem",
+      "schemaName": "cdxmeta_WorkItem",
+      "displayName": "Work Item",
+      "description": "Generated work item table for the first greenfield compiler milestone.",
+      "entitySetName": "cdxmeta_workitems",
+      "ownershipTypeMask": "UserOwned",
+      "columns": [
+        {
+          "logicalName": "cdxmeta_summary",
+          "schemaName": "cdxmeta_Summary",
+          "displayName": "Summary",
+          "description": "Short summary for the generated work item.",
+          "type": "string"
+        },
+        {
+          "logicalName": "cdxmeta_externalcode",
+          "schemaName": "cdxmeta_ExternalCode",
+          "displayName": "External Code",
+          "description": "Business key for the generated alternate-key slice.",
+          "type": "string"
+        },
+        {
+          "logicalName": "cdxmeta_details",
+          "schemaName": "cdxmeta_Details",
+          "displayName": "Details",
+          "description": "Long-form notes for the generated work item.",
+          "type": "memo",
+          "isSecured": true
+        },
+        {
+          "logicalName": "cdxmeta_priority",
+          "schemaName": "cdxmeta_Priority",
+          "displayName": "Priority",
+          "description": "Global priority choice.",
+          "type": "choice",
+          "globalOptionSet": "cdxmeta_priorityband"
+        },
+        {
+          "logicalName": "cdxmeta_stage",
+          "schemaName": "cdxmeta_Stage",
+          "displayName": "Stage",
+          "description": "Local stage choice for generated work items.",
+          "type": "choice",
+          "options": [
+            { "value": "727270100", "label": "Backlog" },
+            { "value": "727270101", "label": "In Progress" },
+            { "value": "727270102", "label": "Done" }
+          ]
+        },
+        {
+          "logicalName": "cdxmeta_categoryid",
+          "schemaName": "cdxmeta_CategoryId",
+          "displayName": "Category",
+          "description": "Lookup back to the generated category table.",
+          "type": "lookup",
+          "targetTable": "cdxmeta_category",
+          "relationshipSchemaName": "cdxmeta_category_workitem"
+        }
+      ],
+      "keys": [
+        {
+          "logicalName": "cdxmeta_workitem_externalcode",
+          "schemaName": "cdxmeta_WorkItem_ExternalCode",
+          "description": "Alternate key over the generated external-code field.",
+          "keyAttributes": [
+            "cdxmeta_externalcode"
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "name": "Work Item Main",
+          "type": "main",
+          "tabs": [
+            {
+              "name": "summary",
+              "label": "Summary",
+              "sections": [
+                {
+                  "name": "overview",
+                  "label": "Overview",
+                  "fields": [
+                    "cdxmeta_workitemname",
+                    "cdxmeta_summary",
+                    "cdxmeta_categoryid",
+                    "cdxmeta_priority",
+                    "cdxmeta_stage"
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": [
+            "cdxmeta_priority",
+            "cdxmeta_stage"
+          ]
+        }
+      ],
+      "views": [
+        {
+          "name": "Active Work Items",
+          "layoutColumns": [
+            "cdxmeta_workitemname",
+            "cdxmeta_summary",
+            "cdxmeta_priority",
+            "cdxmeta_stage"
+          ],
+          "fetchAttributes": [
+            "cdxmeta_workitemid",
+            "cdxmeta_workitemname",
+            "cdxmeta_summary",
+            "cdxmeta_priority",
+            "cdxmeta_stage"
+          ],
+          "filters": [
+            {
+              "attribute": "cdxmeta_stage",
+              "operator": "eq",
+              "value": "727270101"
+            }
+          ],
+          "orders": [
+            {
+              "attribute": "cdxmeta_workitemname",
+              "descending": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

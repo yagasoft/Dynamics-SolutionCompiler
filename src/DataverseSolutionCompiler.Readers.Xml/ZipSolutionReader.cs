@@ -18,55 +18,27 @@ public sealed class ZipSolutionReader : ISolutionReader
             throw new FileNotFoundException("Packed Dataverse solution zip not found.", request.SourcePath);
         }
 
-        using var archive = ZipFile.OpenRead(request.SourcePath);
-        var artifacts = archive.Entries
-            .Select(MapEntryToArtifact)
-            .Where(artifact => artifact is not null)
-            .Cast<FamilyArtifact>()
-            .Distinct()
-            .ToArray();
+        var extractionRoot = Path.Combine(
+            Path.GetTempPath(),
+            "DataverseSolutionCompiler",
+            "zip-read",
+            Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(extractionRoot);
+        ZipFile.ExtractToDirectory(request.SourcePath, extractionRoot);
 
-        return new CanonicalSolution(
-            new SolutionIdentity(
-                Path.GetFileNameWithoutExtension(request.SourcePath).ToLowerInvariant(),
-                Path.GetFileNameWithoutExtension(request.SourcePath),
-                "0.1.0",
-                LayeringIntent.Hybrid),
-            new PublisherDefinition("dsc", "dsc", "dsc", "Dataverse Solution Compiler"),
-            artifacts,
-            [],
-            [],
-            [
-                new CompilerDiagnostic(
-                    "zip-reader-structural",
-                    DiagnosticSeverity.Info,
-                    "The packed ZIP reader inventories known Dataverse entry families without unpacking them to tracked source yet.",
-                    request.SourcePath)
-            ]);
-    }
-
-    private static FamilyArtifact? MapEntryToArtifact(ZipArchiveEntry entry)
-    {
-        if (entry.FullName.StartsWith("Entities/", StringComparison.OrdinalIgnoreCase))
+        var parsed = XmlCanonicalSolutionParser.Parse(extractionRoot);
+        return parsed with
         {
-            return new FamilyArtifact(ComponentFamily.Table, "entities", "Entities", entry.FullName);
-        }
-
-        if (entry.FullName.StartsWith("CanvasApps/", StringComparison.OrdinalIgnoreCase))
-        {
-            return new FamilyArtifact(ComponentFamily.CanvasApp, "canvasapps", "CanvasApps", entry.FullName);
-        }
-
-        if (entry.FullName.Equals("Other/Solution.xml", StringComparison.OrdinalIgnoreCase))
-        {
-            return new FamilyArtifact(ComponentFamily.SolutionShell, "solution", "Solution.xml", entry.FullName);
-        }
-
-        if (entry.FullName.Equals("Other/Customizations.xml", StringComparison.OrdinalIgnoreCase))
-        {
-            return new FamilyArtifact(ComponentFamily.LegacyAsset, "customizations", "Customizations.xml", entry.FullName);
-        }
-
-        return null;
+            Diagnostics = parsed.Diagnostics
+                .Concat(
+                [
+                    new CompilerDiagnostic(
+                        "zip-reader-extracted",
+                        DiagnosticSeverity.Info,
+                        "The packed ZIP reader extracted the solution into a temporary folder and delegated to the typed XML parser for the proven families.",
+                        request.SourcePath)
+                ])
+                .ToArray()
+        };
     }
 }

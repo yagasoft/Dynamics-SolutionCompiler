@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportMap>
+  <LogicalName>codex_contact_csv_map</LogicalName>
+  <Name>Codex Contact CSV Map</Name>
+  <Description>Neutral import-map fixture for source-first Dataverse package proof.</Description>
+  <Source>CSV</Source>
+  <SourceFormat>text/csv</SourceFormat>
+  <FieldDelimiter>,</FieldDelimiter>
+  <TargetEntity>contact</TargetEntity>
+  <DataSourceMappings>
+    <DataSourceMapping>
+      <SourceEntityName>contacts.csv</SourceEntityName>
+      <SourceAttributeName>fullname</SourceAttributeName>
+      <TargetEntityName>contact</TargetEntityName>
+      <TargetAttributeName>fullname</TargetAttributeName>
+      <ProcessCode>Process</ProcessCode>
+      <ColumnIndex>1</ColumnIndex>
+    </DataSourceMapping>
+    <DataSourceMapping>
+      <SourceEntityName>contacts.csv</SourceEntityName>
+      <SourceAttributeName>emailaddress1</SourceAttributeName>
+      <TargetEntityName>contact</TargetEntityName>
+      <TargetAttributeName>emailaddress1</TargetAttributeName>
+      <ProcessCode>Process</ProcessCode>
+      <ColumnIndex>2</ColumnIndex>
+    </DataSourceMapping>
+  </DataSourceMappings>
+</ImportMap>

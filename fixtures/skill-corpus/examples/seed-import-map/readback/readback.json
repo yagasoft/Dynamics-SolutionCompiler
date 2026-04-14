@@ -1,0 +1,18 @@
+{
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Import Map",
+    "uniquename": "CodexMetadataSeedImportMap",
+    "version": "1.0.0.0",
+    "solutionid": "d67c4fc9-7683-4a38-b9f6-aef325d1b6a8"
+  },
+  "capture_mode": "web-api",
+  "entities": {},
+  "global_option_sets": [],
+  "app_modules": [],
+  "app_settings": [],
+  "site_maps": [],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "canvas_apps": [],
+  "warnings": []
+}

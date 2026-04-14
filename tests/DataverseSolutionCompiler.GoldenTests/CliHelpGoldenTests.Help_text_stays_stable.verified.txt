@@ -1,14 +1,24 @@
 Dataverse Solution Compiler
 Registered commands:
-  read <path> [capabilities...]
-  plan <path> [capabilities...]
-  emit <path> [capabilities...]
-  apply-dev <path> [capabilities...]
-  readback <path> [capabilities...]
-  diff <path> [capabilities...]
-  pack <path> [capabilities...]
-  import <path> [capabilities...]
-  publish <path> [capabilities...]
-  check <path> [capabilities...]
-  doctor <path> [capabilities...]
-  explain <path> [capabilities...]
+  read <path> [capabilities...] [options]
+  plan <path> [capabilities...] [options]
+  emit <path> [capabilities...] [options]
+  apply-dev <path> [capabilities...] [options]
+  readback <path> [capabilities...] [options]
+  diff <path> [capabilities...] [options]
+  pack <path> [capabilities...] [options]
+  import <path> [capabilities...] [options]
+  publish <path> [capabilities...] [options]
+  check <path> [capabilities...] [options]
+  doctor <path> [capabilities...] [options]
+  explain <path> [capabilities...] [options]
+Common options:
+  --output <path>
+  --layout tracked-source|package-inputs
+  --environment <absolute Dataverse URL>
+  --tenant <tenant id>
+  --solution <solution unique name>
+  --managed | --unmanaged
+  --run-solution-check
+  --publish-after-import
+  --include-best-effort

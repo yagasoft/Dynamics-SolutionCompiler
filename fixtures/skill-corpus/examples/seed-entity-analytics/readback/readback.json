@@ -1,0 +1,19 @@
+{
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Entity Analytics",
+    "uniquename": "CodexMetadataSeedEntityAnalytics",
+    "version": "1.0.0.0",
+    "solutionid": "4d458f73-2dc4-41c4-aae2-089466013c57"
+  },
+  "capture_mode": "web-api",
+  "entities": {},
+  "global_option_sets": [],
+  "app_modules": [],
+  "app_settings": [],
+  "site_maps": [],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "entity_analytics_configurations": [],
+  "canvas_apps": [],
+  "warnings": []
+}

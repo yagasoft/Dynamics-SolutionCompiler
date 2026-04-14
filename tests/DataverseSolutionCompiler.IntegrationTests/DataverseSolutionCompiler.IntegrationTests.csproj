@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Compiler\DataverseSolutionCompiler.Compiler.csproj" />
+    <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Emitters.Package\DataverseSolutionCompiler.Emitters.Package.csproj" />
+    <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Packaging.Pac\DataverseSolutionCompiler.Packaging.Pac.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Readers.Xml\DataverseSolutionCompiler.Readers.Xml.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Emitters.TrackedSource\DataverseSolutionCompiler.Emitters.TrackedSource.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Diff\DataverseSolutionCompiler.Diff.csproj" />

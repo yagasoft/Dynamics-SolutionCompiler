@@ -7,6 +7,7 @@ namespace DataverseSolutionCompiler.Domain.Read
     public enum ReadSourceKind
     {
         Auto,
+        IntentSpecJson,
         UnpackedXmlFolder,
         PackedZip,
         TrackedSource,
