@@ -1,0 +1,66 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "Column",
+    "Form",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Active Demo Notes",
+      "reason": "View \u0027Active Demo Notes\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Demo Note Advanced Find View",
+      "reason": "View \u0027Demo Note Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Demo Note Associated View",
+      "reason": "View \u0027Demo Note Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Demo Note Lookup View",
+      "reason": "View \u0027Demo Note Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Inactive Demo Notes",
+      "reason": "View \u0027Inactive Demo Notes\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|My Demo Notes",
+      "reason": "View \u0027My Demo Notes\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "demo_note|Quick Find Active Demo Notes",
+      "reason": "View \u0027Quick Find Active Demo Notes\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    }
+  ],
+  "preservedIdsIncluded": [
+    {
+      "family": "Form",
+      "artifact": "demo_note|main|fa05dc3b-444c-49b4-d07c-4d7940d22d44",
+      "id": "fa05dc3b-444c-49b4-d07c-4d7940d22d44"
+    }
+  ]
+}

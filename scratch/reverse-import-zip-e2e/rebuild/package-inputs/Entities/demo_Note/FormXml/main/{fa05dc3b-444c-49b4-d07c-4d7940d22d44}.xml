@@ -1,0 +1,66 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{fa05dc3b-444c-49b4-d07c-4d7940d22d44}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="summary" id="{94bf69ea-fa97-ea6f-5099-06aa1c16f13e}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="overview" id="{4231eebc-e180-6780-cbb7-bfcb621d0936}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Overview" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{f7c518f9-236a-6154-a0e4-eca0878f8649}" showlabel="true">
+<labels>
+<label description="Demo Note" languagecode="1033" />
+</labels>
+<control id="demo_notename" datafieldname="demo_notename" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{32c36db7-2b9e-a104-a082-faf6f5b76414}" showlabel="true">
+<labels>
+<label description="Extra Text" languagecode="1033" />
+</labels>
+<control id="demo_extratext" datafieldname="demo_extratext" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+<header id="{fcfd56f0-f294-637e-8ef9-139f2768665e}" columns="111" celllabelposition="Top" labelwidth="115">
+<rows>
+<row>
+<cell id="{84582765-3a6d-265b-5852-637b0eee2bc9}" showlabel="true">
+<labels>
+<label description="Demo Note" languagecode="1033" />
+</labels>
+<control id="header_demo_notename" datafieldname="demo_notename" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</header>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Demo Note Main" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="" languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

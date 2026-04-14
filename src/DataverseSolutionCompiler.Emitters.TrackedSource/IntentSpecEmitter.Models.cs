@@ -359,10 +359,19 @@ internal sealed record ReverseGenerationReport
     public IReadOnlyList<PreservedIdEntry>? PreservedIdsIncluded { get; init; }
 }
 
+internal static class ReverseGenerationReportCategories
+{
+    public const string UnsupportedFamily = "unsupportedFamily";
+    public const string UnsupportedShape = "unsupportedShape";
+    public const string PlatformGeneratedArtifact = "platformGeneratedArtifact";
+    public const string MissingSourceFidelity = "missingSourceFidelity";
+}
+
 internal sealed record IntentReportEntry(
     [property: JsonPropertyName("family")] string Family,
     [property: JsonPropertyName("artifact")] string Artifact,
-    [property: JsonPropertyName("reason")] string Reason);
+    [property: JsonPropertyName("reason")] string Reason,
+    [property: JsonPropertyName("category")] string Category = ReverseGenerationReportCategories.UnsupportedShape);
 
 internal sealed record PreservedIdEntry(
     [property: JsonPropertyName("family")] string Family,

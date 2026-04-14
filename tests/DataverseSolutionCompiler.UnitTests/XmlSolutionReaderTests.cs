@@ -1,4 +1,5 @@
 using FluentAssertions;
+using System.Diagnostics;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Read;
 using DataverseSolutionCompiler.Readers.Xml;
@@ -310,6 +311,29 @@ public sealed class XmlSolutionReaderTests
     }
 
     [Fact]
+    public void Reader_normalizes_classic_export_zip_when_pac_is_available()
+    {
+        if (!IsPacAvailable())
+        {
+            return;
+        }
+
+        var reader = new XmlSolutionReader();
+        var solution = reader.Read(new ReadRequest(Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            "seed-core",
+            "export",
+            "CodexMetadataSeedCore.zip"),
+            ReadSourceKind.PackedZip));
+
+        solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Table && artifact.LogicalName == "cdxmeta_workitem");
+        solution.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "zip-reader-normalized-classic-export");
+    }
+
+    [Fact]
     public void Reader_parses_source_only_similarity_rule_and_sla_families_as_best_effort()
     {
         var slaSolution = ReadFixture("source-only-sla");
@@ -349,4 +373,33 @@ public sealed class XmlSolutionReaderTests
         solution.Artifacts.Single(artifact =>
             artifact.Family == family
             && string.Equals(artifact.LogicalName, logicalName, StringComparison.OrdinalIgnoreCase));
+
+    private static bool IsPacAvailable()
+    {
+        try
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "pac",
+                ArgumentList = { "--version" },
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(startInfo);
+            if (process is null)
+            {
+                return false;
+            }
+
+            process.WaitForExit(5000);
+            return process.ExitCode == 0;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

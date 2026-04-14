@@ -49,8 +49,29 @@ This repository is the persistent knowledge base and implementation workspace fo
 
 - `emit --layout tracked-source` produces the deterministic review/archive JSON tree.
 - `emit --layout intent-spec` reverse-generates the supported subset into `intent-spec/intent-spec.json`.
+- Classic exported solution zips are now first-class reverse-authoring input. The compiler normalizes `solution.xml` / `customizations.xml` exports through `pac solution unpack` internally, so manual unpack is no longer required before reverse generation.
 - Unsupported families and unsupported shapes are never silently dropped; they are listed in `intent-spec/reverse-generation-report.json`.
-- The first reverse-generation slice is intentionally subset-only. It covers the current JSON intent v1 families and keeps later families out of the authoring surface until they have the same proof bar.
+- The omission report now distinguishes:
+  - `unsupportedFamily`
+  - `unsupportedShape`
+  - `platformGeneratedArtifact`
+  - `missingSourceFidelity`
+- The current reverse-generation slice is intentionally subset-only. It covers the current JSON intent v1 families and keeps later families out of the authoring surface until they have the same proof bar.
+
+## Generator Status
+
+Generator readiness is now tracked separately from source/readback breadth.
+
+| Family lane | Intent author | Reverse from tracked-source | Rebuild from intent | Current class |
+| --- | --- | --- | --- | --- |
+| Schema core: tables, custom columns, lookup-driven relationships | done | done | done | full rebuildable |
+| Schema detail subset: global/local choices, alternate keys | done | done | done | full rebuildable |
+| Main forms and rebuild-safe authored savedquery views | partial | partial | partial | authorable but partial |
+| App modules, entity-only site maps, environment variables | partial | partial | partial | authorable but partial |
+| Image configuration, entity analytics, AI, plugin registration, service endpoints, connectors, process/security families | none | none | none | source/readback only |
+| Import maps, similarity rules, SLAs | none | none | none | source-first / permanent best-effort |
+
+Use `reverse-generation-report.json` as the authority for what was intentionally omitted from any one reverse-generated intent document.
 
 ## Working Commands
 

@@ -412,28 +412,6 @@ public sealed class IntentSpecReader : ISolutionReader
                     diagnostics.Add(CreateError(sourcePath, $"{viewPath}.layoutColumns", "Each view requires at least one layout column."));
                 }
 
-                foreach (var (columnName, layoutIndex) in Enumerate(view.LayoutColumns))
-                {
-                    if (!allowedFieldNames.Contains(columnName))
-                    {
-                        diagnostics.Add(CreateError(
-                            sourcePath,
-                            $"{viewPath}.layoutColumns[{layoutIndex}]",
-                            $"View '{view.Name}' references unknown layout column '{columnName}' on table '{table.LogicalName}'."));
-                    }
-                }
-
-                foreach (var (columnName, fetchIndex) in Enumerate(view.FetchAttributes))
-                {
-                    if (!allowedFieldNames.Contains(columnName))
-                    {
-                        diagnostics.Add(CreateError(
-                            sourcePath,
-                            $"{viewPath}.fetchAttributes[{fetchIndex}]",
-                            $"View '{view.Name}' references unknown fetch attribute '{columnName}' on table '{table.LogicalName}'."));
-                    }
-                }
-
                 foreach (var (filter, filterIndex) in Enumerate(view.Filters))
                 {
                     var filterPath = $"{viewPath}.filters[{filterIndex}]";

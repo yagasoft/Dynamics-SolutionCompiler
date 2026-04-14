@@ -1,0 +1,32 @@
+{
+  "solution": {
+    "UniqueName": "DemoTableToolTest",
+    "DisplayName": "Demo Table Tool Test",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "demo",
+    "Prefix": "demo",
+    "CustomizationPrefix": "demo",
+    "DisplayName": "Demo Publisher"
+  },
+  "sourceLayout": "intent-spec-derived",
+  "copiedDirectories": [
+    "AppModuleSiteMaps",
+    "AppModules",
+    "Entities",
+    "OptionSets",
+    "Other",
+    "environmentvariabledefinitions"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Entities/demo_Note/Entity.xml",
+    "package-inputs/Entities/demo_Note/FormXml/main/{fa05dc3b-444c-49b4-d07c-4d7940d22d44}.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/manifest.json"
+  ]
+}

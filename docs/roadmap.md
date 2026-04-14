@@ -59,19 +59,25 @@ Priority order:
 Exit criteria:
 - each family has a documented source shape, a compare-safe field set, and a clear boundary for what remains best-effort
 
-## Phase 5: Expansion And Hardening
+## Phase 5: Rebuild Fidelity And Controlled Expansion
 
 Goal:
-- expand breadth while keeping the compiler trustworthy
-- harden the reverse-authoring loop so supported tracked-source JSON can be edited and rebuilt through compiler-native intent
+- make the already-supported authoring subset deeply trustworthy from real exports before adding more breadth
+- expand breadth only after the reverse-authoring and rebuild loop stays honest about omissions and authorable scope
 
 Current hardening baseline:
 - `emit --layout intent-spec` now reverse-generates the supported tracked-source subset into one editable compiler-native intent-spec JSON document plus a machine-readable omission report
+- classic exported solution zips are now first-class reverse-authoring input; the compiler normalizes them internally through PAC unpack before typed parsing and intent emission
 - preserved form and view IDs now flow through the intent surface when reverse generation needs them for rebuild fidelity
-- tracked-source remains the primary reverse-authoring path, while XML/ZIP and existing intent input can also emit normalized intent-spec output
-- unsupported families and unsupported shapes stay out of the authoring surface and are reported explicitly rather than silently dropped
+- tracked-source remains the primary reverse-authoring path, while classic export ZIP, unpacked XML, and existing intent input can also emit normalized intent-spec output
+- omission reporting now distinguishes unsupported families, unsupported shapes, platform-generated or non-authorable artifacts, and missing source fidelity instead of collapsing them into a generic partial warning
+
+Immediate priority:
+- keep new breadth paused until the supported authoring subset can reliably complete `export zip -> intent-spec -> package-inputs -> pack -> import`
+- continue hardening rebuild-safe authored savedquery views, app modules, entity-only site maps, and environment variables using real export-backed proof instead of assuming every touched family is generatable
 
 Exit criteria:
+- a compact real exported solution can go straight from classic ZIP to editable intent-spec JSON and back to a successful rebuild without hidden manual unpack steps
 - family coverage grows without weakening the difference between source evidence, readback evidence, and package evidence
-- reverse-generation remains canonical-first and partial-intent safe as family coverage grows
+- reverse-generation remains canonical-first, omission-typed, and partial-intent safe as family coverage grows
 - the docs spine remains short enough for a fresh thread to use in one pass

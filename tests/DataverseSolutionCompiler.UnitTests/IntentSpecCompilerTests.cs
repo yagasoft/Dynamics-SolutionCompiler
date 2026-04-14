@@ -1,4 +1,5 @@
 using FluentAssertions;
+using System.Text.Json.Nodes;
 using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Diff;
 using DataverseSolutionCompiler.Domain.Compilation;
@@ -21,6 +22,14 @@ public sealed class IntentSpecCompilerTests
         "fixtures",
         "intent-specs",
         "seed-greenfield-v1.json");
+
+    private static readonly string SeedCorePath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-core",
+        "unpacked");
 
     [Fact]
     public void Compile_reads_json_intent_fixture_into_canonical_solution()
@@ -368,6 +377,36 @@ public sealed class IntentSpecCompilerTests
             if (Directory.Exists(packageOutputRoot))
             {
                 Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_report_classifies_platform_generated_views_explicitly()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-intent-report-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(SeedCorePath, Array.Empty<string>()));
+
+            var emitted = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.IntentSpec));
+
+            emitted.Success.Should().BeTrue();
+            var reportPath = Path.Combine(outputRoot, "intent-spec", "reverse-generation-report.json");
+            var report = JsonNode.Parse(File.ReadAllText(reportPath))!.AsObject();
+
+            report["isPartial"]!.GetValue<bool>().Should().BeTrue();
+            report["unsupportedFamiliesOmitted"]!.AsArray()
+                .Any(entry => string.Equals(entry?["category"]?.GetValue<string>(), "platformGeneratedArtifact", StringComparison.Ordinal))
+                .Should()
+                .BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
             }
         }
     }

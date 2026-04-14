@@ -12,7 +12,8 @@ public sealed partial class IntentSpecEmitter
             .Select(artifact => new IntentReportEntry(
                 artifact.Family.ToString(),
                 artifact.LogicalName,
-                "Family is outside the supported reverse-generation subset for intent-spec JSON."))
+                "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+                ReverseGenerationReportCategories.UnsupportedFamily))
             .ToArray();
 
     private static IReadOnlyList<IntentReportEntry> BuildUnsupportedDiagnosticEntries(IEnumerable<CompilerDiagnostic> diagnostics) =>
@@ -21,7 +22,8 @@ public sealed partial class IntentSpecEmitter
             .Select(diagnostic => new IntentReportEntry(
                 diagnostic.Code["tracked-source-intent-unsupported-".Length..],
                 diagnostic.Location ?? diagnostic.Code,
-                diagnostic.Message))
+                diagnostic.Message,
+                ReverseGenerationReportCategories.UnsupportedFamily))
             .ToArray();
 
     private static Dictionary<string, FamilyArtifact[]> GroupArtifactsByEntity(IEnumerable<FamilyArtifact> artifacts, ComponentFamily family) =>
@@ -205,10 +207,11 @@ public sealed partial class IntentSpecEmitter
         {
             if (!relationshipsByTableAndAttribute.TryGetValue((entityLogicalName, columnLogicalName), out var relationship))
             {
-                unsupportedEntries.Add(new IntentReportEntry(
-                    ComponentFamily.Column.ToString(),
-                    column.LogicalName,
-                    "Lookup columns require a one-to-many relationship that can be folded back into targetTable and relationshipSchemaName."));
+                    unsupportedEntries.Add(new IntentReportEntry(
+                        ComponentFamily.Column.ToString(),
+                        column.LogicalName,
+                        "Lookup columns require a one-to-many relationship that can be folded back into targetTable and relationshipSchemaName.",
+                        ReverseGenerationReportCategories.MissingSourceFidelity));
                 return null;
             }
 
@@ -252,7 +255,8 @@ public sealed partial class IntentSpecEmitter
                     unsupportedEntries.Add(new IntentReportEntry(
                         ComponentFamily.Column.ToString(),
                         column.LogicalName,
-                        "Local choice and boolean columns require inline option metadata to reverse-generate intent-spec JSON."));
+                        "Local choice and boolean columns require inline option metadata to reverse-generate intent-spec JSON.",
+                        ReverseGenerationReportCategories.MissingSourceFidelity));
                     return null;
                 }
 
@@ -311,7 +315,11 @@ public sealed partial class IntentSpecEmitter
             var definition = ReadFormDefinition(form);
             if (definition is null)
             {
-                unsupportedEntries.Add(new IntentReportEntry(ComponentFamily.Form.ToString(), form.LogicalName, "Main forms require formDefinitionJson so the layout can be reconstructed."));
+                unsupportedEntries.Add(new IntentReportEntry(
+                    ComponentFamily.Form.ToString(),
+                    form.LogicalName,
+                    "Main forms require formDefinitionJson so the layout can be reconstructed.",
+                    ReverseGenerationReportCategories.MissingSourceFidelity));
                 continue;
             }
 
@@ -358,7 +366,7 @@ public sealed partial class IntentSpecEmitter
     private static List<IntentViewSpec> BuildViewSpecs(
         string tableLogicalName,
         IEnumerable<FamilyArtifact> views,
-        IReadOnlySet<string> allowedFieldNames,
+        IReadOnlySet<string> _allowedFieldNames,
         ICollection<IntentReportEntry> unsupportedEntries,
         ICollection<PreservedIdEntry> preservedIds)
     {
@@ -368,7 +376,22 @@ public sealed partial class IntentSpecEmitter
             var queryType = GetProperty(view, ArtifactPropertyKeys.QueryType);
             if (!string.IsNullOrWhiteSpace(queryType) && !string.Equals(queryType, "0", StringComparison.OrdinalIgnoreCase))
             {
-                unsupportedEntries.Add(new IntentReportEntry(ComponentFamily.View.ToString(), view.LogicalName, $"Only savedquery views are supported, but '{view.LogicalName}' reported queryType '{queryType}'."));
+                unsupportedEntries.Add(new IntentReportEntry(
+                    ComponentFamily.View.ToString(),
+                    view.LogicalName,
+                    $"View '{view.DisplayName ?? view.LogicalName}' is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType '{queryType}'.",
+                    ReverseGenerationReportCategories.PlatformGeneratedArtifact));
+                continue;
+            }
+
+            if (GetProperty(view, ArtifactPropertyKeys.CanBeDeleted) is { } canBeDeleted
+                && !NormalizeBoolean(canBeDeleted))
+            {
+                unsupportedEntries.Add(new IntentReportEntry(
+                    ComponentFamily.View.ToString(),
+                    view.LogicalName,
+                    $"View '{view.DisplayName ?? view.LogicalName}' is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+                    ReverseGenerationReportCategories.PlatformGeneratedArtifact));
                 continue;
             }
 
@@ -376,15 +399,14 @@ public sealed partial class IntentSpecEmitter
             var fetchAttributes = ReadStringArray(GetProperty(view, ArtifactPropertyKeys.FetchAttributesJson));
             var filters = ReadViewFilters(GetProperty(view, ArtifactPropertyKeys.FiltersJson));
             var orders = ReadViewOrders(GetProperty(view, ArtifactPropertyKeys.OrdersJson));
-            if (!AllFieldsAreSupported(layoutColumns, allowedFieldNames)
-                || !AllFieldsAreSupported(fetchAttributes, allowedFieldNames)
-                || !AllFieldsAreSupported(filters.Select(filter => filter.Attribute), allowedFieldNames)
-                || !AllFieldsAreSupported(orders.Select(order => order.Attribute), allowedFieldNames))
+
+            if (layoutColumns.Count == 0 || fetchAttributes.Count == 0)
             {
                 unsupportedEntries.Add(new IntentReportEntry(
                     ComponentFamily.View.ToString(),
                     view.LogicalName,
-                    $"View '{view.DisplayName ?? view.LogicalName}' references fields outside the supported reverse-generated column set for table '{tableLogicalName}'."));
+                    $"View '{view.DisplayName ?? view.LogicalName}' is missing the layout or fetch metadata needed to reverse-generate a rebuild-safe savedquery view for table '{tableLogicalName}'.",
+                    ReverseGenerationReportCategories.MissingSourceFidelity));
                 continue;
             }
 
@@ -467,14 +489,22 @@ public sealed partial class IntentSpecEmitter
         var definitionJson = GetProperty(siteMap, ArtifactPropertyKeys.SiteMapDefinitionJson);
         if (string.IsNullOrWhiteSpace(definitionJson))
         {
-            unsupportedEntries.Add(new IntentReportEntry(ComponentFamily.SiteMap.ToString(), siteMap.LogicalName, "Site maps require siteMapDefinitionJson so entity-only area/group/subarea layout can be reconstructed."));
+            unsupportedEntries.Add(new IntentReportEntry(
+                ComponentFamily.SiteMap.ToString(),
+                siteMap.LogicalName,
+                "Site maps require siteMapDefinitionJson so entity-only area/group/subarea layout can be reconstructed.",
+                ReverseGenerationReportCategories.MissingSourceFidelity));
             return null;
         }
 
         var definition = JsonSerializer.Deserialize<SiteMapDefinition>(definitionJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         if (definition?.Areas is null)
         {
-            unsupportedEntries.Add(new IntentReportEntry(ComponentFamily.SiteMap.ToString(), siteMap.LogicalName, "Site map definition JSON could not be parsed."));
+            unsupportedEntries.Add(new IntentReportEntry(
+                ComponentFamily.SiteMap.ToString(),
+                siteMap.LogicalName,
+                "Site map definition JSON could not be parsed.",
+                ReverseGenerationReportCategories.MissingSourceFidelity));
             return null;
         }
 
@@ -634,7 +664,9 @@ public sealed partial class IntentSpecEmitter
             return "intent-spec-json";
         }
 
-        if (model.Diagnostics.Any(diagnostic => string.Equals(diagnostic.Code, "zip-reader-extracted", StringComparison.Ordinal)))
+        if (model.Diagnostics.Any(diagnostic =>
+                string.Equals(diagnostic.Code, "zip-reader-extracted", StringComparison.Ordinal)
+                || string.Equals(diagnostic.Code, "zip-reader-normalized-classic-export", StringComparison.Ordinal)))
         {
             return "packed-zip";
         }

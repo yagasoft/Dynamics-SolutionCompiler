@@ -60,6 +60,8 @@ public static class ArtifactPropertyKeys
     public const string FooterControlCount = "footerControlCount";
     public const string ControlDescriptionCount = "controlDescriptionCount";
     public const string IsDefault = "isDefault";
+    public const string CanBeDeleted = "canBeDeleted";
+    public const string IsQuickFindQuery = "isQuickFindQuery";
     public const string ReadbackScope = "readbackScope";
 
     public const string ViewId = "viewId";

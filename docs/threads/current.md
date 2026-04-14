@@ -2,7 +2,7 @@
 
 ## Thread State
 
-- Purpose: continue the approved `.NET 10` compiler roadmap after the reverse-authoring hardening slice that can reconstruct supported intent-spec JSON from tracked-source output.
+- Purpose: continue the approved `.NET 10` compiler roadmap with rebuild-fidelity hardening as the first next lane before more breadth work.
 - Scope: source/readback canonicalization, generator breadth, release-path operation, docs, and tests.
 - Roadmap boundary: approved `.NET 10` direction.
 
@@ -15,7 +15,8 @@
   - typed domain contracts and canonical IR
   - capability registry and source-backed planner/kernel
   - compiler-native JSON intent ingestion for the supported v1 greenfield families
-  - supported reverse generation from tracked-source JSON back into compiler-native intent-spec JSON through `emit --layout intent-spec`, including deterministic `reverse-generation-report.json` omissions and preserved form/view IDs when rebuild fidelity depends on them
+  - supported reverse generation from tracked-source JSON back into compiler-native intent-spec JSON through `emit --layout intent-spec`, including deterministic `reverse-generation-report.json` omissions, preserved form/view IDs when rebuild fidelity depends on them, and omission typing that now distinguishes unsupported families, unsupported shapes, platform-generated artifacts, and missing source fidelity
+  - direct classic export ZIP reverse-authoring: `emit --layout intent-spec` now accepts `solution.xml` / `customizations.xml` export zips and normalizes them internally through PAC unpack, so manual unpack is no longer required before reverse generation
   - operational CLI command surface for `read`, `plan`, `emit`, `readback`, `diff`, `pack`, `import`, `publish`, `check`, `doctor`, and `explain`
   - typed XML/ZIP readers for the strongest proven source families
   - deterministic tracked-source materialization for the same first-family slice
@@ -39,22 +40,24 @@
     - derived XML synthesis for the supported JSON v1 generator families
   - real PAC `pack` / `import` / optional `check` execution with captured diagnostics, plus CLI release-path orchestration for `pack`, `import`, `publish`, and `check`
   - conditional real-`pac` proof for both source-backed and generated package-inputs in the current environment
+  - a compact live export/delete/reimport proof for `DemoTableToolTest` that now succeeds through the direct classic export ZIP -> `emit --layout intent-spec` -> pack -> import path without manual unpack
   - bootstrap apply and agent orchestration adapters
 - The copied `dataverse-metadata-synthesis` corpus lives under `fixtures/skill-corpus`, and dedicated generator fixtures now live under `fixtures/intent-specs`.
 
 ## What Still Needs Attention
 
-- Deepen typed reader coverage into later partial families such as ribbon, web resources beyond metadata-only handling, richer process-policy/security breadth beyond the current definition slices, and any remaining code-extensibility artifacts beyond the neutral plugin-registration plus integration-endpoint slices.
-- Extend reverse-generation beyond the current supported subset so later proven families can move from tracked-source review surfaces into editable intent-spec authoring without silent omission.
-- Continue schema-detail breadth beyond the alternate-key and image-config slices, especially any broader managed-property surface that can be captured honestly without overclaiming a standalone family.
-- Extend Phase 4 beyond the current canvas-app, explicit source-first import-map boundary, entity-analytics, and compact AI footholds by choosing the next honest environment/config family that can clear the same seed/readback/drift bar without overclaiming parity.
-- Broaden the JSON intent / generator surface beyond the current v1 families while preserving the same proof bar:
+- Keep rebuild-fidelity hardening ahead of new breadth until the already-authorable subset is deeply trustworthy from real exports, especially for rebuild-safe authored views, app modules, entity-only site maps, and environment variables.
+- Extend reverse-generation beyond the current supported subset only when later proven families can meet the same omission-typed, package-reread, and stable-overlap proof bar without silent loss.
+- Broaden the JSON intent / generator surface beyond the current v1 families only after the supported subset stays clean through:
   - intent read
   - tracked-source reverse-generation
   - tracked/package emit
   - XML reread
   - stable-overlap compare
   - PAC pack
+- Deepen typed reader coverage into later partial families such as ribbon, web resources beyond metadata-only handling, richer process-policy/security breadth beyond the current definition slices, and any remaining code-extensibility artifacts beyond the neutral plugin-registration plus integration-endpoint slices.
+- Continue schema-detail breadth beyond the alternate-key and image-config slices, especially any broader managed-property surface that can be captured honestly without overclaiming a standalone family.
+- Extend Phase 4 beyond the current canvas-app, explicit source-first import-map boundary, entity-analytics, and compact AI footholds by choosing the next honest environment/config family that can clear the same seed/readback/drift bar without overclaiming parity.
 - Deepen drift coverage beyond the current first-family slice and reduce the remaining non-blocking warning surfaces around quick/card forms, under-reported local option sets, visualizations, and live-only platform relationship noise.
 - Extend live readback proof into later partial families such as visualizations, web resources, richer app-role detail, deeper process/security surfaces, and later environment/config families beyond the explicit permanent best-effort import-map boundary.
 - Broaden package-input coverage beyond the current proven release-path and generated-v1 directories so later families can ship through the same governed path.

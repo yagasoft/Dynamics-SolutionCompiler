@@ -146,7 +146,7 @@ public sealed partial class IntentSpecEmitter : ISolutionEmitter
             unsupportedEntries.Count > 0 ? "intent-spec-reverse-partial" : "intent-spec-reverse-full",
             unsupportedEntries.Count > 0 ? DiagnosticSeverity.Warning : DiagnosticSeverity.Info,
             unsupportedEntries.Count > 0
-                ? $"Reverse-generated intent-spec JSON is partial: {unsupportedEntries.Count} unsupported family or shape omission(s) were recorded in reverse-generation-report.json."
+                ? $"Reverse-generated intent-spec JSON is partial: {unsupportedEntries.Count} unsupported, platform-generated, or fidelity omission(s) were recorded in reverse-generation-report.json."
                 : "Reverse-generated intent-spec JSON covered the supported subset without omissions.",
             unsupportedEntries.Count > 0
                 ? Path.Combine(intentRoot, "reverse-generation-report.json")

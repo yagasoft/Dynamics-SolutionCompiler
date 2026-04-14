@@ -1,4 +1,5 @@
 using FluentAssertions;
+using System.Diagnostics;
 using DataverseSolutionCompiler.Cli;
 using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Domain.Abstractions;
@@ -40,6 +41,15 @@ public sealed class CliApplicationTests
         "examples",
         "seed-import-map",
         "unpacked");
+
+    private static readonly string SeedCoreExportZipPath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-core",
+        "export",
+        "CodexMetadataSeedCore.zip");
 
     private static readonly string SeedAlternateKeyPath = Path.Combine(
         "C:\\Git\\Dataverse-Solution-KB",
@@ -218,6 +228,44 @@ public sealed class CliApplicationTests
     }
 
     [Fact]
+    public void Emit_command_can_write_intent_spec_directly_from_classic_export_zip_input()
+    {
+        if (!IsPacAvailable())
+        {
+            return;
+        }
+
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-zip-intent-{Guid.NewGuid():N}");
+
+        try
+        {
+            var exitCode = CliApplication.Run(["emit", SeedCoreExportZipPath, "--layout", "intent-spec", "--output", outputRoot], new StringWriter(), new StringWriter());
+
+            exitCode.Should().Be(0);
+
+            var intentSpecPath = Path.Combine(outputRoot, "intent-spec", "intent-spec.json");
+            var reportPath = Path.Combine(outputRoot, "intent-spec", "reverse-generation-report.json");
+            File.Exists(intentSpecPath).Should().BeTrue();
+            File.Exists(reportPath).Should().BeTrue();
+
+            var report = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(reportPath))!.AsObject();
+            report["inputKind"]!.GetValue<string>().Should().Be("packed-zip");
+            report["isPartial"]!.GetValue<bool>().Should().BeTrue();
+            report["unsupportedFamiliesOmitted"]!.AsArray()
+                .Any(entry => string.Equals(entry?["category"]?.GetValue<string>(), "platformGeneratedArtifact", StringComparison.Ordinal))
+                .Should()
+                .BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
     public void Read_and_plan_commands_accept_json_intent_input()
     {
         var readOutput = new StringWriter();
@@ -320,6 +368,10 @@ public sealed class CliApplicationTests
             report["inputKind"]!.GetValue<string>().Should().Be("tracked-source");
             report["isPartial"]!.GetValue<bool>().Should().BeTrue();
             report["unsupportedFamiliesOmitted"]!.ToJsonString().Should().Contain("DuplicateRule");
+            report["unsupportedFamiliesOmitted"]!.AsArray()
+                .Any(entry => string.Equals(entry?["category"]?.GetValue<string>(), "unsupportedFamily", StringComparison.Ordinal))
+                .Should()
+                .BeTrue();
         }
         finally
         {
@@ -332,6 +384,35 @@ public sealed class CliApplicationTests
             {
                 Directory.Delete(intentOutputRoot, recursive: true);
             }
+        }
+    }
+
+    private static bool IsPacAvailable()
+    {
+        try
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "pac",
+                ArgumentList = { "--version" },
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(startInfo);
+            if (process is null)
+            {
+                return false;
+            }
+
+            process.WaitForExit(5000);
+            return process.ExitCode == 0;
+        }
+        catch
+        {
+            return false;
         }
     }
 
