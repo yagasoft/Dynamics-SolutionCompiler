@@ -1,0 +1,14 @@
+{
+  "unique_name": "DynamicsBusinessMachine",
+  "friendly_name": "",
+  "version": "0.1.1.1",
+  "managed": "0",
+  "publisher": {
+    "unique_name": "yagasoft",
+    "prefix": "ys"
+  },
+  "source_files": {
+    "solution_xml": "C:\\Git\\Dynamics-BusinessMachine\\power-platform\\solutions\\DynamicsBusinessMachine\\baseline\\Solution.xml",
+    "customizations_xml": "C:\\Git\\Dynamics-BusinessMachine\\power-platform\\solutions\\DynamicsBusinessMachine\\baseline\\Customizations.xml"
+  }
+}

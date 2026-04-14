@@ -1,0 +1,21 @@
+{
+  "id": "{6d574ac0-acf8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/bundle.js",
+  "display_name": "DBM Editor App - Bundle JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorbundlejs6D574AC0-ACF8-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\bundle.js",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 3228671,
+      "line_count": 133
+    },
+    "content_sha256": "b21433f36db38b0ffd22584a7287d1fa7e598b14458a6150e3cd71810720e48f",
+    "comparison_signature": "0e2cb65f4304c555b30b65c46ad94fdfdf666a38cd443cc1de4399adb34e64a6",
+    "signature": "a0ec5dee6c30284cd240a1c6c5cc0b58cb9071c087d3035c5da089fe69590a07"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "cdsdependencies": [
+    {
+      "componenttype": 1,
+      "logicalname": "entity"
+    },
+    {
+      "componenttype": 1,
+      "logicalname": "solution"
+    },
+    {
+      "componenttype": 1,
+      "logicalname": "customapi"
+    },
+    {
+      "componenttype": 1,
+      "logicalname": "customapirequestparameter"
+    },
+    {
+      "componenttype": 1,
+      "logicalname": "publisher"
+    },
+    {
+      "componenttype": 1,
+      "logicalname": "customapiresponseproperty"
+    },
+    {
+      "componenttype": 1,
+      "logicalname": "sdkmessageprocessingstep"
+    },
+    {
+      "componenttype": 61,
+      "logicalname": "cat_DVPageLoc",
+      "componenttypeplatformname": "WebResource"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.DVCommandBar",
+      "componenttypeplatformname": "CustomControl"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.DVAutoWidthLabel",
+      "componenttypeplatformname": "CustomControl"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.DVIcon",
+      "componenttypeplatformname": "CustomControl"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.DVIcon",
+      "componenttypeplatformname": "CustomControl"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.DVIcon",
+      "componenttypeplatformname": "CustomControl"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.DVIcon",
+      "componenttypeplatformname": "CustomControl"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.NavigationComponentPCF",
+      "componenttypeplatformname": "CustomControl"
+    },
+    {
+      "componenttype": 66,
+      "logicalname": "cat_PowerCAT.NavigationComponentPCF",
+      "componenttypeplatformname": "CustomControl"
+    }
+  ]
+}

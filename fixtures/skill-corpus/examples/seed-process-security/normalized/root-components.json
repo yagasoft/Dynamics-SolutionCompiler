@@ -1,0 +1,38 @@
+[
+  {
+    "type": "1",
+    "type_label": "Entity",
+    "family_label": "Schema and Metadata",
+    "id": "",
+    "schema_name": "cdxmeta_workitem",
+    "behavior": "1",
+    "behavior_label": "Do not include subcomponents"
+  },
+  {
+    "type": "20",
+    "type_label": "Role",
+    "family_label": "Security and Access",
+    "id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+    "schema_name": "",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "63",
+    "type_label": "Connection Role",
+    "family_label": "Security and Access",
+    "id": "{a3843e20-5d37-f111-88b3-0022489b9600}",
+    "schema_name": "",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "70",
+    "type_label": "Field Security Profile",
+    "family_label": "Security and Access",
+    "id": "{a0843e20-5d37-f111-88b3-0022489b9600}",
+    "schema_name": "",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  }
+]

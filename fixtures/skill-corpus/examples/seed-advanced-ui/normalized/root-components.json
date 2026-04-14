@@ -1,0 +1,47 @@
+[
+  {
+    "type": "1",
+    "type_label": "Entity",
+    "family_label": "Schema and Metadata",
+    "id": "",
+    "schema_name": "account",
+    "behavior": "2",
+    "behavior_label": "Include As Shell Only"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "cdxmeta_/advancedui/icon.svg",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "cdxmeta_/advancedui/landing.html",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "62",
+    "type_label": "Site Map",
+    "family_label": "Model-Driven UI and App Shell",
+    "id": "",
+    "schema_name": "codex_metadata_advanced_ui_924e69cb",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "80",
+    "type_label": "App Module",
+    "family_label": "Model-Driven UI and App Shell",
+    "id": "",
+    "schema_name": "codex_metadata_advanced_ui_924e69cb",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  }
+]

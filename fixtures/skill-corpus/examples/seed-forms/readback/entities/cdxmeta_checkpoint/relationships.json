@@ -1,0 +1,105 @@
+﻿{
+    "many_to_many":  [
+
+                     ],
+    "one_to_many":  [
+                        {
+                            "ReferencedEntity":  "cdxmeta_checkpoint",
+                            "SchemaName":  "cdxmeta_checkpoint_SyncErrors",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "syncerror"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_checkpoint",
+                            "SchemaName":  "cdxmeta_checkpoint_AsyncOperations",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "asyncoperation"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_checkpoint",
+                            "SchemaName":  "cdxmeta_checkpoint_MailboxTrackingFolders",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "mailboxtrackingfolder"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_checkpoint",
+                            "SchemaName":  "cdxmeta_checkpoint_UserEntityInstanceDatas",
+                            "ReferencingAttribute":  "objectid",
+                            "ReferencingEntity":  "userentityinstancedata"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_checkpoint",
+                            "SchemaName":  "cdxmeta_checkpoint_ProcessSession",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "processsession"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_checkpoint",
+                            "SchemaName":  "cdxmeta_checkpoint_BulkDeleteFailures",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "bulkdeletefailure"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_checkpoint",
+                            "SchemaName":  "cdxmeta_checkpoint_PrincipalObjectAttributeAccesses",
+                            "ReferencingAttribute":  "objectid",
+                            "ReferencingEntity":  "principalobjectattributeaccess"
+                        }
+                    ],
+    "many_to_one":  [
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_checkpoint_createdby",
+                            "ReferencingAttribute":  "createdby",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_checkpoint_createdonbehalfby",
+                            "ReferencingAttribute":  "createdonbehalfby",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_checkpoint_modifiedby",
+                            "ReferencingAttribute":  "modifiedby",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_checkpoint_modifiedonbehalfby",
+                            "ReferencingAttribute":  "modifiedonbehalfby",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "user_cdxmeta_checkpoint",
+                            "ReferencingAttribute":  "owninguser",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "team",
+                            "SchemaName":  "team_cdxmeta_checkpoint",
+                            "ReferencingAttribute":  "owningteam",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "owner",
+                            "SchemaName":  "owner_cdxmeta_checkpoint",
+                            "ReferencingAttribute":  "ownerid",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "businessunit",
+                            "SchemaName":  "business_unit_cdxmeta_checkpoint",
+                            "ReferencingAttribute":  "owningbusinessunit",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_workitem",
+                            "SchemaName":  "cdxmeta_workitem_checkpoint",
+                            "ReferencingAttribute":  "cdxmeta_workitemid",
+                            "ReferencingEntity":  "cdxmeta_checkpoint"
+                        }
+                    ]
+}

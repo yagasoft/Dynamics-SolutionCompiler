@@ -1,0 +1,427 @@
+﻿{
+    "many_to_many":  [
+                         {
+                             "Entity2LogicalName":  "account",
+                             "SchemaName":  "powerpagecomponent_mspp_webrole_account",
+                             "Entity1LogicalName":  "powerpagecomponent"
+                         }
+                     ],
+    "one_to_many":  [
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_BulkDeleteFailures",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "bulkdeletefailure"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Phonecalls",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "phonecall"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_CustomerAddress",
+                            "ReferencingAttribute":  "parentid",
+                            "ReferencingEntity":  "customeraddress"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_SharepointDocumentLocation",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "sharepointdocumentlocation"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "msa_account_managingpartner",
+                            "ReferencingAttribute":  "msa_managingpartnerid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "msa_contact_managingpartner",
+                            "ReferencingAttribute":  "msa_managingpartnerid",
+                            "ReferencingEntity":  "contact"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "SocialActivity_PostAuthor_accounts",
+                            "ReferencingAttribute":  "postauthor",
+                            "ReferencingEntity":  "socialactivity"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Email_EmailSender",
+                            "ReferencingAttribute":  "emailsender",
+                            "ReferencingEntity":  "email"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_ProcessSessions",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "processsession"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_PostRegardings",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "postregarding"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_parent_account",
+                            "ReferencingAttribute":  "parentaccountid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Tasks",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "task"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_principalobjectattributeaccess",
+                            "ReferencingAttribute":  "objectid",
+                            "ReferencingEntity":  "principalobjectattributeaccess"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Socialprofile_customer_accounts",
+                            "ReferencingAttribute":  "customerid",
+                            "ReferencingEntity":  "socialprofile"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_AsyncOperations",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "asyncoperation"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_adx_inviteredemptions",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "adx_inviteredemption"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_adx_portalcomments",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "adx_portalcomment"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_connections1",
+                            "ReferencingAttribute":  "record1id",
+                            "ReferencingEntity":  "connection"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_actioncard",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "actioncard"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Email_SendersAccount",
+                            "ReferencingAttribute":  "sendersaccount",
+                            "ReferencingEntity":  "email"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "adx_invitation_assigntoaccount",
+                            "ReferencingAttribute":  "adx_assigntoaccount",
+                            "ReferencingEntity":  "adx_invitation"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "userentityinstancedata_account",
+                            "ReferencingAttribute":  "objectid",
+                            "ReferencingEntity":  "userentityinstancedata"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Faxes",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "fax"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_MailboxTrackingFolder",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "mailboxtrackingfolder"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_activity_parties",
+                            "ReferencingAttribute":  "partyid",
+                            "ReferencingEntity":  "activityparty"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_PostFollows",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "postfollow"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_msfp_alerts",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "msfp_alert"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_PostRoles",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "postrole"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Letters",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "letter"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Annotation",
+                            "ReferencingAttribute":  "objectid",
+                            "ReferencingEntity":  "annotation"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_DuplicateMatchingRecord",
+                            "ReferencingAttribute":  "duplicaterecordid",
+                            "ReferencingEntity":  "duplicaterecord"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_DuplicateBaseRecord",
+                            "ReferencingAttribute":  "baserecordid",
+                            "ReferencingEntity":  "duplicaterecord"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_msfp_surveyinvites",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "msfp_surveyinvite"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_msfp_surveyresponses",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "msfp_surveyresponse"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Emails",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "email"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "slakpiinstance_account",
+                            "ReferencingAttribute":  "regarding",
+                            "ReferencingEntity":  "slakpiinstance"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_customer_relationship_partner",
+                            "ReferencingAttribute":  "partnerid",
+                            "ReferencingEntity":  "customerrelationship"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_connections2",
+                            "ReferencingAttribute":  "record2id",
+                            "ReferencingEntity":  "connection"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_Appointments",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "appointment"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_SocialActivities",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "socialactivity"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_SharepointDocument",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "sharepointdocument"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_SyncErrors",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "syncerror"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "SocialActivity_PostAuthorAccount_accounts",
+                            "ReferencingAttribute":  "postauthoraccount",
+                            "ReferencingEntity":  "socialactivity"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_RecurringAppointmentMasters",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "recurringappointmentmaster"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_chats",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "chat"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "Account_ActivityPointers",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "activitypointer"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_master_account",
+                            "ReferencingAttribute":  "masterid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_customer_relationship_customer",
+                            "ReferencingAttribute":  "customerid",
+                            "ReferencingEntity":  "customerrelationship"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "contact_customer_accounts",
+                            "ReferencingAttribute":  "parentcustomerid",
+                            "ReferencingEntity":  "contact"
+                        }
+                    ],
+    "many_to_one":  [
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_accountbase_modifiedonbehalfby",
+                            "ReferencingAttribute":  "modifiedonbehalfby",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "system_user_accounts",
+                            "ReferencingAttribute":  "preferredsystemuserid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "msa_account_managingpartner",
+                            "ReferencingAttribute":  "msa_managingpartnerid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "transactioncurrency",
+                            "SchemaName":  "transactioncurrency_account",
+                            "ReferencingAttribute":  "transactioncurrencyid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_parent_account",
+                            "ReferencingAttribute":  "parentaccountid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "sla",
+                            "SchemaName":  "sla_account",
+                            "ReferencingAttribute":  "slainvokedid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "businessunit",
+                            "SchemaName":  "business_unit_accounts",
+                            "ReferencingAttribute":  "owningbusinessunit",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "owner",
+                            "SchemaName":  "owner_accounts",
+                            "ReferencingAttribute":  "ownerid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "user_accounts",
+                            "ReferencingAttribute":  "owninguser",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_accountbase_createdby",
+                            "ReferencingAttribute":  "createdby",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "team",
+                            "SchemaName":  "team_accounts",
+                            "ReferencingAttribute":  "owningteam",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_accountbase_createdonbehalfby",
+                            "ReferencingAttribute":  "createdonbehalfby",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "processstage",
+                            "SchemaName":  "processstage_account",
+                            "ReferencingAttribute":  "stageid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "externalparty",
+                            "SchemaName":  "lk_externalparty_account_createdby",
+                            "ReferencingAttribute":  "createdbyexternalparty",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "sla",
+                            "SchemaName":  "manualsla_account",
+                            "ReferencingAttribute":  "slaid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_accountbase_modifiedby",
+                            "ReferencingAttribute":  "modifiedby",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "contact",
+                            "SchemaName":  "account_primary_contact",
+                            "ReferencingAttribute":  "primarycontactid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "externalparty",
+                            "SchemaName":  "lk_externalparty_account_modifiedby",
+                            "ReferencingAttribute":  "modifiedbyexternalparty",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "imagedescriptor",
+                            "SchemaName":  "lk_account_entityimage",
+                            "ReferencingAttribute":  "entityimageid",
+                            "ReferencingEntity":  "account"
+                        },
+                        {
+                            "ReferencedEntity":  "account",
+                            "SchemaName":  "account_master_account",
+                            "ReferencingAttribute":  "masterid",
+                            "ReferencingEntity":  "account"
+                        }
+                    ]
+}

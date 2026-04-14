@@ -1,0 +1,14 @@
+{
+  "id": "",
+  "comparison_key": "codex metadata account name duplicate rule|name|name|0",
+  "rule_name": "Codex Metadata Account Name Duplicate Rule",
+  "rule_id": "",
+  "base_attribute_name": "name",
+  "matching_attribute_name": "name",
+  "operator_code": "0",
+  "ignore_blank_values": "1",
+  "summary": {
+    "comparison_signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a",
+    "signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a"
+  }
+}

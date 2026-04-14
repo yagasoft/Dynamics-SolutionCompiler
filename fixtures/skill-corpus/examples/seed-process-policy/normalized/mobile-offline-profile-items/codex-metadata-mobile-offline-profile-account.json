@@ -1,0 +1,22 @@
+{
+  "id": "{8BB0691A-6937-F111-88B3-0022489B9600}",
+  "comparison_key": "codex metadata mobile offline profile|account",
+  "name": "Codex Metadata Mobile Offline Profile Item",
+  "profile_name": "Codex Metadata Mobile Offline Profile",
+  "profile_id": "{9f0a7210-6937-f111-88b3-0022489b9600}",
+  "selected_entity_type_code": "",
+  "entity_schema_name": "Account",
+  "entity_object_type_code": "",
+  "record_distribution_criteria": "0",
+  "records_owned_by_me": "0",
+  "records_owned_by_my_team": "0",
+  "records_owned_by_my_business_unit": "0",
+  "profile_item_entity_filter": "",
+  "is_visible_in_grid": "",
+  "get_related_entity_records": "",
+  "can_be_followed": "",
+  "summary": {
+    "comparison_signature": "56cfb71e97e137939676a8647e2856082aea3528ad8abc75553c6c78bfadb64c",
+    "signature": "56cfb71e97e137939676a8647e2856082aea3528ad8abc75553c6c78bfadb64c"
+  }
+}

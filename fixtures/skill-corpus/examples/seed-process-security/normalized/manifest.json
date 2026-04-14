@@ -1,0 +1,14 @@
+{
+  "unique_name": "CodexMetadataSeedProcessSecurity",
+  "friendly_name": "",
+  "version": "1.0.0.0",
+  "managed": "0",
+  "publisher": {
+    "unique_name": "CodexMetadata",
+    "prefix": "cdxmeta"
+  },
+  "source_files": {
+    "solution_xml": "C:\\Users\\AHMEDE~1\\AppData\\Local\\Temp\\dataverse-solution-3t05imzf\\Solution.xml",
+    "customizations_xml": "C:\\Users\\AHMEDE~1\\AppData\\Local\\Temp\\dataverse-solution-3t05imzf\\Customizations.xml"
+  }
+}

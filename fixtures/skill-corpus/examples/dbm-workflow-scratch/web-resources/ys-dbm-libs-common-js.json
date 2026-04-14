@@ -1,0 +1,21 @@
+{
+  "id": "{d0279397-e2f9-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/libs/common.js",
+  "display_name": "DBM Common Library JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmlibscommonjsD0279397-E2F9-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\libs\\common.js",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 3275,
+      "line_count": 70
+    },
+    "content_sha256": "72733bc2cc3b80ff895d3f0b277637bb266e8c253fd482eccfd8f689cf72eeaa",
+    "comparison_signature": "ba38afe8a9fa3cb463aa00398288bc075ef69bc0e00630f61a55a439395261e7",
+    "signature": "03027243af3b54faa0592f27507928384ab6f64de82a9f80116766ddab5f30f0"
+  }
+}

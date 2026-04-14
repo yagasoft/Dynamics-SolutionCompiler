@@ -1,0 +1,42 @@
+{
+  "unique_name": "codex_metadata_shell_dd96cf20",
+  "display_name": "Codex Metadata Shell",
+  "enable_collapsible_groups": "False",
+  "show_home": "True",
+  "show_pinned": "True",
+  "show_recents": "True",
+  "sitemap_xml": "<SiteMap IntroducedVersion=\"7.0.0.0\">\n    <Area Id=\"area_codex_metadata_shell\" ShowGroups=\"true\" ResourceId=\"SitemapDesigner.NewArea\" IntroducedVersion=\"7.0.0.0\">\n      <Titles>\n        <Title LCID=\"1033\" Title=\"Codex Metadata\" />\n      </Titles>\n      <Group Id=\"group_codex_metadata_shell\" ResourceId=\"SitemapDesigner.NewGroup\" IntroducedVersion=\"7.0.0.0\">\n        <Titles>\n          <Title LCID=\"1033\" Title=\"Shell\" />\n        </Titles>\n        <SubArea Id=\"subarea_codex_metadata_shell\" ResourceId=\"SitemapDesigner.NewSubArea\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" Url=\"$webresource:cdxmeta_/shell/landing.html\" Client=\"Web\" PassParams=\"true\">\n          <Titles>\n            <Title LCID=\"1033\" Title=\"Metadata Shell\" />\n          </Titles>\n        </SubArea>\n      </Group>\n    </Area>\n  </SiteMap>\n  ",
+  "summary": {
+    "counts": {
+      "area_count": 1,
+      "group_count": 1,
+      "subarea_count": 1,
+      "web_resource_subarea_count": 1,
+      "entity_subarea_count": 0
+    },
+    "areas": [
+      {
+        "id": "area_codex_metadata_shell",
+        "title": "Codex Metadata",
+        "groups": [
+          {
+            "id": "group_codex_metadata_shell",
+            "title": "Shell",
+            "subareas": [
+              {
+                "id": "subarea_codex_metadata_shell",
+                "title": "Metadata Shell",
+                "url": "$webresource:cdxmeta_/shell/landing.html",
+                "entity": "",
+                "icon": "/WebResources/cdxmeta_/shell/icon.svg",
+                "vector_icon": "/WebResources/cdxmeta_/shell/icon.svg"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "signature": "634ce084212965c4f69ee7ce1c6f3e9cec2d1e9a4661bdafa66f15f3f1da00f1",
+    "comparison_signature": "4f2560890237b76688d9cd41da01d4e3745e700342aaafc21a33dca3b5dfa0d2"
+  }
+}

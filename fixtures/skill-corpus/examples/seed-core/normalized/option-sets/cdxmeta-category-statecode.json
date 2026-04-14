@@ -1,0 +1,17 @@
+{
+  "entity_logical_name": "cdxmeta_category",
+  "attribute_logical_name": "statecode",
+  "attribute_display_name": "Status",
+  "option_set_name": "cdxmeta_category_statecode",
+  "option_set_type": "state",
+  "is_global": null,
+  "options": [],
+  "comparison_key": "cdxmeta_category|statecode",
+  "summary": {
+    "counts": {
+      "option_count": 0
+    },
+    "comparison_signature": "da62153145cb0286c4c309e7d425cb0f7cdbb76ea87db6b7d6834d9607443f08",
+    "signature": "da62153145cb0286c4c309e7d425cb0f7cdbb76ea87db6b7d6834d9607443f08"
+  }
+}

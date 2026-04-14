@@ -1,0 +1,154 @@
+﻿{
+    "custom_controls":  [
+
+                        ],
+    "workflows":  [
+
+                  ],
+    "connection_roles":  [
+
+                         ],
+    "app_settings":  [
+
+                     ],
+    "field_permissions":  [
+
+                          ],
+    "routing_rule_items":  [
+
+                           ],
+    "duplicate_rule_conditions":  [
+
+                                  ],
+    "environment_variable_values":  [
+
+                                    ],
+    "site_maps":  [
+
+                  ],
+    "entities":  {
+
+                 },
+    "ribbon_diffs":  [
+
+                     ],
+    "web_resources":  [
+
+                      ],
+    "plugin_steps":  [
+
+                     ],
+    "mobile_offline_profiles":  [
+
+                                ],
+    "mobile_offline_profile_items":  [
+
+                                     ],
+    "field_security_profiles":  [
+
+                                ],
+    "canvas_apps":  [
+                        {
+                            "@odata.context":  "https://ldv-rd-min.crm4.dynamics.com/api/data/v9.2/$metadata#canvasapps(canvasappid,name,displayname,description,appversion,status,createdbyclientversion,minclientversion,tags,authorizationreferences,connectionreferences,databasereferences,canconsumeapppass,canvasapptype,introducedversion,cdsdependencies,iscustomizable,componentstate,ismanaged,backgroundimage_name,document_name)/$entity",
+                            "@odata.etag":  "W/\"1572918\"",
+                            "componentstate":  0,
+                            "databasereferences":  "{\"default.cds\":{\"databaseDetails\":{\"referenceType\":\"Environmental\",\"environmentName\":\"default.cds\",\"overrideValues\":{\"status\":\"NotSpecified\"}},\"dataSources\":{\"Entities\":{\"entitySetName\":\"entities\",\"logicalName\":\"entity\"},\"Solutions\":{\"entitySetName\":\"solutions\",\"logicalName\":\"solution\"},\"Custom APIs\":{\"entitySetName\":\"customapis\",\"logicalName\":\"customapi\"},\"Custom API Request Parameters\":{\"entitySetName\":\"customapirequestparameters\",\"logicalName\":\"customapirequestparameter\"},\"Publishers\":{\"entitySetName\":\"publishers\",\"logicalName\":\"publisher\"},\"Custom API Response Properties\":{\"entitySetName\":\"customapiresponseproperties\",\"logicalName\":\"customapiresponseproperty\"},\"Sdk Message Processing Steps\":{\"entitySetName\":\"sdkmessageprocessingsteps\",\"logicalName\":\"sdkmessageprocessingstep\"},\"environment_39a902ba\":{\"entitySetName\":\"Environment\",\"logicalName\":\"environment_39a902ba\"}},\"components\":[{\"componentName\":\"WebResource\",\"identifier\":\"cat_DVPageLoc\",\"identifierType\":\"LogicalName\"},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVCommandBar\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVAutoWidthLabel\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.NavigationComponentPCF\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.NavigationComponentPCF\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}}]}}",
+                            "name":  "cat_overview_3dbf5",
+                            "displayname":  "Overview",
+                            "status":  "Ready",
+                            "appversion":  "2023-09-06T20:22:07Z",
+                            "description":  "",
+                            "canvasapptype":  2,
+                            "document_name":  null,
+                            "canvasappid":  "9865130c-ee26-4843-88c8-abcc945b65e3",
+                            "cdsdependencies":  "{\"cdsdependencies\":[{\"componenttype\":1,\"logicalname\":\"entity\"},{\"componenttype\":1,\"logicalname\":\"solution\"},{\"componenttype\":1,\"logicalname\":\"customapi\"},{\"componenttype\":1,\"logicalname\":\"customapirequestparameter\"},{\"componenttype\":1,\"logicalname\":\"publisher\"},{\"componenttype\":1,\"logicalname\":\"customapiresponseproperty\"},{\"componenttype\":1,\"logicalname\":\"sdkmessageprocessingstep\"},{\"componenttype\":61,\"logicalname\":\"cat_DVPageLoc\",\"componenttypeplatformname\":\"WebResource\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVCommandBar\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVAutoWidthLabel\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.NavigationComponentPCF\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.NavigationComponentPCF\",\"componenttypeplatformname\":\"CustomControl\"}]}",
+                            "createdbyclientversion":  "3.23081.15.0",
+                            "canconsumeapppass":  true,
+                            "ismanaged":  true,
+                            "introducedversion":  "1.0",
+                            "tags":  "{\"primaryDeviceWidth\":\"1366\",\"primaryDeviceHeight\":\"768\",\"supportsPortrait\":\"true\",\"supportsLandscape\":\"true\",\"primaryFormFactor\":\"Tablet\",\"publisherVersion\":\"3.23081.15\",\"minimumRequiredApiVersion\":\"2.2.0\",\"hasComponent\":\"false\",\"hasUnlockedComponent\":\"false\",\"isUnifiedRootApp\":\"false\",\"sienaVersion\":\"20230823T035157Z-3.23081.15.0\",\"showStatusBar\":\"false\"}",
+                            "authorizationreferences":  "[]",
+                            "minclientversion":  "3.23081.15.0",
+                            "connectionreferences":  "{}",
+                            "backgroundimage_name":  null,
+                            "iscustomizable":  {
+                                                   "Value":  false,
+                                                   "CanBeChanged":  true,
+                                                   "ManagedPropertyLogicalName":  "iscustomizableanddeletable"
+                                               }
+                        }
+                    ],
+    "environment_variable_definitions":  [
+
+                                         ],
+    "roles":  [
+
+              ],
+    "similarity_rules":  [
+
+                         ],
+    "privilege_object_type_codes":  [
+
+                                    ],
+    "role_privileges":  [
+
+                        ],
+    "slas":  [
+
+             ],
+    "ribbon_context_groups":  [
+
+                              ],
+    "complex_controls":  [
+
+                         ],
+    "global_option_sets":  [
+
+                           ],
+    "plugin_assemblies":  [
+
+                          ],
+    "warnings":  [
+
+                 ],
+    "solution":  {
+                     "friendlyname":  "Codex Metadata Seed Environment",
+                     "uniquename":  "CodexMetadataSeedEnvironment",
+                     "version":  "1.0.0.0",
+                     "solutionid":  "f6b24d66-e237-f111-88b3-0022489b9600"
+                 },
+    "routing_rules":  [
+
+                      ],
+    "capture_mode":  "web-api",
+    "sla_items":  [
+
+                  ],
+    "duplicate_rules":  [
+
+                        ],
+    "saved_query_visualizations":  [
+
+                                   ],
+    "app_modules":  [
+
+                    ],
+    "ribbon_rules":  [
+
+                     ],
+    "ribbon_tab_to_command_maps":  [
+
+                                   ],
+    "custom_control_default_configs":  [
+
+                                       ],
+    "plugin_step_images":  [
+
+                           ],
+    "ribbon_commands":  [
+
+                        ],
+    "ribbon_customizations":  [
+
+                              ]
+}

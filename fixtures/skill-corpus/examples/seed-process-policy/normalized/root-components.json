@@ -1,0 +1,29 @@
+[
+  {
+    "type": "1",
+    "type_label": "Entity",
+    "family_label": "Schema and Metadata",
+    "id": "",
+    "schema_name": "account",
+    "behavior": "1",
+    "behavior_label": "Do not include subcomponents"
+  },
+  {
+    "type": "150",
+    "type_label": "Routing Rule",
+    "family_label": "Process and Service Policy",
+    "id": "{4c205db4-6737-f111-88b3-0022489b9600}",
+    "schema_name": "",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "161",
+    "type_label": "Mobile Offline Profile",
+    "family_label": "Process and Service Policy",
+    "id": "{9f0a7210-6937-f111-88b3-0022489b9600}",
+    "schema_name": "",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  }
+]

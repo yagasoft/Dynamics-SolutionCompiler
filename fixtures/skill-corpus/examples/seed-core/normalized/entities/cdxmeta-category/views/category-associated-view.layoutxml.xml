@@ -1,0 +1,1 @@
+<grid icon="1" jump="cdxmeta_categoryname" name="cdxmeta_categories" preview="1" select="1"><row id="cdxmeta_categoryid" name="cdxmeta_category"><cell name="cdxmeta_categoryname" width="300" /><cell name="createdon" width="125" /></row></grid>

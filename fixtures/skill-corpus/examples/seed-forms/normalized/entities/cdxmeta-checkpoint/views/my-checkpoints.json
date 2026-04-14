@@ -1,0 +1,21 @@
+{
+  "name": "My Checkpoints",
+  "id": "{9cd24523-3b37-f111-88b3-0022489b9600}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n            <condition attribute=\"ownerid\" operator=\"eq-userid\" />\n          </filter>\n        </entity>\n      </fetch>",
+  "layoutxml": "",
+  "summary": {
+    "target_entity": "cdxmeta_checkpoint",
+    "layout_columns": [],
+    "fetch_attributes": [
+      "cdxmeta_checkpointid"
+    ],
+    "link_entities": [],
+    "filters": [
+      "and:statecode:eq",
+      "and:ownerid:eq-userid"
+    ],
+    "orders": [],
+    "signature": "493de1eddcb6174530c1ce42223f794e92faaed16ee8bf465b6e64aaf98c6406"
+  }
+}

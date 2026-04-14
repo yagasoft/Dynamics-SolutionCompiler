@@ -1,0 +1,36 @@
+[
+  {
+    "entity_logical_name": "cdxmeta_category",
+    "attribute_logical_name": "statecode",
+    "attribute_display_name": "Status",
+    "option_set_name": "cdxmeta_category_statecode",
+    "option_set_type": "state",
+    "is_global": null,
+    "options": [],
+    "comparison_key": "cdxmeta_category|statecode",
+    "summary": {
+      "counts": {
+        "option_count": 0
+      },
+      "comparison_signature": "da62153145cb0286c4c309e7d425cb0f7cdbb76ea87db6b7d6834d9607443f08",
+      "signature": "da62153145cb0286c4c309e7d425cb0f7cdbb76ea87db6b7d6834d9607443f08"
+    }
+  },
+  {
+    "entity_logical_name": "cdxmeta_category",
+    "attribute_logical_name": "statuscode",
+    "attribute_display_name": "Status Reason",
+    "option_set_name": "cdxmeta_category_statuscode",
+    "option_set_type": "status",
+    "is_global": null,
+    "options": [],
+    "comparison_key": "cdxmeta_category|statuscode",
+    "summary": {
+      "counts": {
+        "option_count": 0
+      },
+      "comparison_signature": "6c26d1eac9e2f874b2c8760e619cc968661a6706b2daf469590c293ac34ddc01",
+      "signature": "6c26d1eac9e2f874b2c8760e619cc968661a6706b2daf469590c293ac34ddc01"
+    }
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "source_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\source-only-similarity-rule\\unpacked",
+  "resolved_root": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\source-only-similarity-rule\\unpacked",
+  "layout": "xml",
+  "solution": {
+    "unique_name": "CodexMetadataSourceOnlySimilarityRule",
+    "friendly_name": "",
+    "version": "1.0.0.0",
+    "managed": "0",
+    "publisher": {
+      "unique_name": "CodexMetadata",
+      "prefix": "cdxmeta"
+    },
+    "source_files": {
+      "solution_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\source-only-similarity-rule\\unpacked\\Other\\Solution.xml",
+      "customizations_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\source-only-similarity-rule\\unpacked\\Other\\Customizations.xml"
+    }
+  },
+  "root_components": [
+    {
+      "type": "165",
+      "type_label": "Similarity Rule",
+      "family_label": "Process and Service Policy",
+      "id": "{3B0D5FB7-7F92-4A8A-AE36-6FC1C7A96165}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    }
+  ],
+  "entities": {},
+  "app_modules": [],
+  "site_maps": [],
+  "web_resources": [],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "plugin_assemblies": [],
+  "plugin_steps": [],
+  "plugin_step_images": [],
+  "workflows": [],
+  "duplicate_rules": [],
+  "duplicate_rule_conditions": [],
+  "routing_rules": [],
+  "routing_rule_items": [],
+  "slas": [],
+  "sla_items": [],
+  "similarity_rules": [
+    {
+      "id": "{3B0D5FB7-7F92-4A8A-AE36-6FC1C7A96165}",
+      "name": "Codex Metadata Account Similarity Rule",
+      "description": "Compact source-only similarity-rule parser fixture.",
+      "base_entity_name": "account",
+      "matching_entity_name": "account",
+      "exclude_inactive_records": "1",
+      "max_keywords": "5",
+      "ngram_size": "2",
+      "summary": {
+        "comparison_signature": "41bd0ba5e6e0e7a90f6aa7d42029df9c42b6f9496ed4aa815f0c07c4cfcdc964",
+        "signature": "41bd0ba5e6e0e7a90f6aa7d42029df9c42b6f9496ed4aa815f0c07c4cfcdc964"
+      }
+    }
+  ],
+  "mobile_offline_profiles": [],
+  "mobile_offline_profile_items": [],
+  "roles": [],
+  "role_privileges": [],
+  "privilege_object_type_codes": [],
+  "field_security_profiles": [],
+  "field_permissions": [],
+  "connection_roles": [],
+  "warnings": [],
+  "signature": "8847858bb45eaa3dcf7d1faed11f4c03831ecfa2dfcdc1204aa00d9e88474226"
+}

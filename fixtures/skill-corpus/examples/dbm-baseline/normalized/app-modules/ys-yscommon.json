@@ -1,0 +1,25 @@
+{
+  "id": "",
+  "unique_name": "ys_YSCommon",
+  "display_name": "Yagasoft",
+  "description": "Please refer to Yagasoft.com (Ahmed Elsawalhy) for support.",
+  "web_resource_id": "953b9fac-1e5e-e611-80d6-00155ded156f",
+  "client_type": "4",
+  "form_factor": "1",
+  "navigation_type": "0",
+  "state_code": "0",
+  "status_code": "1",
+  "components": [],
+  "role_ids": [],
+  "app_settings": [],
+  "summary": {
+    "counts": {
+      "component_count": 0,
+      "role_map_count": 0,
+      "app_setting_count": 0
+    },
+    "component_types": [],
+    "comparison_signature": "13ba0ee65c81b0289e39f0b7ca4469521be4b3b4a2ecfa0cdab60c034d1f3a67",
+    "signature": "85a76dd47ed4b8509043437a86ace0da0033d1e87e584ec2686cfaa9ffbb2944"
+  }
+}

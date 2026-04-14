@@ -1,0 +1,35 @@
+{
+  "id": "{74A622C0-5193-DE11-97D4-00155DA3B01E}",
+  "name": "Accounts by Industry",
+  "description": "Shows the total number of accounts by industry.",
+  "primary_entity_type_code": "account",
+  "is_default": "0",
+  "introduced_version": "5.0.0.0",
+  "data_description": "<datadefinition>\n      <fetchcollection>\n        <fetch mapping=\"logical\" aggregate=\"true\">\n          <entity name=\"account\">\n            <attribute groupby=\"true\" alias=\"groupby_column\" name=\"industrycode\" />\n            <attribute alias=\"aggregate_column\" name=\"name\" aggregate=\"count\" />\n          </entity>\n        </fetch>\n      </fetchcollection>\n      <categorycollection>\n        <category>\n          <measurecollection>\n            <measure alias=\"aggregate_column\" />\n          </measurecollection>\n        </category>\n      </categorycollection>\n    </datadefinition>",
+  "presentation_description": "<Chart>\n      <Series>\n        <Series ChartType=\"Bar\" IsValueShownAsLabel=\"True\" Color=\"91, 151, 213\" BackSecondaryColor=\"112, 142, 50\" Font=\"{0}, 9.5px\" LabelForeColor=\"59, 59, 59\" CustomProperties=\"PointWidth=0.75, MaxPixelPointWidth=40\">\n          <SmartLabelStyle Enabled=\"True\" />\n        </Series>\n      </Series>\n      <ChartAreas>\n        <ChartArea BorderColor=\"White\" BorderDashStyle=\"Solid\">\n          <AxisY LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\">\n            <MajorGrid LineColor=\"239, 242, 246\" />\n            <LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" />\n          </AxisY>\n          <AxisX LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\">\n            <MajorGrid Enabled=\"False\" />\n            <MajorTickMark Enabled=\"False\" />\n            <LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" />\n          </AxisX>\n        </ChartArea>\n      </ChartAreas>\n      <Titles>\n        <Title Name=\"Chart Title\" DockingOffset=\"-3\" Font=\"{0}, 13px\" ForeColor=\"59, 59, 59\" Alignment=\"TopLeft\" />\n      </Titles>\n    </Chart>",
+  "comparison_key": "account|accounts by industry",
+  "summary": {
+    "counts": {
+      "fetch_count": 1,
+      "category_count": 1,
+      "series_count": 1
+    },
+    "entity_names": [
+      "account"
+    ],
+    "groupby_columns": [
+      "industrycode"
+    ],
+    "measure_aliases": [
+      "aggregate_column"
+    ],
+    "chart_types": [
+      "Bar"
+    ],
+    "title_names": [
+      "Chart Title"
+    ],
+    "comparison_signature": "54913098e748db469cdc277f9b889e8ef2b6bb3252912f59f3628eb6297c2aa0",
+    "signature": "99eebcdf2dd4a54b2e17c82acfc8833ac3b4b24b124955f3148a9f17d21d49ab"
+  }
+}

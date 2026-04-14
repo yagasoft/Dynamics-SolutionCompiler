@@ -1,0 +1,21 @@
+{
+  "id": "{7f5c0f2a-6037-f111-88b3-0022489b9600}",
+  "name": "cdxmeta_/advancedui/landing.html",
+  "display_name": "Advanced UI Landing",
+  "description": "Neutral landing page for the Codex advanced UI scaffold.",
+  "type": "1",
+  "type_label": "Webpage (HTML)",
+  "language_code": "",
+  "file_name": "/WebResources/cdxmeta_advanceduilandinghtml7F5C0F2A-6037-F111-88B3-0022489B9600",
+  "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked\\WebResources\\cdxmeta_\\advancedui\\landing.html",
+  "summary": {
+    "type_label": "Webpage (HTML)",
+    "counts": {
+      "byte_count": 1389,
+      "line_count": 30
+    },
+    "content_sha256": "769c1328ba2445211a1e99b9eca7a19657fcb0c093a32c4e05d378b56f7e7007",
+    "comparison_signature": "974edda02fb929ca2bcd867002cf66c3751b4cb8a5db1c7341a695f36bbe73f4",
+    "signature": "3283370bfff5f9e7e0c724c2ea54fc520ccf525a26cf12bd09f7806c5446503d"
+  }
+}

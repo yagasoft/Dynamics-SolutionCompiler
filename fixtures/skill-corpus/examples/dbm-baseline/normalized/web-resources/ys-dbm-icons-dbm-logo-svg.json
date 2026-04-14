@@ -1,0 +1,21 @@
+{
+  "id": "{308b1c74-bba5-ef11-8a6a-0022489cf64b}",
+  "name": "ys_/dbm/icons/dbm-logo.svg",
+  "display_name": "DBM Logo SVG",
+  "description": "",
+  "type": "11",
+  "type_label": "Vector format (SVG)",
+  "language_code": "0",
+  "file_name": "/WebResources/ys_dbmiconsdbm-logosvg308B1C74-BBA5-EF11-8A6A-0022489CF64B",
+  "content_path": "",
+  "summary": {
+    "type_label": "Vector format (SVG)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "b4a819059a28032754a37d5ef5fdee8e232e80d04fc7b85fa1722de29a56241e",
+    "signature": "0c2cb0f1122ea352a89377b0549172ec1af446b0f0c327dc52ff5d1de705fb9d"
+  }
+}

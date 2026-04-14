@@ -1,0 +1,21 @@
+{
+  "id": "{a7b23fee-0ef0-ee11-af4b-00155d016516}",
+  "name": "ys_/dbm/libs/core.js",
+  "display_name": "DBM Core Library JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmlibscorejsA7B23FEE-0EF0-EE11-AF4B-00155D016516",
+  "content_path": "",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "a6d15e41a9995407dc85e61a0f0a0d1e24c1de12fd56d345e13a883f791ff842",
+    "signature": "19c99b84bb4a1a70961887ca5f0c05898f4f188a4db313dd03eb7fc82f945425"
+  }
+}

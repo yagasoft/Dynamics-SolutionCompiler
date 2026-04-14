@@ -1,0 +1,21 @@
+{
+  "id": "{981bbb43-13fa-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/primeicons.ttf",
+  "display_name": "DBM Editor App - PrimeIcons TTF",
+  "description": "",
+  "type": "2",
+  "type_label": "Style Sheet (CSS)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorprimeiconsttf981BBB43-13FA-EE11-A1FE-0022489F971B",
+  "content_path": "",
+  "summary": {
+    "type_label": "Style Sheet (CSS)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "13c0e98f8081e2082dc2a66faa4ad352b9410de54344e2cb0f555211c33d7915",
+    "signature": "8e3f915366ee5056c21fdf2eef2455a5dee952a1863a13db73ec8c7c8aa6b478"
+  }
+}

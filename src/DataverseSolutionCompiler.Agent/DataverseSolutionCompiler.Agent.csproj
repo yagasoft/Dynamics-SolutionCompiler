@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataverseSolutionCompiler.Domain\DataverseSolutionCompiler.Domain.csproj" />
+    <ProjectReference Include="..\DataverseSolutionCompiler.Compiler\DataverseSolutionCompiler.Compiler.csproj" />
+  </ItemGroup>
+</Project>

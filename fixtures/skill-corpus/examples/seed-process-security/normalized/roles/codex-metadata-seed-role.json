@@ -1,0 +1,75 @@
+{
+  "id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+  "name": "Codex Metadata Seed Role",
+  "business_unit_id": "",
+  "is_inherited": "",
+  "role_privileges": [
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvCreateSharePointData",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvCreateSharePointData|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvReadPluginAssembly",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvReadPluginAssembly|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvReadPluginType",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvReadPluginType|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvReadSdkMessage",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvReadSdkMessage|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvReadSdkMessageProcessingStep",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvReadSdkMessageProcessingStep|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvReadSdkMessageProcessingStepImage",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvReadSdkMessageProcessingStepImage|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvReadSharePointData",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvReadSharePointData|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvReadSharePointDocument",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvReadSharePointDocument|Global"
+    },
+    {
+      "role_name": "Codex Metadata Seed Role",
+      "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "prvWriteSharePointData",
+      "level": "Global",
+      "comparison_key": "Codex Metadata Seed Role|prvWriteSharePointData|Global"
+    }
+  ],
+  "summary": {
+    "comparison_signature": "173a112bbb6bdec2d3234b0333f7921f8cf516a936b3d649c07e0a5d5769e36b",
+    "signature": "173a112bbb6bdec2d3234b0333f7921f8cf516a936b3d649c07e0a5d5769e36b"
+  }
+}

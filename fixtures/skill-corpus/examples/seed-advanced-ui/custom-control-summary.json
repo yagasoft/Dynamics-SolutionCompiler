@@ -1,0 +1,46 @@
+{
+  "source_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\readback\\artifacts\\custom-controls.json",
+  "name": "cat_PowerCAT.CustomizableTextField",
+  "version": "0.0.2",
+  "supported_platform": "(Model),(Canvas),(CustomPage)",
+  "summary": {
+    "counts": {
+      "property_count": 7,
+      "dataset_count": 0,
+      "feature_count": 1,
+      "resource_count": 3
+    },
+    "supported_platforms": [
+      "Canvas",
+      "CustomPage",
+      "Model"
+    ],
+    "namespace": "PowerCAT",
+    "constructor_name": "CustomizableTextField",
+    "control_type": "virtual",
+    "api_version": "1.3.5",
+    "property_names": [
+      "AccessibilityLabel",
+      "DelayOutput",
+      "ErrorMessage",
+      "Prefix",
+      "Suffix",
+      "Theme",
+      "Value"
+    ],
+    "dataset_names": [],
+    "feature_names": [
+      "ExplicitCommonEvents"
+    ],
+    "resource_paths": [
+      "bundle.js"
+    ],
+    "platform_libraries": [
+      "Fluent:8.29.0",
+      "React:16.8.6"
+    ],
+    "client_json_name": "PowerCAT.CustomizableTextField",
+    "comparison_signature": "b33fe06194a782d3bd882dbf1addf2f2581842afd5ebc8a61102a90debc6ddda",
+    "signature": "ddc1a69d48e6f7175e10f8b5cdb344d7ff12eedca15c04af4a781172005e58b9"
+  }
+}

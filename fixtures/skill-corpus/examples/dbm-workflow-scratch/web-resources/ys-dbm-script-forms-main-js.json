@@ -1,0 +1,21 @@
+{
+  "id": "{5207ac13-38fb-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm-script/forms/main.js",
+  "display_name": "DBM Script - Main Form JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbm-scriptformsmainjs5207AC13-38FB-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm-script\\forms\\main.js",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 669,
+      "line_count": 22
+    },
+    "content_sha256": "cabdc0157805bd350b2926c615c192dfc70a182f3a0e80ea0abd0095306a117a",
+    "comparison_signature": "fd89a1520d2aeef910f475657e094432a16b0a9a78d381202a669aa63026719b",
+    "signature": "be69404b6875e49d29549ccba6d77d24db034a3e7141fd471ca1cc2421d44859"
+  }
+}

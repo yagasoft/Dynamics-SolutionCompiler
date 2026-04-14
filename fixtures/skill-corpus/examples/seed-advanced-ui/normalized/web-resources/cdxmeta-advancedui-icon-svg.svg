@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Codex Metadata Advanced UI">
+  <rect x="8" y="8" width="112" height="112" rx="22" fill="#0f172a" />
+  <rect x="22" y="22" width="84" height="84" rx="16" fill="#f8fafc" />
+  <path d="M38 44h52M38 64h52M38 84h34" stroke="#2563eb" stroke-width="8" stroke-linecap="round" />
+</svg>

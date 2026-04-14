@@ -1,0 +1,21 @@
+{
+  "id": "{60ec2068-13fa-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/primeicons.woff",
+  "display_name": "DBM Editor App - PrimeIcons WOFF",
+  "description": "",
+  "type": "2",
+  "type_label": "Style Sheet (CSS)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorprimeiconswoff60EC2068-13FA-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.woff",
+  "summary": {
+    "type_label": "Style Sheet (CSS)",
+    "counts": {
+      "byte_count": 72280,
+      "line_count": 0
+    },
+    "content_sha256": "90a58d3a04d0020525920f02f25b154f03f1b0a99f7f4fbf97a9134ed6b27d48",
+    "comparison_signature": "af74e75e7dc5d994cea4d35201b51e5a2e299824a59f2e88eb8dc1006cc11a4f",
+    "signature": "e468cdbb640995f421c6dc853da083ae2846f07f2b7a69611e4fad4914bce7c4"
+  }
+}

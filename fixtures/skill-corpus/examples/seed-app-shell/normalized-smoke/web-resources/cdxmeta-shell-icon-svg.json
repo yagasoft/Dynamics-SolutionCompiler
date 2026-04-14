@@ -1,0 +1,21 @@
+{
+  "id": "{9fba2262-5637-f111-88b3-0022489b9600}",
+  "name": "cdxmeta_/shell/icon.svg",
+  "display_name": "Codex Metadata Shell Icon SVG",
+  "description": "Neutral SVG icon for the app-shell seed.",
+  "type": "11",
+  "type_label": "Vector format (SVG)",
+  "language_code": "1033",
+  "file_name": "/WebResources/cdxmeta_shelliconsvg9FBA2262-5637-F111-88B3-0022489B9600",
+  "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\WebResources\\cdxmeta_\\shell\\icon.svg",
+  "summary": {
+    "type_label": "Vector format (SVG)",
+    "counts": {
+      "byte_count": 243,
+      "line_count": 1
+    },
+    "content_sha256": "f3ab323557e9683e58cec264aeb606427cba2ee402ee61a318c8c65970394a99",
+    "comparison_signature": "6db33e2ed1694f0a05106242945252cca582000851250d87a96c75fc21315100",
+    "signature": "335008e6d962451c17e3935c0e6f75b2f4717a6aeb34aad6ecab3209abcf9856"
+  }
+}

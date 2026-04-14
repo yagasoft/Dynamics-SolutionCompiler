@@ -1,0 +1,21 @@
+{
+  "id": "{a6230f14-13fa-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/primeicons.eot",
+  "display_name": "DBM Editor App - PrimeIcons EOT",
+  "description": "",
+  "type": "2",
+  "type_label": "Style Sheet (CSS)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorprimeiconseotA6230F14-13FA-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.eot",
+  "summary": {
+    "type_label": "Style Sheet (CSS)",
+    "counts": {
+      "byte_count": 72380,
+      "line_count": 0
+    },
+    "content_sha256": "ce85233818dabc762ff0a24de4dd956376a3b5c641f5fa78b3bf9977d56c97ff",
+    "comparison_signature": "b9d06240a3828e5757bca7b751f855b54034869ef01484121e131f60e4ad695f",
+    "signature": "7c2502fbda1b84a6fcfb4c598508418800ac58b92636f50aea545e5afa88b438"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "{47578132-b2a5-ef11-8a6a-0022489cf64b}",
+  "name": "ys_/dbm/icons/dbmicon128.png",
+  "display_name": "DBM Icon 128 PNG",
+  "description": "",
+  "type": "5",
+  "type_label": "PNG format",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmiconsdbmicon128png47578132-B2A5-EF11-8A6A-0022489CF64B",
+  "content_path": "",
+  "summary": {
+    "type_label": "PNG format",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "cd6220bae8141cde71413b7c1610b13a1a84447de55d62b1d1aae3c1287e0211",
+    "signature": "a2e2a6a3d227a4defcd5e1b9ae75f09dfb6fa2726b6780e5125ec0cd1b272181"
+  }
+}

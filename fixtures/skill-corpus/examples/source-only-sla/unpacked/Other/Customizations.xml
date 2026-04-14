@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26033.170" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26033.00170">
+  <Entities />
+  <Roles />
+  <Workflows />
+  <FieldSecurityProfiles />
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <RoutingRules />
+  <MobileOfflineProfiles />
+  <CustomControls />
+  <SLAs>
+    <SLA SLAId="{5B22D27B-67A2-4C2D-B8AF-CA6C0F121152}" Name="Codex Metadata Account SLA">
+      <ApplicableFrom>createdon</ApplicableFrom>
+      <AllowPauseResume>0</AllowPauseResume>
+      <IsDefault>0</IsDefault>
+      <WorkflowId>{00000000-0000-0000-0000-000000000000}</WorkflowId>
+      <SLAItems>
+        <SLAItem SLAItemId="{1E12DA50-54E1-4D6D-BF47-9C9A2A251153}" SLAId="{5B22D27B-67A2-4C2D-B8AF-CA6C0F121152}" SLAName="Codex Metadata Account SLA" Name="Codex Metadata Account SLA Item">
+          <ApplicableEntity>account</ApplicableEntity>
+          <AllowPauseResume>0</AllowPauseResume>
+          <ApplicableWhenXml><conditions><condition attribute="name" operator="not-null" /></conditions></ApplicableWhenXml>
+          <ActionUrl>https://example.invalid/sla-fixture</ActionUrl>
+          <ActionFlowUniqueName>cdxmeta_source_only_sla_action</ActionFlowUniqueName>
+        </SLAItem>
+      </SLAItems>
+    </SLA>
+  </SLAs>
+  <EntityDataProviders />
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

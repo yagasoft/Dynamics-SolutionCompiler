@@ -1,0 +1,607 @@
+{
+  "logical_name": "cdxmeta_checkpoint",
+  "schema_name": "cdxmeta_Checkpoint",
+  "forms": [
+    {
+      "name": "Information",
+      "type": "card",
+      "id": "{7c2d07e7-c51b-491b-861d-1fb283a2c78d}",
+      "description": "A card form for this entity.",
+      "formxml": "<form>\n      <tabs>\n        <tab name=\"general\" verticallayout=\"true\" id=\"{26aaa30f-f1c8-4b5a-b827-1b891661729a}\" IsUserDefined=\"0\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"25%\">\n              <sections>\n                <section name=\"ColorStrip\" showlabel=\"false\" showbar=\"false\" columns=\"1\" IsUserDefined=\"0\" id=\"{608140e9-4d2b-408f-8f1b-dd063592bec6}\">\n                  <labels>\n                    <label description=\"ColorStrip\" languagecode=\"1033\" />\n                  </labels>\n                </section>\n              </sections>\n            </column>\n            <column width=\"75%\">\n              <sections>\n                <section name=\"CardHeader\" showlabel=\"false\" showbar=\"false\" columns=\"111\" id=\"{7ad50db8-323f-4795-8757-83bdde610e3b}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Header\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{97253f69-92a2-446e-b4fc-5172aed27efc}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Status Reason\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"statuscode\" classid=\"{5D68B988-0661-4db2-BC3E-17598AD3BE6C}\" datafieldname=\"statuscode\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{cd0ea78b-1c18-42b0-ad19-5280c42e43be}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                      <cell id=\"{6ba87239-1b92-48ed-804c-1e858eba7f9c}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"CardDetails\" showlabel=\"false\" showbar=\"false\" columns=\"1\" id=\"{e30a1121-a021-4f62-bbb9-6a09b042cd72}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Details\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{8eb0142e-bd5d-4cdd-993f-0a6d04b76c46}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Checkpoint Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_checkpointname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_checkpointname\" disabled=\"false\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"CardFooter\" showlabel=\"false\" columns=\"1111\" showbar=\"false\" id=\"{b33b1ed7-92b7-4323-8f12-369c55f3ecd7}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Footer\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{b7508646-4c31-4ca2-8a34-5b08e026a337}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{5248bba0-276a-4a07-b0d0-4a1d24677600}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Created On\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"createdon\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"createdon\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{b24676fc-0eca-46bd-af90-e2a21a619c53}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                      <cell id=\"{9bd23b84-a321-4cff-818e-a456e7e85d61}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 4,
+          "control_count": 4,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "general",
+            "label": "",
+            "section_count": 4,
+            "sections": [
+              {
+                "name": "ColorStrip",
+                "label": "ColorStrip",
+                "control_count": 0,
+                "controls": []
+              },
+              {
+                "name": "CardHeader",
+                "label": "Header",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "statuscode",
+                    "uniqueid": "",
+                    "classid": "{5D68B988-0661-4db2-BC3E-17598AD3BE6C}",
+                    "datafieldname": "statuscode",
+                    "kind": "field",
+                    "signature": "924feff09161923fac8af428340971a92a287df59491a6b2184941ab9ebfb336",
+                    "label": "Status Reason"
+                  }
+                ]
+              },
+              {
+                "name": "CardDetails",
+                "label": "Details",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "cdxmeta_checkpointname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_checkpointname",
+                    "kind": "single-line-text",
+                    "signature": "d389e86bd36873a562a151a6a3536eb440a720e3fd675929ff9872e9b60f8aca",
+                    "label": "Checkpoint Name"
+                  }
+                ]
+              },
+              {
+                "name": "CardFooter",
+                "label": "Footer",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  },
+                  {
+                    "id": "createdon",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "createdon",
+                    "kind": "lookup",
+                    "signature": "1812e7c8e47d316173dd5da44ebcb65545b026cc8421fd255110a4eb3c40ca1c",
+                    "label": "Created On"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "ea1b7c7742838203392b49e7095f9e1b9693ebde52607168871ea85db9ccdfca"
+      }
+    },
+    {
+      "name": "Information",
+      "type": "main",
+      "id": "{46da5e3d-fbf9-4060-9f79-b9ac4a0b7b7d}",
+      "description": "A form for this entity.",
+      "formxml": "<form>\n      <tabs>\n        <tab verticallayout=\"true\" id=\"{c8260ac0-ad4d-46f0-96b5-1d3cf52bf31e}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"General\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section showlabel=\"false\" showbar=\"false\" IsUserDefined=\"0\" id=\"{a2a71a7c-5780-4a39-ace8-bd364e48df0a}\">\n                  <labels>\n                    <label description=\"General\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{b02631a3-5c91-4ad9-b638-345af211e5c9}\">\n                        <labels>\n                          <label description=\"Checkpoint Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_checkpointname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_checkpointname\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{16151aad-d7f3-465a-bc90-7dfc3a69ef52}\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 1,
+          "control_count": 2,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "",
+            "label": "General",
+            "section_count": 1,
+            "sections": [
+              {
+                "name": "",
+                "label": "General",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "cdxmeta_checkpointname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_checkpointname",
+                    "kind": "single-line-text",
+                    "signature": "d389e86bd36873a562a151a6a3536eb440a720e3fd675929ff9872e9b60f8aca",
+                    "label": "Checkpoint Name"
+                  },
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "cd7e68bf4c8f3a2de9685f81e26080640962be092e31f07b1c067f9765dd0f49"
+      }
+    },
+    {
+      "name": "Information",
+      "type": "quick",
+      "id": "{4e60526b-43c9-4eff-980e-12fb152572de}",
+      "description": "",
+      "formxml": "<form>\n      <tabs>\n        <tab verticallayout=\"true\" id=\"{7a5c58e5-7f1e-4909-807d-7275b4d49653}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section showlabel=\"false\" showbar=\"false\" IsUserDefined=\"0\" id=\"{8cf241bc-62c1-4b5a-86c2-911c1572bd9a}\">\n                  <labels>\n                    <label description=\"GENERAL\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{e7884d27-189f-4142-8314-b62ea4a109b9}\">\n                        <labels>\n                          <label description=\"Checkpoint Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_checkpointname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_checkpointname\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{3e10f4dc-89db-45ea-99dd-9674f8f99cc3}\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 1,
+          "control_count": 2,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "",
+            "label": "",
+            "section_count": 1,
+            "sections": [
+              {
+                "name": "",
+                "label": "GENERAL",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "cdxmeta_checkpointname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_checkpointname",
+                    "kind": "single-line-text",
+                    "signature": "d389e86bd36873a562a151a6a3536eb440a720e3fd675929ff9872e9b60f8aca",
+                    "label": "Checkpoint Name"
+                  },
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "d82ed83808b7d87128e5055d4c88f3e164443a5448195f64434b5ae8b7bf69f0"
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "Checkpoint Advanced Find View",
+      "id": "{08bea66b-4fd7-4d7b-929c-b4fe2758d3cf}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <attribute name=\"cdxmeta_checkpointname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_checkpointname\" descending=\"false\" />\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_checkpointid\">\n          <cell name=\"cdxmeta_checkpointname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_checkpoint",
+        "layout_columns": [
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_checkpointid",
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [],
+        "orders": [
+          "cdxmeta_checkpointname"
+        ],
+        "signature": "e3af68d722478ce86512d2a00a55e5814a4a989ee39142338fd002a787e72504"
+      }
+    },
+    {
+      "name": "Checkpoint Lookup View",
+      "id": "{1cccc4d2-7d78-4523-b21e-5776205e3cb3}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <attribute name=\"cdxmeta_checkpointname\" />\n          <attribute name=\"createdon\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"cdxmeta_checkpoints\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"0\">\n        <row name=\"cdxmeta_checkpoint\" id=\"cdxmeta_checkpointid\">\n          <cell name=\"cdxmeta_checkpointname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_checkpoint",
+        "layout_columns": [
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_checkpointid",
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [],
+        "signature": "da9c7d5d7bc3d138906772c8b6a2ca7f4563f2724cab4e05092fa9e2539ff1a6"
+      }
+    },
+    {
+      "name": "Active Checkpoints",
+      "id": "{500a740d-e399-42c5-9f3a-0f9c203ef9cd}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <attribute name=\"cdxmeta_checkpointname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_checkpointname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_checkpointid\">\n          <cell name=\"cdxmeta_checkpointname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_checkpoint",
+        "layout_columns": [
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_checkpointid",
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_checkpointname"
+        ],
+        "signature": "11aa434244d26bb04fe83cfcab8180c40ccdb6523c4a146df4f285b6f959aacb"
+      }
+    },
+    {
+      "name": "Quick Find Active Checkpoints",
+      "id": "{7bc5b4c0-cd93-40a2-8b98-12d6643c1601}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <attribute name=\"cdxmeta_checkpointname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_checkpointname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n          <filter type=\"or\" isquickfindfields=\"1\">\n            <condition attribute=\"cdxmeta_checkpointname\" operator=\"like\" value=\"{0}\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_checkpointid\">\n          <cell name=\"cdxmeta_checkpointname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_checkpoint",
+        "layout_columns": [
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_checkpointid",
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq",
+          "or:cdxmeta_checkpointname:like"
+        ],
+        "orders": [
+          "cdxmeta_checkpointname"
+        ],
+        "signature": "afc988229868d4d41eee229bc3b3cada755e50624d02b27846c2701f8161c4ac"
+      }
+    },
+    {
+      "name": "My Checkpoints",
+      "id": "{9cd24523-3b37-f111-88b3-0022489b9600}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n            <condition attribute=\"ownerid\" operator=\"eq-userid\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "",
+      "summary": {
+        "target_entity": "cdxmeta_checkpoint",
+        "layout_columns": [],
+        "fetch_attributes": [
+          "cdxmeta_checkpointid"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq",
+          "and:ownerid:eq-userid"
+        ],
+        "orders": [],
+        "signature": "493de1eddcb6174530c1ce42223f794e92faaed16ee8bf465b6e64aaf98c6406"
+      }
+    },
+    {
+      "name": "Checkpoint Associated View",
+      "id": "{c08b029d-d71f-4418-bf9f-d71c7913e560}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <attribute name=\"cdxmeta_checkpointname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_checkpointname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"cdxmeta_checkpoints\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"cdxmeta_checkpoint\" id=\"cdxmeta_checkpointid\">\n          <cell name=\"cdxmeta_checkpointname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_checkpoint",
+        "layout_columns": [
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_checkpointid",
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_checkpointname"
+        ],
+        "signature": "11aa434244d26bb04fe83cfcab8180c40ccdb6523c4a146df4f285b6f959aacb"
+      }
+    },
+    {
+      "name": "Inactive Checkpoints",
+      "id": "{ddebe026-05c4-4758-a4d7-ff904e137288}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <attribute name=\"cdxmeta_checkpointname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_checkpointname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"1\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_checkpointid\">\n          <cell name=\"cdxmeta_checkpointname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_checkpoint",
+        "layout_columns": [
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_checkpointid",
+          "cdxmeta_checkpointname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_checkpointname"
+        ],
+        "signature": "11aa434244d26bb04fe83cfcab8180c40ccdb6523c4a146df4f285b6f959aacb"
+      }
+    }
+  ],
+  "saved_query_visualizations": [],
+  "attributes": [
+    {
+      "logical_name": "cdxmeta_checkpointid",
+      "display_name": "Checkpoint",
+      "type": "primarykey",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_checkpointname",
+      "display_name": "Checkpoint Name",
+      "type": "nvarchar",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_notes",
+      "display_name": "Notes",
+      "type": "ntext",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_sequence",
+      "display_name": "Sequence",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_workitemid",
+      "display_name": "Work Item",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdby",
+      "display_name": "Created By",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdon",
+      "display_name": "Created On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdonbehalfby",
+      "display_name": "Created By (Delegate)",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "importsequencenumber",
+      "display_name": "Import Sequence Number",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedby",
+      "display_name": "Modified By",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedon",
+      "display_name": "Modified On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedonbehalfby",
+      "display_name": "Modified By (Delegate)",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "overriddencreatedon",
+      "display_name": "Record Created On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "ownerid",
+      "display_name": "Owner",
+      "type": "owner",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owningbusinessunit",
+      "display_name": "Owning Business Unit",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owningteam",
+      "display_name": "Owning Team",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owninguser",
+      "display_name": "Owning User",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "statecode",
+      "display_name": "Status",
+      "type": "state",
+      "is_secured": false
+    },
+    {
+      "logical_name": "statuscode",
+      "display_name": "Status Reason",
+      "type": "status",
+      "is_secured": false
+    },
+    {
+      "logical_name": "timezoneruleversionnumber",
+      "display_name": "Time Zone Rule Version Number",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "utcconversiontimezonecode",
+      "display_name": "UTC Conversion Time Zone Code",
+      "type": "int",
+      "is_secured": false
+    }
+  ],
+  "relationships": {
+    "one_to_many": [],
+    "many_to_one": [],
+    "many_to_many": []
+  },
+  "ribbon_diff_xml": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RibbonDiffXml xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <CustomActions />\r\n  <Templates>\r\n    <RibbonTemplates Id=\"Mscrm.Templates\"></RibbonTemplates>\r\n  </Templates>\r\n  <CommandDefinitions />\r\n  <RuleDefinitions>\r\n    <TabDisplayRules />\r\n    <DisplayRules />\r\n    <EnableRules />\r\n  </RuleDefinitions>\r\n  <LocLabels />\r\n</RibbonDiffXml>",
+  "ribbon_diff_summary": {
+    "counts": {
+      "custom_action_count": 0,
+      "command_definition_count": 0,
+      "display_rule_count": 0,
+      "enable_rule_count": 0,
+      "hide_custom_action_count": 0,
+      "button_count": 0,
+      "loc_label_count": 0,
+      "byte_length": 396
+    },
+    "custom_action_ids": [],
+    "command_definition_ids": [],
+    "button_ids": [],
+    "display_rule_ids": [],
+    "enable_rule_ids": [],
+    "hide_custom_action_ids": [],
+    "comparison_signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6",
+    "signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6"
+  },
+  "shell_only": false
+}

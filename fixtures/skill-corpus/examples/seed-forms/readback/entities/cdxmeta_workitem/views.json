@@ -1,0 +1,58 @@
+﻿[
+    {
+        "savedqueryid":  "2bae28ff-3a37-f111-88b3-0022489b9600",
+        "name":  "My Work Items",
+        "returnedtypecode":  "cdxmeta_workitem",
+        "querytype":  8192,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\" savedqueryid=\"2bae28ff-3a37-f111-88b3-0022489b9600\"\u003e\u003centity name=\"cdxmeta_workitem\"\u003e\u003cattribute name=\"cdxmeta_workitemid\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003ccondition attribute=\"ownerid\" operator=\"eq-userid\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  null
+    },
+    {
+        "savedqueryid":  "16174dd2-556d-47a0-a1ca-5ad412bbe9dc",
+        "name":  "Inactive Work Items",
+        "returnedtypecode":  "cdxmeta_workitem",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"16174dd2-556d-47a0-a1ca-5ad412bbe9dc\"\u003e\u003centity name=\"cdxmeta_workitem\"\u003e\u003cattribute name=\"cdxmeta_workitemid\" /\u003e\u003cattribute name=\"cdxmeta_workitemname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_workitemname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"1\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10783\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_workitemid\"\u003e\u003ccell name=\"cdxmeta_workitemname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "a806b807-120e-4225-be4d-780c04932180",
+        "name":  "Work Item Advanced Find View",
+        "returnedtypecode":  "cdxmeta_workitem",
+        "querytype":  1,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"a806b807-120e-4225-be4d-780c04932180\"\u003e\u003centity name=\"cdxmeta_workitem\"\u003e\u003cattribute name=\"cdxmeta_workitemid\" /\u003e\u003cattribute name=\"cdxmeta_workitemname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_workitemname\" descending=\"false\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10783\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_workitemid\"\u003e\u003ccell name=\"cdxmeta_workitemname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "5bea075b-c3bb-41b9-9c02-79b40ab7650f",
+        "name":  "Quick Find Active Work Items",
+        "returnedtypecode":  "cdxmeta_workitem",
+        "querytype":  4,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"5bea075b-c3bb-41b9-9c02-79b40ab7650f\"\u003e\u003centity name=\"cdxmeta_workitem\"\u003e\u003cattribute name=\"cdxmeta_workitemid\" /\u003e\u003cattribute name=\"cdxmeta_workitemname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_workitemname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003cfilter type=\"or\" isquickfindfields=\"1\"\u003e\u003ccondition attribute=\"cdxmeta_workitemname\" operator=\"like\" value=\"{0}\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10783\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_workitemid\"\u003e\u003ccell name=\"cdxmeta_workitemname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "fc4076e5-70ab-4a7e-a1a5-9c5499819fe1",
+        "name":  "Work Item Associated View",
+        "returnedtypecode":  "cdxmeta_workitem",
+        "querytype":  2,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"fc4076e5-70ab-4a7e-a1a5-9c5499819fe1\"\u003e\u003centity name=\"cdxmeta_workitem\"\u003e\u003cattribute name=\"cdxmeta_workitemid\" /\u003e\u003cattribute name=\"cdxmeta_workitemname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_workitemname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"cdxmeta_workitems\" object=\"10783\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"cdxmeta_workitem\" id=\"cdxmeta_workitemid\"\u003e\u003ccell name=\"cdxmeta_workitemname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "c24565e8-7bef-41bf-a4cd-b1408f0a0543",
+        "name":  "Work Item Lookup View",
+        "returnedtypecode":  "cdxmeta_workitem",
+        "querytype":  64,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"c24565e8-7bef-41bf-a4cd-b1408f0a0543\"\u003e\u003centity name=\"cdxmeta_workitem\"\u003e\u003cattribute name=\"cdxmeta_workitemid\" /\u003e\u003cattribute name=\"cdxmeta_workitemname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"cdxmeta_workitems\" object=\"10783\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"0\"\u003e\u003crow name=\"cdxmeta_workitem\" id=\"cdxmeta_workitemid\"\u003e\u003ccell name=\"cdxmeta_workitemname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "50ec9e87-d0c3-4e0c-b2ca-fb84f7fb7eee",
+        "name":  "Active Work Items",
+        "returnedtypecode":  "cdxmeta_workitem",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"50ec9e87-d0c3-4e0c-b2ca-fb84f7fb7eee\"\u003e\u003centity name=\"cdxmeta_workitem\"\u003e\u003cattribute name=\"cdxmeta_workitemid\" /\u003e\u003cattribute name=\"cdxmeta_workitemname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_workitemname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10783\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_workitemid\"\u003e\u003ccell name=\"cdxmeta_workitemname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    }
+]

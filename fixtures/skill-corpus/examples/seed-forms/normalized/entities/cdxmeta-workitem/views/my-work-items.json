@@ -1,0 +1,21 @@
+{
+  "name": "My Work Items",
+  "id": "{2bae28ff-3a37-f111-88b3-0022489b9600}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n            <condition attribute=\"ownerid\" operator=\"eq-userid\" />\n          </filter>\n        </entity>\n      </fetch>",
+  "layoutxml": "",
+  "summary": {
+    "target_entity": "cdxmeta_workitem",
+    "layout_columns": [],
+    "fetch_attributes": [
+      "cdxmeta_workitemid"
+    ],
+    "link_entities": [],
+    "filters": [
+      "and:statecode:eq",
+      "and:ownerid:eq-userid"
+    ],
+    "orders": [],
+    "signature": "5fde54dd300c8f9db02f3c7f5b20edd9c960ac339b71f8a25f8ebc977b9affdd"
+  }
+}

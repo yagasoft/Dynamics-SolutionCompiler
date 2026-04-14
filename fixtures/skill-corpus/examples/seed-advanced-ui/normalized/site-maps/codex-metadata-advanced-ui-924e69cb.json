@@ -1,0 +1,42 @@
+{
+  "unique_name": "codex_metadata_advanced_ui_924e69cb",
+  "display_name": "Codex Metadata Advanced UI",
+  "enable_collapsible_groups": "False",
+  "show_home": "True",
+  "show_pinned": "True",
+  "show_recents": "True",
+  "sitemap_xml": "<SiteMap>\n    <Area Id=\"cdxmeta_area\" ResourceId=\"Area_CodexMetadata\" ShowGroups=\"true\" Title=\"Codex Metadata Advanced UI\">\n      <Group Id=\"cdxmeta_group\" ResourceId=\"Group_CodexMetadata\" Title=\"Advanced UI Seed\">\n        <SubArea Id=\"cdxmeta_shell\" Title=\"Advanced UI Shell\" Url=\"$webresource:cdxmeta_/advancedui/landing.html\" Icon=\"/WebResources/cdxmeta_/advancedui/icon.svg\" AvailableOffline=\"false\" PassParams=\"false\" />\n      </Group>\n    </Area>\n  </SiteMap>\n  ",
+  "summary": {
+    "counts": {
+      "area_count": 1,
+      "group_count": 1,
+      "subarea_count": 1,
+      "web_resource_subarea_count": 1,
+      "entity_subarea_count": 0
+    },
+    "areas": [
+      {
+        "id": "cdxmeta_area",
+        "title": "",
+        "groups": [
+          {
+            "id": "cdxmeta_group",
+            "title": "",
+            "subareas": [
+              {
+                "id": "cdxmeta_shell",
+                "title": "Advanced UI Shell",
+                "url": "$webresource:cdxmeta_/advancedui/landing.html",
+                "entity": "",
+                "icon": "/WebResources/cdxmeta_/advancedui/icon.svg",
+                "vector_icon": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "signature": "408575967d1201de2789246b27cf0909a06475a3e4ce2c23294ddbcbf7507423",
+    "comparison_signature": "1d48038496a5fdfde35eee6d1ce5978b4619df6b5df6aab19df59f8cf766a62a"
+  }
+}

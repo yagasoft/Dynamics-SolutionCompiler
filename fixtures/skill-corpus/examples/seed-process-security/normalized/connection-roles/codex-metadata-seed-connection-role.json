@@ -1,0 +1,10 @@
+{
+  "id": "{a3843e20-5d37-f111-88b3-0022489b9600}",
+  "name": "Codex Metadata Seed Connection Role",
+  "category": "1",
+  "description": "Neutral connection role placeholder for Dataverse metadata synthesis.",
+  "summary": {
+    "comparison_signature": "78f1911be727fe6613f0690dd1b471dbf53d0b2498f5e7de98b665d7a71e0c5c",
+    "signature": "78f1911be727fe6613f0690dd1b471dbf53d0b2498f5e7de98b665d7a71e0c5c"
+  }
+}

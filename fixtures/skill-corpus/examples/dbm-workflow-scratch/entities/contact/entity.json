@@ -1,0 +1,12 @@
+{
+  "logical_name": "contact",
+  "schema_name": "Contact",
+  "forms": [],
+  "views": [],
+  "attributes": [],
+  "relationships": {
+    "one_to_many": [],
+    "many_to_one": [],
+    "many_to_many": []
+  }
+}

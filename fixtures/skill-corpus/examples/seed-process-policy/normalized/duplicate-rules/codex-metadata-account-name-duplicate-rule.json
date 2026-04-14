@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "Codex Metadata Account Name Duplicate Rule",
+  "base_entity_name": "account",
+  "matching_entity_name": "account",
+  "is_case_sensitive": "0",
+  "exclude_inactive_records": "1",
+  "state_code": "",
+  "status_code": "",
+  "conditions": [
+    {
+      "id": "",
+      "comparison_key": "codex metadata account name duplicate rule|name|name|0",
+      "rule_name": "Codex Metadata Account Name Duplicate Rule",
+      "rule_id": "",
+      "base_attribute_name": "name",
+      "matching_attribute_name": "name",
+      "operator_code": "0",
+      "ignore_blank_values": "1",
+      "summary": {
+        "comparison_signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a",
+        "signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a"
+      }
+    }
+  ],
+  "summary": {
+    "comparison_signature": "19e34cbc1558b5f0a5d9d57170701b9ac1fd723f113d19050be855d0cab6ef93",
+    "signature": "19e34cbc1558b5f0a5d9d57170701b9ac1fd723f113d19050be855d0cab6ef93"
+  }
+}

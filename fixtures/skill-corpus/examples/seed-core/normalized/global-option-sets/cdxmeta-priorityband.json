@@ -1,0 +1,35 @@
+{
+  "name": "cdxmeta_priorityband",
+  "display_name": "Priority Band",
+  "description": "Reusable global choice for neutral schema-detail coverage.",
+  "option_set_type": "picklist",
+  "is_global": true,
+  "options": [
+    {
+      "value": "727270010",
+      "label": "Low",
+      "is_hidden": "0",
+      "external_value": ""
+    },
+    {
+      "value": "727270011",
+      "label": "Medium",
+      "is_hidden": "0",
+      "external_value": ""
+    },
+    {
+      "value": "727270012",
+      "label": "High",
+      "is_hidden": "0",
+      "external_value": ""
+    }
+  ],
+  "comparison_key": "cdxmeta_priorityband",
+  "summary": {
+    "counts": {
+      "option_count": 3
+    },
+    "comparison_signature": "fb9de14eed84976562fc32b3bd2c6b448e2f2a7657217f90fb6323fe77ae5a60",
+    "signature": "fb9de14eed84976562fc32b3bd2c6b448e2f2a7657217f90fb6323fe77ae5a60"
+  }
+}

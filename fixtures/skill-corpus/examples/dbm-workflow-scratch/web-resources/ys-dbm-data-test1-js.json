@@ -1,0 +1,21 @@
+{
+  "id": "{9ae62cd8-75a4-ef11-8a6a-002248a0a7da}",
+  "name": "ys_/dbm/data/test1.js",
+  "display_name": "Test JS 1",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmdatatest1js9AE62CD8-75A4-EF11-8A6A-002248A0A7DA",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\data\\test1.js",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 129,
+      "line_count": 1
+    },
+    "content_sha256": "37a0fa261e74a1ca7969c0b220b9a423d4b08b70ad6588fccb5766eb9015643e",
+    "comparison_signature": "84c90891f68c04aec0e4afee5c047da5b87e1fe361ec4886e880ba06ecb203ec",
+    "signature": "1f67d2e7e8040fc6bf0f8f1c18b32f50d87809962d5790fc9a4a0c7db07d0d94"
+  }
+}

@@ -1,0 +1,807 @@
+{
+  "logical_name": "cdxmeta_workitem",
+  "schema_name": "cdxmeta_WorkItem",
+  "forms": [
+    {
+      "name": "Information",
+      "type": "card",
+      "id": "{337dbfeb-0f67-4f81-b71e-3bd05a4b597a}",
+      "description": "A card form for this entity.",
+      "formxml": "<form>\n      <tabs>\n        <tab name=\"general\" verticallayout=\"true\" id=\"{c1075269-54ad-428c-86be-b3372fc34fde}\" IsUserDefined=\"0\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"25%\">\n              <sections>\n                <section name=\"ColorStrip\" showlabel=\"false\" showbar=\"false\" columns=\"1\" IsUserDefined=\"0\" id=\"{43890971-0f9d-46b0-9306-08ddedea6d6d}\">\n                  <labels>\n                    <label description=\"ColorStrip\" languagecode=\"1033\" />\n                  </labels>\n                </section>\n              </sections>\n            </column>\n            <column width=\"75%\">\n              <sections>\n                <section name=\"CardHeader\" showlabel=\"false\" showbar=\"false\" columns=\"111\" id=\"{ce818fbf-f138-4e10-8cb7-08c0e19df97f}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Header\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{cb5ed36c-601b-46cb-951a-cedadb786d4f}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Status Reason\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"statuscode\" classid=\"{5D68B988-0661-4db2-BC3E-17598AD3BE6C}\" datafieldname=\"statuscode\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{43cb919e-2e1e-43de-bc3f-efdaca824d2d}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                      <cell id=\"{bcb9c135-8a83-4cb3-b49d-226289075ac1}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"CardDetails\" showlabel=\"false\" showbar=\"false\" columns=\"1\" id=\"{f3bbc868-1085-4b47-8130-aa1f0846e4a5}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Details\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{6fcf6b23-e822-43d6-a307-d1a4e01bbe69}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Work Item Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_workitemname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_workitemname\" disabled=\"false\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"CardFooter\" showlabel=\"false\" columns=\"1111\" showbar=\"false\" id=\"{e0f386a7-d6bf-4632-a6ed-784bb7788cae}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Footer\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{dd0b100a-acc7-48ce-ba9a-72c628eeb310}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{ceb96910-03cf-403b-a8fc-608be54c7dc3}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Created On\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"createdon\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"createdon\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{f2619872-ce8e-4ad8-a491-cc2a5d4cdbb9}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                      <cell id=\"{31bfb1f3-cdef-4cd4-bd7f-16f09ad2c2f2}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 4,
+          "control_count": 4,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "general",
+            "label": "",
+            "section_count": 4,
+            "sections": [
+              {
+                "name": "ColorStrip",
+                "label": "ColorStrip",
+                "control_count": 0,
+                "controls": []
+              },
+              {
+                "name": "CardHeader",
+                "label": "Header",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "statuscode",
+                    "uniqueid": "",
+                    "classid": "{5D68B988-0661-4db2-BC3E-17598AD3BE6C}",
+                    "datafieldname": "statuscode",
+                    "kind": "field",
+                    "signature": "924feff09161923fac8af428340971a92a287df59491a6b2184941ab9ebfb336",
+                    "label": "Status Reason"
+                  }
+                ]
+              },
+              {
+                "name": "CardDetails",
+                "label": "Details",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "cdxmeta_workitemname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_workitemname",
+                    "kind": "single-line-text",
+                    "signature": "56144483e07f718df67dfc80230eabb0a16b33ab9f76feb4b31857e545814f49",
+                    "label": "Work Item Name"
+                  }
+                ]
+              },
+              {
+                "name": "CardFooter",
+                "label": "Footer",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  },
+                  {
+                    "id": "createdon",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "createdon",
+                    "kind": "lookup",
+                    "signature": "1812e7c8e47d316173dd5da44ebcb65545b026cc8421fd255110a4eb3c40ca1c",
+                    "label": "Created On"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "5ee39b37c05d102ce8d3c5779d26db27f5d9cf4dbe004518b70a0740d9fe69a1"
+      }
+    },
+    {
+      "name": "Work Item Seed Main",
+      "type": "main",
+      "id": "{c67be8a4-c475-4041-90e6-78e3ed79b018}",
+      "description": "Rich main form for the Dataverse metadata synthesis seed.",
+      "formxml": "<form headerdensity=\"HighWithControls\">\n      <tabs>\n        <tab name=\"summary\" id=\"{11111111-1111-1111-1111-111111111111}\" IsUserDefined=\"1\" expanded=\"true\" showlabel=\"true\">\n          <labels>\n            <label description=\"Summary\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"50%\">\n              <sections>\n                <section name=\"overview\" id=\"{11111111-1111-1111-1111-111111111112}\" IsUserDefined=\"1\" showlabel=\"true\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"Overview\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111113}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Work Item\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_workitemname\" datafieldname=\"cdxmeta_workitemname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111114}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Summary\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_summary\" datafieldname=\"cdxmeta_summary\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111115}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Category\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_categoryid\" datafieldname=\"cdxmeta_categoryid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n            <column width=\"50%\">\n              <sections>\n                <section name=\"details\" id=\"{11111111-1111-1111-1111-111111111116}\" IsUserDefined=\"1\" showlabel=\"true\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"Details\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111117}\" showlabel=\"true\" rowspan=\"4\">\n                        <labels>\n                          <label description=\"Notes\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_details\" datafieldname=\"cdxmeta_details\" classid=\"{E0DECE4B-6FC8-4a8f-A065-082708572369}\" />\n                      </cell>\n                    </row>\n                    <row />\n                    <row />\n                    <row />\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n        <tab name=\"planning\" id=\"{11111111-1111-1111-1111-111111111118}\" IsUserDefined=\"1\" expanded=\"true\" showlabel=\"true\">\n          <labels>\n            <label description=\"Planning\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"50%\">\n              <sections>\n                <section name=\"schedule\" id=\"{11111111-1111-1111-1111-111111111119}\" IsUserDefined=\"1\" showlabel=\"true\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"Schedule\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111120}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Due date\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_duedate\" datafieldname=\"cdxmeta_duedate\" classid=\"{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111121}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Effort hours\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_efforthours\" datafieldname=\"cdxmeta_efforthours\" classid=\"{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111122}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Priority\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_priority\" datafieldname=\"cdxmeta_priority\" classid=\"{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n            <column width=\"50%\">\n              <sections>\n                <section name=\"status\" id=\"{11111111-1111-1111-1111-111111111123}\" IsUserDefined=\"1\" showlabel=\"true\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"Status\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111124}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Stage\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_stage\" datafieldname=\"cdxmeta_stage\" classid=\"{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111125}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Blocked\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_isblocked\" datafieldname=\"cdxmeta_isblocked\" classid=\"{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n        <tab name=\"related\" id=\"{11111111-1111-1111-1111-111111111126}\" IsUserDefined=\"1\" expanded=\"true\" showlabel=\"true\">\n          <labels>\n            <label description=\"Related\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"50%\">\n              <sections>\n                <section name=\"category_snapshot\" id=\"{11111111-1111-1111-1111-111111111127}\" IsUserDefined=\"1\" showlabel=\"true\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"Category Snapshot\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111128}\" showlabel=\"false\">\n                        <labels>\n                          <label description=\"Category Snapshot\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_category_snapshot\" classid=\"{5C5600E0-1D6E-4205-A272-BE80DA87FD42}\" datafieldname=\"cdxmeta_categoryid\">\n                          <parameters>\n                            <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname=\"cdxmeta_category\"&gt;5978624f-3b37-f111-88b3-0022489b9600&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>\n                            <ControlMode>Edit</ControlMode>\n                          </parameters>\n                        </control>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n            <column width=\"50%\">\n              <sections>\n                <section name=\"checkpoints\" id=\"{11111111-1111-1111-1111-111111111129}\" IsUserDefined=\"1\" showlabel=\"true\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"Checkpoints\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{11111111-1111-1111-1111-111111111130}\" showlabel=\"false\" rowspan=\"8\">\n                        <labels>\n                          <label description=\"Checkpoints\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_checkpoints\" classid=\"{E7A81278-8635-4d9e-8D4D-59480B391C5B}\" indicationOfSubgrid=\"true\">\n                          <parameters>\n                            <ViewId>{500a740d-e399-42c5-9f3a-0f9c203ef9cd}</ViewId>\n                            <IsUserView>false</IsUserView>\n                            <RelationshipName>cdxmeta_workitem_checkpoint</RelationshipName>\n                            <TargetEntityType>cdxmeta_checkpoint</TargetEntityType>\n                            <AutoExpand>Auto</AutoExpand>\n                            <EnableQuickFind>false</EnableQuickFind>\n                            <EnableViewPicker>false</EnableViewPicker>\n                            <ViewIds>{500a740d-e399-42c5-9f3a-0f9c203ef9cd}</ViewIds>\n                            <EnableJumpBar>false</EnableJumpBar>\n                            <ChartGridMode>Grid</ChartGridMode>\n                            <EnableChartPicker>false</EnableChartPicker>\n                            <RecordsPerPage>5</RecordsPerPage>\n                          </parameters>\n                        </control>\n                      </cell>\n                    </row>\n                    <row />\n                    <row />\n                    <row />\n                    <row />\n                    <row />\n                    <row />\n                    <row />\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n      <header id=\"{11111111-1111-1111-1111-111111111131}\" columns=\"111\" celllabelposition=\"Top\" labelwidth=\"115\">\n        <rows>\n          <row>\n            <cell id=\"{11111111-1111-1111-1111-111111111132}\" showlabel=\"true\">\n              <labels>\n                <label description=\"Stage\" languagecode=\"1033\" />\n              </labels>\n              <control id=\"header_cdxmeta_stage\" datafieldname=\"cdxmeta_stage\" classid=\"{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}\" />\n            </cell>\n            <cell id=\"{11111111-1111-1111-1111-111111111133}\" showlabel=\"true\">\n              <labels>\n                <label description=\"Due date\" languagecode=\"1033\" />\n              </labels>\n              <control id=\"header_cdxmeta_duedate\" datafieldname=\"cdxmeta_duedate\" classid=\"{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}\" />\n            </cell>\n            <cell id=\"{11111111-1111-1111-1111-111111111134}\" showlabel=\"true\">\n              <labels>\n                <label description=\"Category\" languagecode=\"1033\" />\n              </labels>\n              <control id=\"header_cdxmeta_categoryid\" datafieldname=\"cdxmeta_categoryid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" />\n            </cell>\n          </row>\n        </rows>\n      </header>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 3,
+          "section_count": 6,
+          "control_count": 11,
+          "quickform_count": 1,
+          "subgrid_count": 1,
+          "webresource_count": 0,
+          "header_control_count": 3,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "summary",
+            "label": "Summary",
+            "section_count": 2,
+            "sections": [
+              {
+                "name": "overview",
+                "label": "Overview",
+                "control_count": 3,
+                "controls": [
+                  {
+                    "id": "cdxmeta_workitemname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_workitemname",
+                    "kind": "single-line-text",
+                    "signature": "56144483e07f718df67dfc80230eabb0a16b33ab9f76feb4b31857e545814f49",
+                    "label": "Work Item"
+                  },
+                  {
+                    "id": "cdxmeta_summary",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_summary",
+                    "kind": "single-line-text",
+                    "signature": "4efe96e9199087b01905e9efaf401a361dffd34d7583089859c7fb331d740103",
+                    "label": "Summary"
+                  },
+                  {
+                    "id": "cdxmeta_categoryid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "cdxmeta_categoryid",
+                    "kind": "lookup",
+                    "signature": "cf392a2e841a29dde3a183183749a3831a4c86a7b45edd77083722c6dbab449a",
+                    "label": "Category"
+                  }
+                ]
+              },
+              {
+                "name": "details",
+                "label": "Details",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "cdxmeta_details",
+                    "uniqueid": "",
+                    "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                    "datafieldname": "cdxmeta_details",
+                    "kind": "multiline-text",
+                    "signature": "90656f14ec91e5604bfabaff3a849f08c2671629d4f85445733eb98980484417",
+                    "label": "Notes"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "planning",
+            "label": "Planning",
+            "section_count": 2,
+            "sections": [
+              {
+                "name": "schedule",
+                "label": "Schedule",
+                "control_count": 3,
+                "controls": [
+                  {
+                    "id": "cdxmeta_duedate",
+                    "uniqueid": "",
+                    "classid": "{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}",
+                    "datafieldname": "cdxmeta_duedate",
+                    "kind": "date-or-time",
+                    "signature": "c3dd3c96c0537edb862d0cff67809cdd4fea39f6566199dc7903b43fce3a4aab",
+                    "label": "Due date"
+                  },
+                  {
+                    "id": "cdxmeta_efforthours",
+                    "uniqueid": "",
+                    "classid": "{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}",
+                    "datafieldname": "cdxmeta_efforthours",
+                    "kind": "number",
+                    "signature": "e6562c0848446451d007314c579b8bdaef2d0b6631f3be672f778ed1a9b9b3d5",
+                    "label": "Effort hours"
+                  },
+                  {
+                    "id": "cdxmeta_priority",
+                    "uniqueid": "",
+                    "classid": "{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}",
+                    "datafieldname": "cdxmeta_priority",
+                    "kind": "number",
+                    "signature": "499285f3d7bf8ef15f1c9d6444d269083ded67f13e4491b1f57d1ba58e7c148c",
+                    "label": "Priority"
+                  }
+                ]
+              },
+              {
+                "name": "status",
+                "label": "Status",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "cdxmeta_stage",
+                    "uniqueid": "",
+                    "classid": "{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}",
+                    "datafieldname": "cdxmeta_stage",
+                    "kind": "optionset",
+                    "signature": "d9e8b4f39cb6448e59493f5c2f5865760d70ad904f9e7504097a6c20ac56c0b3",
+                    "label": "Stage"
+                  },
+                  {
+                    "id": "cdxmeta_isblocked",
+                    "uniqueid": "",
+                    "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                    "datafieldname": "cdxmeta_isblocked",
+                    "kind": "two-options",
+                    "signature": "2baaf8e32da2589fd076c944ee1da3d40a465734ce0d5219e3293ef13ad6174e",
+                    "label": "Blocked"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "related",
+            "label": "Related",
+            "section_count": 2,
+            "sections": [
+              {
+                "name": "category_snapshot",
+                "label": "Category Snapshot",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "cdxmeta_category_snapshot",
+                    "uniqueid": "",
+                    "classid": "{5C5600E0-1D6E-4205-A272-BE80DA87FD42}",
+                    "datafieldname": "cdxmeta_categoryid",
+                    "kind": "quickform",
+                    "view_id": "",
+                    "relationship_name": "",
+                    "target_entity_type": "",
+                    "quick_forms": [
+                      "cdxmeta_category:5978624f-3b37-f111-88b3-0022489b9600"
+                    ],
+                    "url": "",
+                    "signature": "2c0216dfb57cc1f8b6980d3569bf24d696054395681ba34e5e2427cf2e7f4bab",
+                    "label": "Category Snapshot"
+                  }
+                ]
+              },
+              {
+                "name": "checkpoints",
+                "label": "Checkpoints",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "cdxmeta_checkpoints",
+                    "uniqueid": "",
+                    "classid": "{E7A81278-8635-4d9e-8D4D-59480B391C5B}",
+                    "datafieldname": "",
+                    "kind": "subgrid",
+                    "view_id": "{500a740d-e399-42c5-9f3a-0f9c203ef9cd}",
+                    "relationship_name": "cdxmeta_workitem_checkpoint",
+                    "target_entity_type": "cdxmeta_checkpoint",
+                    "quick_forms": [],
+                    "url": "",
+                    "signature": "2a9c9663d94d015d962d54ff2a9d3daecfdb4db87ac45819a98fcdb2ba92b99f",
+                    "label": "Checkpoints"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [
+          {
+            "id": "header_cdxmeta_stage",
+            "uniqueid": "",
+            "classid": "{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}",
+            "datafieldname": "cdxmeta_stage",
+            "kind": "optionset",
+            "signature": "d9e8b4f39cb6448e59493f5c2f5865760d70ad904f9e7504097a6c20ac56c0b3",
+            "label": "Stage"
+          },
+          {
+            "id": "header_cdxmeta_duedate",
+            "uniqueid": "",
+            "classid": "{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}",
+            "datafieldname": "cdxmeta_duedate",
+            "kind": "date-or-time",
+            "signature": "c3dd3c96c0537edb862d0cff67809cdd4fea39f6566199dc7903b43fce3a4aab",
+            "label": "Due date"
+          },
+          {
+            "id": "header_cdxmeta_categoryid",
+            "uniqueid": "",
+            "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+            "datafieldname": "cdxmeta_categoryid",
+            "kind": "lookup",
+            "signature": "cf392a2e841a29dde3a183183749a3831a4c86a7b45edd77083722c6dbab449a",
+            "label": "Category"
+          }
+        ],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "7eb8a8b4a9ca0b99643433a0256101fba4382874fd2a28dcf6606100df9d3bda"
+      }
+    },
+    {
+      "name": "Information",
+      "type": "quick",
+      "id": "{38cc575f-ed67-4a02-8f01-2631e59b33d5}",
+      "description": "",
+      "formxml": "<form>\n      <tabs>\n        <tab verticallayout=\"true\" id=\"{24d49b00-3512-44ff-8f37-f15ffc2f7699}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section showlabel=\"false\" showbar=\"false\" IsUserDefined=\"0\" id=\"{ffb68212-58c9-418d-b3a9-df48d309bfda}\">\n                  <labels>\n                    <label description=\"GENERAL\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{91c8d9fd-dda5-4bff-bf5e-0cac44557fb0}\">\n                        <labels>\n                          <label description=\"Work Item Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_workitemname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_workitemname\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{a907db90-8c3c-46ed-a74d-1de1498f88e7}\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 1,
+          "control_count": 2,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "",
+            "label": "",
+            "section_count": 1,
+            "sections": [
+              {
+                "name": "",
+                "label": "GENERAL",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "cdxmeta_workitemname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_workitemname",
+                    "kind": "single-line-text",
+                    "signature": "56144483e07f718df67dfc80230eabb0a16b33ab9f76feb4b31857e545814f49",
+                    "label": "Work Item Name"
+                  },
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "eea62fadcceb65be1bc4062c4376ef9b74a56cda69f683248ab27cb49b9cac8f"
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "Inactive Work Items",
+      "id": "{16174dd2-556d-47a0-a1ca-5ad412bbe9dc}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_workitemname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"1\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_workitem",
+        "layout_columns": [
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_workitemid",
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_workitemname"
+        ],
+        "signature": "8132beeffc44fa69b30f788a489f0fa20306c6830b5d39132a01e9ee00216d2c"
+      }
+    },
+    {
+      "name": "My Work Items",
+      "id": "{2bae28ff-3a37-f111-88b3-0022489b9600}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n            <condition attribute=\"ownerid\" operator=\"eq-userid\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "",
+      "summary": {
+        "target_entity": "cdxmeta_workitem",
+        "layout_columns": [],
+        "fetch_attributes": [
+          "cdxmeta_workitemid"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq",
+          "and:ownerid:eq-userid"
+        ],
+        "orders": [],
+        "signature": "5fde54dd300c8f9db02f3c7f5b20edd9c960ac339b71f8a25f8ebc977b9affdd"
+      }
+    },
+    {
+      "name": "Active Work Items",
+      "id": "{50ec9e87-d0c3-4e0c-b2ca-fb84f7fb7eee}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_workitemname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_workitem",
+        "layout_columns": [
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_workitemid",
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_workitemname"
+        ],
+        "signature": "8132beeffc44fa69b30f788a489f0fa20306c6830b5d39132a01e9ee00216d2c"
+      }
+    },
+    {
+      "name": "Quick Find Active Work Items",
+      "id": "{5bea075b-c3bb-41b9-9c02-79b40ab7650f}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_workitemname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n          <filter type=\"or\" isquickfindfields=\"1\">\n            <condition attribute=\"cdxmeta_workitemname\" operator=\"like\" value=\"{0}\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_workitem",
+        "layout_columns": [
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_workitemid",
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq",
+          "or:cdxmeta_workitemname:like"
+        ],
+        "orders": [
+          "cdxmeta_workitemname"
+        ],
+        "signature": "8e464d0e7c9d66be60c66b06f9117bcb748323a74262eb6a3740c11cd5a5e991"
+      }
+    },
+    {
+      "name": "Work Item Advanced Find View",
+      "id": "{a806b807-120e-4225-be4d-780c04932180}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_workitemname\" descending=\"false\" />\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_workitem",
+        "layout_columns": [
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_workitemid",
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [],
+        "orders": [
+          "cdxmeta_workitemname"
+        ],
+        "signature": "b7dcca6ce8c040d4b0c6b7eb2ef8fe7d09f0f474f11fd324348af4a0d92b5eee"
+      }
+    },
+    {
+      "name": "Work Item Lookup View",
+      "id": "{c24565e8-7bef-41bf-a4cd-b1408f0a0543}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"cdxmeta_workitems\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"0\">\n        <row name=\"cdxmeta_workitem\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_workitem",
+        "layout_columns": [
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_workitemid",
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [],
+        "signature": "8d4a078ee62c63dc4247baaacfc7cbe2fe3eeb7946f2c69d0c9212b24dfa8edc"
+      }
+    },
+    {
+      "name": "Work Item Associated View",
+      "id": "{fc4076e5-70ab-4a7e-a1a5-9c5499819fe1}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_workitemname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"cdxmeta_workitems\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"cdxmeta_workitem\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_workitem",
+        "layout_columns": [
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_workitemid",
+          "cdxmeta_workitemname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_workitemname"
+        ],
+        "signature": "8132beeffc44fa69b30f788a489f0fa20306c6830b5d39132a01e9ee00216d2c"
+      }
+    }
+  ],
+  "saved_query_visualizations": [],
+  "attributes": [
+    {
+      "logical_name": "cdxmeta_categoryid",
+      "display_name": "Category",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_details",
+      "display_name": "Details",
+      "type": "ntext",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_duedate",
+      "display_name": "Due Date",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_efforthours",
+      "display_name": "Effort Hours",
+      "type": "decimal",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_isblocked",
+      "display_name": "Blocked",
+      "type": "bit",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_priority",
+      "display_name": "Priority",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_stage",
+      "display_name": "Stage",
+      "type": "picklist",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_summary",
+      "display_name": "Summary",
+      "type": "nvarchar",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_workitemid",
+      "display_name": "Work Item",
+      "type": "primarykey",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_workitemname",
+      "display_name": "Work Item Name",
+      "type": "nvarchar",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdby",
+      "display_name": "Created By",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdon",
+      "display_name": "Created On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdonbehalfby",
+      "display_name": "Created By (Delegate)",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "importsequencenumber",
+      "display_name": "Import Sequence Number",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedby",
+      "display_name": "Modified By",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedon",
+      "display_name": "Modified On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedonbehalfby",
+      "display_name": "Modified By (Delegate)",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "overriddencreatedon",
+      "display_name": "Record Created On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "ownerid",
+      "display_name": "Owner",
+      "type": "owner",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owningbusinessunit",
+      "display_name": "Owning Business Unit",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owningteam",
+      "display_name": "Owning Team",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owninguser",
+      "display_name": "Owning User",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "statecode",
+      "display_name": "Status",
+      "type": "state",
+      "is_secured": false
+    },
+    {
+      "logical_name": "statuscode",
+      "display_name": "Status Reason",
+      "type": "status",
+      "is_secured": false
+    },
+    {
+      "logical_name": "timezoneruleversionnumber",
+      "display_name": "Time Zone Rule Version Number",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "utcconversiontimezonecode",
+      "display_name": "UTC Conversion Time Zone Code",
+      "type": "int",
+      "is_secured": false
+    }
+  ],
+  "relationships": {
+    "one_to_many": [],
+    "many_to_one": [],
+    "many_to_many": []
+  },
+  "ribbon_diff_xml": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RibbonDiffXml xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <CustomActions />\r\n  <Templates>\r\n    <RibbonTemplates Id=\"Mscrm.Templates\"></RibbonTemplates>\r\n  </Templates>\r\n  <CommandDefinitions />\r\n  <RuleDefinitions>\r\n    <TabDisplayRules />\r\n    <DisplayRules />\r\n    <EnableRules />\r\n  </RuleDefinitions>\r\n  <LocLabels />\r\n</RibbonDiffXml>",
+  "ribbon_diff_summary": {
+    "counts": {
+      "custom_action_count": 0,
+      "command_definition_count": 0,
+      "display_rule_count": 0,
+      "enable_rule_count": 0,
+      "hide_custom_action_count": 0,
+      "button_count": 0,
+      "loc_label_count": 0,
+      "byte_length": 396
+    },
+    "custom_action_ids": [],
+    "command_definition_ids": [],
+    "button_ids": [],
+    "display_rule_ids": [],
+    "enable_rule_ids": [],
+    "hide_custom_action_ids": [],
+    "comparison_signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6",
+    "signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6"
+  },
+  "shell_only": false
+}

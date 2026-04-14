@@ -1,0 +1,707 @@
+{
+  "logical_name": "cdxmeta_category",
+  "schema_name": "cdxmeta_Category",
+  "forms": [
+    {
+      "name": "Information",
+      "type": "card",
+      "id": "{bdce255d-c30a-45cf-bb31-d1768434dd11}",
+      "description": "A card form for this entity.",
+      "formxml": "<form>\n      <tabs>\n        <tab name=\"general\" verticallayout=\"true\" id=\"{73a24a17-95a8-42f8-b5ef-41c615e3263f}\" IsUserDefined=\"0\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"25%\">\n              <sections>\n                <section name=\"ColorStrip\" showlabel=\"false\" showbar=\"false\" columns=\"1\" IsUserDefined=\"0\" id=\"{95810fcf-3414-4137-afb9-44ccf6052391}\">\n                  <labels>\n                    <label description=\"ColorStrip\" languagecode=\"1033\" />\n                  </labels>\n                </section>\n              </sections>\n            </column>\n            <column width=\"75%\">\n              <sections>\n                <section name=\"CardHeader\" showlabel=\"false\" showbar=\"false\" columns=\"111\" id=\"{d6d69e27-fb15-4914-94b5-f3cbf9b3b4dd}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Header\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{6d25ea12-b575-43c7-a86a-1206fc1f0c2e}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Status Reason\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"statuscode\" classid=\"{5D68B988-0661-4db2-BC3E-17598AD3BE6C}\" datafieldname=\"statuscode\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{ff90d299-2cf4-46e1-a248-5b3fc5bc905e}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                      <cell id=\"{cfd39bab-5007-4d69-8f12-28e13123ee6e}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"CardDetails\" showlabel=\"false\" showbar=\"false\" columns=\"1\" id=\"{82087b6e-be73-4799-85c0-e648ec71f2f0}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Details\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{5d7dcf61-2f19-439e-bcf4-9ef67c3d740d}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Category Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_categoryname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_categoryname\" disabled=\"false\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"CardFooter\" showlabel=\"false\" columns=\"1111\" showbar=\"false\" id=\"{9ed5bc55-c729-45f3-b4d3-4f2e73cfe513}\" IsUserDefined=\"0\">\n                  <labels>\n                    <label description=\"Footer\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{12791a89-7c89-49f5-8c62-b2e813886c09}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{dda12ea0-5d18-4b47-9a69-03cba4f3caa5}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"Created On\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"createdon\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"createdon\" disabled=\"false\" />\n                      </cell>\n                      <cell id=\"{2ddd31db-f456-4c8e-8c61-d5598ddf395d}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                      <cell id=\"{5abbbe67-1b88-4380-9207-4bc55cc9ff65}\" showlabel=\"true\" locklevel=\"0\">\n                        <labels>\n                          <label description=\"\" languagecode=\"1033\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 4,
+          "control_count": 4,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "general",
+            "label": "",
+            "section_count": 4,
+            "sections": [
+              {
+                "name": "ColorStrip",
+                "label": "ColorStrip",
+                "control_count": 0,
+                "controls": []
+              },
+              {
+                "name": "CardHeader",
+                "label": "Header",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "statuscode",
+                    "uniqueid": "",
+                    "classid": "{5D68B988-0661-4db2-BC3E-17598AD3BE6C}",
+                    "datafieldname": "statuscode",
+                    "kind": "field",
+                    "signature": "924feff09161923fac8af428340971a92a287df59491a6b2184941ab9ebfb336",
+                    "label": "Status Reason"
+                  }
+                ]
+              },
+              {
+                "name": "CardDetails",
+                "label": "Details",
+                "control_count": 1,
+                "controls": [
+                  {
+                    "id": "cdxmeta_categoryname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_categoryname",
+                    "kind": "single-line-text",
+                    "signature": "44a723658c98042c81b7bc04a198f27aa17dc35807a4e9f0b388531e6cdfc394",
+                    "label": "Category Name"
+                  }
+                ]
+              },
+              {
+                "name": "CardFooter",
+                "label": "Footer",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  },
+                  {
+                    "id": "createdon",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "createdon",
+                    "kind": "lookup",
+                    "signature": "1812e7c8e47d316173dd5da44ebcb65545b026cc8421fd255110a4eb3c40ca1c",
+                    "label": "Created On"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "9b5f280eeb7d3d018f3eec34ecf8ca1a774e0c76f00924da0e7d840ede166b5f"
+      }
+    },
+    {
+      "name": "Information",
+      "type": "main",
+      "id": "{6a3a3191-b5b2-43f9-831a-565ecfe782b0}",
+      "description": "A form for this entity.",
+      "formxml": "<form>\n      <tabs>\n        <tab verticallayout=\"true\" id=\"{86345301-151e-43ec-b227-b48ac2611b47}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"General\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section showlabel=\"false\" showbar=\"false\" IsUserDefined=\"0\" id=\"{394945f1-4457-46ab-863d-47cdf5aee2eb}\">\n                  <labels>\n                    <label description=\"General\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{02b981d3-2f50-40e6-af43-54d019e6a728}\">\n                        <labels>\n                          <label description=\"Category Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_categoryname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_categoryname\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{04b39c9c-69b5-493e-a7eb-ef4e708d5296}\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 1,
+          "control_count": 2,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "",
+            "label": "General",
+            "section_count": 1,
+            "sections": [
+              {
+                "name": "",
+                "label": "General",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "cdxmeta_categoryname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_categoryname",
+                    "kind": "single-line-text",
+                    "signature": "44a723658c98042c81b7bc04a198f27aa17dc35807a4e9f0b388531e6cdfc394",
+                    "label": "Category Name"
+                  },
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "8f4c4476f31c8025efd09bba261366ca4d93e4b818b6fb933e8cb93d58351973"
+      }
+    },
+    {
+      "name": "Category Snapshot",
+      "type": "quick",
+      "id": "{5978624f-3b37-f111-88b3-0022489b9600}",
+      "description": "Compact quick view form for the metadata synthesis seed.",
+      "formxml": "<form>\n      <tabs showlabels=\"false\">\n        <tab name=\"general\" verticallayout=\"true\" id=\"{49ACD000-6C0A-4749-9D51-5BD1CF071386}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section name=\"snapshot\" id=\"{1ED8018D-18A3-4617-8401-4D2BFE3608BB}\" IsUserDefined=\"1\" showlabel=\"false\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{8FAA3648-D89D-42B6-B75B-F693CAC6C241}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Category\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_categoryname\" datafieldname=\"cdxmeta_categoryname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{EF2DB2A0-B682-4BAD-B6C7-19ECC2D7EF6F}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Description\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_description\" datafieldname=\"cdxmeta_description\" classid=\"{E0DECE4B-6FC8-4a8f-A065-082708572369}\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 1,
+          "control_count": 2,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "general",
+            "label": "",
+            "section_count": 1,
+            "sections": [
+              {
+                "name": "snapshot",
+                "label": "",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "cdxmeta_categoryname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_categoryname",
+                    "kind": "single-line-text",
+                    "signature": "44a723658c98042c81b7bc04a198f27aa17dc35807a4e9f0b388531e6cdfc394",
+                    "label": "Category"
+                  },
+                  {
+                    "id": "cdxmeta_description",
+                    "uniqueid": "",
+                    "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                    "datafieldname": "cdxmeta_description",
+                    "kind": "multiline-text",
+                    "signature": "0e798e6a1d98745e9885c5f099f09d5710d7551ca64b4e2e92dc865b0577b848",
+                    "label": "Description"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "4008a84bb87d71c7e592d4fab73603b113b1f83e1e7c79446df8c280a32ffbc2"
+      }
+    },
+    {
+      "name": "Information",
+      "type": "quick",
+      "id": "{c49182b0-92f0-46e8-8b4e-89d46fafa948}",
+      "description": "",
+      "formxml": "<form>\n      <tabs>\n        <tab verticallayout=\"true\" id=\"{c6825116-c639-416f-8e86-516d9bd6bf8a}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section showlabel=\"false\" showbar=\"false\" IsUserDefined=\"0\" id=\"{7ac58746-8922-4901-b069-ef140f8300af}\">\n                  <labels>\n                    <label description=\"GENERAL\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{c5a1bd4d-4cf5-4ccc-9de9-26a5cbc8b9fd}\">\n                        <labels>\n                          <label description=\"Category Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_categoryname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_categoryname\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{9d748816-77c3-41d3-a32e-e65a4031145a}\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+      "summary": {
+        "counts": {
+          "tab_count": 1,
+          "section_count": 1,
+          "control_count": 2,
+          "quickform_count": 0,
+          "subgrid_count": 0,
+          "webresource_count": 0,
+          "header_control_count": 0,
+          "footer_control_count": 0,
+          "control_description_count": 0,
+          "custom_control_host_count": 0,
+          "custom_control_instance_count": 0,
+          "custom_control_family_count": 0,
+          "custom_control_reference_count": 0,
+          "custom_control_manifest_count": 0
+        },
+        "tabs": [
+          {
+            "name": "",
+            "label": "",
+            "section_count": 1,
+            "sections": [
+              {
+                "name": "",
+                "label": "GENERAL",
+                "control_count": 2,
+                "controls": [
+                  {
+                    "id": "cdxmeta_categoryname",
+                    "uniqueid": "",
+                    "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                    "datafieldname": "cdxmeta_categoryname",
+                    "kind": "single-line-text",
+                    "signature": "44a723658c98042c81b7bc04a198f27aa17dc35807a4e9f0b388531e6cdfc394",
+                    "label": "Category Name"
+                  },
+                  {
+                    "id": "ownerid",
+                    "uniqueid": "",
+                    "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                    "datafieldname": "ownerid",
+                    "kind": "lookup",
+                    "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                    "label": "Owner"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "header": [],
+        "footer": [],
+        "control_descriptions": [],
+        "embedded_custom_controls": {
+          "host_controls": [],
+          "families": [],
+          "registration_reference_ids": [],
+          "manifest_names": [],
+          "form_factors": [],
+          "bind_attributes": [],
+          "data_field_names": [],
+          "dataset_names": [],
+          "default_view_ids": [],
+          "quick_forms": []
+        },
+        "signature": "7e7badb029d9e9ef0dac275da73f08d3d3d4e8aaa38f7dd72a6ed5e16496718a"
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "My Categories",
+      "id": "{03280ae5-3a37-f111-88b3-0022489b9600}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n            <condition attribute=\"ownerid\" operator=\"eq-userid\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "",
+      "summary": {
+        "target_entity": "cdxmeta_category",
+        "layout_columns": [],
+        "fetch_attributes": [
+          "cdxmeta_categoryid"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq",
+          "and:ownerid:eq-userid"
+        ],
+        "orders": [],
+        "signature": "5d681e48ecf1dd3e5c81692798298379ad6a0daa7dd4f5c9787715aa378cd243"
+      }
+    },
+    {
+      "name": "Active Categories",
+      "id": "{2eb30f58-5138-4a2e-9bc5-fc21fd1de9f9}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_categoryname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_category",
+        "layout_columns": [
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_categoryid",
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_categoryname"
+        ],
+        "signature": "4775ae9a0b3ce527adfc82f2fb1536dff95ddf9416d672e0bdfaf87fa592cb67"
+      }
+    },
+    {
+      "name": "Quick Find Active Categories",
+      "id": "{73dde9da-0858-44c0-955e-43268e41a484}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_categoryname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n          <filter type=\"or\" isquickfindfields=\"1\">\n            <condition attribute=\"cdxmeta_categoryname\" operator=\"like\" value=\"{0}\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_category",
+        "layout_columns": [
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_categoryid",
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq",
+          "or:cdxmeta_categoryname:like"
+        ],
+        "orders": [
+          "cdxmeta_categoryname"
+        ],
+        "signature": "776cd3f6bd231ca20e979d913271bd1cd07b9b8cb85d8f66fa4ffd089947d706"
+      }
+    },
+    {
+      "name": "Inactive Categories",
+      "id": "{8ac7c1c7-0374-4606-9ab7-cfa2b95ead12}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_categoryname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"1\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_category",
+        "layout_columns": [
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_categoryid",
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_categoryname"
+        ],
+        "signature": "4775ae9a0b3ce527adfc82f2fb1536dff95ddf9416d672e0bdfaf87fa592cb67"
+      }
+    },
+    {
+      "name": "Category Advanced Find View",
+      "id": "{8daa158f-e559-497d-bb01-05e35b9fdfca}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_categoryname\" descending=\"false\" />\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_category",
+        "layout_columns": [
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_categoryid",
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [],
+        "orders": [
+          "cdxmeta_categoryname"
+        ],
+        "signature": "e9623c9ed34d926e04b453a32d390a090e4687e9f4839f458099e4637fe84bcd"
+      }
+    },
+    {
+      "name": "Category Lookup View",
+      "id": "{9f07e63b-ab5d-4add-879e-2b48494194b0}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"cdxmeta_categories\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"0\">\n        <row name=\"cdxmeta_category\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_category",
+        "layout_columns": [
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_categoryid",
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [],
+        "signature": "bd6e695a3d5ea86ae512be6b581c905bac2c327ef965af2a613957eb15cd42a7"
+      }
+    },
+    {
+      "name": "Category Associated View",
+      "id": "{d28a8ea1-577b-46dc-90b0-86d153e00a22}",
+      "returned_type_code": "",
+      "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_categoryname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+      "layoutxml": "<grid name=\"cdxmeta_categories\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"cdxmeta_category\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+      "summary": {
+        "target_entity": "cdxmeta_category",
+        "layout_columns": [
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "fetch_attributes": [
+          "cdxmeta_categoryid",
+          "cdxmeta_categoryname",
+          "createdon"
+        ],
+        "link_entities": [],
+        "filters": [
+          "and:statecode:eq"
+        ],
+        "orders": [
+          "cdxmeta_categoryname"
+        ],
+        "signature": "4775ae9a0b3ce527adfc82f2fb1536dff95ddf9416d672e0bdfaf87fa592cb67"
+      }
+    }
+  ],
+  "saved_query_visualizations": [],
+  "attributes": [
+    {
+      "logical_name": "cdxmeta_categoryid",
+      "display_name": "Category",
+      "type": "primarykey",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_categoryname",
+      "display_name": "Category Name",
+      "type": "nvarchar",
+      "is_secured": false
+    },
+    {
+      "logical_name": "cdxmeta_description",
+      "display_name": "Description",
+      "type": "ntext",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdby",
+      "display_name": "Created By",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdon",
+      "display_name": "Created On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "createdonbehalfby",
+      "display_name": "Created By (Delegate)",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "importsequencenumber",
+      "display_name": "Import Sequence Number",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedby",
+      "display_name": "Modified By",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedon",
+      "display_name": "Modified On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "modifiedonbehalfby",
+      "display_name": "Modified By (Delegate)",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "overriddencreatedon",
+      "display_name": "Record Created On",
+      "type": "datetime",
+      "is_secured": false
+    },
+    {
+      "logical_name": "ownerid",
+      "display_name": "Owner",
+      "type": "owner",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owningbusinessunit",
+      "display_name": "Owning Business Unit",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owningteam",
+      "display_name": "Owning Team",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "owninguser",
+      "display_name": "Owning User",
+      "type": "lookup",
+      "is_secured": false
+    },
+    {
+      "logical_name": "statecode",
+      "display_name": "Status",
+      "type": "state",
+      "is_secured": false
+    },
+    {
+      "logical_name": "statuscode",
+      "display_name": "Status Reason",
+      "type": "status",
+      "is_secured": false
+    },
+    {
+      "logical_name": "timezoneruleversionnumber",
+      "display_name": "Time Zone Rule Version Number",
+      "type": "int",
+      "is_secured": false
+    },
+    {
+      "logical_name": "utcconversiontimezonecode",
+      "display_name": "UTC Conversion Time Zone Code",
+      "type": "int",
+      "is_secured": false
+    }
+  ],
+  "option_sets": [
+    {
+      "entity_logical_name": "cdxmeta_category",
+      "attribute_logical_name": "statecode",
+      "attribute_display_name": "Status",
+      "option_set_name": "cdxmeta_category_statecode",
+      "option_set_type": "state",
+      "is_global": null,
+      "options": [],
+      "comparison_key": "cdxmeta_category|statecode",
+      "summary": {
+        "counts": {
+          "option_count": 0
+        },
+        "comparison_signature": "da62153145cb0286c4c309e7d425cb0f7cdbb76ea87db6b7d6834d9607443f08",
+        "signature": "da62153145cb0286c4c309e7d425cb0f7cdbb76ea87db6b7d6834d9607443f08"
+      }
+    },
+    {
+      "entity_logical_name": "cdxmeta_category",
+      "attribute_logical_name": "statuscode",
+      "attribute_display_name": "Status Reason",
+      "option_set_name": "cdxmeta_category_statuscode",
+      "option_set_type": "status",
+      "is_global": null,
+      "options": [],
+      "comparison_key": "cdxmeta_category|statuscode",
+      "summary": {
+        "counts": {
+          "option_count": 0
+        },
+        "comparison_signature": "6c26d1eac9e2f874b2c8760e619cc968661a6706b2daf469590c293ac34ddc01",
+        "signature": "6c26d1eac9e2f874b2c8760e619cc968661a6706b2daf469590c293ac34ddc01"
+      }
+    }
+  ],
+  "entity_keys": [],
+  "relationships": {
+    "one_to_many": [],
+    "many_to_one": [],
+    "many_to_many": []
+  },
+  "ribbon_diff_xml": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RibbonDiffXml xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <CustomActions />\r\n  <Templates>\r\n    <RibbonTemplates Id=\"Mscrm.Templates\"></RibbonTemplates>\r\n  </Templates>\r\n  <CommandDefinitions />\r\n  <RuleDefinitions>\r\n    <TabDisplayRules />\r\n    <DisplayRules />\r\n    <EnableRules />\r\n  </RuleDefinitions>\r\n  <LocLabels />\r\n</RibbonDiffXml>",
+  "ribbon_diff_summary": {
+    "counts": {
+      "custom_action_count": 0,
+      "command_definition_count": 0,
+      "display_rule_count": 0,
+      "enable_rule_count": 0,
+      "hide_custom_action_count": 0,
+      "button_count": 0,
+      "loc_label_count": 0,
+      "byte_length": 396
+    },
+    "custom_action_ids": [],
+    "command_definition_ids": [],
+    "button_ids": [],
+    "display_rule_ids": [],
+    "enable_rule_ids": [],
+    "hide_custom_action_ids": [],
+    "comparison_signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6",
+    "signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6"
+  },
+  "shell_only": false
+}

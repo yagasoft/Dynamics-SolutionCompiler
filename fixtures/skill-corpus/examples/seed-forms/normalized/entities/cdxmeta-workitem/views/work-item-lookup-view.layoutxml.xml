@@ -1,0 +1,1 @@
+<grid icon="1" jump="cdxmeta_workitemname" name="cdxmeta_workitems" preview="0" select="1"><row id="cdxmeta_workitemid" name="cdxmeta_workitem"><cell name="cdxmeta_workitemname" width="300" /><cell name="createdon" width="125" /></row></grid>

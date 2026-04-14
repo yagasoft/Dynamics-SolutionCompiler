@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_cdxmeta_checkpoint" />
+  <EntityRelationship Name="business_unit_cdxmeta_workitem" />
+  <EntityRelationship Name="cdxmeta_category_workitem" />
+  <EntityRelationship Name="cdxmeta_workitem_checkpoint" />
+  <EntityRelationship Name="lk_cdxmeta_checkpoint_createdby" />
+  <EntityRelationship Name="lk_cdxmeta_checkpoint_modifiedby" />
+  <EntityRelationship Name="lk_cdxmeta_workitem_createdby" />
+  <EntityRelationship Name="lk_cdxmeta_workitem_modifiedby" />
+  <EntityRelationship Name="owner_cdxmeta_checkpoint" />
+  <EntityRelationship Name="owner_cdxmeta_workitem" />
+  <EntityRelationship Name="team_cdxmeta_checkpoint" />
+  <EntityRelationship Name="team_cdxmeta_workitem" />
+  <EntityRelationship Name="user_cdxmeta_checkpoint" />
+  <EntityRelationship Name="user_cdxmeta_workitem" />
+</EntityRelationships>

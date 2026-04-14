@@ -1,0 +1,2159 @@
+﻿{
+    "LogicalName":  "account",
+    "EntitySetName":  "accounts",
+    "Attributes":  [
+                       {
+                           "LogicalName":  "accountcategorycode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountCategoryCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "accountcategorycodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountCategoryCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "accountclassificationcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountClassificationCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "accountclassificationcodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountClassificationCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "accountid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Uniqueidentifier",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "accountnumber",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountNumber",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "accountratingcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountRatingCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "accountratingcodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "AccountRatingCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_addressid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Uniqueidentifier",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_AddressId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_addresstypecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_AddressTypeCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_addresstypecodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_AddressTypeCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_city",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_City",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_composite",
+                           "DisplayName":  null,
+                           "AttributeType":  "Memo",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Composite",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_country",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Country",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_county",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_County",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_fax",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Fax",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_freighttermscode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_FreightTermsCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_freighttermscodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_FreightTermsCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_latitude",
+                           "DisplayName":  null,
+                           "AttributeType":  "Double",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Latitude",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_line1",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Line1",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_line2",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Line2",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_line3",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Line3",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_longitude",
+                           "DisplayName":  null,
+                           "AttributeType":  "Double",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Longitude",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_name",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Name",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_postalcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_PostalCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_postofficebox",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_PostOfficeBox",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_primarycontactname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_PrimaryContactName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_shippingmethodcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_ShippingMethodCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_shippingmethodcodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_ShippingMethodCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_stateorprovince",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_StateOrProvince",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_telephone1",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Telephone1",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_telephone2",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Telephone2",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_telephone3",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_Telephone3",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_upszone",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_UPSZone",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address1_utcoffset",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address1_UTCOffset",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_addressid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Uniqueidentifier",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_AddressId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_addresstypecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_AddressTypeCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_addresstypecodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_AddressTypeCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_city",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_City",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_composite",
+                           "DisplayName":  null,
+                           "AttributeType":  "Memo",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Composite",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_country",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Country",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_county",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_County",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_fax",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Fax",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_freighttermscode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_FreightTermsCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_freighttermscodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_FreightTermsCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_latitude",
+                           "DisplayName":  null,
+                           "AttributeType":  "Double",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Latitude",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_line1",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Line1",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_line2",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Line2",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_line3",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Line3",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_longitude",
+                           "DisplayName":  null,
+                           "AttributeType":  "Double",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Longitude",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_name",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Name",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_postalcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_PostalCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_postofficebox",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_PostOfficeBox",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_primarycontactname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_PrimaryContactName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_shippingmethodcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_ShippingMethodCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_shippingmethodcodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_ShippingMethodCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_stateorprovince",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_StateOrProvince",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_telephone1",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Telephone1",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_telephone2",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Telephone2",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_telephone3",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_Telephone3",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_upszone",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_UPSZone",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "address2_utcoffset",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Address2_UTCOffset",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "adx_createdbyipaddress",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Adx_CreatedByIPAddress",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "adx_createdbyusername",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Adx_CreatedByUsername",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "adx_modifiedbyipaddress",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Adx_ModifiedByIPAddress",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "adx_modifiedbyusername",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Adx_ModifiedByUsername",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "aging30",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Aging30",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "aging30_base",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Aging30_Base",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "aging60",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Aging60",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "aging60_base",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Aging60_Base",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "aging90",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Aging90",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "aging90_base",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Aging90_Base",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "businesstypecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "BusinessTypeCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "businesstypecodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "BusinessTypeCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdby",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedBy",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdbyexternalparty",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedByExternalParty",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdbyexternalpartyname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedByExternalPartyName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdbyexternalpartyyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedByExternalPartyYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdbyname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedByName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdbyyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedByYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdon",
+                           "DisplayName":  null,
+                           "AttributeType":  "DateTime",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedOn",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdonbehalfby",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedOnBehalfBy",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdonbehalfbyname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedOnBehalfByName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "createdonbehalfbyyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreatedOnBehalfByYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "creditlimit",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreditLimit",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "creditlimit_base",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreditLimit_Base",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "creditonhold",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreditOnHold",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "creditonholdname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CreditOnHoldName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "customersizecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CustomerSizeCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "customersizecodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CustomerSizeCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "customertypecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CustomerTypeCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "customertypecodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "CustomerTypeCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "description",
+                           "DisplayName":  null,
+                           "AttributeType":  "Memo",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Description",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotbulkemail",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotBulkEMail",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotbulkemailname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotBulkEMailName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotbulkpostalmail",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotBulkPostalMail",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotbulkpostalmailname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotBulkPostalMailName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotemail",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotEMail",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotemailname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotEMailName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotfax",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotFax",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotfaxname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotFaxName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotphone",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotPhone",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotphonename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotPhoneName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotpostalmail",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotPostalMail",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotpostalmailname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotPostalMailName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotsendmarketingmaterialname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotSendMarketingMaterialName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "donotsendmm",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "DoNotSendMM",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "emailaddress1",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "EMailAddress1",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "emailaddress2",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "EMailAddress2",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "emailaddress3",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "EMailAddress3",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "entityimage",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "EntityImage",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "entityimage_timestamp",
+                           "DisplayName":  null,
+                           "AttributeType":  "BigInt",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "EntityImage_Timestamp",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "entityimage_url",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "EntityImage_URL",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "entityimageid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Uniqueidentifier",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "EntityImageId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "exchangerate",
+                           "DisplayName":  null,
+                           "AttributeType":  "Decimal",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ExchangeRate",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "fax",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Fax",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "followemail",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "FollowEmail",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "followemailname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "FollowEmailName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "ftpsiteurl",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "FtpSiteURL",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "importsequencenumber",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ImportSequenceNumber",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "industrycode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "IndustryCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "industrycodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "IndustryCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "isprivate",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "IsPrivate",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "isprivatename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "IsPrivateName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "lastonholdtime",
+                           "DisplayName":  null,
+                           "AttributeType":  "DateTime",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "LastOnHoldTime",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "lastusedincampaign",
+                           "DisplayName":  null,
+                           "AttributeType":  "DateTime",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "LastUsedInCampaign",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "marketcap",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MarketCap",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "marketcap_base",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MarketCap_Base",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "marketingonly",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MarketingOnly",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "marketingonlyname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MarketingOnlyName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "masteraccountidname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MasterAccountIdName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "masteraccountidyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MasterAccountIdYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "masterid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MasterId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "merged",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Merged",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "mergedname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "MergedName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedby",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedBy",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedbyexternalparty",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedByExternalParty",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedbyexternalpartyname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedByExternalPartyName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedbyexternalpartyyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedByExternalPartyYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedbyname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedByName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedbyyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedByYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedon",
+                           "DisplayName":  null,
+                           "AttributeType":  "DateTime",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedOn",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedonbehalfby",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedOnBehalfBy",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedonbehalfbyname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedOnBehalfByName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "modifiedonbehalfbyyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ModifiedOnBehalfByYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "msa_managingpartnerid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "msa_managingpartnerid",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "msa_managingpartneridname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "msa_managingpartneridName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "msa_managingpartneridyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "msa_managingpartneridYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "name",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Name",
+                           "IsPrimaryName":  true
+                       },
+                       {
+                           "LogicalName":  "numberofemployees",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "NumberOfEmployees",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "onholdtime",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OnHoldTime",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "overriddencreatedon",
+                           "DisplayName":  null,
+                           "AttributeType":  "DateTime",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OverriddenCreatedOn",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "ownerid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Owner",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwnerId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "owneridname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwnerIdName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "owneridtype",
+                           "DisplayName":  null,
+                           "AttributeType":  "EntityName",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwnerIdType",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "owneridyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwnerIdYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "ownershipcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwnershipCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "ownershipcodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwnershipCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "owningbusinessunit",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwningBusinessUnit",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "owningbusinessunitname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwningBusinessUnitName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "owningteam",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwningTeam",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "owninguser",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "OwningUser",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "parentaccountid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ParentAccountId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "parentaccountidname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ParentAccountIdName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "parentaccountidyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ParentAccountIdYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "participatesinworkflow",
+                           "DisplayName":  null,
+                           "AttributeType":  "Boolean",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ParticipatesInWorkflow",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "participatesinworkflowname",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ParticipatesInWorkflowName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "paymenttermscode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PaymentTermsCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "paymenttermscodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PaymentTermsCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredappointmentdaycode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredAppointmentDayCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredappointmentdaycodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredAppointmentDayCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredappointmenttimecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredAppointmentTimeCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredappointmenttimecodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredAppointmentTimeCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredcontactmethodcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredContactMethodCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredcontactmethodcodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredContactMethodCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredsystemuserid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredSystemUserId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredsystemuseridname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredSystemUserIdName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "preferredsystemuseridyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PreferredSystemUserIdYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "primarycontactid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PrimaryContactId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "primarycontactidname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PrimaryContactIdName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "primarycontactidyominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PrimaryContactIdYomiName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "primarysatoriid",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PrimarySatoriId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "primarytwitterid",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "PrimaryTwitterId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "processid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Uniqueidentifier",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ProcessId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "revenue",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Revenue",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "revenue_base",
+                           "DisplayName":  null,
+                           "AttributeType":  "Money",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Revenue_Base",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "sharesoutstanding",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "SharesOutstanding",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "shippingmethodcode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ShippingMethodCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "shippingmethodcodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "ShippingMethodCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "sic",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "SIC",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "slaid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "SLAId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "slainvokedid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "SLAInvokedId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "slainvokedidname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "SLAInvokedIdName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "slaname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "SLAName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "stageid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Uniqueidentifier",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "StageId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "statecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "State",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "StateCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "statecodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "StateCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "statuscode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Status",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "StatusCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "statuscodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "StatusCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "stockexchange",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "StockExchange",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "telephone1",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Telephone1",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "telephone2",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Telephone2",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "telephone3",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "Telephone3",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "territorycode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Picklist",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TerritoryCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "territorycodename",
+                           "DisplayName":  null,
+                           "AttributeType":  "Virtual",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TerritoryCodeName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "tickersymbol",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TickerSymbol",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "timespentbymeonemailandmeetings",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TimeSpentByMeOnEmailAndMeetings",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "timezoneruleversionnumber",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TimeZoneRuleVersionNumber",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "transactioncurrencyid",
+                           "DisplayName":  null,
+                           "AttributeType":  "Lookup",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TransactionCurrencyId",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "transactioncurrencyidname",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TransactionCurrencyIdName",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "traversedpath",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "TraversedPath",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "utcconversiontimezonecode",
+                           "DisplayName":  null,
+                           "AttributeType":  "Integer",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "UTCConversionTimeZoneCode",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "versionnumber",
+                           "DisplayName":  null,
+                           "AttributeType":  "BigInt",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "VersionNumber",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "websiteurl",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "WebSiteURL",
+                           "IsPrimaryName":  false
+                       },
+                       {
+                           "LogicalName":  "yominame",
+                           "DisplayName":  null,
+                           "AttributeType":  "String",
+                           "AttributeTypeName":  null,
+                           "SchemaName":  "YomiName",
+                           "IsPrimaryName":  false
+                       }
+                   ],
+    "PrimaryIdAttribute":  "accountid",
+    "ObjectTypeCode":  1,
+    "Relationships":  {
+                          "many_to_many":  [
+                                               {
+                                                   "Entity2LogicalName":  "account",
+                                                   "SchemaName":  "powerpagecomponent_mspp_webrole_account",
+                                                   "Entity1LogicalName":  "powerpagecomponent"
+                                               }
+                                           ],
+                          "one_to_many":  [
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_BulkDeleteFailures",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "bulkdeletefailure"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Phonecalls",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "phonecall"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_CustomerAddress",
+                                                  "ReferencingAttribute":  "parentid",
+                                                  "ReferencingEntity":  "customeraddress"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_SharepointDocumentLocation",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "sharepointdocumentlocation"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "msa_account_managingpartner",
+                                                  "ReferencingAttribute":  "msa_managingpartnerid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "msa_contact_managingpartner",
+                                                  "ReferencingAttribute":  "msa_managingpartnerid",
+                                                  "ReferencingEntity":  "contact"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "SocialActivity_PostAuthor_accounts",
+                                                  "ReferencingAttribute":  "postauthor",
+                                                  "ReferencingEntity":  "socialactivity"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Email_EmailSender",
+                                                  "ReferencingAttribute":  "emailsender",
+                                                  "ReferencingEntity":  "email"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_ProcessSessions",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "processsession"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_PostRegardings",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "postregarding"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_parent_account",
+                                                  "ReferencingAttribute":  "parentaccountid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Tasks",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "task"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_principalobjectattributeaccess",
+                                                  "ReferencingAttribute":  "objectid",
+                                                  "ReferencingEntity":  "principalobjectattributeaccess"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Socialprofile_customer_accounts",
+                                                  "ReferencingAttribute":  "customerid",
+                                                  "ReferencingEntity":  "socialprofile"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_AsyncOperations",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "asyncoperation"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_adx_inviteredemptions",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "adx_inviteredemption"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_adx_portalcomments",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "adx_portalcomment"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_connections1",
+                                                  "ReferencingAttribute":  "record1id",
+                                                  "ReferencingEntity":  "connection"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_actioncard",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "actioncard"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Email_SendersAccount",
+                                                  "ReferencingAttribute":  "sendersaccount",
+                                                  "ReferencingEntity":  "email"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "adx_invitation_assigntoaccount",
+                                                  "ReferencingAttribute":  "adx_assigntoaccount",
+                                                  "ReferencingEntity":  "adx_invitation"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "userentityinstancedata_account",
+                                                  "ReferencingAttribute":  "objectid",
+                                                  "ReferencingEntity":  "userentityinstancedata"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Faxes",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "fax"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_MailboxTrackingFolder",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "mailboxtrackingfolder"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_activity_parties",
+                                                  "ReferencingAttribute":  "partyid",
+                                                  "ReferencingEntity":  "activityparty"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_PostFollows",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "postfollow"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_msfp_alerts",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "msfp_alert"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_PostRoles",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "postrole"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Letters",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "letter"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Annotation",
+                                                  "ReferencingAttribute":  "objectid",
+                                                  "ReferencingEntity":  "annotation"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_DuplicateMatchingRecord",
+                                                  "ReferencingAttribute":  "duplicaterecordid",
+                                                  "ReferencingEntity":  "duplicaterecord"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_DuplicateBaseRecord",
+                                                  "ReferencingAttribute":  "baserecordid",
+                                                  "ReferencingEntity":  "duplicaterecord"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_msfp_surveyinvites",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "msfp_surveyinvite"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_msfp_surveyresponses",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "msfp_surveyresponse"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Emails",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "email"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "slakpiinstance_account",
+                                                  "ReferencingAttribute":  "regarding",
+                                                  "ReferencingEntity":  "slakpiinstance"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_customer_relationship_partner",
+                                                  "ReferencingAttribute":  "partnerid",
+                                                  "ReferencingEntity":  "customerrelationship"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_connections2",
+                                                  "ReferencingAttribute":  "record2id",
+                                                  "ReferencingEntity":  "connection"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_Appointments",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "appointment"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_SocialActivities",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "socialactivity"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_SharepointDocument",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "sharepointdocument"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_SyncErrors",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "syncerror"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "SocialActivity_PostAuthorAccount_accounts",
+                                                  "ReferencingAttribute":  "postauthoraccount",
+                                                  "ReferencingEntity":  "socialactivity"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_RecurringAppointmentMasters",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "recurringappointmentmaster"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_chats",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "chat"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "Account_ActivityPointers",
+                                                  "ReferencingAttribute":  "regardingobjectid",
+                                                  "ReferencingEntity":  "activitypointer"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_master_account",
+                                                  "ReferencingAttribute":  "masterid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_customer_relationship_customer",
+                                                  "ReferencingAttribute":  "customerid",
+                                                  "ReferencingEntity":  "customerrelationship"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "contact_customer_accounts",
+                                                  "ReferencingAttribute":  "parentcustomerid",
+                                                  "ReferencingEntity":  "contact"
+                                              }
+                                          ],
+                          "many_to_one":  [
+                                              {
+                                                  "ReferencedEntity":  "systemuser",
+                                                  "SchemaName":  "lk_accountbase_modifiedonbehalfby",
+                                                  "ReferencingAttribute":  "modifiedonbehalfby",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "systemuser",
+                                                  "SchemaName":  "system_user_accounts",
+                                                  "ReferencingAttribute":  "preferredsystemuserid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "msa_account_managingpartner",
+                                                  "ReferencingAttribute":  "msa_managingpartnerid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "transactioncurrency",
+                                                  "SchemaName":  "transactioncurrency_account",
+                                                  "ReferencingAttribute":  "transactioncurrencyid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_parent_account",
+                                                  "ReferencingAttribute":  "parentaccountid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "sla",
+                                                  "SchemaName":  "sla_account",
+                                                  "ReferencingAttribute":  "slainvokedid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "businessunit",
+                                                  "SchemaName":  "business_unit_accounts",
+                                                  "ReferencingAttribute":  "owningbusinessunit",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "owner",
+                                                  "SchemaName":  "owner_accounts",
+                                                  "ReferencingAttribute":  "ownerid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "systemuser",
+                                                  "SchemaName":  "user_accounts",
+                                                  "ReferencingAttribute":  "owninguser",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "systemuser",
+                                                  "SchemaName":  "lk_accountbase_createdby",
+                                                  "ReferencingAttribute":  "createdby",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "team",
+                                                  "SchemaName":  "team_accounts",
+                                                  "ReferencingAttribute":  "owningteam",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "systemuser",
+                                                  "SchemaName":  "lk_accountbase_createdonbehalfby",
+                                                  "ReferencingAttribute":  "createdonbehalfby",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "processstage",
+                                                  "SchemaName":  "processstage_account",
+                                                  "ReferencingAttribute":  "stageid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "externalparty",
+                                                  "SchemaName":  "lk_externalparty_account_createdby",
+                                                  "ReferencingAttribute":  "createdbyexternalparty",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "sla",
+                                                  "SchemaName":  "manualsla_account",
+                                                  "ReferencingAttribute":  "slaid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "systemuser",
+                                                  "SchemaName":  "lk_accountbase_modifiedby",
+                                                  "ReferencingAttribute":  "modifiedby",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "contact",
+                                                  "SchemaName":  "account_primary_contact",
+                                                  "ReferencingAttribute":  "primarycontactid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "externalparty",
+                                                  "SchemaName":  "lk_externalparty_account_modifiedby",
+                                                  "ReferencingAttribute":  "modifiedbyexternalparty",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "imagedescriptor",
+                                                  "SchemaName":  "lk_account_entityimage",
+                                                  "ReferencingAttribute":  "entityimageid",
+                                                  "ReferencingEntity":  "account"
+                                              },
+                                              {
+                                                  "ReferencedEntity":  "account",
+                                                  "SchemaName":  "account_master_account",
+                                                  "ReferencingAttribute":  "masterid",
+                                                  "ReferencingEntity":  "account"
+                                              }
+                                          ]
+                      },
+    "DisplayCollectionName":  null,
+    "SchemaName":  "Account",
+    "PrimaryNameAttribute":  "name",
+    "DisplayName":  null
+}

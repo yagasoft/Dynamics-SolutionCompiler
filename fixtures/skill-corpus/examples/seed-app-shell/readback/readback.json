@@ -1,0 +1,212 @@
+﻿{
+    "custom_controls":  [
+
+                        ],
+    "workflows":  [
+
+                  ],
+    "connection_roles":  [
+
+                         ],
+    "app_settings":  [
+                         {
+                             "@odata.context":  "https://ldv-rd-min.crm4.dynamics.com/api/data/v9.2/$metadata#appsettings(appsettingid,displayname,uniquename,value,description,_parentappmoduleid_value,_settingdefinitionid_value,componentidunique)/$entity",
+                             "@odata.etag":  "W/\"9920504\"",
+                             "displayname":  "App channel",
+                             "uniquename":  null,
+                             "appsettingid":  "df2136c3-5537-f111-88b3-0022489b9600",
+                             "componentidunique":  "80b04809-dfed-4ff2-b736-01d0c59f73b1",
+                             "_organizationid_value":  "49916849-57f1-ee11-9048-000d3ab5d944",
+                             "_settingdefinitionid_value":  "2a57a662-30e1-4ec0-b72e-832a1e88cf45",
+                             "_parentappmoduleid_value":  "de2136c3-5537-f111-88b3-0022489b9600",
+                             "value":  "1",
+                             "description":  null
+                         }
+                     ],
+    "field_permissions":  [
+
+                          ],
+    "routing_rule_items":  [
+
+                           ],
+    "duplicate_rule_conditions":  [
+
+                                  ],
+    "environment_variable_values":  [
+                                        {
+                                            "@odata.context":  "https://ldv-rd-min.crm4.dynamics.com/api/data/v9.2/$metadata#environmentvariablevalues(environmentvariablevalueid,schemaname,value,_environmentvariabledefinitionid_value)/$entity",
+                                            "@odata.etag":  "W/\"9920554\"",
+                                            "_environmentvariabledefinitionid_value":  "2fbf302e-5637-f111-88b3-0022489b9600",
+                                            "environmentvariablevalueid":  "83e42634-5637-f111-88b3-0022489b9600",
+                                            "schemaname":  "cdxmeta_AppShellMode",
+                                            "value":  "guided",
+                                            "definition_schema_name":  "cdxmeta_AppShellMode"
+                                        }
+                                    ],
+    "site_maps":  [
+                      {
+                          "@odata.context":  "https://ldv-rd-min.crm4.dynamics.com/api/data/v9.2/$metadata#sitemaps(sitemapid,sitemapname,sitemapnameunique,sitemapxml,isappaware,showhome,showpinned,showrecents,enablecollapsiblegroups)/$entity",
+                          "@odata.etag":  "W/\"9920585\"",
+                          "showrecents":  true,
+                          "sitemapxml":  "\u003cSiteMap IntroducedVersion=\"7.0.0.0\"\u003e\u003cArea Id=\"area_codex_metadata_shell\" ShowGroups=\"true\" ResourceId=\"SitemapDesigner.NewArea\" IntroducedVersion=\"7.0.0.0\"\u003e\u003cTitles\u003e\u003cTitle LCID=\"1033\" Title=\"Codex Metadata\" /\u003e\u003c/Titles\u003e\u003cGroup Id=\"group_codex_metadata_shell\" ResourceId=\"SitemapDesigner.NewGroup\" IntroducedVersion=\"7.0.0.0\"\u003e\u003cTitles\u003e\u003cTitle LCID=\"1033\" Title=\"Shell\" /\u003e\u003c/Titles\u003e\u003cSubArea Id=\"subarea_codex_metadata_shell\" ResourceId=\"SitemapDesigner.NewSubArea\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" Url=\"$webresource:cdxmeta_/shell/landing.html\" Client=\"Web\" PassParams=\"true\"\u003e\u003cTitles\u003e\u003cTitle LCID=\"1033\" Title=\"Metadata Shell\" /\u003e\u003c/Titles\u003e\u003c/SubArea\u003e\u003c/Group\u003e\u003c/Area\u003e\u003c/SiteMap\u003e",
+                          "showpinned":  true,
+                          "sitemapname":  "Codex Metadata Shell",
+                          "sitemapid":  "9f89c484-483d-4e90-bf9c-e564e424697f",
+                          "showhome":  true,
+                          "_organizationid_value":  "49916849-57f1-ee11-9048-000d3ab5d944",
+                          "enablecollapsiblegroups":  false,
+                          "sitemapnameunique":  "codex_metadata_shell_dd96cf20",
+                          "isappaware":  true
+                      }
+                  ],
+    "entities":  {
+
+                 },
+    "ribbon_diffs":  [
+
+                     ],
+    "web_resources":  [
+                          {
+                              "@odata.context":  "https://ldv-rd-min.crm4.dynamics.com/api/data/v9.2/$metadata#webresourceset(webresourceid,name,displayname,description,webresourcetype,content)/$entity",
+                              "@odata.etag":  "W/\"9920566\"",
+                              "displayname":  "Codex Metadata Shell Landing HTML",
+                              "webresourcetype":  1,
+                              "content":  "PCFET0NUWVBFIGh0bWw+PGh0bWwgbGFuZz0iZW4iPjxoZWFkPjxtZXRhIGNoYXJzZXQ9InV0Zi04IiAvPjx0aXRsZT5Db2RleCBNZXRhZGF0YSBTaGVsbDwvdGl0bGU+PC9oZWFkPjxib2R5PjxtYWluPjxoMT5Db2RleCBNZXRhZGF0YSBTaGVsbDwvaDE+PHA+TmV1dHJhbCBhcHAtc2hlbGwgbGFuZGluZyBwYWdlLjwvcD48L21haW4+PC9ib2R5PjwvaHRtbD4=",
+                              "webresourceid":  "a0ba2262-5637-f111-88b3-0022489b9600",
+                              "name":  "cdxmeta_/shell/landing.html",
+                              "_organizationid_value":  "49916849-57f1-ee11-9048-000d3ab5d944",
+                              "description":  "Neutral HTML landing page for the app-shell seed."
+                          },
+                          {
+                              "@odata.context":  "https://ldv-rd-min.crm4.dynamics.com/api/data/v9.2/$metadata#webresourceset(webresourceid,name,displayname,description,webresourcetype,content)/$entity",
+                              "@odata.etag":  "W/\"9920563\"",
+                              "displayname":  "Codex Metadata Shell Icon SVG",
+                              "webresourcetype":  11,
+                              "content":  "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cmVjdCB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgcng9IjI0IiBmaWxsPSIjMTYzMjRmIi8+PHBhdGggZD0iTTI2IDM3aDc2djEySDI2em0wIDIxaDc2djEySDI2em0wIDIxaDQ4djEySDI2eiIgZmlsbD0iI2Y1ZjhmYiIvPjxjaXJjbGUgY3g9IjkzIiBjeT0iODUiIHI9IjExIiBmaWxsPSIjZjBhMjAyIi8+PC9zdmc+",
+                              "webresourceid":  "9fba2262-5637-f111-88b3-0022489b9600",
+                              "name":  "cdxmeta_/shell/icon.svg",
+                              "_organizationid_value":  "49916849-57f1-ee11-9048-000d3ab5d944",
+                              "description":  "Neutral SVG icon for the app-shell seed."
+                          }
+                      ],
+    "plugin_steps":  [
+
+                     ],
+    "mobile_offline_profiles":  [
+
+                                ],
+    "mobile_offline_profile_items":  [
+
+                                     ],
+    "field_security_profiles":  [
+
+                                ],
+    "environment_variable_definitions":  [
+                                             {
+                                                 "@odata.context":  "https://ldv-rd-min.crm4.dynamics.com/api/data/v9.2/$metadata#environmentvariabledefinitions(environmentvariabledefinitionid,schemaname,displayname,defaultvalue,type,secretstore,isrequired,valueschema)/$entity",
+                                                 "@odata.etag":  "W/\"9920533\"",
+                                                 "defaultvalue":  "standard",
+                                                 "displayname":  "App Shell Mode",
+                                                 "type":  100000000,
+                                                 "secretstore":  0,
+                                                 "valueschema":  null,
+                                                 "schemaname":  "cdxmeta_AppShellMode",
+                                                 "environmentvariabledefinitionid":  "2fbf302e-5637-f111-88b3-0022489b9600",
+                                                 "isrequired":  false
+                                             }
+                                         ],
+    "roles":  [
+
+              ],
+    "similarity_rules":  [
+
+                         ],
+    "privilege_object_type_codes":  [
+
+                                    ],
+    "role_privileges":  [
+
+                        ],
+    "slas":  [
+
+             ],
+    "ribbon_context_groups":  [
+
+                              ],
+    "complex_controls":  [
+
+                         ],
+    "plugin_assemblies":  [
+
+                          ],
+    "warnings":  [
+
+                 ],
+    "solution":  {
+                     "friendlyname":  "Codex Metadata Seed App Shell",
+                     "uniquename":  "CodexMetadataSeedAppShell",
+                     "version":  "1.0.0.0",
+                     "solutionid":  "c52136c3-5537-f111-88b3-0022489b9600"
+                 },
+    "routing_rules":  [
+
+                      ],
+    "capture_mode":  "web-api",
+    "sla_items":  [
+
+                  ],
+    "duplicate_rules":  [
+
+                        ],
+    "saved_query_visualizations":  [
+
+                                   ],
+    "app_modules":  [
+                        {
+                            "clienttype":  4,
+                            "formfactor":  1,
+                            "appmoduleidunique":  "96b9b49a-49d5-4b18-ab3e-8c9594bbf561",
+                            "role_ids":  [
+
+                                         ],
+                            "name":  "Codex Metadata Shell",
+                            "components":  [
+                                               {
+                                                   "componenttype":  62,
+                                                   "objectid":  "9f89c484-483d-4e90-bf9c-e564e424697f"
+                                               }
+                                           ],
+                            "statecode":  0,
+                            "appmoduleid":  "de2136c3-5537-f111-88b3-0022489b9600",
+                            "statuscode":  1,
+                            "uniquename":  "codex_metadata_shell_dd96cf20",
+                            "navigationtype":  0,
+                            "app_settings":  [
+                                                 {
+                                                     "value":  "1",
+                                                     "setting_definition_unique_name":  "AppChannel"
+                                                 }
+                                             ],
+                            "webresourceid":  "953b9fac-1e5e-e611-80d6-00155ded156f",
+                            "description":  "Neutral model-driven app for Dataverse metadata synthesis skill coverage."
+                        }
+                    ],
+    "ribbon_rules":  [
+
+                     ],
+    "ribbon_tab_to_command_maps":  [
+
+                                   ],
+    "custom_control_default_configs":  [
+
+                                       ],
+    "plugin_step_images":  [
+
+                           ],
+    "ribbon_commands":  [
+
+                        ],
+    "ribbon_customizations":  [
+
+                              ]
+}

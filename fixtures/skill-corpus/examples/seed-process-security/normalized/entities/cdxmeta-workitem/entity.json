@@ -1,0 +1,21 @@
+{
+  "logical_name": "cdxmeta_workitem",
+  "schema_name": "cdxmeta_WorkItem",
+  "forms": [],
+  "views": [],
+  "attributes": [
+    {
+      "logical_name": "cdxmeta_details",
+      "display_name": "Details",
+      "type": "ntext",
+      "is_secured": true
+    }
+  ],
+  "relationships": {
+    "one_to_many": [],
+    "many_to_one": [],
+    "many_to_many": []
+  },
+  "ribbon_diff_xml": "",
+  "ribbon_diff_summary": {}
+}

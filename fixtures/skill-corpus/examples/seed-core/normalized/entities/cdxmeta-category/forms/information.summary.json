@@ -1,0 +1,68 @@
+{
+  "counts": {
+    "tab_count": 1,
+    "section_count": 1,
+    "control_count": 2,
+    "quickform_count": 0,
+    "subgrid_count": 0,
+    "webresource_count": 0,
+    "header_control_count": 0,
+    "footer_control_count": 0,
+    "control_description_count": 0,
+    "custom_control_host_count": 0,
+    "custom_control_instance_count": 0,
+    "custom_control_family_count": 0,
+    "custom_control_reference_count": 0,
+    "custom_control_manifest_count": 0
+  },
+  "tabs": [
+    {
+      "name": "",
+      "label": "",
+      "section_count": 1,
+      "sections": [
+        {
+          "name": "",
+          "label": "GENERAL",
+          "control_count": 2,
+          "controls": [
+            {
+              "id": "cdxmeta_categoryname",
+              "uniqueid": "",
+              "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+              "datafieldname": "cdxmeta_categoryname",
+              "kind": "single-line-text",
+              "signature": "44a723658c98042c81b7bc04a198f27aa17dc35807a4e9f0b388531e6cdfc394",
+              "label": "Category Name"
+            },
+            {
+              "id": "ownerid",
+              "uniqueid": "",
+              "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+              "datafieldname": "ownerid",
+              "kind": "lookup",
+              "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+              "label": "Owner"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "header": [],
+  "footer": [],
+  "control_descriptions": [],
+  "embedded_custom_controls": {
+    "host_controls": [],
+    "families": [],
+    "registration_reference_ids": [],
+    "manifest_names": [],
+    "form_factors": [],
+    "bind_attributes": [],
+    "data_field_names": [],
+    "dataset_names": [],
+    "default_view_ids": [],
+    "quick_forms": []
+  },
+  "signature": "7e7badb029d9e9ef0dac275da73f08d3d3d4e8aaa38f7dd72a6ed5e16496718a"
+}

@@ -1,0 +1,20 @@
+{
+  "counts": {
+    "custom_action_count": 0,
+    "command_definition_count": 0,
+    "display_rule_count": 0,
+    "enable_rule_count": 0,
+    "hide_custom_action_count": 0,
+    "button_count": 0,
+    "loc_label_count": 0,
+    "byte_length": 396
+  },
+  "custom_action_ids": [],
+  "command_definition_ids": [],
+  "button_ids": [],
+  "display_rule_ids": [],
+  "enable_rule_ids": [],
+  "hide_custom_action_ids": [],
+  "comparison_signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6",
+  "signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6"
+}

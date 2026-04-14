@@ -1,0 +1,58 @@
+﻿[
+    {
+        "savedqueryid":  "9cd24523-3b37-f111-88b3-0022489b9600",
+        "name":  "My Checkpoints",
+        "returnedtypecode":  "cdxmeta_checkpoint",
+        "querytype":  8192,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\" savedqueryid=\"9cd24523-3b37-f111-88b3-0022489b9600\"\u003e\u003centity name=\"cdxmeta_checkpoint\"\u003e\u003cattribute name=\"cdxmeta_checkpointid\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003ccondition attribute=\"ownerid\" operator=\"eq-userid\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  null
+    },
+    {
+        "savedqueryid":  "500a740d-e399-42c5-9f3a-0f9c203ef9cd",
+        "name":  "Active Checkpoints",
+        "returnedtypecode":  "cdxmeta_checkpoint",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"500a740d-e399-42c5-9f3a-0f9c203ef9cd\"\u003e\u003centity name=\"cdxmeta_checkpoint\"\u003e\u003cattribute name=\"cdxmeta_checkpointid\" /\u003e\u003cattribute name=\"cdxmeta_checkpointname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_checkpointname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10784\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_checkpointid\"\u003e\u003ccell name=\"cdxmeta_checkpointname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "7bc5b4c0-cd93-40a2-8b98-12d6643c1601",
+        "name":  "Quick Find Active Checkpoints",
+        "returnedtypecode":  "cdxmeta_checkpoint",
+        "querytype":  4,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"7bc5b4c0-cd93-40a2-8b98-12d6643c1601\"\u003e\u003centity name=\"cdxmeta_checkpoint\"\u003e\u003cattribute name=\"cdxmeta_checkpointid\" /\u003e\u003cattribute name=\"cdxmeta_checkpointname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_checkpointname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003cfilter type=\"or\" isquickfindfields=\"1\"\u003e\u003ccondition attribute=\"cdxmeta_checkpointname\" operator=\"like\" value=\"{0}\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10784\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_checkpointid\"\u003e\u003ccell name=\"cdxmeta_checkpointname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "1cccc4d2-7d78-4523-b21e-5776205e3cb3",
+        "name":  "Checkpoint Lookup View",
+        "returnedtypecode":  "cdxmeta_checkpoint",
+        "querytype":  64,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"1cccc4d2-7d78-4523-b21e-5776205e3cb3\"\u003e\u003centity name=\"cdxmeta_checkpoint\"\u003e\u003cattribute name=\"cdxmeta_checkpointid\" /\u003e\u003cattribute name=\"cdxmeta_checkpointname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"cdxmeta_checkpoints\" object=\"10784\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"0\"\u003e\u003crow name=\"cdxmeta_checkpoint\" id=\"cdxmeta_checkpointid\"\u003e\u003ccell name=\"cdxmeta_checkpointname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "08bea66b-4fd7-4d7b-929c-b4fe2758d3cf",
+        "name":  "Checkpoint Advanced Find View",
+        "returnedtypecode":  "cdxmeta_checkpoint",
+        "querytype":  1,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"08bea66b-4fd7-4d7b-929c-b4fe2758d3cf\"\u003e\u003centity name=\"cdxmeta_checkpoint\"\u003e\u003cattribute name=\"cdxmeta_checkpointid\" /\u003e\u003cattribute name=\"cdxmeta_checkpointname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_checkpointname\" descending=\"false\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10784\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_checkpointid\"\u003e\u003ccell name=\"cdxmeta_checkpointname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "c08b029d-d71f-4418-bf9f-d71c7913e560",
+        "name":  "Checkpoint Associated View",
+        "returnedtypecode":  "cdxmeta_checkpoint",
+        "querytype":  2,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"c08b029d-d71f-4418-bf9f-d71c7913e560\"\u003e\u003centity name=\"cdxmeta_checkpoint\"\u003e\u003cattribute name=\"cdxmeta_checkpointid\" /\u003e\u003cattribute name=\"cdxmeta_checkpointname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_checkpointname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"cdxmeta_checkpoints\" object=\"10784\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"cdxmeta_checkpoint\" id=\"cdxmeta_checkpointid\"\u003e\u003ccell name=\"cdxmeta_checkpointname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "ddebe026-05c4-4758-a4d7-ff904e137288",
+        "name":  "Inactive Checkpoints",
+        "returnedtypecode":  "cdxmeta_checkpoint",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"ddebe026-05c4-4758-a4d7-ff904e137288\"\u003e\u003centity name=\"cdxmeta_checkpoint\"\u003e\u003cattribute name=\"cdxmeta_checkpointid\" /\u003e\u003cattribute name=\"cdxmeta_checkpointname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_checkpointname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"1\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10784\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_checkpointid\"\u003e\u003ccell name=\"cdxmeta_checkpointname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    }
+]

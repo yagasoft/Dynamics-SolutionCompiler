@@ -1,0 +1,25 @@
+{
+  "name": "Category Advanced Find View",
+  "id": "{8daa158f-e559-497d-bb01-05e35b9fdfca}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_categoryname\" descending=\"false\" />\n        </entity>\n      </fetch>",
+  "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+  "summary": {
+    "target_entity": "cdxmeta_category",
+    "layout_columns": [
+      "cdxmeta_categoryname",
+      "createdon"
+    ],
+    "fetch_attributes": [
+      "cdxmeta_categoryid",
+      "cdxmeta_categoryname",
+      "createdon"
+    ],
+    "link_entities": [],
+    "filters": [],
+    "orders": [
+      "cdxmeta_categoryname"
+    ],
+    "signature": "e9623c9ed34d926e04b453a32d390a090e4687e9f4839f458099e4637fe84bcd"
+  }
+}

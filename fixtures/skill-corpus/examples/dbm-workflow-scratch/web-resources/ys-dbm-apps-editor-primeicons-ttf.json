@@ -1,0 +1,21 @@
+{
+  "id": "{981bbb43-13fa-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/primeicons.ttf",
+  "display_name": "DBM Editor App - PrimeIcons TTF",
+  "description": "",
+  "type": "2",
+  "type_label": "Style Sheet (CSS)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorprimeiconsttf981BBB43-13FA-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.ttf",
+  "summary": {
+    "type_label": "Style Sheet (CSS)",
+    "counts": {
+      "byte_count": 72204,
+      "line_count": 0
+    },
+    "content_sha256": "131bc3bfb18180990842d86b491fe604118a9e7a83d2bb495afdadccba8b9ff4",
+    "comparison_signature": "b2ab3a7bd2f4754c286ef32db9d378d8f669d1ce7f0b21103d9197c7b2f4f18a",
+    "signature": "886b231e964d9f5f67baa764c01db0e92f49cd91247cf450a987d186cf8a647b"
+  }
+}

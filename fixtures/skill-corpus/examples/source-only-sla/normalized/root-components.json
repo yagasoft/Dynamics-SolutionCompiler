@@ -1,0 +1,11 @@
+[
+  {
+    "type": "152",
+    "type_label": "SLA",
+    "family_label": "Process and Service Policy",
+    "id": "{5B22D27B-67A2-4C2D-B8AF-CA6C0F121152}",
+    "schema_name": "",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  }
+]

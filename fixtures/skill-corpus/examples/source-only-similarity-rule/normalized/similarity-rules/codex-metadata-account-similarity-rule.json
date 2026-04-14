@@ -1,0 +1,14 @@
+{
+  "id": "{3B0D5FB7-7F92-4A8A-AE36-6FC1C7A96165}",
+  "name": "Codex Metadata Account Similarity Rule",
+  "description": "Compact source-only similarity-rule parser fixture.",
+  "base_entity_name": "account",
+  "matching_entity_name": "account",
+  "exclude_inactive_records": "1",
+  "max_keywords": "5",
+  "ngram_size": "2",
+  "summary": {
+    "comparison_signature": "41bd0ba5e6e0e7a90f6aa7d42029df9c42b6f9496ed4aa815f0c07c4cfcdc964",
+    "signature": "41bd0ba5e6e0e7a90f6aa7d42029df9c42b6f9496ed4aa815f0c07c4cfcdc964"
+  }
+}

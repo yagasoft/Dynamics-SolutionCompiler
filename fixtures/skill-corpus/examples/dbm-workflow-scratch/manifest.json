@@ -1,0 +1,14 @@
+{
+  "unique_name": "Temp",
+  "friendly_name": "",
+  "version": "1.0.0.0",
+  "managed": "0",
+  "publisher": {
+    "unique_name": "yagasoft",
+    "prefix": "ys"
+  },
+  "source_files": {
+    "solution_xml": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\Other\\Solution.xml",
+    "customizations_xml": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\Other\\Customizations.xml"
+  }
+}

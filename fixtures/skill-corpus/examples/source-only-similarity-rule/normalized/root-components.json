@@ -1,0 +1,11 @@
+[
+  {
+    "type": "165",
+    "type_label": "Similarity Rule",
+    "family_label": "Process and Service Policy",
+    "id": "{3B0D5FB7-7F92-4A8A-AE36-6FC1C7A96165}",
+    "schema_name": "",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  }
+]

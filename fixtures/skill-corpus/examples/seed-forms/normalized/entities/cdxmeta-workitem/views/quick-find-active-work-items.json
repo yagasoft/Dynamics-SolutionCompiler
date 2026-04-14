@@ -1,0 +1,28 @@
+{
+  "name": "Quick Find Active Work Items",
+  "id": "{5bea075b-c3bb-41b9-9c02-79b40ab7650f}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_workitemname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n          <filter type=\"or\" isquickfindfields=\"1\">\n            <condition attribute=\"cdxmeta_workitemname\" operator=\"like\" value=\"{0}\" />\n          </filter>\n        </entity>\n      </fetch>",
+  "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+  "summary": {
+    "target_entity": "cdxmeta_workitem",
+    "layout_columns": [
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "fetch_attributes": [
+      "cdxmeta_workitemid",
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "link_entities": [],
+    "filters": [
+      "and:statecode:eq",
+      "or:cdxmeta_workitemname:like"
+    ],
+    "orders": [
+      "cdxmeta_workitemname"
+    ],
+    "signature": "8e464d0e7c9d66be60c66b06f9117bcb748323a74262eb6a3740c11cd5a5e991"
+  }
+}

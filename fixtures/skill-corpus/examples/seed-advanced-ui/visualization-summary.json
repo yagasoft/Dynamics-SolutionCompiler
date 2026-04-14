@@ -1,0 +1,30 @@
+{
+  "name": "Accounts by Industry",
+  "primary_entity_type_code": "account",
+  "data_description": "<datadefinition><fetchcollection><fetch mapping=\"logical\" aggregate=\"true\"><entity name=\"account\"><attribute groupby=\"true\" alias=\"groupby_column\" name=\"industrycode\" /><attribute alias=\"aggregate_column\" name=\"name\" aggregate=\"count\" /></entity></fetch></fetchcollection><categorycollection><category><measurecollection><measure alias=\"aggregate_column\" /></measurecollection></category></categorycollection></datadefinition>",
+  "presentation_description": "<Chart><Series><Series ChartType=\"Bar\" IsValueShownAsLabel=\"True\" Color=\"91, 151, 213\" BackSecondaryColor=\"112, 142, 50\" Font=\"{0}, 9.5px\" LabelForeColor=\"59, 59, 59\" CustomProperties=\"PointWidth=0.75, MaxPixelPointWidth=40\"><SmartLabelStyle Enabled=\"True\" /></Series></Series><ChartAreas><ChartArea BorderColor=\"White\" BorderDashStyle=\"Solid\"><AxisY LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\"><MajorGrid LineColor=\"239, 242, 246\" /><LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" /></AxisY><AxisX LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\"><MajorGrid Enabled=\"False\" /><MajorTickMark Enabled=\"False\" /><LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" /></AxisX></ChartArea></ChartAreas><Titles><Title Name=\"Chart Title\" DockingOffset=\"-3\" Font=\"{0}, 13px\" ForeColor=\"59, 59, 59\" Alignment=\"TopLeft\"></Title></Titles></Chart>",
+  "summary": {
+    "counts": {
+      "fetch_count": 1,
+      "category_count": 1,
+      "series_count": 1
+    },
+    "entity_names": [
+      "account"
+    ],
+    "groupby_columns": [
+      "industrycode"
+    ],
+    "measure_aliases": [
+      "aggregate_column"
+    ],
+    "chart_types": [
+      "Bar"
+    ],
+    "title_names": [
+      "Chart Title"
+    ],
+    "comparison_signature": "54913098e748db469cdc277f9b889e8ef2b6bb3252912f59f3628eb6297c2aa0",
+    "signature": "fc40533477e9421c6920efb6054b53be6c56c5d4b42827203bc41b4742522125"
+  }
+}

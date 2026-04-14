@@ -1,0 +1,254 @@
+{
+  "source_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-security\\export\\CodexMetadataSeedProcessSecurity.zip",
+  "resolved_root": "C:\\Users\\AHMEDE~1\\AppData\\Local\\Temp\\dataverse-solution-3t05imzf",
+  "layout": "xml",
+  "solution": {
+    "unique_name": "CodexMetadataSeedProcessSecurity",
+    "friendly_name": "",
+    "version": "1.0.0.0",
+    "managed": "0",
+    "publisher": {
+      "unique_name": "CodexMetadata",
+      "prefix": "cdxmeta"
+    },
+    "source_files": {
+      "solution_xml": "C:\\Users\\AHMEDE~1\\AppData\\Local\\Temp\\dataverse-solution-3t05imzf\\Solution.xml",
+      "customizations_xml": "C:\\Users\\AHMEDE~1\\AppData\\Local\\Temp\\dataverse-solution-3t05imzf\\Customizations.xml"
+    }
+  },
+  "root_components": [
+    {
+      "type": "1",
+      "type_label": "Entity",
+      "family_label": "Schema and Metadata",
+      "id": "",
+      "schema_name": "cdxmeta_workitem",
+      "behavior": "1",
+      "behavior_label": "Do not include subcomponents"
+    },
+    {
+      "type": "20",
+      "type_label": "Role",
+      "family_label": "Security and Access",
+      "id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "63",
+      "type_label": "Connection Role",
+      "family_label": "Security and Access",
+      "id": "{a3843e20-5d37-f111-88b3-0022489b9600}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "70",
+      "type_label": "Field Security Profile",
+      "family_label": "Security and Access",
+      "id": "{a0843e20-5d37-f111-88b3-0022489b9600}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    }
+  ],
+  "entities": {
+    "cdxmeta_workitem": {
+      "logical_name": "cdxmeta_workitem",
+      "schema_name": "cdxmeta_WorkItem",
+      "forms": [],
+      "views": [],
+      "attributes": [
+        {
+          "logical_name": "cdxmeta_details",
+          "display_name": "Details",
+          "type": "ntext",
+          "is_secured": true
+        }
+      ],
+      "relationships": {
+        "one_to_many": [],
+        "many_to_one": [],
+        "many_to_many": []
+      },
+      "ribbon_diff_xml": "",
+      "ribbon_diff_summary": {}
+    }
+  },
+  "app_modules": [],
+  "site_maps": [],
+  "web_resources": [],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "plugin_assemblies": [],
+  "plugin_steps": [],
+  "plugin_step_images": [],
+  "workflows": [],
+  "duplicate_rules": [],
+  "duplicate_rule_conditions": [],
+  "routing_rules": [],
+  "routing_rule_items": [],
+  "slas": [],
+  "sla_items": [],
+  "similarity_rules": [],
+  "mobile_offline_profiles": [],
+  "mobile_offline_profile_items": [],
+  "roles": [
+    {
+      "id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "Codex Metadata Seed Role",
+      "business_unit_id": "",
+      "is_inherited": "",
+      "role_privileges": [
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvCreateSharePointData",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvCreateSharePointData|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvReadPluginAssembly",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvReadPluginAssembly|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvReadPluginType",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvReadPluginType|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvReadSdkMessage",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvReadSdkMessage|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvReadSdkMessageProcessingStep",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvReadSdkMessageProcessingStep|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvReadSdkMessageProcessingStepImage",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvReadSdkMessageProcessingStepImage|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvReadSharePointData",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvReadSharePointData|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvReadSharePointDocument",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvReadSharePointDocument|Global"
+        },
+        {
+          "role_name": "Codex Metadata Seed Role",
+          "role_id": "{94843e20-5d37-f111-88b3-0022489b9600}",
+          "name": "prvWriteSharePointData",
+          "level": "Global",
+          "comparison_key": "Codex Metadata Seed Role|prvWriteSharePointData|Global"
+        }
+      ],
+      "summary": {
+        "comparison_signature": "173a112bbb6bdec2d3234b0333f7921f8cf516a936b3d649c07e0a5d5769e36b",
+        "signature": "173a112bbb6bdec2d3234b0333f7921f8cf516a936b3d649c07e0a5d5769e36b"
+      }
+    }
+  ],
+  "role_privileges": [],
+  "privilege_object_type_codes": [],
+  "field_security_profiles": [
+    {
+      "id": "{a0843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "Codex Metadata Seed Field Security",
+      "description": "",
+      "permissions": [
+        {
+          "id": "",
+          "comparison_key": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+          "profile_name": "Codex Metadata Seed Field Security",
+          "profile_id": "{a0843e20-5d37-f111-88b3-0022489b9600}",
+          "entity_name": "cdxmeta_workitem",
+          "attribute_logical_name": "cdxmeta_details",
+          "can_create": "4",
+          "can_read": "4",
+          "can_read_unmasked": "0",
+          "can_update": "4",
+          "summary": {
+            "comparison_signature": "3040313837e2187110f672fa871e5cb1540b74ca810a3e8d6e7eb3d586790267",
+            "signature": "3040313837e2187110f672fa871e5cb1540b74ca810a3e8d6e7eb3d586790267"
+          }
+        }
+      ],
+      "summary": {
+        "comparison_signature": "22a8e86d5886b3079cb22902f8d3548a5deefca13439f84c7fbe4adfcbe3b558",
+        "signature": "22a8e86d5886b3079cb22902f8d3548a5deefca13439f84c7fbe4adfcbe3b558"
+      }
+    }
+  ],
+  "field_permissions": [
+    {
+      "id": "",
+      "comparison_key": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+      "profile_name": "Codex Metadata Seed Field Security",
+      "profile_id": "{a0843e20-5d37-f111-88b3-0022489b9600}",
+      "entity_name": "cdxmeta_workitem",
+      "attribute_logical_name": "cdxmeta_details",
+      "can_create": "4",
+      "can_read": "4",
+      "can_read_unmasked": "0",
+      "can_update": "4",
+      "summary": {
+        "comparison_signature": "3040313837e2187110f672fa871e5cb1540b74ca810a3e8d6e7eb3d586790267",
+        "signature": "3040313837e2187110f672fa871e5cb1540b74ca810a3e8d6e7eb3d586790267"
+      }
+    },
+    {
+      "id": "",
+      "comparison_key": "cdxmeta_workitem|cdxmeta_details",
+      "profile_name": "",
+      "profile_id": "",
+      "entity_name": "cdxmeta_workitem",
+      "attribute_logical_name": "cdxmeta_details",
+      "can_create": "4",
+      "can_read": "4",
+      "can_read_unmasked": "0",
+      "can_update": "4",
+      "summary": {
+        "comparison_signature": "bb6c96f9f2f6b71cfb010f787b4648aeb48afbb6b50ef6f4d0d2740ce6efc734",
+        "signature": "bb6c96f9f2f6b71cfb010f787b4648aeb48afbb6b50ef6f4d0d2740ce6efc734"
+      }
+    }
+  ],
+  "connection_roles": [
+    {
+      "id": "{a3843e20-5d37-f111-88b3-0022489b9600}",
+      "name": "Codex Metadata Seed Connection Role",
+      "category": "1",
+      "description": "Neutral connection role placeholder for Dataverse metadata synthesis.",
+      "summary": {
+        "comparison_signature": "78f1911be727fe6613f0690dd1b471dbf53d0b2498f5e7de98b665d7a71e0c5c",
+        "signature": "78f1911be727fe6613f0690dd1b471dbf53d0b2498f5e7de98b665d7a71e0c5c"
+      }
+    }
+  ],
+  "warnings": [],
+  "signature": "3c66c44210da36a4847584b54d7582f0e2fb03a5632a139f857cccbc5891e0ad"
+}

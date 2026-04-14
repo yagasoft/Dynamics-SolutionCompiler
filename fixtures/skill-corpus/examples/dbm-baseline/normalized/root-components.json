@@ -1,0 +1,137 @@
+[
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/apps/editor/bundle.js",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/apps/editor/index.html",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/apps/editor/primeicons.eot",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/apps/editor/primeicons.svg",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/apps/editor/primeicons.ttf",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/apps/editor/primeicons.woff",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/apps/editor/primeicons.woff2",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/icons/dbm-logo.svg",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/icons/dbmicon128.png",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/libs/common.js",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/dbm/libs/core.js",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "61",
+    "type_label": "Web Resource",
+    "family_label": "Code and Extensibility",
+    "id": "",
+    "schema_name": "ys_/generic/libs/common.js",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "62",
+    "type_label": "Site Map",
+    "family_label": "Model-Driven UI and App Shell",
+    "id": "",
+    "schema_name": "ys_YSCommon",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "80",
+    "type_label": "App Module",
+    "family_label": "Model-Driven UI and App Shell",
+    "id": "",
+    "schema_name": "ys_YSCommon",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "91",
+    "type_label": "Plugin Assembly",
+    "family_label": "Code and Extensibility",
+    "id": "{30b3a8b1-6fd2-44ac-8749-c46b7b725e52}",
+    "schema_name": "Yagasoft.Dbm.Plugins, Version=1.0.9088.31941, Culture=neutral, PublicKeyToken=bcdf1e34c5296dde",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  }
+]

@@ -1,0 +1,14 @@
+Dataverse Solution Compiler
+Registered commands:
+  read <path> [capabilities...]
+  plan <path> [capabilities...]
+  emit <path> [capabilities...]
+  apply-dev <path> [capabilities...]
+  readback <path> [capabilities...]
+  diff <path> [capabilities...]
+  pack <path> [capabilities...]
+  import <path> [capabilities...]
+  publish <path> [capabilities...]
+  check <path> [capabilities...]
+  doctor <path> [capabilities...]
+  explain <path> [capabilities...]

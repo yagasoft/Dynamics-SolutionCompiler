@@ -1,0 +1,21 @@
+{
+  "name": "My Categories",
+  "id": "{03280ae5-3a37-f111-88b3-0022489b9600}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n            <condition attribute=\"ownerid\" operator=\"eq-userid\" />\n          </filter>\n        </entity>\n      </fetch>",
+  "layoutxml": "",
+  "summary": {
+    "target_entity": "cdxmeta_category",
+    "layout_columns": [],
+    "fetch_attributes": [
+      "cdxmeta_categoryid"
+    ],
+    "link_entities": [],
+    "filters": [
+      "and:statecode:eq",
+      "and:ownerid:eq-userid"
+    ],
+    "orders": [],
+    "signature": "5d681e48ecf1dd3e5c81692798298379ad6a0daa7dd4f5c9787715aa378cd243"
+  }
+}

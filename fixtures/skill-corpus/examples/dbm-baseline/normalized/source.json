@@ -1,0 +1,532 @@
+{
+  "source_path": "C:\\Git\\Dynamics-BusinessMachine\\power-platform\\solutions\\DynamicsBusinessMachine\\baseline",
+  "resolved_root": "C:\\Git\\Dynamics-BusinessMachine\\power-platform\\solutions\\DynamicsBusinessMachine\\baseline",
+  "layout": "xml",
+  "solution": {
+    "unique_name": "DynamicsBusinessMachine",
+    "friendly_name": "",
+    "version": "0.1.1.1",
+    "managed": "0",
+    "publisher": {
+      "unique_name": "yagasoft",
+      "prefix": "ys"
+    },
+    "source_files": {
+      "solution_xml": "C:\\Git\\Dynamics-BusinessMachine\\power-platform\\solutions\\DynamicsBusinessMachine\\baseline\\Solution.xml",
+      "customizations_xml": "C:\\Git\\Dynamics-BusinessMachine\\power-platform\\solutions\\DynamicsBusinessMachine\\baseline\\Customizations.xml"
+    }
+  },
+  "root_components": [
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/bundle.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/index.html",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.eot",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.svg",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.ttf",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.woff",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.woff2",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/icons/dbm-logo.svg",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/icons/dbmicon128.png",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/libs/common.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/libs/core.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/generic/libs/common.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "62",
+      "type_label": "Site Map",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "ys_YSCommon",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "80",
+      "type_label": "App Module",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "ys_YSCommon",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "91",
+      "type_label": "Plugin Assembly",
+      "family_label": "Code and Extensibility",
+      "id": "{30b3a8b1-6fd2-44ac-8749-c46b7b725e52}",
+      "schema_name": "Yagasoft.Dbm.Plugins, Version=1.0.9088.31941, Culture=neutral, PublicKeyToken=bcdf1e34c5296dde",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    }
+  ],
+  "entities": {},
+  "app_modules": [
+    {
+      "id": "",
+      "unique_name": "ys_YSCommon",
+      "display_name": "Yagasoft",
+      "description": "Please refer to Yagasoft.com (Ahmed Elsawalhy) for support.",
+      "web_resource_id": "953b9fac-1e5e-e611-80d6-00155ded156f",
+      "client_type": "4",
+      "form_factor": "1",
+      "navigation_type": "0",
+      "state_code": "0",
+      "status_code": "1",
+      "components": [],
+      "role_ids": [],
+      "app_settings": [],
+      "summary": {
+        "counts": {
+          "component_count": 0,
+          "role_map_count": 0,
+          "app_setting_count": 0
+        },
+        "component_types": [],
+        "comparison_signature": "13ba0ee65c81b0289e39f0b7ca4469521be4b3b4a2ecfa0cdab60c034d1f3a67",
+        "signature": "85a76dd47ed4b8509043437a86ace0da0033d1e87e584ec2686cfaa9ffbb2944"
+      }
+    }
+  ],
+  "site_maps": [
+    {
+      "unique_name": "ys_YSCommon",
+      "display_name": "Yagasoft",
+      "enable_collapsible_groups": "False",
+      "show_home": "True",
+      "show_pinned": "True",
+      "show_recents": "True",
+      "sitemap_xml": "<SiteMap IntroducedVersion=\"7.0.0.0\">\n        <Area Id=\"area_dbm\" ResourceId=\"SitemapDesigner.NewTitle\" DescriptionResourceId=\"SitemapDesigner.NewTitle\" ShowGroups=\"true\" IntroducedVersion=\"7.0.0.0\" ordinalvalue=\"3\" solutionaction=\"Added\">\n          <Titles>\n            <Title LCID=\"1033\" Title=\"Dynamics Business Machine\" />\n          </Titles>\n          <Group Id=\"group_cd2e3929\" ResourceId=\"SitemapDesigner.NewGroup\" DescriptionResourceId=\"SitemapDesigner.NewGroup\" IntroducedVersion=\"7.0.0.0\" IsProfile=\"false\" ToolTipResourseId=\"SitemapDesigner.Unknown\" ordinalvalue=\"0\">\n            <Titles>\n              <Title LCID=\"1033\" Title=\"Apps\" />\n            </Titles>\n            <SubArea Id=\"subarea_70298910\" ResourceId=\"SitemapDesigner.NewSubArea\" VectorIcon=\"/WebResources/ys_/dbm/icons/dbm-logo.svg\" Icon=\"/WebResources/ys_/dbm/icons/dbm-logo.svg\" Url=\"$webresource:ys_/dbm/apps/editor/index.html\" Client=\"All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web\" AvailableOffline=\"false\" PassParams=\"true\" Sku=\"All,OnPremise,Live,SPLA\" ordinalvalue=\"0\">\n              <Titles>\n                <Title LCID=\"1033\" Title=\"DBM App\" ordinalvalue=\"0\" />\n              </Titles>\n            </SubArea>\n          </Group>\n        </Area>\n      </SiteMap>\n      ",
+      "summary": {
+        "counts": {
+          "area_count": 1,
+          "group_count": 1,
+          "subarea_count": 1,
+          "web_resource_subarea_count": 1,
+          "entity_subarea_count": 0
+        },
+        "areas": [
+          {
+            "id": "area_dbm",
+            "title": "Dynamics Business Machine",
+            "groups": [
+              {
+                "id": "group_cd2e3929",
+                "title": "Apps",
+                "subareas": [
+                  {
+                    "id": "subarea_70298910",
+                    "title": "DBM App",
+                    "url": "$webresource:ys_/dbm/apps/editor/index.html",
+                    "entity": "",
+                    "icon": "/WebResources/ys_/dbm/icons/dbm-logo.svg",
+                    "vector_icon": "/WebResources/ys_/dbm/icons/dbm-logo.svg"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "signature": "69b15f0c747c449d192c55dc8c35af6ba861a907814a0396979fd0b8e32eb0a4",
+        "comparison_signature": "e54dab486247158569d482f1852f6a98a9a7c733203ebc623c3b4fd9c854ae2f"
+      }
+    }
+  ],
+  "saved_query_visualizations": [],
+  "web_resources": [
+    {
+      "id": "{a7b23fee-0ef0-ee11-af4b-00155d016516}",
+      "name": "ys_/dbm/libs/core.js",
+      "display_name": "DBM Core Library JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmlibscorejsA7B23FEE-0EF0-EE11-AF4B-00155D016516",
+      "content_path": "",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "a6d15e41a9995407dc85e61a0f0a0d1e24c1de12fd56d345e13a883f791ff842",
+        "signature": "19c99b84bb4a1a70961887ca5f0c05898f4f188a4db313dd03eb7fc82f945425"
+      }
+    },
+    {
+      "id": "{47578132-b2a5-ef11-8a6a-0022489cf64b}",
+      "name": "ys_/dbm/icons/dbmicon128.png",
+      "display_name": "DBM Icon 128 PNG",
+      "description": "",
+      "type": "5",
+      "type_label": "PNG format",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmiconsdbmicon128png47578132-B2A5-EF11-8A6A-0022489CF64B",
+      "content_path": "",
+      "summary": {
+        "type_label": "PNG format",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "cd6220bae8141cde71413b7c1610b13a1a84447de55d62b1d1aae3c1287e0211",
+        "signature": "a2e2a6a3d227a4defcd5e1b9ae75f09dfb6fa2726b6780e5125ec0cd1b272181"
+      }
+    },
+    {
+      "id": "{308b1c74-bba5-ef11-8a6a-0022489cf64b}",
+      "name": "ys_/dbm/icons/dbm-logo.svg",
+      "display_name": "DBM Logo SVG",
+      "description": "",
+      "type": "11",
+      "type_label": "Vector format (SVG)",
+      "language_code": "0",
+      "file_name": "/WebResources/ys_dbmiconsdbm-logosvg308B1C74-BBA5-EF11-8A6A-0022489CF64B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Vector format (SVG)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "b4a819059a28032754a37d5ef5fdee8e232e80d04fc7b85fa1722de29a56241e",
+        "signature": "0c2cb0f1122ea352a89377b0549172ec1af446b0f0c327dc52ff5d1de705fb9d"
+      }
+    },
+    {
+      "id": "{aadd6d78-aaf8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/index.html",
+      "display_name": "DBM Editor App - HTML",
+      "description": "",
+      "type": "1",
+      "type_label": "Webpage (HTML)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorindexhtmlAADD6D78-AAF8-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Webpage (HTML)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "72f8fbb7719baf9f0512624244478b4d91f008de28db5bcd38abfd69c19b9c2b",
+        "signature": "7941f53567bd15140abaa528a905b98cd62091555600484f312b354dfbe2f733"
+      }
+    },
+    {
+      "id": "{6d574ac0-acf8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/bundle.js",
+      "display_name": "DBM Editor App - Bundle JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorbundlejs6D574AC0-ACF8-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "da6d645c90d4ef1cb7437b8fb4b969927fdc919c0d1076eea54a947e02c334d0",
+        "signature": "ac595fce5626489541e26666f89e49f8416d113b89b6446018a7634dfddf6860"
+      }
+    },
+    {
+      "id": "{3abcc44d-aef8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.svg",
+      "display_name": "DBM Editor App - PrimeIcons SVG",
+      "description": "",
+      "type": "11",
+      "type_label": "Vector format (SVG)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconssvg3ABCC44D-AEF8-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Vector format (SVG)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "7c13d91c1798f4f44d9226f8d2b1b867010a3d2f46e0be7fc6630d7df7f993a0",
+        "signature": "8e171569ab4c1d2491264dbb471bbba9b7c23fdfdd2cdbef062f512f5bba71e1"
+      }
+    },
+    {
+      "id": "{d0279397-e2f9-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/libs/common.js",
+      "display_name": "DBM Common Library JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmlibscommonjsD0279397-E2F9-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "7ec6ca120a89347134c0ba8c90f4917f5351170af5d198917a933da3898c8564",
+        "signature": "f589b0e43c3d7dafa4504f452509b8322cf09a88cd3f5830576ae483f6f9de48"
+      }
+    },
+    {
+      "id": "{f1bce850-e3f9-ee11-a1fe-0022489f971b}",
+      "name": "ys_/generic/libs/common.js",
+      "display_name": "YS Common Library JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_genericlibscommonjsF1BCE850-E3F9-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "a0fb7ee3201b344402bb0c7b74ee7b25edfca8a22475be091ea839d17043098b",
+        "signature": "f4b1f62598e6b3ed67282788564ea63529c6f0951884b093fbda96a83f48f52c"
+      }
+    },
+    {
+      "id": "{a6230f14-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.eot",
+      "display_name": "DBM Editor App - PrimeIcons EOT",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconseotA6230F14-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "9154a53f6a9bab91bd9c176f882f76be76b64d3d0d413aad6e574aa330c65397",
+        "signature": "778a6f3760b8d9ad217234c3804e8cb8c8c7be96e2742a9b08fcce64629ab019"
+      }
+    },
+    {
+      "id": "{981bbb43-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.ttf",
+      "display_name": "DBM Editor App - PrimeIcons TTF",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconsttf981BBB43-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "13c0e98f8081e2082dc2a66faa4ad352b9410de54344e2cb0f555211c33d7915",
+        "signature": "8e3f915366ee5056c21fdf2eef2455a5dee952a1863a13db73ec8c7c8aa6b478"
+      }
+    },
+    {
+      "id": "{60ec2068-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.woff",
+      "display_name": "DBM Editor App - PrimeIcons WOFF",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconswoff60EC2068-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "733d7839bf04c60596864928b9fbc24ff6ddb3c78ec889b916cd68fadca3bac2",
+        "signature": "69cea8172602c9d035dc684fbc92bf3b338c81d4414a12ddbde774987f95f4be"
+      }
+    },
+    {
+      "id": "{4116a87c-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.woff2",
+      "display_name": "DBM Editor App - PrimeIcons WOFF 2",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconswoff24116A87C-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 0,
+          "line_count": 0
+        },
+        "content_sha256": "",
+        "comparison_signature": "094a3ced4c4388b0f29ecc7399a26f2539feaf619d37f7905711b075223ccd69",
+        "signature": "f49a4aafc1027603db347bc87803faf2ad60d2986069844df48265f12dd5862c"
+      }
+    }
+  ],
+  "custom_controls": [],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "plugin_assemblies": [
+    {
+      "id": "30b3a8b1-6fd2-44ac-8749-c46b7b725e52",
+      "full_name": "Yagasoft.Dbm.Plugins, Version=1.0.9088.31941, Culture=neutral, PublicKeyToken=bcdf1e34c5296dde",
+      "file_name": "/PluginAssemblies/YagasoftDbmPlugins-30B3A8B1-6FD2-44AC-8749-C46B7B725E52/YagasoftDbmPlugins.dll",
+      "introduced_version": "1.0",
+      "isolation_mode": "2",
+      "source_type": "0",
+      "plugin_types": [
+        {
+          "id": "e3d5f956-8cad-455a-894b-c516a52a0b5b",
+          "name": "Yagasoft.Dbm.Plugins.Evaluation.Steps.DbmEvaluateScript",
+          "assembly_qualified_name": "Yagasoft.Dbm.Plugins.Evaluation.Steps.DbmEvaluateScript, Yagasoft.Dbm.Plugins, Version=1.0.9088.31941, Culture=neutral, PublicKeyToken=bcdf1e34c5296dde",
+          "friendly_name": "9f6c8c60-a4ec-4b6b-8e42-57547e84724b",
+          "workflow_activity_group_name": "Yagasoft.Dbm.Plugins (1.0.9088.31941)"
+        }
+      ],
+      "summary": {
+        "counts": {
+          "plugin_type_count": 1
+        },
+        "comparison_signature": "874a65ffd979a744d11044f99a7170a12c0e84e82189ffed93ee8cba61c6f403",
+        "signature": "49ed01e563ab913f0ab49a7cfe66936b4f744c8fed2988c7044b0d84e12ea15c"
+      }
+    }
+  ],
+  "plugin_steps": [],
+  "plugin_step_images": [],
+  "workflows": [],
+  "duplicate_rules": [],
+  "duplicate_rule_conditions": [],
+  "routing_rules": [],
+  "routing_rule_items": [],
+  "slas": [],
+  "sla_items": [],
+  "similarity_rules": [],
+  "mobile_offline_profiles": [],
+  "mobile_offline_profile_items": [],
+  "roles": [],
+  "role_privileges": [],
+  "privilege_object_type_codes": [],
+  "field_security_profiles": [],
+  "field_permissions": [],
+  "connection_roles": [],
+  "warnings": [],
+  "signature": "75d51e8354bfd7d91f6a50d14644748648b345a9aff3c537ae4ed2229456c722"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Category Lookup View",
+  "id": "{9f07e63b-ab5d-4add-879e-2b48494194b0}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_category\">\n          <attribute name=\"cdxmeta_categoryid\" />\n          <attribute name=\"cdxmeta_categoryname\" />\n          <attribute name=\"createdon\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"0\" />\n          </filter>\n        </entity>\n      </fetch>",
+  "layoutxml": "<grid name=\"cdxmeta_categories\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"0\">\n        <row name=\"cdxmeta_category\" id=\"cdxmeta_categoryid\">\n          <cell name=\"cdxmeta_categoryname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+  "summary": {
+    "target_entity": "cdxmeta_category",
+    "layout_columns": [
+      "cdxmeta_categoryname",
+      "createdon"
+    ],
+    "fetch_attributes": [
+      "cdxmeta_categoryid",
+      "cdxmeta_categoryname",
+      "createdon"
+    ],
+    "link_entities": [],
+    "filters": [
+      "and:statecode:eq"
+    ],
+    "orders": [],
+    "signature": "bd6e695a3d5ea86ae512be6b581c905bac2c327ef965af2a613957eb15cd42a7"
+  }
+}

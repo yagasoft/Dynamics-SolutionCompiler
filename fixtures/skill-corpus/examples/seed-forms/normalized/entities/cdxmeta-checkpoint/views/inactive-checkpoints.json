@@ -1,0 +1,27 @@
+{
+  "name": "Inactive Checkpoints",
+  "id": "{ddebe026-05c4-4758-a4d7-ff904e137288}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_checkpoint\">\n          <attribute name=\"cdxmeta_checkpointid\" />\n          <attribute name=\"cdxmeta_checkpointname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_checkpointname\" descending=\"false\" />\n          <filter type=\"and\">\n            <condition attribute=\"statecode\" operator=\"eq\" value=\"1\" />\n          </filter>\n        </entity>\n      </fetch>",
+  "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_checkpointname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_checkpointid\">\n          <cell name=\"cdxmeta_checkpointname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+  "summary": {
+    "target_entity": "cdxmeta_checkpoint",
+    "layout_columns": [
+      "cdxmeta_checkpointname",
+      "createdon"
+    ],
+    "fetch_attributes": [
+      "cdxmeta_checkpointid",
+      "cdxmeta_checkpointname",
+      "createdon"
+    ],
+    "link_entities": [],
+    "filters": [
+      "and:statecode:eq"
+    ],
+    "orders": [
+      "cdxmeta_checkpointname"
+    ],
+    "signature": "11aa434244d26bb04fe83cfcab8180c40ccdb6523c4a146df4f285b6f959aacb"
+  }
+}

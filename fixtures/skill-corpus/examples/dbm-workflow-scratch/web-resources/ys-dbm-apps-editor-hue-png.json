@@ -1,0 +1,21 @@
+{
+  "id": "{af4523f7-acf8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/hue.png",
+  "display_name": "DBM Editor App - Hue PNG",
+  "description": "",
+  "type": "5",
+  "type_label": "PNG format",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorhuepngAF4523F7-ACF8-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\hue.png",
+  "summary": {
+    "type_label": "PNG format",
+    "counts": {
+      "byte_count": 293,
+      "line_count": 0
+    },
+    "content_sha256": "024cc884600c368c55ecd507a69413ef1e244283df8ccc58c927a4986a42b4a3",
+    "comparison_signature": "1b7bdee65cb724a048d10eacd608478395024fe1d14877f48b2cead80fb0851d",
+    "signature": "29f6e748ab2ccd5413854b91ca3f0df74f69fff7cf9bdf2af7f1c30df69693eb"
+  }
+}

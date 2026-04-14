@@ -1,0 +1,251 @@
+{
+  "source_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\unpacked",
+  "resolved_root": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\unpacked",
+  "layout": "xml",
+  "solution": {
+    "unique_name": "CodexMetadataSeedProcessPolicy",
+    "friendly_name": "",
+    "version": "1.0.0.0",
+    "managed": "0",
+    "publisher": {
+      "unique_name": "CodexMetadata",
+      "prefix": "cdxmeta"
+    },
+    "source_files": {
+      "solution_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\unpacked\\Other\\Solution.xml",
+      "customizations_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\unpacked\\Other\\Customizations.xml"
+    }
+  },
+  "root_components": [
+    {
+      "type": "1",
+      "type_label": "Entity",
+      "family_label": "Schema and Metadata",
+      "id": "",
+      "schema_name": "account",
+      "behavior": "1",
+      "behavior_label": "Do not include subcomponents"
+    },
+    {
+      "type": "150",
+      "type_label": "Routing Rule",
+      "family_label": "Process and Service Policy",
+      "id": "{4c205db4-6737-f111-88b3-0022489b9600}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "161",
+      "type_label": "Mobile Offline Profile",
+      "family_label": "Process and Service Policy",
+      "id": "{9f0a7210-6937-f111-88b3-0022489b9600}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    }
+  ],
+  "entities": {
+    "account": {
+      "logical_name": "account",
+      "schema_name": "Account",
+      "forms": [],
+      "views": [],
+      "attributes": [],
+      "relationships": {
+        "one_to_many": [],
+        "many_to_one": [],
+        "many_to_many": []
+      },
+      "ribbon_diff_xml": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RibbonDiffXml xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <CustomActions />\r\n  <Templates>\r\n    <RibbonTemplates Id=\"Mscrm.Templates\"></RibbonTemplates>\r\n  </Templates>\r\n  <CommandDefinitions />\r\n  <RuleDefinitions>\r\n    <TabDisplayRules />\r\n    <DisplayRules />\r\n    <EnableRules />\r\n  </RuleDefinitions>\r\n  <LocLabels />\r\n</RibbonDiffXml>",
+      "ribbon_diff_summary": {
+        "counts": {
+          "custom_action_count": 0,
+          "command_definition_count": 0,
+          "rule_definition_count": 1,
+          "button_count": 0,
+          "loc_label_count": 0,
+          "byte_length": 396
+        },
+        "comparison_signature": "45469c0c5357f7d3e1822937bf1bc2541588f07f8c59cd93f97913f5744c361a",
+        "signature": "45469c0c5357f7d3e1822937bf1bc2541588f07f8c59cd93f97913f5744c361a"
+      }
+    }
+  },
+  "app_modules": [],
+  "site_maps": [],
+  "web_resources": [],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "plugin_assemblies": [],
+  "plugin_steps": [],
+  "plugin_step_images": [],
+  "workflows": [],
+  "duplicate_rules": [
+    {
+      "id": "",
+      "name": "Codex Metadata Account Name Duplicate Rule",
+      "base_entity_name": "account",
+      "matching_entity_name": "account",
+      "is_case_sensitive": "0",
+      "exclude_inactive_records": "1",
+      "state_code": "",
+      "status_code": "",
+      "conditions": [
+        {
+          "id": "",
+          "comparison_key": "codex metadata account name duplicate rule|name|name|0",
+          "rule_name": "Codex Metadata Account Name Duplicate Rule",
+          "rule_id": "",
+          "base_attribute_name": "name",
+          "matching_attribute_name": "name",
+          "operator_code": "0",
+          "ignore_blank_values": "1",
+          "summary": {
+            "comparison_signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a",
+            "signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a"
+          }
+        }
+      ],
+      "summary": {
+        "comparison_signature": "19e34cbc1558b5f0a5d9d57170701b9ac1fd723f113d19050be855d0cab6ef93",
+        "signature": "19e34cbc1558b5f0a5d9d57170701b9ac1fd723f113d19050be855d0cab6ef93"
+      }
+    }
+  ],
+  "duplicate_rule_conditions": [
+    {
+      "id": "",
+      "comparison_key": "codex metadata account name duplicate rule|name|name|0",
+      "rule_name": "Codex Metadata Account Name Duplicate Rule",
+      "rule_id": "",
+      "base_attribute_name": "name",
+      "matching_attribute_name": "name",
+      "operator_code": "0",
+      "ignore_blank_values": "1",
+      "summary": {
+        "comparison_signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a",
+        "signature": "f53acbd224b44992aba78872ce5b4972b15fe66c9de73035b287643f6818fb2a"
+      }
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "{4c205db4-6737-f111-88b3-0022489b9600}",
+      "name": "Codex Metadata Routing Rule",
+      "description": "Neutral routing rule for Dataverse metadata synthesis.",
+      "workflow_id": "",
+      "state_code": "",
+      "status_code": "",
+      "items": [
+        {
+          "id": "bdd324c4-6737-f111-88b3-0022489b9600",
+          "name": "Codex Metadata Routing Rule Item",
+          "comparison_key": "codex metadata routing rule|Route all",
+          "routing_rule_name": "Codex Metadata Routing Rule",
+          "routing_rule_id": "{4c205db4-6737-f111-88b3-0022489b9600}",
+          "assign_object_id": "",
+          "assign_object_id_type": "",
+          "description": "Route all",
+          "condition_xml": "<conditions />",
+          "summary": {
+            "comparison_signature": "1b0c8d090e0d08c0b2e0013d09bee01617fb379e3a2b251e15fa59b370860f99",
+            "signature": "1b0c8d090e0d08c0b2e0013d09bee01617fb379e3a2b251e15fa59b370860f99"
+          }
+        }
+      ],
+      "summary": {
+        "comparison_signature": "4cfbc2baf6c64bb5a9cdd932b2e64712a6f7e5afef5a04594b5bac2f8ffc4423",
+        "signature": "9ef804ce76f7416e508a644d4cc24d407af4e41b75f7f74361047f9a957da973"
+      }
+    }
+  ],
+  "routing_rule_items": [
+    {
+      "id": "bdd324c4-6737-f111-88b3-0022489b9600",
+      "name": "Codex Metadata Routing Rule Item",
+      "comparison_key": "codex metadata routing rule|Route all",
+      "routing_rule_name": "Codex Metadata Routing Rule",
+      "routing_rule_id": "{4c205db4-6737-f111-88b3-0022489b9600}",
+      "assign_object_id": "",
+      "assign_object_id_type": "",
+      "description": "Route all",
+      "condition_xml": "<conditions />",
+      "summary": {
+        "comparison_signature": "1b0c8d090e0d08c0b2e0013d09bee01617fb379e3a2b251e15fa59b370860f99",
+        "signature": "1b0c8d090e0d08c0b2e0013d09bee01617fb379e3a2b251e15fa59b370860f99"
+      }
+    }
+  ],
+  "slas": [],
+  "sla_items": [],
+  "similarity_rules": [],
+  "mobile_offline_profiles": [
+    {
+      "id": "{9f0a7210-6937-f111-88b3-0022489b9600}",
+      "name": "Codex Metadata Mobile Offline Profile",
+      "description": "Neutral mobile offline profile for Dataverse metadata synthesis.",
+      "is_validated": "",
+      "items": [
+        {
+          "id": "{8BB0691A-6937-F111-88B3-0022489B9600}",
+          "comparison_key": "codex metadata mobile offline profile|account",
+          "name": "Codex Metadata Mobile Offline Profile Item",
+          "profile_name": "Codex Metadata Mobile Offline Profile",
+          "profile_id": "{9f0a7210-6937-f111-88b3-0022489b9600}",
+          "selected_entity_type_code": "",
+          "entity_schema_name": "Account",
+          "entity_object_type_code": "",
+          "record_distribution_criteria": "0",
+          "records_owned_by_me": "0",
+          "records_owned_by_my_team": "0",
+          "records_owned_by_my_business_unit": "0",
+          "profile_item_entity_filter": "",
+          "is_visible_in_grid": "",
+          "get_related_entity_records": "",
+          "can_be_followed": "",
+          "summary": {
+            "comparison_signature": "56cfb71e97e137939676a8647e2856082aea3528ad8abc75553c6c78bfadb64c",
+            "signature": "56cfb71e97e137939676a8647e2856082aea3528ad8abc75553c6c78bfadb64c"
+          }
+        }
+      ],
+      "summary": {
+        "comparison_signature": "bfdc2bbf1ee392d02a1020c9be30680dbedaa763ce20652af22841307bc1ca4d",
+        "signature": "bfdc2bbf1ee392d02a1020c9be30680dbedaa763ce20652af22841307bc1ca4d"
+      }
+    }
+  ],
+  "mobile_offline_profile_items": [
+    {
+      "id": "{8BB0691A-6937-F111-88B3-0022489B9600}",
+      "comparison_key": "codex metadata mobile offline profile|account",
+      "name": "Codex Metadata Mobile Offline Profile Item",
+      "profile_name": "Codex Metadata Mobile Offline Profile",
+      "profile_id": "{9f0a7210-6937-f111-88b3-0022489b9600}",
+      "selected_entity_type_code": "",
+      "entity_schema_name": "Account",
+      "entity_object_type_code": "",
+      "record_distribution_criteria": "0",
+      "records_owned_by_me": "0",
+      "records_owned_by_my_team": "0",
+      "records_owned_by_my_business_unit": "0",
+      "profile_item_entity_filter": "",
+      "is_visible_in_grid": "",
+      "get_related_entity_records": "",
+      "can_be_followed": "",
+      "summary": {
+        "comparison_signature": "56cfb71e97e137939676a8647e2856082aea3528ad8abc75553c6c78bfadb64c",
+        "signature": "56cfb71e97e137939676a8647e2856082aea3528ad8abc75553c6c78bfadb64c"
+      }
+    }
+  ],
+  "roles": [],
+  "role_privileges": [],
+  "privilege_object_type_codes": [],
+  "field_security_profiles": [],
+  "field_permissions": [],
+  "connection_roles": [],
+  "warnings": [],
+  "signature": "f4423e9be79c5377b14ddb350afdc7f1988b1c93927e8aa79540e6dc0b96cafc"
+}

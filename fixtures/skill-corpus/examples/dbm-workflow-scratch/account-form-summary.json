@@ -1,0 +1,364 @@
+{
+  "counts": {
+    "tab_count": 2,
+    "section_count": 6,
+    "control_count": 2,
+    "quickform_count": 0,
+    "subgrid_count": 1,
+    "webresource_count": 0,
+    "header_control_count": 0,
+    "footer_control_count": 0,
+    "control_description_count": 1,
+    "custom_control_host_count": 1,
+    "custom_control_instance_count": 5,
+    "custom_control_family_count": 2,
+    "custom_control_reference_count": 1,
+    "custom_control_manifest_count": 1
+  },
+  "tabs": [
+    {
+      "name": "SUMMARY_TAB",
+      "label": "",
+      "section_count": 3,
+      "sections": [
+        {
+          "name": "ACCOUNT_INFORMATION",
+          "label": "",
+          "control_count": 0,
+          "controls": []
+        },
+        {
+          "name": "ADDRESS",
+          "label": "",
+          "control_count": 0,
+          "controls": []
+        },
+        {
+          "name": "SUMMARY_TAB_section_6",
+          "label": "",
+          "control_count": 2,
+          "controls": [
+            {
+              "id": "Contacts",
+              "uniqueid": "",
+              "classid": "{e7a81278-8635-4d9e-8d4d-59480b391c5b}",
+              "datafieldname": "",
+              "kind": "subgrid",
+              "view_id": "",
+              "relationship_name": "",
+              "target_entity_type": "",
+              "quick_forms": [],
+              "url": "",
+              "signature": "0b3abe3def4f0716871bb7a45414252f319f080f368457c8f1319601b62481ba",
+              "label": ""
+            },
+            {
+              "id": "primarycontactid",
+              "uniqueid": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+              "classid": "{f9a8a302-114e-466a-b582-6771b2ae0d92}",
+              "datafieldname": "primarycontactid",
+              "kind": "field",
+              "view_id": "",
+              "relationship_name": "",
+              "target_entity_type": "",
+              "quick_forms": [],
+              "url": "",
+              "signature": "5dd6a413b28825d8ef3e70bdbd2c225f2c76951a7528ac91bf18d7eead913aa4",
+              "label": "Primary Contact"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DETAILS_TAB",
+      "label": "",
+      "section_count": 3,
+      "sections": [
+        {
+          "name": "COMPANY_PROFILE",
+          "label": "",
+          "control_count": 0,
+          "controls": []
+        },
+        {
+          "name": "DETAILS_TAB_section_6",
+          "label": "",
+          "control_count": 0,
+          "controls": []
+        },
+        {
+          "name": "BILLING",
+          "label": "",
+          "control_count": 0,
+          "controls": []
+        }
+      ]
+    }
+  ],
+  "header": [],
+  "footer": [],
+  "control_descriptions": [
+    {
+      "for_control": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+      "host_control": {
+        "id": "primarycontactid",
+        "uniqueid": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+        "label": "Primary Contact",
+        "datafieldname": "primarycontactid",
+        "kind": "field"
+      },
+      "families": [
+        "MscrmControls.ModelForm.ModelFormControl",
+        "id:{270bd3db-d9af-4782-9025-509e298dec0a}"
+      ],
+      "custom_controls": [
+        {
+          "name": "",
+          "id": "{270bd3db-d9af-4782-9025-509e298dec0a}",
+          "form_factor": "",
+          "control_mode": "registration-reference",
+          "data_field_name": "primarycontactid",
+          "bind_attribute": "",
+          "default_view_id": "",
+          "target_entity_type": "",
+          "parameter_keys": [
+            "datafieldname"
+          ],
+          "value_keys": [],
+          "dataset_names": [],
+          "data_field_names": [
+            "primarycontactid"
+          ],
+          "bind_attributes": [],
+          "default_view_ids": [],
+          "view_ids": [],
+          "target_entity_types": [],
+          "quick_forms": []
+        },
+        {
+          "name": "",
+          "id": "{270bd3db-d9af-4782-9025-509e298dec0a}",
+          "form_factor": "",
+          "control_mode": "registration-reference",
+          "data_field_name": "primarycontactid",
+          "bind_attribute": "",
+          "default_view_id": "",
+          "target_entity_type": "",
+          "parameter_keys": [
+            "datafieldname"
+          ],
+          "value_keys": [],
+          "dataset_names": [],
+          "data_field_names": [
+            "primarycontactid"
+          ],
+          "bind_attributes": [],
+          "default_view_ids": [],
+          "view_ids": [],
+          "target_entity_types": [],
+          "quick_forms": []
+        },
+        {
+          "name": "MscrmControls.ModelForm.ModelFormControl",
+          "id": "",
+          "form_factor": "0",
+          "control_mode": "embedded-manifest",
+          "data_field_name": "",
+          "bind_attribute": "primarycontactid",
+          "default_view_id": "{a2d479c5-53e3-4c69-addd-802327e67a0d}",
+          "target_entity_type": "",
+          "parameter_keys": [
+            "AddToRecentItems",
+            "DisplayFormSelector",
+            "EnableHighDensityPageHeader",
+            "QuickForms",
+            "SaveMode",
+            "value"
+          ],
+          "value_keys": [
+            "AllowFilterOff",
+            "AvailableViewIds",
+            "BindAttribute",
+            "DefaultViewId",
+            "DependentAttributeName",
+            "DependentAttributeType",
+            "DisableQuickFind",
+            "DisableViewPicker",
+            "FilterRelationshipName"
+          ],
+          "dataset_names": [],
+          "data_field_names": [],
+          "bind_attributes": [
+            "primarycontactid"
+          ],
+          "default_view_ids": [
+            "{a2d479c5-53e3-4c69-addd-802327e67a0d}"
+          ],
+          "view_ids": [],
+          "target_entity_types": [],
+          "quick_forms": [
+            "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+          ]
+        },
+        {
+          "name": "MscrmControls.ModelForm.ModelFormControl",
+          "id": "",
+          "form_factor": "2",
+          "control_mode": "embedded-manifest",
+          "data_field_name": "",
+          "bind_attribute": "primarycontactid",
+          "default_view_id": "{a2d479c5-53e3-4c69-addd-802327e67a0d}",
+          "target_entity_type": "",
+          "parameter_keys": [
+            "AddToRecentItems",
+            "DisplayFormSelector",
+            "EnableHighDensityPageHeader",
+            "QuickForms",
+            "SaveMode",
+            "value"
+          ],
+          "value_keys": [
+            "AllowFilterOff",
+            "AvailableViewIds",
+            "BindAttribute",
+            "DefaultViewId",
+            "DependentAttributeName",
+            "DependentAttributeType",
+            "DisableQuickFind",
+            "DisableViewPicker",
+            "FilterRelationshipName"
+          ],
+          "dataset_names": [],
+          "data_field_names": [],
+          "bind_attributes": [
+            "primarycontactid"
+          ],
+          "default_view_ids": [
+            "{a2d479c5-53e3-4c69-addd-802327e67a0d}"
+          ],
+          "view_ids": [],
+          "target_entity_types": [],
+          "quick_forms": [
+            "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+          ]
+        },
+        {
+          "name": "MscrmControls.ModelForm.ModelFormControl",
+          "id": "",
+          "form_factor": "1",
+          "control_mode": "embedded-manifest",
+          "data_field_name": "",
+          "bind_attribute": "primarycontactid",
+          "default_view_id": "{a2d479c5-53e3-4c69-addd-802327e67a0d}",
+          "target_entity_type": "",
+          "parameter_keys": [
+            "AddToRecentItems",
+            "DisplayFormSelector",
+            "EnableHighDensityPageHeader",
+            "QuickForms",
+            "SaveMode",
+            "value"
+          ],
+          "value_keys": [
+            "AllowFilterOff",
+            "AvailableViewIds",
+            "BindAttribute",
+            "DefaultViewId",
+            "DependentAttributeName",
+            "DependentAttributeType",
+            "DisableQuickFind",
+            "DisableViewPicker",
+            "FilterRelationshipName"
+          ],
+          "dataset_names": [],
+          "data_field_names": [],
+          "bind_attributes": [
+            "primarycontactid"
+          ],
+          "default_view_ids": [
+            "{a2d479c5-53e3-4c69-addd-802327e67a0d}"
+          ],
+          "view_ids": [],
+          "target_entity_types": [],
+          "quick_forms": [
+            "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+          ]
+        }
+      ],
+      "signature": "206bad80b2a07efd1f786afe93a3b5de690fa1767b30675e853559081cfe07b7"
+    }
+  ],
+  "embedded_custom_controls": {
+    "host_controls": [
+      {
+        "id": "primarycontactid",
+        "uniqueid": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+        "label": "Primary Contact",
+        "datafieldname": "primarycontactid",
+        "kind": "field"
+      }
+    ],
+    "families": [
+      "MscrmControls.ModelForm.ModelFormControl",
+      "id:{270bd3db-d9af-4782-9025-509e298dec0a}"
+    ],
+    "registration_reference_ids": [
+      "{270bd3db-d9af-4782-9025-509e298dec0a}"
+    ],
+    "manifest_names": [
+      "MscrmControls.ModelForm.ModelFormControl"
+    ],
+    "form_factors": [
+      "0",
+      "1",
+      "2"
+    ],
+    "bind_attributes": [
+      "primarycontactid"
+    ],
+    "data_field_names": [
+      "primarycontactid"
+    ],
+    "dataset_names": [],
+    "default_view_ids": [
+      "{a2d479c5-53e3-4c69-addd-802327e67a0d}"
+    ],
+    "quick_forms": [
+      "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+    ]
+  },
+  "signature": "6784e11cb18432f18d17bf2ef5e48d53f68e05ca782179abb04ea55501c20c00",
+  "source": {
+    "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\dbm-workflow-scratch\\entities\\account\\forms\\account.xml",
+    "kind": "formxml",
+    "entity": null,
+    "form_name": "account",
+    "form_type": null
+  },
+  "xml_control_index": {
+    "Contacts": {
+      "id": "Contacts",
+      "datafieldname": null,
+      "classid": "e7a81278-8635-4d9e-8d4d-59480b391c5b",
+      "parameters": [
+        "VisualizationId"
+      ]
+    },
+    "primarycontactid": {
+      "id": "primarycontactid",
+      "datafieldname": "primarycontactid",
+      "classid": "f9a8a302-114e-466a-b582-6771b2ae0d92",
+      "parameters": [
+        "DefaultViewId={a2d479c5-53e3-4c69-addd-802327e67a0d}"
+      ]
+    }
+  },
+  "custom_control_configurations": [],
+  "embedded_control_details": [
+    "",
+    "## Embedded Control Details",
+    "- `Contacts` (subgrid; class `e7a81278-8635-4d9e-8d4d-59480b391c5b`; parameters `VisualizationId`; path `SUMMARY_TAB / SUMMARY_TAB_section_6`)",
+    "- `primarycontactid` (field; class `f9a8a302-114e-466a-b582-6771b2ae0d92`; parameters `DefaultViewId={a2d479c5-53e3-4c69-addd-802327e67a0d}`; path `SUMMARY_TAB / SUMMARY_TAB_section_6`)"
+  ]
+}

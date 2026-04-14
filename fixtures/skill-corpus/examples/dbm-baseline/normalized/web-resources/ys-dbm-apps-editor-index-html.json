@@ -1,0 +1,21 @@
+{
+  "id": "{aadd6d78-aaf8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/index.html",
+  "display_name": "DBM Editor App - HTML",
+  "description": "",
+  "type": "1",
+  "type_label": "Webpage (HTML)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorindexhtmlAADD6D78-AAF8-EE11-A1FE-0022489F971B",
+  "content_path": "",
+  "summary": {
+    "type_label": "Webpage (HTML)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "72f8fbb7719baf9f0512624244478b4d91f008de28db5bcd38abfd69c19b9c2b",
+    "signature": "7941f53567bd15140abaa528a905b98cd62091555600484f312b354dfbe2f733"
+  }
+}

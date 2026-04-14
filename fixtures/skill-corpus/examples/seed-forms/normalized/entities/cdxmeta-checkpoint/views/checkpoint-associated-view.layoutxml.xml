@@ -1,0 +1,1 @@
+<grid icon="1" jump="cdxmeta_checkpointname" name="cdxmeta_checkpoints" preview="1" select="1"><row id="cdxmeta_checkpointid" name="cdxmeta_checkpoint"><cell name="cdxmeta_checkpointname" width="300" /><cell name="createdon" width="125" /></row></grid>

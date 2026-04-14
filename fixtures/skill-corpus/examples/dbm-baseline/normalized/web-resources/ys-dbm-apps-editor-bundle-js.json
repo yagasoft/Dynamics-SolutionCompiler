@@ -1,0 +1,21 @@
+{
+  "id": "{6d574ac0-acf8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/bundle.js",
+  "display_name": "DBM Editor App - Bundle JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorbundlejs6D574AC0-ACF8-EE11-A1FE-0022489F971B",
+  "content_path": "",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "da6d645c90d4ef1cb7437b8fb4b969927fdc919c0d1076eea54a947e02c334d0",
+    "signature": "ac595fce5626489541e26666f89e49f8416d113b89b6446018a7634dfddf6860"
+  }
+}

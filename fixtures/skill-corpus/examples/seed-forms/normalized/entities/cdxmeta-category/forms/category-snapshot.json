@@ -1,0 +1,75 @@
+{
+  "name": "Category Snapshot",
+  "type": "quick",
+  "id": "{5978624f-3b37-f111-88b3-0022489b9600}",
+  "description": "Compact quick view form for the metadata synthesis seed.",
+  "formxml": "<form>\n      <tabs showlabels=\"false\">\n        <tab name=\"general\" verticallayout=\"true\" id=\"{49ACD000-6C0A-4749-9D51-5BD1CF071386}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section name=\"snapshot\" id=\"{1ED8018D-18A3-4617-8401-4D2BFE3608BB}\" IsUserDefined=\"1\" showlabel=\"false\" showbar=\"false\" columns=\"1\">\n                  <labels>\n                    <label description=\"\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{8FAA3648-D89D-42B6-B75B-F693CAC6C241}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Category\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_categoryname\" datafieldname=\"cdxmeta_categoryname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{EF2DB2A0-B682-4BAD-B6C7-19ECC2D7EF6F}\" showlabel=\"true\">\n                        <labels>\n                          <label description=\"Description\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_description\" datafieldname=\"cdxmeta_description\" classid=\"{E0DECE4B-6FC8-4a8f-A065-082708572369}\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+  "summary": {
+    "counts": {
+      "tab_count": 1,
+      "section_count": 1,
+      "control_count": 2,
+      "quickform_count": 0,
+      "subgrid_count": 0,
+      "webresource_count": 0,
+      "header_control_count": 0,
+      "footer_control_count": 0,
+      "control_description_count": 0,
+      "custom_control_host_count": 0,
+      "custom_control_instance_count": 0,
+      "custom_control_family_count": 0,
+      "custom_control_reference_count": 0,
+      "custom_control_manifest_count": 0
+    },
+    "tabs": [
+      {
+        "name": "general",
+        "label": "",
+        "section_count": 1,
+        "sections": [
+          {
+            "name": "snapshot",
+            "label": "",
+            "control_count": 2,
+            "controls": [
+              {
+                "id": "cdxmeta_categoryname",
+                "uniqueid": "",
+                "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                "datafieldname": "cdxmeta_categoryname",
+                "kind": "single-line-text",
+                "signature": "44a723658c98042c81b7bc04a198f27aa17dc35807a4e9f0b388531e6cdfc394",
+                "label": "Category"
+              },
+              {
+                "id": "cdxmeta_description",
+                "uniqueid": "",
+                "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                "datafieldname": "cdxmeta_description",
+                "kind": "multiline-text",
+                "signature": "0e798e6a1d98745e9885c5f099f09d5710d7551ca64b4e2e92dc865b0577b848",
+                "label": "Description"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "header": [],
+    "footer": [],
+    "control_descriptions": [],
+    "embedded_custom_controls": {
+      "host_controls": [],
+      "families": [],
+      "registration_reference_ids": [],
+      "manifest_names": [],
+      "form_factors": [],
+      "bind_attributes": [],
+      "data_field_names": [],
+      "dataset_names": [],
+      "default_view_ids": [],
+      "quick_forms": []
+    },
+    "signature": "4008a84bb87d71c7e592d4fab73603b113b1f83e1e7c79446df8c280a32ffbc2"
+  }
+}

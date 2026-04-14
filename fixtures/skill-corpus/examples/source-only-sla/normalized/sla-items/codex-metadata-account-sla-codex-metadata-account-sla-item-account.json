@@ -1,0 +1,16 @@
+{
+  "id": "{1E12DA50-54E1-4D6D-BF47-9C9A2A251153}",
+  "comparison_key": "codex metadata account sla|Codex Metadata Account SLA Item|account",
+  "sla_name": "Codex Metadata Account SLA",
+  "sla_id": "{5B22D27B-67A2-4C2D-B8AF-CA6C0F121152}",
+  "name": "Codex Metadata Account SLA Item",
+  "applicable_entity": "account",
+  "action_url": "https://example.invalid/sla-fixture",
+  "action_flow_unique_name": "cdxmeta_source_only_sla_action",
+  "allow_pause_resume": "0",
+  "applicable_when_xml": "<conditions><condition attribute=\"name\" operator=\"not-null\" /></conditions>",
+  "summary": {
+    "comparison_signature": "8bbd33443c2e3651d1af18a562ac105c9f7ae9f56e8a8e6432851af445344631",
+    "signature": "8bbd33443c2e3651d1af18a562ac105c9f7ae9f56e8a8e6432851af445344631"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": "Information",
+  "type": "quick",
+  "id": "{c49182b0-92f0-46e8-8b4e-89d46fafa948}",
+  "description": "",
+  "formxml": "<form>\n      <tabs>\n        <tab verticallayout=\"true\" id=\"{c6825116-c639-416f-8e86-516d9bd6bf8a}\" IsUserDefined=\"1\">\n          <labels>\n            <label description=\"\" languagecode=\"1033\" />\n          </labels>\n          <columns>\n            <column width=\"100%\">\n              <sections>\n                <section showlabel=\"false\" showbar=\"false\" IsUserDefined=\"0\" id=\"{7ac58746-8922-4901-b069-ef140f8300af}\">\n                  <labels>\n                    <label description=\"GENERAL\" languagecode=\"1033\" />\n                  </labels>\n                  <rows>\n                    <row>\n                      <cell id=\"{c5a1bd4d-4cf5-4ccc-9de9-26a5cbc8b9fd}\">\n                        <labels>\n                          <label description=\"Category Name\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"cdxmeta_categoryname\" classid=\"{4273EDBD-AC1D-40d3-9FB2-095C621B552D}\" datafieldname=\"cdxmeta_categoryname\" />\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{9d748816-77c3-41d3-a32e-e65a4031145a}\">\n                        <labels>\n                          <label description=\"Owner\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"ownerid\" classid=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\" datafieldname=\"ownerid\" />\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n    </form>\n    ",
+  "summary": {
+    "counts": {
+      "tab_count": 1,
+      "section_count": 1,
+      "control_count": 2,
+      "quickform_count": 0,
+      "subgrid_count": 0,
+      "webresource_count": 0,
+      "header_control_count": 0,
+      "footer_control_count": 0,
+      "control_description_count": 0,
+      "custom_control_host_count": 0,
+      "custom_control_instance_count": 0,
+      "custom_control_family_count": 0,
+      "custom_control_reference_count": 0,
+      "custom_control_manifest_count": 0
+    },
+    "tabs": [
+      {
+        "name": "",
+        "label": "",
+        "section_count": 1,
+        "sections": [
+          {
+            "name": "",
+            "label": "GENERAL",
+            "control_count": 2,
+            "controls": [
+              {
+                "id": "cdxmeta_categoryname",
+                "uniqueid": "",
+                "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                "datafieldname": "cdxmeta_categoryname",
+                "kind": "single-line-text",
+                "signature": "44a723658c98042c81b7bc04a198f27aa17dc35807a4e9f0b388531e6cdfc394",
+                "label": "Category Name"
+              },
+              {
+                "id": "ownerid",
+                "uniqueid": "",
+                "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                "datafieldname": "ownerid",
+                "kind": "lookup",
+                "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                "label": "Owner"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "header": [],
+    "footer": [],
+    "control_descriptions": [],
+    "embedded_custom_controls": {
+      "host_controls": [],
+      "families": [],
+      "registration_reference_ids": [],
+      "manifest_names": [],
+      "form_factors": [],
+      "bind_attributes": [],
+      "data_field_names": [],
+      "dataset_names": [],
+      "default_view_ids": [],
+      "quick_forms": []
+    },
+    "signature": "7e7badb029d9e9ef0dac275da73f08d3d3d4e8aaa38f7dd72a6ed5e16496718a"
+  }
+}

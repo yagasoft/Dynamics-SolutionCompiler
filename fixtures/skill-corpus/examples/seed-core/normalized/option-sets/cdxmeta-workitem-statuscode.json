@@ -1,0 +1,17 @@
+{
+  "entity_logical_name": "cdxmeta_workitem",
+  "attribute_logical_name": "statuscode",
+  "attribute_display_name": "Status Reason",
+  "option_set_name": "cdxmeta_workitem_statuscode",
+  "option_set_type": "status",
+  "is_global": null,
+  "options": [],
+  "comparison_key": "cdxmeta_workitem|statuscode",
+  "summary": {
+    "counts": {
+      "option_count": 0
+    },
+    "comparison_signature": "1dd051096bc9fe733eb0b50201714718d7373e7861e95321bd14c6a3c36b6abd",
+    "signature": "1dd051096bc9fe733eb0b50201714718d7373e7861e95321bd14c6a3c36b6abd"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "{41467dda-acf8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/color.png",
+  "display_name": "DBM Editor App - Color PNG",
+  "description": "",
+  "type": "5",
+  "type_label": "PNG format",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorcolorpng41467DDA-ACF8-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\color.png",
+  "summary": {
+    "type_label": "PNG format",
+    "counts": {
+      "byte_count": 10355,
+      "line_count": 0
+    },
+    "content_sha256": "473bc8ca699232bc002945702515df870395a8bb97448954d759a445db459e7c",
+    "comparison_signature": "9a33ce7fac71fd57e07a02eaf4995415c22d5c835db6acf649580d0be0e31efb",
+    "signature": "dd5297ffaecde4f442feb3bf0a46052381091447630761b16fe520f2ec02fac1"
+  }
+}

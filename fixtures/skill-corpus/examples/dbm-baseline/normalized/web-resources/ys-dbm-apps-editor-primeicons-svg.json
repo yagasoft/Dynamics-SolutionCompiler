@@ -1,0 +1,21 @@
+{
+  "id": "{3abcc44d-aef8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/primeicons.svg",
+  "display_name": "DBM Editor App - PrimeIcons SVG",
+  "description": "",
+  "type": "11",
+  "type_label": "Vector format (SVG)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorprimeiconssvg3ABCC44D-AEF8-EE11-A1FE-0022489F971B",
+  "content_path": "",
+  "summary": {
+    "type_label": "Vector format (SVG)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "7c13d91c1798f4f44d9226f8d2b1b867010a3d2f46e0be7fc6630d7df7f993a0",
+    "signature": "8e171569ab4c1d2491264dbb471bbba9b7c23fdfdd2cdbef062f512f5bba71e1"
+  }
+}

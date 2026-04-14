@@ -1,0 +1,1 @@
+<fetch mapping="logical" version="1.0"><entity name="cdxmeta_category"><attribute name="cdxmeta_categoryid" /><attribute name="cdxmeta_categoryname" /><attribute name="createdon" /><order attribute="cdxmeta_categoryname" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /></filter></entity></fetch>

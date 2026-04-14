@@ -1,0 +1,21 @@
+{
+  "id": "{a0ba2262-5637-f111-88b3-0022489b9600}",
+  "name": "cdxmeta_/shell/landing.html",
+  "display_name": "Codex Metadata Shell Landing HTML",
+  "description": "Neutral HTML landing page for the app-shell seed.",
+  "type": "1",
+  "type_label": "Webpage (HTML)",
+  "language_code": "1033",
+  "file_name": "/WebResources/cdxmeta_shelllandinghtmlA0BA2262-5637-F111-88B3-0022489B9600",
+  "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\WebResources\\cdxmeta_\\shell\\landing.html",
+  "summary": {
+    "type_label": "Webpage (HTML)",
+    "counts": {
+      "byte_count": 203,
+      "line_count": 1
+    },
+    "content_sha256": "544625246404e77b7fa2b554f4de52638172ee074494d5adb38b27fe2259f42a",
+    "comparison_signature": "83f3d7902e2d516dfb24912343618a3ca041cc85c8bcea04a5827df77598ec59",
+    "signature": "bc3d6cba0227c28e7661e1cae53d10991f12ce17427eb7391566b4b6b8eb83f5"
+  }
+}

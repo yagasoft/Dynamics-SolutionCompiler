@@ -1,0 +1,21 @@
+{
+  "id": "{f1bce850-e3f9-ee11-a1fe-0022489f971b}",
+  "name": "ys_/generic/libs/common.js",
+  "display_name": "YS Common Library JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_genericlibscommonjsF1BCE850-E3F9-EE11-A1FE-0022489F971B",
+  "content_path": "",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "a0fb7ee3201b344402bb0c7b74ee7b25edfca8a22475be091ea839d17043098b",
+    "signature": "f4b1f62598e6b3ed67282788564ea63529c6f0951884b093fbda96a83f48f52c"
+  }
+}

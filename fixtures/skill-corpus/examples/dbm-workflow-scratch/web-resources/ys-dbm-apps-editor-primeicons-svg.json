@@ -1,0 +1,21 @@
+{
+  "id": "{3abcc44d-aef8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/primeicons.svg",
+  "display_name": "DBM Editor App - PrimeIcons SVG",
+  "description": "",
+  "type": "11",
+  "type_label": "Vector format (SVG)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorprimeiconssvg3ABCC44D-AEF8-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.svg",
+  "summary": {
+    "type_label": "Vector format (SVG)",
+    "counts": {
+      "byte_count": 291454,
+      "line_count": 292
+    },
+    "content_sha256": "5e10f102b4119a1601fda082def55fac2f81173c4e7519d976886f1aa5779f47",
+    "comparison_signature": "2185569345d025cd8be02afce61b4a68125768cf8153cb80d772365cb433e329",
+    "signature": "15251bd9908063731e36bf20d9d7628c9a7c33fa5477d689694a09e0d2ddf7d6"
+  }
+}

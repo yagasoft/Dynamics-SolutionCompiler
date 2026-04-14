@@ -1,0 +1,816 @@
+{
+  "source_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src",
+  "resolved_root": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src",
+  "layout": "xml",
+  "solution": {
+    "unique_name": "Temp",
+    "friendly_name": "",
+    "version": "1.0.0.0",
+    "managed": "0",
+    "publisher": {
+      "unique_name": "yagasoft",
+      "prefix": "ys"
+    },
+    "source_files": {
+      "solution_xml": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\Other\\Solution.xml",
+      "customizations_xml": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\Other\\Customizations.xml"
+    }
+  },
+  "root_components": [
+    {
+      "type": "1",
+      "type_label": "Entity",
+      "family_label": "Schema and Metadata",
+      "id": "",
+      "schema_name": "account",
+      "behavior": "2",
+      "behavior_label": "Include As Shell Only"
+    },
+    {
+      "type": "1",
+      "type_label": "Entity",
+      "family_label": "Schema and Metadata",
+      "id": "",
+      "schema_name": "contact",
+      "behavior": "2",
+      "behavior_label": "Include As Shell Only"
+    },
+    {
+      "type": "29",
+      "type_label": "Workflow",
+      "family_label": "Process and Service Policy",
+      "id": "{1fe4d3dc-dad0-4b93-bed0-2129d8e9639d}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "29",
+      "type_label": "Workflow",
+      "family_label": "Process and Service Policy",
+      "id": "{29683e80-ba00-4393-91ee-3d583e48b7a2}",
+      "schema_name": "",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm-object/forms/main.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm-script/forms/main.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/bundle.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/color.png",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/hue.png",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/index.html",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.eot",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.svg",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.ttf",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.woff",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/apps/editor/primeicons.woff2",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/data/test1.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/data/test1.json",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/libs/common.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "ys_/dbm/libs/core.js",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "62",
+      "type_label": "Site Map",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "ys_Test",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "80",
+      "type_label": "App Module",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "ys_Test",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    }
+  ],
+  "entities": {
+    "account": {
+      "logical_name": "account",
+      "schema_name": "Account",
+      "forms": [
+        {
+          "name": "Account",
+          "type": "main",
+          "id": "{8448b78f-8f42-454e-8e2a-f8196b0419af}",
+          "description": "Updated default Account form.",
+          "formxml": "<form showImage=\"true\" headerdensity=\"HighWithControls\" solutionaction=\"Modified\">\n      <tabs>\n        <tab name=\"SUMMARY_TAB\" id=\"{3b0b63a9-d379-689a-0ec3-e71eb4c6a841}\" IsUserDefined=\"0\" showlabel=\"true\" expanded=\"true\" locklevel=\"0\" ordinalvalue=\"0\">\n          <columns>\n            <column width=\"33%\" id=\"0\">\n              <sections>\n                <section name=\"ACCOUNT_INFORMATION\" showlabel=\"true\" showbar=\"false\" id=\"{0eb92e6c-bcb8-0d52-a188-d81543ddb7cd}\" IsUserDefined=\"0\" layout=\"varwidth\" columns=\"1\" labelwidth=\"115\" celllabelposition=\"Left\" ordinalvalue=\"0\">\n                  <rows>\n                    <row>\n                      <cell id=\"{b0e82a7e-5683-d90c-308a-0d779377ea8a}\" showlabel=\"true\" ordinalvalue=\"10000\">\n                        <labels>\n                          <label description=\"Account Name\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{8b98a55e-a345-b20e-d46e-801e79d5c1c1}\" showlabel=\"true\" ordinalvalue=\"10002\">\n                        <labels>\n                          <label description=\"Fax\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{e6441984-4343-813a-aa7e-e2747ad35390}\" showlabel=\"true\" ordinalvalue=\"10003\">\n                        <labels>\n                          <label description=\"Website\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{87DE203E-B03C-44CC-8B06-438202B82553}\" ordinalvalue=\"10004\">\n                        <labels>\n                          <label description=\"Parent Account\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{5f38af3a-3307-47dc-b36d-d9a5de525e6e}\" showlabel=\"true\" ordinalvalue=\"10005\">\n                        <labels>\n                          <label description=\"Ticker Symbol\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"ADDRESS\" showlabel=\"true\" locklevel=\"0\" showbar=\"false\" id=\"{cc0fe06e-4b5f-4648-A62d-84d1514e1fc5}\" IsUserDefined=\"0\" layout=\"varwidth\" columns=\"1\" labelwidth=\"115\" celllabelposition=\"Left\" ordinalvalue=\"1\">\n                  <rows>\n                    <row>\n                      <cell id=\"{4913500e-605a-809b-e99e-69e2710d09bd}\" showlabel=\"true\" locklevel=\"0\" ordinalvalue=\"10000\">\n                        <labels>\n                          <label description=\"Address 1\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n            <column width=\"25%\" id=\"2\">\n              <sections>\n                <section name=\"SUMMARY_TAB_section_6\" showlabel=\"false\" showbar=\"false\" locklevel=\"0\" id=\"{d4c3ee9c-ba71-5cdb-31be-2aa505750472}\" IsUserDefined=\"0\" layout=\"varwidth\" columns=\"1\" labelwidth=\"115\" celllabelalignment=\"Left\" celllabelposition=\"Top\" ordinalvalue=\"1\">\n                  <rows>\n                    <row>\n                      <cell id=\"{b187688c-8410-5990-16ec-e153968ab583}\" showlabel=\"true\" locklevel=\"0\" ordinalvalue=\"10000\">\n                        <labels>\n                          <label description=\"Primary Contact\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{0F664FFF-E39E-4676-9191-CBA16972B21D}\" colspan=\"1\" showlabel=\"false\" ordinalvalue=\"10002\" solutionaction=\"Modified\">\n                        <labels>\n                          <label description=\"Primary Contact\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{8e24c7e3-6a40-5abb-eadb-254eba5478e2}\" showlabel=\"true\" colspan=\"1\" auto=\"false\" rowspan=\"7\" ordinalvalue=\"10003\" solutionaction=\"Modified\">\n                        <control id=\"Contacts\" classid=\"{E7A81278-8635-4d9e-8D4D-59480B391C5B}\">\n                          <parameters>\n                            <VisualizationId />\n                          </parameters>\n                        </control>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell locklevel=\"0\" id=\"{04666f2b-7e7b-473c-b9a5-921a71cde011}\" colspan=\"1\" rowspan=\"1\" ordinalvalue=\"10001\" solutionaction=\"Added\">\n                        <labels>\n                          <label description=\"Primary Contact\" languagecode=\"1033\" />\n                        </labels>\n                        <control id=\"primarycontactid\" classid=\"{F9A8A302-114E-466A-B582-6771B2AE0D92}\" datafieldname=\"primarycontactid\" uniqueid=\"{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}\">\n                          <parameters>\n                            <DefaultViewId>{A2D479C5-53E3-4C69-ADDD-802327E67A0D}</DefaultViewId>\n                          </parameters>\n                        </control>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n        <tab name=\"DETAILS_TAB\" id=\"{11a42c72-9ded-ea04-253d-2143e731b795}\" IsUserDefined=\"0\" showlabel=\"true\" expanded=\"true\" ordinalvalue=\"1\">\n          <columns>\n            <column width=\"34%\" id=\"0\">\n              <sections>\n                <section name=\"COMPANY_PROFILE\" showlabel=\"true\" showbar=\"false\" id=\"{ca8587c5-18c0-cac1-7c34-6c639eade090}\" IsUserDefined=\"0\" layout=\"varwidth\" columns=\"1\" labelwidth=\"115\" celllabelposition=\"Left\" ordinalvalue=\"0\">\n                  <rows>\n                    <row>\n                      <cell id=\"{59782911-4d1a-38dc-ce49-7dae620dbc51}\" showlabel=\"true\" ordinalvalue=\"10000\">\n                        <labels>\n                          <label description=\"Industry\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{930beba3-d531-0808-c403-de95e2ac3e62}\" showlabel=\"true\" ordinalvalue=\"10001\">\n                        <labels>\n                          <label description=\"SIC Code\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{1c33ad89-92a1-8433-2378-306259eb57c0}\" showlabel=\"true\" ordinalvalue=\"10002\">\n                        <labels>\n                          <label description=\"Ownership\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n                <section name=\"DETAILS_TAB_section_6\" showlabel=\"true\" showbar=\"false\" locklevel=\"0\" id=\"{e201b9ce-c3d5-c922-dba5-528c25066940}\" IsUserDefined=\"0\" layout=\"varwidth\" columns=\"1\" labelwidth=\"115\" celllabelalignment=\"Left\" celllabelposition=\"Top\" height=\"auto\" ordinalvalue=\"1\">\n                  <rows>\n                    <row>\n                      <cell id=\"{a4a726a2-8e3e-79d0-02c3-0a04a6b71089}\" showlabel=\"false\" locklevel=\"0\" rowspan=\"3\" auto=\"true\" ordinalvalue=\"10000\">\n                        <labels>\n                          <label description=\"Description\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n            <column width=\"33%\" id=\"2\">\n              <sections>\n                <section name=\"BILLING\" showlabel=\"true\" showbar=\"false\" id=\"{910de80a-a17e-092a-255d-44d775cb4207}\" IsUserDefined=\"0\" layout=\"varwidth\" columns=\"1\" labelwidth=\"115\" celllabelposition=\"Left\" locklevel=\"0\" celllabelalignment=\"Left\" ordinalvalue=\"0\">\n                  <rows>\n                    <row>\n                      <cell id=\"{7cd2b88c-b25c-4729-9c27-f59ebb5a1538}\" ordinalvalue=\"10000\">\n                        <labels>\n                          <label description=\"Currency\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{0125719c-a5b0-4230-9817-3fba5d6ebfaf}\" ordinalvalue=\"10001\">\n                        <labels>\n                          <label description=\"Credit Limit\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{abc2c862-bcd4-4a4b-ac51-c311d4e66d5b}\" ordinalvalue=\"10002\">\n                        <labels>\n                          <label description=\"Credit Hold\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                    <row>\n                      <cell id=\"{0bab9157-d14e-441f-969d-80460634c15e}\" ordinalvalue=\"10003\">\n                        <labels>\n                          <label description=\"Payment Terms\" languagecode=\"1033\" solutionaction=\"Modified\" />\n                        </labels>\n                      </cell>\n                    </row>\n                  </rows>\n                </section>\n              </sections>\n            </column>\n          </columns>\n        </tab>\n      </tabs>\n      <header id=\"{d5a03552-1183-4347-a237-1f894ba449eb}\" columns=\"111\" celllabelposition=\"Top\" labelwidth=\"115\">\n        <rows>\n          <row>\n            <cell id=\"{d3e19d4e-b2ae-409f-9b4e-5976527c6c83}\" ordinalvalue=\"10000\">\n              <labels>\n                <label description=\"Annual Revenue\" languagecode=\"1033\" solutionaction=\"Modified\" />\n              </labels>\n            </cell>\n            <cell id=\"{2adb5a52-604d-5aad-ba6a-2bbab6c33594}\" showlabel=\"true\" ordinalvalue=\"20001\">\n              <labels>\n                <label description=\"Number of Employees\" languagecode=\"1033\" solutionaction=\"Modified\" />\n              </labels>\n            </cell>\n            <cell id=\"{54b2d0a2-eb77-b3cd-b60a-03ea6944e98e}\" showlabel=\"true\" locklevel=\"1\" ordinalvalue=\"30002\">\n              <labels>\n                <label description=\"Owner\" languagecode=\"1033\" solutionaction=\"Modified\" />\n              </labels>\n            </cell>\n          </row>\n        </rows>\n      </header>\n      <controlDescriptions>\n        <controlDescription forControl=\"{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}\" solutionaction=\"Added\">\n          <customControl id=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\">\n            <parameters>\n              <datafieldname>primarycontactid</datafieldname>\n            </parameters>\n          </customControl>\n          <customControl id=\"{270BD3DB-D9AF-4782-9025-509E298DEC0A}\">\n            <parameters>\n              <datafieldname>primarycontactid</datafieldname>\n            </parameters>\n          </customControl>\n          <customControl formFactor=\"0\" name=\"MscrmControls.ModelForm.ModelFormControl\">\n            <parameters>\n              <value>\n                <BindAttribute>primarycontactid</BindAttribute>\n                <DefaultViewId>{A2D479C5-53E3-4C69-ADDD-802327E67A0D}</DefaultViewId>\n                <FilterRelationshipName />\n                <DependentAttributeName />\n                <DependentAttributeType />\n                <AvailableViewIds />\n                <AllowFilterOff>false</AllowFilterOff>\n                <DisableQuickFind>false</DisableQuickFind>\n                <DisableViewPicker>false</DisableViewPicker>\n              </value>\n              <QuickForms type=\"SingleLine.Text\" static=\"true\">&lt;QuickForms&gt;&lt;QuickFormIds&gt;&lt;QuickFormId entityname=\"contact\"&gt;1fed44d1-ae68-4a41-bd2b-f13acac4acfa&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;&lt;/QuickForms&gt;</QuickForms>\n              <SaveMode type=\"Enum\" static=\"true\">0</SaveMode>\n              <EnableHighDensityPageHeader type=\"Enum\" static=\"true\">false</EnableHighDensityPageHeader>\n              <DisplayFormSelector type=\"Enum\" static=\"true\">false</DisplayFormSelector>\n              <AddToRecentItems type=\"Enum\" static=\"true\">false</AddToRecentItems>\n            </parameters>\n          </customControl>\n          <customControl formFactor=\"2\" name=\"MscrmControls.ModelForm.ModelFormControl\">\n            <parameters>\n              <value>\n                <BindAttribute>primarycontactid</BindAttribute>\n                <DefaultViewId>{A2D479C5-53E3-4C69-ADDD-802327E67A0D}</DefaultViewId>\n                <FilterRelationshipName />\n                <DependentAttributeName />\n                <DependentAttributeType />\n                <AvailableViewIds />\n                <AllowFilterOff>false</AllowFilterOff>\n                <DisableQuickFind>false</DisableQuickFind>\n                <DisableViewPicker>false</DisableViewPicker>\n              </value>\n              <QuickForms type=\"SingleLine.Text\" static=\"true\">&lt;QuickForms&gt;&lt;QuickFormIds&gt;&lt;QuickFormId entityname=\"contact\"&gt;1fed44d1-ae68-4a41-bd2b-f13acac4acfa&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;&lt;/QuickForms&gt;</QuickForms>\n              <SaveMode type=\"Enum\" static=\"true\">0</SaveMode>\n              <EnableHighDensityPageHeader type=\"Enum\" static=\"true\">false</EnableHighDensityPageHeader>\n              <DisplayFormSelector type=\"Enum\" static=\"true\">false</DisplayFormSelector>\n              <AddToRecentItems type=\"Enum\" static=\"true\">false</AddToRecentItems>\n            </parameters>\n          </customControl>\n          <customControl formFactor=\"1\" name=\"MscrmControls.ModelForm.ModelFormControl\">\n            <parameters>\n              <value>\n                <BindAttribute>primarycontactid</BindAttribute>\n                <DefaultViewId>{A2D479C5-53E3-4C69-ADDD-802327E67A0D}</DefaultViewId>\n                <FilterRelationshipName />\n                <DependentAttributeName />\n                <DependentAttributeType />\n                <AvailableViewIds />\n                <AllowFilterOff>false</AllowFilterOff>\n                <DisableQuickFind>false</DisableQuickFind>\n                <DisableViewPicker>false</DisableViewPicker>\n              </value>\n              <QuickForms type=\"SingleLine.Text\" static=\"true\">&lt;QuickForms&gt;&lt;QuickFormIds&gt;&lt;QuickFormId entityname=\"contact\"&gt;1fed44d1-ae68-4a41-bd2b-f13acac4acfa&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;&lt;/QuickForms&gt;</QuickForms>\n              <SaveMode type=\"Enum\" static=\"true\">0</SaveMode>\n              <EnableHighDensityPageHeader type=\"Enum\" static=\"true\">false</EnableHighDensityPageHeader>\n              <DisplayFormSelector type=\"Enum\" static=\"true\">false</DisplayFormSelector>\n              <AddToRecentItems type=\"Enum\" static=\"true\">false</AddToRecentItems>\n            </parameters>\n          </customControl>\n        </controlDescription>\n      </controlDescriptions>\n      <footer id=\"{ae7d9b8e-f100-4dda-85dd-fdf97a17f3ce}\" celllabelposition=\"Top\" columns=\"111\" labelwidth=\"115\" celllabelalignment=\"Left\" solutionaction=\"Added\">\n        <rows>\n          <row>\n            <cell id=\"{be91a1ef-a409-4ca4-8647-4695ae9c8054}\" showlabel=\"false\" ordinalvalue=\"10000\">\n              <labels>\n                <label description=\"\" languagecode=\"1033\" />\n              </labels>\n            </cell>\n            <cell id=\"{6b93eccb-324c-4d52-b724-aa5b34b0c149}\" showlabel=\"false\" ordinalvalue=\"20001\">\n              <labels>\n                <label description=\"\" languagecode=\"1033\" />\n              </labels>\n            </cell>\n            <cell id=\"{b693d307-1965-4dfb-895e-cf6abdeb03b9}\" showlabel=\"false\" ordinalvalue=\"30002\">\n              <labels>\n                <label description=\"\" languagecode=\"1033\" />\n              </labels>\n            </cell>\n          </row>\n        </rows>\n      </footer>\n    </form>\n    ",
+          "summary": {
+            "counts": {
+              "tab_count": 2,
+              "section_count": 6,
+              "control_count": 2,
+              "quickform_count": 0,
+              "subgrid_count": 1,
+              "webresource_count": 0,
+              "header_control_count": 0,
+              "footer_control_count": 0
+            },
+            "tabs": [
+              {
+                "name": "SUMMARY_TAB",
+                "label": "",
+                "section_count": 3,
+                "sections": [
+                  {
+                    "name": "ACCOUNT_INFORMATION",
+                    "label": "",
+                    "control_count": 0,
+                    "controls": []
+                  },
+                  {
+                    "name": "ADDRESS",
+                    "label": "",
+                    "control_count": 0,
+                    "controls": []
+                  },
+                  {
+                    "name": "SUMMARY_TAB_section_6",
+                    "label": "",
+                    "control_count": 2,
+                    "controls": [
+                      {
+                        "id": "Contacts",
+                        "classid": "{E7A81278-8635-4d9e-8D4D-59480B391C5B}",
+                        "datafieldname": "",
+                        "kind": "subgrid",
+                        "view_id": "",
+                        "relationship_name": "",
+                        "target_entity_type": "",
+                        "quick_forms": [],
+                        "url": "",
+                        "signature": "0b3abe3def4f0716871bb7a45414252f319f080f368457c8f1319601b62481ba",
+                        "label": ""
+                      },
+                      {
+                        "id": "primarycontactid",
+                        "classid": "{F9A8A302-114E-466A-B582-6771B2AE0D92}",
+                        "datafieldname": "primarycontactid",
+                        "kind": "field",
+                        "view_id": "",
+                        "relationship_name": "",
+                        "target_entity_type": "",
+                        "quick_forms": [],
+                        "url": "",
+                        "signature": "5dd6a413b28825d8ef3e70bdbd2c225f2c76951a7528ac91bf18d7eead913aa4",
+                        "label": "Primary Contact"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "DETAILS_TAB",
+                "label": "",
+                "section_count": 3,
+                "sections": [
+                  {
+                    "name": "COMPANY_PROFILE",
+                    "label": "",
+                    "control_count": 0,
+                    "controls": []
+                  },
+                  {
+                    "name": "DETAILS_TAB_section_6",
+                    "label": "",
+                    "control_count": 0,
+                    "controls": []
+                  },
+                  {
+                    "name": "BILLING",
+                    "label": "",
+                    "control_count": 0,
+                    "controls": []
+                  }
+                ]
+              }
+            ],
+            "header": [],
+            "footer": [],
+            "signature": "85fb3827329349d737b5d36732de12954be43cbe7a7dc1503d3d92c0ea43eec2"
+          }
+        }
+      ],
+      "views": [],
+      "attributes": [],
+      "relationships": {
+        "one_to_many": [],
+        "many_to_one": [],
+        "many_to_many": []
+      }
+    },
+    "contact": {
+      "logical_name": "contact",
+      "schema_name": "Contact",
+      "forms": [],
+      "views": [],
+      "attributes": [],
+      "relationships": {
+        "one_to_many": [],
+        "many_to_one": [],
+        "many_to_many": []
+      }
+    }
+  },
+  "app_modules": [
+    {
+      "id": "",
+      "unique_name": "ys_Test",
+      "display_name": "Test",
+      "description": "",
+      "web_resource_id": "953b9fac-1e5e-e611-80d6-00155ded156f",
+      "client_type": "4",
+      "form_factor": "1",
+      "navigation_type": "0",
+      "state_code": "0",
+      "status_code": "1",
+      "components": [
+        {
+          "type": "1",
+          "type_label": "Entity",
+          "schema_name": "account"
+        },
+        {
+          "type": "1",
+          "type_label": "Entity",
+          "schema_name": "contact"
+        },
+        {
+          "type": "62",
+          "type_label": "Site Map",
+          "schema_name": "ys_Test"
+        }
+      ],
+      "role_ids": [
+        "{627090ff-40a3-4053-8790-584edc5be201}",
+        "{119f245c-3cc8-4b62-b31c-d1a046ced15d}"
+      ],
+      "app_settings": [
+        {
+          "setting_definition_unique_name": "AppChannel",
+          "value": "1"
+        }
+      ],
+      "summary": {
+        "counts": {
+          "component_count": 3,
+          "role_map_count": 2,
+          "app_setting_count": 1
+        },
+        "component_types": [
+          "1:Entity",
+          "62:Site Map"
+        ],
+        "comparison_signature": "383b70127a9ecc6a1ab591d7f7418d81d1b9efa44287b2d12f55b91800408c36",
+        "signature": "87695f721a399b18100111b73816b8f9f5ddfaacefdda11e61c8744abafcf7dc"
+      }
+    }
+  ],
+  "site_maps": [
+    {
+      "unique_name": "ys_Test",
+      "display_name": "Test",
+      "enable_collapsible_groups": "False",
+      "show_home": "True",
+      "show_pinned": "True",
+      "show_recents": "True",
+      "sitemap_xml": "<SiteMap IntroducedVersion=\"7.0.0.0\">\n    <Area Id=\"area_9d903cf2\" ResourceId=\"SitemapDesigner.NewTitle\" DescriptionResourceId=\"SitemapDesigner.NewTitle\" ShowGroups=\"true\" IntroducedVersion=\"7.0.0.0\">\n      <Titles>\n        <Title LCID=\"1033\" Title=\"Area1\" />\n      </Titles>\n      <Group Id=\"group_6d8954ca\" ResourceId=\"SitemapDesigner.NewGroup\" DescriptionResourceId=\"SitemapDesigner.NewGroup\" IntroducedVersion=\"7.0.0.0\" IsProfile=\"false\" ToolTipResourseId=\"SitemapDesigner.Unknown\">\n        <SubArea Id=\"subarea_768727a5\" Icon=\"/_imgs/imagestrips/transparent_spacer.gif\" Entity=\"account\" Client=\"All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web\" AvailableOffline=\"true\" PassParams=\"false\" Sku=\"All,OnPremise,Live,SPLA\" />\n        <SubArea Id=\"subarea_a454745b\" Icon=\"/_imgs/imagestrips/transparent_spacer.gif\" Entity=\"contact\" Client=\"All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web\" AvailableOffline=\"true\" PassParams=\"false\" Sku=\"All,OnPremise,Live,SPLA\" />\n      </Group>\n    </Area>\n  </SiteMap>\n  ",
+      "summary": {
+        "counts": {
+          "area_count": 1,
+          "group_count": 1,
+          "subarea_count": 2,
+          "web_resource_subarea_count": 0,
+          "entity_subarea_count": 2
+        },
+        "areas": [
+          {
+            "id": "area_9d903cf2",
+            "title": "Area1",
+            "groups": [
+              {
+                "id": "group_6d8954ca",
+                "title": "",
+                "subareas": [
+                  {
+                    "id": "subarea_768727a5",
+                    "title": "",
+                    "url": "",
+                    "entity": "account",
+                    "icon": "/_imgs/imagestrips/transparent_spacer.gif",
+                    "vector_icon": ""
+                  },
+                  {
+                    "id": "subarea_a454745b",
+                    "title": "",
+                    "url": "",
+                    "entity": "contact",
+                    "icon": "/_imgs/imagestrips/transparent_spacer.gif",
+                    "vector_icon": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "signature": "b6c55302a2441f142d9155378e2e954ced24135834716e4231cf049ffe7fec50",
+        "comparison_signature": "9abd8cad675b66c5aa9d9e9a3627e1df37b78307aec1645c236ff567d065c825"
+      }
+    }
+  ],
+  "web_resources": [
+    {
+      "id": "{6d574ac0-acf8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/bundle.js",
+      "display_name": "DBM Editor App - Bundle JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorbundlejs6D574AC0-ACF8-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\bundle.js",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 3228671,
+          "line_count": 133
+        },
+        "content_sha256": "b21433f36db38b0ffd22584a7287d1fa7e598b14458a6150e3cd71810720e48f",
+        "comparison_signature": "0e2cb65f4304c555b30b65c46ad94fdfdf666a38cd443cc1de4399adb34e64a6",
+        "signature": "a0ec5dee6c30284cd240a1c6c5cc0b58cb9071c087d3035c5da089fe69590a07"
+      }
+    },
+    {
+      "id": "{41467dda-acf8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/color.png",
+      "display_name": "DBM Editor App - Color PNG",
+      "description": "",
+      "type": "5",
+      "type_label": "PNG format",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorcolorpng41467DDA-ACF8-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\color.png",
+      "summary": {
+        "type_label": "PNG format",
+        "counts": {
+          "byte_count": 10355,
+          "line_count": 0
+        },
+        "content_sha256": "473bc8ca699232bc002945702515df870395a8bb97448954d759a445db459e7c",
+        "comparison_signature": "9a33ce7fac71fd57e07a02eaf4995415c22d5c835db6acf649580d0be0e31efb",
+        "signature": "dd5297ffaecde4f442feb3bf0a46052381091447630761b16fe520f2ec02fac1"
+      }
+    },
+    {
+      "id": "{af4523f7-acf8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/hue.png",
+      "display_name": "DBM Editor App - Hue PNG",
+      "description": "",
+      "type": "5",
+      "type_label": "PNG format",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorhuepngAF4523F7-ACF8-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\hue.png",
+      "summary": {
+        "type_label": "PNG format",
+        "counts": {
+          "byte_count": 293,
+          "line_count": 0
+        },
+        "content_sha256": "024cc884600c368c55ecd507a69413ef1e244283df8ccc58c927a4986a42b4a3",
+        "comparison_signature": "1b7bdee65cb724a048d10eacd608478395024fe1d14877f48b2cead80fb0851d",
+        "signature": "29f6e748ab2ccd5413854b91ca3f0df74f69fff7cf9bdf2af7f1c30df69693eb"
+      }
+    },
+    {
+      "id": "{aadd6d78-aaf8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/index.html",
+      "display_name": "DBM Editor App - HTML",
+      "description": "",
+      "type": "1",
+      "type_label": "Webpage (HTML)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorindexhtmlAADD6D78-AAF8-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\index.html",
+      "summary": {
+        "type_label": "Webpage (HTML)",
+        "counts": {
+          "byte_count": 216,
+          "line_count": 1
+        },
+        "content_sha256": "2fc95e1589e315c81b014ab59a0059874ac2f73494c7e52adcb58aa8edab1889",
+        "comparison_signature": "9e71da05e41310ff3795e99a0e9d42d9d6e0670b6a8a18c060d49e0c519faccf",
+        "signature": "a90490e790ad785ffa4f8c720946428b6abb4fce86efc6b8106d18ff48804a24"
+      }
+    },
+    {
+      "id": "{a6230f14-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.eot",
+      "display_name": "DBM Editor App - PrimeIcons EOT",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconseotA6230F14-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.eot",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 72380,
+          "line_count": 0
+        },
+        "content_sha256": "ce85233818dabc762ff0a24de4dd956376a3b5c641f5fa78b3bf9977d56c97ff",
+        "comparison_signature": "b9d06240a3828e5757bca7b751f855b54034869ef01484121e131f60e4ad695f",
+        "signature": "7c2502fbda1b84a6fcfb4c598508418800ac58b92636f50aea545e5afa88b438"
+      }
+    },
+    {
+      "id": "{3abcc44d-aef8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.svg",
+      "display_name": "DBM Editor App - PrimeIcons SVG",
+      "description": "",
+      "type": "11",
+      "type_label": "Vector format (SVG)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconssvg3ABCC44D-AEF8-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.svg",
+      "summary": {
+        "type_label": "Vector format (SVG)",
+        "counts": {
+          "byte_count": 291454,
+          "line_count": 292
+        },
+        "content_sha256": "5e10f102b4119a1601fda082def55fac2f81173c4e7519d976886f1aa5779f47",
+        "comparison_signature": "2185569345d025cd8be02afce61b4a68125768cf8153cb80d772365cb433e329",
+        "signature": "15251bd9908063731e36bf20d9d7628c9a7c33fa5477d689694a09e0d2ddf7d6"
+      }
+    },
+    {
+      "id": "{981bbb43-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.ttf",
+      "display_name": "DBM Editor App - PrimeIcons TTF",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconsttf981BBB43-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.ttf",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 72204,
+          "line_count": 0
+        },
+        "content_sha256": "131bc3bfb18180990842d86b491fe604118a9e7a83d2bb495afdadccba8b9ff4",
+        "comparison_signature": "b2ab3a7bd2f4754c286ef32db9d378d8f669d1ce7f0b21103d9197c7b2f4f18a",
+        "signature": "886b231e964d9f5f67baa764c01db0e92f49cd91247cf450a987d186cf8a647b"
+      }
+    },
+    {
+      "id": "{60ec2068-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.woff",
+      "display_name": "DBM Editor App - PrimeIcons WOFF",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconswoff60EC2068-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.woff",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 72280,
+          "line_count": 0
+        },
+        "content_sha256": "90a58d3a04d0020525920f02f25b154f03f1b0a99f7f4fbf97a9134ed6b27d48",
+        "comparison_signature": "af74e75e7dc5d994cea4d35201b51e5a2e299824a59f2e88eb8dc1006cc11a4f",
+        "signature": "e468cdbb640995f421c6dc853da083ae2846f07f2b7a69611e4fad4914bce7c4"
+      }
+    },
+    {
+      "id": "{4116a87c-13fa-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/apps/editor/primeicons.woff2",
+      "display_name": "DBM Editor App - PrimeIcons WOFF 2",
+      "description": "",
+      "type": "2",
+      "type_label": "Style Sheet (CSS)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmappseditorprimeiconswoff24116A87C-13FA-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\primeicons.woff2",
+      "summary": {
+        "type_label": "Style Sheet (CSS)",
+        "counts": {
+          "byte_count": 30180,
+          "line_count": 0
+        },
+        "content_sha256": "3824be5040322c884634028b8cdfb1716912128cc4a1d38b4c7a93ffea2a6879",
+        "comparison_signature": "9c96cbb71f4bd5eaf280bb46e5c26dc5e4d59254ae6be94c000f02d2af0da897",
+        "signature": "a522b5d9234260f1fca1f6d9decd93321d42907d063709ea85f6184d2c132dce"
+      }
+    },
+    {
+      "id": "{9ae62cd8-75a4-ef11-8a6a-002248a0a7da}",
+      "name": "ys_/dbm/data/test1.js",
+      "display_name": "Test JS 1",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmdatatest1js9AE62CD8-75A4-EF11-8A6A-002248A0A7DA",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\data\\test1.js",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 129,
+          "line_count": 1
+        },
+        "content_sha256": "37a0fa261e74a1ca7969c0b220b9a423d4b08b70ad6588fccb5766eb9015643e",
+        "comparison_signature": "84c90891f68c04aec0e4afee5c047da5b87e1fe361ec4886e880ba06ecb203ec",
+        "signature": "1f67d2e7e8040fc6bf0f8f1c18b32f50d87809962d5790fc9a4a0c7db07d0d94"
+      }
+    },
+    {
+      "id": "{a4a075d4-a68f-ef11-ac21-002248a0a7da}",
+      "name": "ys_/dbm/data/test1.json",
+      "display_name": "Test JSON 1",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmdatatest1jsonA4A075D4-A68F-EF11-AC21-002248A0A7DA",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\data\\test1.json",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 924,
+          "line_count": 1
+        },
+        "content_sha256": "ca5b986c966dc8f42dfdc5c417f503ee54661a2c7a54c1026313c5aebe6792c5",
+        "comparison_signature": "9a25eae914494b4c9c982d15c6d32b88da81c171c3fec6173ce24a5ca39bb22e",
+        "signature": "9258b5d6415163a1d05bc488ffc0b133ace56838dcbaf1c9fa9e1030ae5f068f"
+      }
+    },
+    {
+      "id": "{d0279397-e2f9-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm/libs/common.js",
+      "display_name": "DBM Common Library JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmlibscommonjsD0279397-E2F9-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\libs\\common.js",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 3275,
+          "line_count": 70
+        },
+        "content_sha256": "72733bc2cc3b80ff895d3f0b277637bb266e8c253fd482eccfd8f689cf72eeaa",
+        "comparison_signature": "ba38afe8a9fa3cb463aa00398288bc075ef69bc0e00630f61a55a439395261e7",
+        "signature": "03027243af3b54faa0592f27507928384ab6f64de82a9f80116766ddab5f30f0"
+      }
+    },
+    {
+      "id": "{a7b23fee-0ef0-ee11-af4b-00155d016516}",
+      "name": "ys_/dbm/libs/core.js",
+      "display_name": "DBM Core Library JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbmlibscorejsA7B23FEE-0EF0-EE11-AF4B-00155D016516",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\libs\\core.js",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 12246,
+          "line_count": 1
+        },
+        "content_sha256": "96ee7fde3b589bfaa7da1d4b8b5304f6772dc71af44d746e1354f14de1473fb9",
+        "comparison_signature": "4e4a4211ddf8fb97396443b78021d6ec7b112ac9c75f9e10635f776f39d30980",
+        "signature": "7d60f63521ec984b6c01d6c908945741e5c8344d60505cee95e1c5181dc969ad"
+      }
+    },
+    {
+      "id": "{7a180f06-cdf8-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm-object/forms/main.js",
+      "display_name": "DBM Object - Main Form JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbm-objectformsmainjs7A180F06-CDF8-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm-object\\forms\\main.js",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 669,
+          "line_count": 22
+        },
+        "content_sha256": "0f405337b395fd0d52185f9d886a4e44266bb021875163127438c54cb8bb05a9",
+        "comparison_signature": "f96030e48fcfe685c43241d5789f8e6123503167c6202ad6768113c414b3fca0",
+        "signature": "8aa3fcda3c95d8f48dc75fcb71bf5197d52f3fa8bdee081dd1b7b96a1a0b1b3b"
+      }
+    },
+    {
+      "id": "{5207ac13-38fb-ee11-a1fe-0022489f971b}",
+      "name": "ys_/dbm-script/forms/main.js",
+      "display_name": "DBM Script - Main Form JS",
+      "description": "",
+      "type": "3",
+      "type_label": "Script (JScript)",
+      "language_code": "",
+      "file_name": "/WebResources/ys_dbm-scriptformsmainjs5207AC13-38FB-EE11-A1FE-0022489F971B",
+      "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm-script\\forms\\main.js",
+      "summary": {
+        "type_label": "Script (JScript)",
+        "counts": {
+          "byte_count": 669,
+          "line_count": 22
+        },
+        "content_sha256": "cabdc0157805bd350b2926c615c192dfc70a182f3a0e80ea0abd0095306a117a",
+        "comparison_signature": "fd89a1520d2aeef910f475657e094432a16b0a9a78d381202a669aa63026719b",
+        "signature": "be69404b6875e49d29549ccba6d77d24db034a3e7141fd471ca1cc2421d44859"
+      }
+    }
+  ],
+  "environment_variable_definitions": [],
+  "environment_variable_values": [],
+  "plugin_assemblies": [],
+  "plugin_steps": [],
+  "plugin_step_images": [],
+  "workflows": [
+    {
+      "id": "{1fe4d3dc-dad0-4b93-bed0-2129d8e9639d}",
+      "name": "Test DBM JS",
+      "category": "0",
+      "mode": "1",
+      "scope": "4",
+      "on_demand": "1",
+      "primary_entity": "Contact",
+      "state_code": "0",
+      "status_code": "1",
+      "xaml_file_name": "/Workflows/TestDBMJS-1FE4D3DC-DAD0-4B93-BED0-2129D8E9639D.xaml",
+      "xaml_text": "<Activity x:Class=\"XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d\" xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:mva=\"clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:mxs=\"clr-namespace:Microsoft.Xrm.Sdk;assembly=Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:mxswa=\"clr-namespace:Microsoft.Xrm.Sdk.Workflow.Activities;assembly=Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:scg=\"clr-namespace:System.Collections.Generic;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\" xmlns:srs=\"clr-namespace:System.Runtime.Serialization;assembly=System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\" xmlns:this=\"clr-namespace:\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\">\r\n  <x:Members>\r\n    <x:Property Name=\"InputEntities\" Type=\"InArgument(scg:IDictionary(x:String, mxs:Entity))\" />\r\n    <x:Property Name=\"CreatedEntities\" Type=\"InArgument(scg:IDictionary(x:String, mxs:Entity))\" />\r\n  </x:Members>\r\n  <this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.InputEntities>\r\n    <InArgument x:TypeArguments=\"scg:IDictionary(x:String, mxs:Entity)\" />\r\n  </this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.InputEntities>\r\n  <this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.CreatedEntities>\r\n    <InArgument x:TypeArguments=\"scg:IDictionary(x:String, mxs:Entity)\" />\r\n  </this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.CreatedEntities>\r\n  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>\r\n  <mxswa:Workflow />\r\n</Activity>",
+      "summary": {
+        "counts": {
+          "activity_count": 10,
+          "xaml_length": 1791
+        },
+        "xaml_root_tag": "Activity",
+        "xaml_class": "XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d",
+        "comparison_signature": "be5b63551c5369d16631abc200199845c7521099b3c09aabba68c5870a58be1c",
+        "signature": "e3789012d0834211addb6eca24581bb7806c2595fa18efa042433918e6b8c61c"
+      }
+    },
+    {
+      "id": "{29683e80-ba00-4393-91ee-3d583e48b7a2}",
+      "name": "Test DBM JSON",
+      "category": "0",
+      "mode": "1",
+      "scope": "4",
+      "on_demand": "1",
+      "primary_entity": "Contact",
+      "state_code": "0",
+      "status_code": "1",
+      "xaml_file_name": "/Workflows/TestDBMJSON-29683E80-BA00-4393-91EE-3D583E48B7A2.xaml",
+      "xaml_text": "<Activity x:Class=\"XrmWorkflow29683e80ba00439391ee3d583e48b7a2\" xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:mva=\"clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:mxs=\"clr-namespace:Microsoft.Xrm.Sdk;assembly=Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:mxswa=\"clr-namespace:Microsoft.Xrm.Sdk.Workflow.Activities;assembly=Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:scg=\"clr-namespace:System.Collections.Generic;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\" xmlns:srs=\"clr-namespace:System.Runtime.Serialization;assembly=System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\" xmlns:this=\"clr-namespace:\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\">\r\n  <x:Members>\r\n    <x:Property Name=\"InputEntities\" Type=\"InArgument(scg:IDictionary(x:String, mxs:Entity))\" />\r\n    <x:Property Name=\"CreatedEntities\" Type=\"InArgument(scg:IDictionary(x:String, mxs:Entity))\" />\r\n  </x:Members>\r\n  <this:XrmWorkflow29683e80ba00439391ee3d583e48b7a2.InputEntities>\r\n    <InArgument x:TypeArguments=\"scg:IDictionary(x:String, mxs:Entity)\" />\r\n  </this:XrmWorkflow29683e80ba00439391ee3d583e48b7a2.InputEntities>\r\n  <this:XrmWorkflow29683e80ba00439391ee3d583e48b7a2.CreatedEntities>\r\n    <InArgument x:TypeArguments=\"scg:IDictionary(x:String, mxs:Entity)\" />\r\n  </this:XrmWorkflow29683e80ba00439391ee3d583e48b7a2.CreatedEntities>\r\n  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>\r\n  <mxswa:Workflow />\r\n</Activity>",
+      "summary": {
+        "counts": {
+          "activity_count": 10,
+          "xaml_length": 1791
+        },
+        "xaml_root_tag": "Activity",
+        "xaml_class": "XrmWorkflow29683e80ba00439391ee3d583e48b7a2",
+        "comparison_signature": "653f7e2d9fa93765002ceefffda3b4593e8cf1f3285c02baa9ebd43e50d05b1c",
+        "signature": "ff8cbe163c01633e58807548ce2992354953012a3b415cb30cbb1f9d935ce00e"
+      }
+    }
+  ],
+  "warnings": [],
+  "signature": "cf2e0a3be0dfe49af2faf4bc7be05356615cf92953f73163f441a9822f904cf0"
+}

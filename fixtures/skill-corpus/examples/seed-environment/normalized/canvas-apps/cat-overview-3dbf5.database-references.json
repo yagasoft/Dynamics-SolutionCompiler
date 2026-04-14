@@ -1,0 +1,116 @@
+{
+  "default.cds": {
+    "databaseDetails": {
+      "referenceType": "Environmental",
+      "environmentName": "default.cds",
+      "overrideValues": {
+        "status": "NotSpecified"
+      }
+    },
+    "dataSources": {
+      "Entities": {
+        "entitySetName": "entities",
+        "logicalName": "entity"
+      },
+      "Solutions": {
+        "entitySetName": "solutions",
+        "logicalName": "solution"
+      },
+      "Custom APIs": {
+        "entitySetName": "customapis",
+        "logicalName": "customapi"
+      },
+      "Custom API Request Parameters": {
+        "entitySetName": "customapirequestparameters",
+        "logicalName": "customapirequestparameter"
+      },
+      "Publishers": {
+        "entitySetName": "publishers",
+        "logicalName": "publisher"
+      },
+      "Custom API Response Properties": {
+        "entitySetName": "customapiresponseproperties",
+        "logicalName": "customapiresponseproperty"
+      },
+      "Sdk Message Processing Steps": {
+        "entitySetName": "sdkmessageprocessingsteps",
+        "logicalName": "sdkmessageprocessingstep"
+      },
+      "environment_39a902ba": {
+        "entitySetName": "Environment",
+        "logicalName": "environment_39a902ba"
+      }
+    },
+    "components": [
+      {
+        "componentName": "WebResource",
+        "identifier": "cat_DVPageLoc",
+        "identifierType": "LogicalName"
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.DVCommandBar",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.DVAutoWidthLabel",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.DVIcon",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.DVIcon",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.DVIcon",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.DVIcon",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.NavigationComponentPCF",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      },
+      {
+        "componentName": "CustomControl",
+        "identifier": "cat_PowerCAT.NavigationComponentPCF",
+        "identifierType": "LogicalName",
+        "capabilities": {
+          "pcfExternalServiceUsageAllowed": false
+        }
+      }
+    ]
+  }
+}

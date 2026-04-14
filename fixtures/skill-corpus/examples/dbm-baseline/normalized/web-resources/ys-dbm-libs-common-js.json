@@ -1,0 +1,21 @@
+{
+  "id": "{d0279397-e2f9-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/libs/common.js",
+  "display_name": "DBM Common Library JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmlibscommonjsD0279397-E2F9-EE11-A1FE-0022489F971B",
+  "content_path": "",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 0,
+      "line_count": 0
+    },
+    "content_sha256": "",
+    "comparison_signature": "7ec6ca120a89347134c0ba8c90f4917f5351170af5d198917a933da3898c8564",
+    "signature": "f589b0e43c3d7dafa4504f452509b8322cf09a88cd3f5830576ae483f6f9de48"
+  }
+}

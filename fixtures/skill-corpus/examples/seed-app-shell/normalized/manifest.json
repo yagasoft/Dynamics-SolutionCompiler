@@ -1,0 +1,14 @@
+{
+  "unique_name": "CodexMetadataSeedAppShell",
+  "friendly_name": "",
+  "version": "1.0.0.0",
+  "managed": "0",
+  "publisher": {
+    "unique_name": "CodexMetadata",
+    "prefix": "cdxmeta"
+  },
+  "source_files": {
+    "solution_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\Other\\Solution.xml",
+    "customizations_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\Other\\Customizations.xml"
+  }
+}

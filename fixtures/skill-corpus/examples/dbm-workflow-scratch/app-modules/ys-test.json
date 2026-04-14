@@ -1,0 +1,52 @@
+{
+  "id": "",
+  "unique_name": "ys_Test",
+  "display_name": "Test",
+  "description": "",
+  "web_resource_id": "953b9fac-1e5e-e611-80d6-00155ded156f",
+  "client_type": "4",
+  "form_factor": "1",
+  "navigation_type": "0",
+  "state_code": "0",
+  "status_code": "1",
+  "components": [
+    {
+      "type": "1",
+      "type_label": "Entity",
+      "schema_name": "account"
+    },
+    {
+      "type": "1",
+      "type_label": "Entity",
+      "schema_name": "contact"
+    },
+    {
+      "type": "62",
+      "type_label": "Site Map",
+      "schema_name": "ys_Test"
+    }
+  ],
+  "role_ids": [
+    "{627090ff-40a3-4053-8790-584edc5be201}",
+    "{119f245c-3cc8-4b62-b31c-d1a046ced15d}"
+  ],
+  "app_settings": [
+    {
+      "setting_definition_unique_name": "AppChannel",
+      "value": "1"
+    }
+  ],
+  "summary": {
+    "counts": {
+      "component_count": 3,
+      "role_map_count": 2,
+      "app_setting_count": 1
+    },
+    "component_types": [
+      "1:Entity",
+      "62:Site Map"
+    ],
+    "comparison_signature": "383b70127a9ecc6a1ab591d7f7418d81d1b9efa44287b2d12f55b91800408c36",
+    "signature": "87695f721a399b18100111b73816b8f9f5ddfaacefdda11e61c8744abafcf7dc"
+  }
+}

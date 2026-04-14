@@ -1,0 +1,116 @@
+[
+  {
+    "logical_name": "cdxmeta_categoryid",
+    "display_name": "Category",
+    "type": "primarykey",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_categoryname",
+    "display_name": "Category Name",
+    "type": "nvarchar",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_description",
+    "display_name": "Description",
+    "type": "ntext",
+    "is_secured": false
+  },
+  {
+    "logical_name": "createdby",
+    "display_name": "Created By",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "createdon",
+    "display_name": "Created On",
+    "type": "datetime",
+    "is_secured": false
+  },
+  {
+    "logical_name": "createdonbehalfby",
+    "display_name": "Created By (Delegate)",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "importsequencenumber",
+    "display_name": "Import Sequence Number",
+    "type": "int",
+    "is_secured": false
+  },
+  {
+    "logical_name": "modifiedby",
+    "display_name": "Modified By",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "modifiedon",
+    "display_name": "Modified On",
+    "type": "datetime",
+    "is_secured": false
+  },
+  {
+    "logical_name": "modifiedonbehalfby",
+    "display_name": "Modified By (Delegate)",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "overriddencreatedon",
+    "display_name": "Record Created On",
+    "type": "datetime",
+    "is_secured": false
+  },
+  {
+    "logical_name": "ownerid",
+    "display_name": "Owner",
+    "type": "owner",
+    "is_secured": false
+  },
+  {
+    "logical_name": "owningbusinessunit",
+    "display_name": "Owning Business Unit",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "owningteam",
+    "display_name": "Owning Team",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "owninguser",
+    "display_name": "Owning User",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "statecode",
+    "display_name": "Status",
+    "type": "state",
+    "is_secured": false
+  },
+  {
+    "logical_name": "statuscode",
+    "display_name": "Status Reason",
+    "type": "status",
+    "is_secured": false
+  },
+  {
+    "logical_name": "timezoneruleversionnumber",
+    "display_name": "Time Zone Rule Version Number",
+    "type": "int",
+    "is_secured": false
+  },
+  {
+    "logical_name": "utcconversiontimezonecode",
+    "display_name": "UTC Conversion Time Zone Code",
+    "type": "int",
+    "is_secured": false
+  }
+]

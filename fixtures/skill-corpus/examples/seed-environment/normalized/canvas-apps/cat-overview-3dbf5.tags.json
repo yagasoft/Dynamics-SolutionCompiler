@@ -1,0 +1,14 @@
+{
+  "primaryDeviceWidth": "1366",
+  "primaryDeviceHeight": "768",
+  "supportsPortrait": "true",
+  "supportsLandscape": "true",
+  "primaryFormFactor": "Tablet",
+  "publisherVersion": "3.23081.15",
+  "minimumRequiredApiVersion": "2.2.0",
+  "hasComponent": "false",
+  "hasUnlockedComponent": "false",
+  "isUnifiedRootApp": "false",
+  "sienaVersion": "20230823T035157Z-3.23081.15.0",
+  "showStatusBar": "false"
+}

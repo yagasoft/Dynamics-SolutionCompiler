@@ -1,0 +1,249 @@
+{
+  "source_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked",
+  "resolved_root": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked",
+  "layout": "xml",
+  "solution": {
+    "unique_name": "CodexMetadataSeedAppShell",
+    "friendly_name": "",
+    "version": "1.0.0.0",
+    "managed": "0",
+    "publisher": {
+      "unique_name": "CodexMetadata",
+      "prefix": "cdxmeta"
+    },
+    "source_files": {
+      "solution_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\Other\\Solution.xml",
+      "customizations_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\Other\\Customizations.xml"
+    }
+  },
+  "root_components": [
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "cdxmeta_/shell/icon.svg",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "cdxmeta_/shell/landing.html",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "62",
+      "type_label": "Site Map",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "codex_metadata_shell_dd96cf20",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "80",
+      "type_label": "App Module",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "codex_metadata_shell_dd96cf20",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    }
+  ],
+  "entities": {},
+  "app_modules": [
+    {
+      "id": "",
+      "unique_name": "codex_metadata_shell_dd96cf20",
+      "display_name": "Codex Metadata Shell",
+      "description": "Neutral model-driven app for Dataverse metadata synthesis skill coverage.",
+      "web_resource_id": "953b9fac-1e5e-e611-80d6-00155ded156f",
+      "client_type": "4",
+      "form_factor": "1",
+      "navigation_type": "0",
+      "state_code": "0",
+      "status_code": "1",
+      "components": [
+        {
+          "type": "62",
+          "type_label": "Site Map",
+          "schema_name": "codex_metadata_shell_dd96cf20"
+        }
+      ],
+      "role_ids": [
+        "{627090ff-40a3-4053-8790-584edc5be201}",
+        "{119f245c-3cc8-4b62-b31c-d1a046ced15d}"
+      ],
+      "app_settings": [
+        {
+          "setting_definition_unique_name": "AppChannel",
+          "value": "1"
+        }
+      ],
+      "summary": {
+        "counts": {
+          "component_count": 1,
+          "role_map_count": 2,
+          "app_setting_count": 1
+        },
+        "component_types": [
+          "62:Site Map"
+        ],
+        "comparison_signature": "6ca187777b9338c3994f4210762f7c81b88c5bf201fbf976ae93ca91926adcbb",
+        "signature": "6f69faa56ef2bf3c411b01d349069689b47fa674c86f1d0d88e96e0cf6642667"
+      }
+    }
+  ],
+  "site_maps": [
+    {
+      "unique_name": "codex_metadata_shell_dd96cf20",
+      "display_name": "Codex Metadata Shell",
+      "enable_collapsible_groups": "False",
+      "show_home": "True",
+      "show_pinned": "True",
+      "show_recents": "True",
+      "sitemap_xml": "<SiteMap IntroducedVersion=\"7.0.0.0\">\n    <Area Id=\"area_codex_metadata_shell\" ShowGroups=\"true\" ResourceId=\"SitemapDesigner.NewArea\" IntroducedVersion=\"7.0.0.0\">\n      <Titles>\n        <Title LCID=\"1033\" Title=\"Codex Metadata\" />\n      </Titles>\n      <Group Id=\"group_codex_metadata_shell\" ResourceId=\"SitemapDesigner.NewGroup\" IntroducedVersion=\"7.0.0.0\">\n        <Titles>\n          <Title LCID=\"1033\" Title=\"Shell\" />\n        </Titles>\n        <SubArea Id=\"subarea_codex_metadata_shell\" ResourceId=\"SitemapDesigner.NewSubArea\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" Url=\"$webresource:cdxmeta_/shell/landing.html\" Client=\"Web\" PassParams=\"true\">\n          <Titles>\n            <Title LCID=\"1033\" Title=\"Metadata Shell\" />\n          </Titles>\n        </SubArea>\n      </Group>\n    </Area>\n  </SiteMap>\n  ",
+      "summary": {
+        "counts": {
+          "area_count": 1,
+          "group_count": 1,
+          "subarea_count": 1,
+          "web_resource_subarea_count": 1,
+          "entity_subarea_count": 0
+        },
+        "areas": [
+          {
+            "id": "area_codex_metadata_shell",
+            "title": "Codex Metadata",
+            "groups": [
+              {
+                "id": "group_codex_metadata_shell",
+                "title": "Shell",
+                "subareas": [
+                  {
+                    "id": "subarea_codex_metadata_shell",
+                    "title": "Metadata Shell",
+                    "url": "$webresource:cdxmeta_/shell/landing.html",
+                    "entity": "",
+                    "icon": "/WebResources/cdxmeta_/shell/icon.svg",
+                    "vector_icon": "/WebResources/cdxmeta_/shell/icon.svg"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "signature": "634ce084212965c4f69ee7ce1c6f3e9cec2d1e9a4661bdafa66f15f3f1da00f1",
+        "comparison_signature": "4f2560890237b76688d9cd41da01d4e3745e700342aaafc21a33dca3b5dfa0d2"
+      }
+    }
+  ],
+  "web_resources": [
+    {
+      "id": "{9fba2262-5637-f111-88b3-0022489b9600}",
+      "name": "cdxmeta_/shell/icon.svg",
+      "display_name": "Codex Metadata Shell Icon SVG",
+      "description": "Neutral SVG icon for the app-shell seed.",
+      "type": "11",
+      "type_label": "Vector format (SVG)",
+      "language_code": "1033",
+      "file_name": "/WebResources/cdxmeta_shelliconsvg9FBA2262-5637-F111-88B3-0022489B9600",
+      "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\WebResources\\cdxmeta_\\shell\\icon.svg",
+      "summary": {
+        "type_label": "Vector format (SVG)",
+        "counts": {
+          "byte_count": 243,
+          "line_count": 1
+        },
+        "content_sha256": "f3ab323557e9683e58cec264aeb606427cba2ee402ee61a318c8c65970394a99",
+        "comparison_signature": "6db33e2ed1694f0a05106242945252cca582000851250d87a96c75fc21315100",
+        "signature": "335008e6d962451c17e3935c0e6f75b2f4717a6aeb34aad6ecab3209abcf9856"
+      }
+    },
+    {
+      "id": "{a0ba2262-5637-f111-88b3-0022489b9600}",
+      "name": "cdxmeta_/shell/landing.html",
+      "display_name": "Codex Metadata Shell Landing HTML",
+      "description": "Neutral HTML landing page for the app-shell seed.",
+      "type": "1",
+      "type_label": "Webpage (HTML)",
+      "language_code": "1033",
+      "file_name": "/WebResources/cdxmeta_shelllandinghtmlA0BA2262-5637-F111-88B3-0022489B9600",
+      "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-app-shell\\unpacked\\WebResources\\cdxmeta_\\shell\\landing.html",
+      "summary": {
+        "type_label": "Webpage (HTML)",
+        "counts": {
+          "byte_count": 203,
+          "line_count": 1
+        },
+        "content_sha256": "544625246404e77b7fa2b554f4de52638172ee074494d5adb38b27fe2259f42a",
+        "comparison_signature": "83f3d7902e2d516dfb24912343618a3ca041cc85c8bcea04a5827df77598ec59",
+        "signature": "bc3d6cba0227c28e7661e1cae53d10991f12ce17427eb7391566b4b6b8eb83f5"
+      }
+    }
+  ],
+  "environment_variable_definitions": [
+    {
+      "schema_name": "cdxmeta_AppShellMode",
+      "display_name": "App Shell Mode",
+      "description": "Neutral environment variable for the Dataverse metadata synthesis app-shell seed.",
+      "default_value": "standard",
+      "type": "100000000",
+      "type_label": "String",
+      "secret_store": "0",
+      "secret_store_label": "Azure Key Vault",
+      "is_required": "0",
+      "introduced_version": "1.0.0.0",
+      "values": [
+        {
+          "value": "guided",
+          "is_customizable": "1"
+        }
+      ],
+      "summary": {
+        "counts": {
+          "value_count": 1
+        },
+        "type_label": "String",
+        "secret_store_label": "Azure Key Vault",
+        "comparison_signature": "a3f2764132312538b1b4dee39b9b79086807baa43c841350a2241c35a5e05158",
+        "value_comparison_signature": "b8584edfd6156d9f5889ba6ca821b0e860874a17ae3c1024b5f4cf50a44c0737",
+        "signature": "e40b5a813ea37a05e284440b264b91528da523b423ae48e4f473bcf168dbd523"
+      }
+    }
+  ],
+  "environment_variable_values": [
+    {
+      "schema_name": "cdxmeta_AppShellMode",
+      "value": "guided",
+      "summary": {
+        "comparison_signature": "3f2d8291fecb83d18f0c1314b5f7c47d0a13855f8fcefb40ca0547a932dabac1"
+      }
+    }
+  ],
+  "plugin_assemblies": [],
+  "plugin_steps": [],
+  "plugin_step_images": [],
+  "workflows": [],
+  "duplicate_rules": [],
+  "duplicate_rule_conditions": [],
+  "routing_rules": [],
+  "routing_rule_items": [],
+  "slas": [],
+  "sla_items": [],
+  "similarity_rules": [],
+  "mobile_offline_profiles": [],
+  "mobile_offline_profile_items": [],
+  "roles": [],
+  "role_privileges": [],
+  "privilege_object_type_codes": [],
+  "field_security_profiles": [],
+  "field_permissions": [],
+  "connection_roles": [],
+  "warnings": [],
+  "signature": "c6b60ccd512be8eb61e0ebdc0b0f0ab87f914d3d2b2bbe0814b09094afcad88b"
+}

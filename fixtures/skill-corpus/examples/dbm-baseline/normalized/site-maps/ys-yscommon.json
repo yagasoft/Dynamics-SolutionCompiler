@@ -1,0 +1,42 @@
+{
+  "unique_name": "ys_YSCommon",
+  "display_name": "Yagasoft",
+  "enable_collapsible_groups": "False",
+  "show_home": "True",
+  "show_pinned": "True",
+  "show_recents": "True",
+  "sitemap_xml": "<SiteMap IntroducedVersion=\"7.0.0.0\">\n        <Area Id=\"area_dbm\" ResourceId=\"SitemapDesigner.NewTitle\" DescriptionResourceId=\"SitemapDesigner.NewTitle\" ShowGroups=\"true\" IntroducedVersion=\"7.0.0.0\" ordinalvalue=\"3\" solutionaction=\"Added\">\n          <Titles>\n            <Title LCID=\"1033\" Title=\"Dynamics Business Machine\" />\n          </Titles>\n          <Group Id=\"group_cd2e3929\" ResourceId=\"SitemapDesigner.NewGroup\" DescriptionResourceId=\"SitemapDesigner.NewGroup\" IntroducedVersion=\"7.0.0.0\" IsProfile=\"false\" ToolTipResourseId=\"SitemapDesigner.Unknown\" ordinalvalue=\"0\">\n            <Titles>\n              <Title LCID=\"1033\" Title=\"Apps\" />\n            </Titles>\n            <SubArea Id=\"subarea_70298910\" ResourceId=\"SitemapDesigner.NewSubArea\" VectorIcon=\"/WebResources/ys_/dbm/icons/dbm-logo.svg\" Icon=\"/WebResources/ys_/dbm/icons/dbm-logo.svg\" Url=\"$webresource:ys_/dbm/apps/editor/index.html\" Client=\"All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web\" AvailableOffline=\"false\" PassParams=\"true\" Sku=\"All,OnPremise,Live,SPLA\" ordinalvalue=\"0\">\n              <Titles>\n                <Title LCID=\"1033\" Title=\"DBM App\" ordinalvalue=\"0\" />\n              </Titles>\n            </SubArea>\n          </Group>\n        </Area>\n      </SiteMap>\n      ",
+  "summary": {
+    "counts": {
+      "area_count": 1,
+      "group_count": 1,
+      "subarea_count": 1,
+      "web_resource_subarea_count": 1,
+      "entity_subarea_count": 0
+    },
+    "areas": [
+      {
+        "id": "area_dbm",
+        "title": "Dynamics Business Machine",
+        "groups": [
+          {
+            "id": "group_cd2e3929",
+            "title": "Apps",
+            "subareas": [
+              {
+                "id": "subarea_70298910",
+                "title": "DBM App",
+                "url": "$webresource:ys_/dbm/apps/editor/index.html",
+                "entity": "",
+                "icon": "/WebResources/ys_/dbm/icons/dbm-logo.svg",
+                "vector_icon": "/WebResources/ys_/dbm/icons/dbm-logo.svg"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "signature": "69b15f0c747c449d192c55dc8c35af6ba861a907814a0396979fd0b8e32eb0a4",
+    "comparison_signature": "e54dab486247158569d482f1852f6a98a9a7c733203ebc623c3b4fd9c854ae2f"
+  }
+}

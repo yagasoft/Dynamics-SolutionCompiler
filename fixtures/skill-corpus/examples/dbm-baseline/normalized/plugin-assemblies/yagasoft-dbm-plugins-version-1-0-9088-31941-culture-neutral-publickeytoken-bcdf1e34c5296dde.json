@@ -1,0 +1,24 @@
+{
+  "id": "30b3a8b1-6fd2-44ac-8749-c46b7b725e52",
+  "full_name": "Yagasoft.Dbm.Plugins, Version=1.0.9088.31941, Culture=neutral, PublicKeyToken=bcdf1e34c5296dde",
+  "file_name": "/PluginAssemblies/YagasoftDbmPlugins-30B3A8B1-6FD2-44AC-8749-C46B7B725E52/YagasoftDbmPlugins.dll",
+  "introduced_version": "1.0",
+  "isolation_mode": "2",
+  "source_type": "0",
+  "plugin_types": [
+    {
+      "id": "e3d5f956-8cad-455a-894b-c516a52a0b5b",
+      "name": "Yagasoft.Dbm.Plugins.Evaluation.Steps.DbmEvaluateScript",
+      "assembly_qualified_name": "Yagasoft.Dbm.Plugins.Evaluation.Steps.DbmEvaluateScript, Yagasoft.Dbm.Plugins, Version=1.0.9088.31941, Culture=neutral, PublicKeyToken=bcdf1e34c5296dde",
+      "friendly_name": "9f6c8c60-a4ec-4b6b-8e42-57547e84724b",
+      "workflow_activity_group_name": "Yagasoft.Dbm.Plugins (1.0.9088.31941)"
+    }
+  ],
+  "summary": {
+    "counts": {
+      "plugin_type_count": 1
+    },
+    "comparison_signature": "874a65ffd979a744d11044f99a7170a12c0e84e82189ffed93ee8cba61c6f403",
+    "signature": "49ed01e563ab913f0ab49a7cfe66936b4f744c8fed2988c7044b0d84e12ea15c"
+  }
+}

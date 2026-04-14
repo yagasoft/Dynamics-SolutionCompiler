@@ -1,0 +1,30 @@
+{
+  "entity_logical_name": "cdxmeta_workitem",
+  "attribute_logical_name": "cdxmeta_isblocked",
+  "attribute_display_name": "Blocked",
+  "option_set_name": "cdxmeta_workitem_cdxmeta_isblocked",
+  "option_set_type": "boolean",
+  "is_global": null,
+  "options": [
+    {
+      "value": "1",
+      "label": "Yes",
+      "is_hidden": "0",
+      "external_value": ""
+    },
+    {
+      "value": "0",
+      "label": "No",
+      "is_hidden": "0",
+      "external_value": ""
+    }
+  ],
+  "comparison_key": "cdxmeta_workitem|cdxmeta_isblocked",
+  "summary": {
+    "counts": {
+      "option_count": 2
+    },
+    "comparison_signature": "62ae2706d1a207c7789f0203fa072ca748050b2bc8dcc8a657a4eb6cf2518e80",
+    "signature": "62ae2706d1a207c7789f0203fa072ca748050b2bc8dcc8a657a4eb6cf2518e80"
+  }
+}

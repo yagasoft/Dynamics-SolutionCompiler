@@ -1,0 +1,72 @@
+{
+  "id": "",
+  "name": "cat_overview_3dbf5",
+  "display_name": "Overview",
+  "description": "",
+  "app_version": "2023-09-06T20:22:07Z",
+  "status": "Ready",
+  "created_by_client_version": "3.23081.15.0",
+  "min_client_version": "3.23081.15.0",
+  "tags": "{\"primaryDeviceWidth\":\"1366\",\"primaryDeviceHeight\":\"768\",\"supportsPortrait\":\"true\",\"supportsLandscape\":\"true\",\"primaryFormFactor\":\"Tablet\",\"publisherVersion\":\"3.23081.15\",\"minimumRequiredApiVersion\":\"2.2.0\",\"hasComponent\":\"false\",\"hasUnlockedComponent\":\"false\",\"isUnifiedRootApp\":\"false\",\"sienaVersion\":\"20230823T035157Z-3.23081.15.0\",\"showStatusBar\":\"false\"}",
+  "authorization_references": "[]",
+  "connection_references": "{}",
+  "database_references": "{\"default.cds\":{\"databaseDetails\":{\"referenceType\":\"Environmental\",\"environmentName\":\"default.cds\",\"overrideValues\":{\"status\":\"NotSpecified\"}},\"dataSources\":{\"Entities\":{\"entitySetName\":\"entities\",\"logicalName\":\"entity\"},\"Solutions\":{\"entitySetName\":\"solutions\",\"logicalName\":\"solution\"},\"Custom APIs\":{\"entitySetName\":\"customapis\",\"logicalName\":\"customapi\"},\"Custom API Request Parameters\":{\"entitySetName\":\"customapirequestparameters\",\"logicalName\":\"customapirequestparameter\"},\"Publishers\":{\"entitySetName\":\"publishers\",\"logicalName\":\"publisher\"},\"Custom API Response Properties\":{\"entitySetName\":\"customapiresponseproperties\",\"logicalName\":\"customapiresponseproperty\"},\"Sdk Message Processing Steps\":{\"entitySetName\":\"sdkmessageprocessingsteps\",\"logicalName\":\"sdkmessageprocessingstep\"},\"environment_39a902ba\":{\"entitySetName\":\"Environment\",\"logicalName\":\"environment_39a902ba\"}},\"components\":[{\"componentName\":\"WebResource\",\"identifier\":\"cat_DVPageLoc\",\"identifierType\":\"LogicalName\"},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVCommandBar\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVAutoWidthLabel\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.NavigationComponentPCF\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.NavigationComponentPCF\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}}]}}",
+  "can_consume_app_pass": "1",
+  "canvas_app_type": "2",
+  "introduced_version": "1.0",
+  "cds_dependencies": "{\"cdsdependencies\":[{\"componenttype\":1,\"logicalname\":\"entity\"},{\"componenttype\":1,\"logicalname\":\"solution\"},{\"componenttype\":1,\"logicalname\":\"customapi\"},{\"componenttype\":1,\"logicalname\":\"customapirequestparameter\"},{\"componenttype\":1,\"logicalname\":\"publisher\"},{\"componenttype\":1,\"logicalname\":\"customapiresponseproperty\"},{\"componenttype\":1,\"logicalname\":\"sdkmessageprocessingstep\"},{\"componenttype\":61,\"logicalname\":\"cat_DVPageLoc\",\"componenttypeplatformname\":\"WebResource\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVCommandBar\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVAutoWidthLabel\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.NavigationComponentPCF\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.NavigationComponentPCF\",\"componenttypeplatformname\":\"CustomControl\"}]}",
+  "is_customizable": "0",
+  "background_color": "RGBA(0,176,240,1)",
+  "background_image_uri": "/CanvasApps/cat_overview_3dbf5_BackgroundImageUri",
+  "background_image_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-environment\\unpacked\\CanvasApps\\cat_overview_3dbf5_BackgroundImageUri",
+  "document_uri": "/CanvasApps/cat_overview_3dbf5_DocumentUri.msapp",
+  "document_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-environment\\unpacked\\CanvasApps\\cat_overview_3dbf5_DocumentUri.msapp",
+  "metadata_xml": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<CanvasApp xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Name>cat_overview_3dbf5</Name>\r\n  <AppVersion>2023-09-06T20:22:07Z</AppVersion>\r\n  <Status>Ready</Status>\r\n  <CreatedByClientVersion>3.23081.15.0</CreatedByClientVersion>\r\n  <MinClientVersion>3.23081.15.0</MinClientVersion>\r\n  <Tags>{\"primaryDeviceWidth\":\"1366\",\"primaryDeviceHeight\":\"768\",\"supportsPortrait\":\"true\",\"supportsLandscape\":\"true\",\"primaryFormFactor\":\"Tablet\",\"publisherVersion\":\"3.23081.15\",\"minimumRequiredApiVersion\":\"2.2.0\",\"hasComponent\":\"false\",\"hasUnlockedComponent\":\"false\",\"isUnifiedRootApp\":\"false\",\"sienaVersion\":\"20230823T035157Z-3.23081.15.0\",\"showStatusBar\":\"false\"}</Tags>\r\n  <IsCdsUpgraded>0</IsCdsUpgraded>\r\n  <GalleryItemId></GalleryItemId>\r\n  <BackgroundColor>RGBA(0,176,240,1)</BackgroundColor>\r\n  <DisplayName>Overview</DisplayName>\r\n  <Description></Description>\r\n  <CommitMessage></CommitMessage>\r\n  <Publisher></Publisher>\r\n  <AuthorizationReferences>[]</AuthorizationReferences>\r\n  <ConnectionReferences>{}</ConnectionReferences>\r\n  <DatabaseReferences>{\"default.cds\":{\"databaseDetails\":{\"referenceType\":\"Environmental\",\"environmentName\":\"default.cds\",\"overrideValues\":{\"status\":\"NotSpecified\"}},\"dataSources\":{\"Entities\":{\"entitySetName\":\"entities\",\"logicalName\":\"entity\"},\"Solutions\":{\"entitySetName\":\"solutions\",\"logicalName\":\"solution\"},\"Custom APIs\":{\"entitySetName\":\"customapis\",\"logicalName\":\"customapi\"},\"Custom API Request Parameters\":{\"entitySetName\":\"customapirequestparameters\",\"logicalName\":\"customapirequestparameter\"},\"Publishers\":{\"entitySetName\":\"publishers\",\"logicalName\":\"publisher\"},\"Custom API Response Properties\":{\"entitySetName\":\"customapiresponseproperties\",\"logicalName\":\"customapiresponseproperty\"},\"Sdk Message Processing Steps\":{\"entitySetName\":\"sdkmessageprocessingsteps\",\"logicalName\":\"sdkmessageprocessingstep\"},\"environment_39a902ba\":{\"entitySetName\":\"Environment\",\"logicalName\":\"environment_39a902ba\"}},\"components\":[{\"componentName\":\"WebResource\",\"identifier\":\"cat_DVPageLoc\",\"identifierType\":\"LogicalName\"},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVCommandBar\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVAutoWidthLabel\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.DVIcon\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.NavigationComponentPCF\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}},{\"componentName\":\"CustomControl\",\"identifier\":\"cat_PowerCAT.NavigationComponentPCF\",\"identifierType\":\"LogicalName\",\"capabilities\":{\"pcfExternalServiceUsageAllowed\":false}}]}}</DatabaseReferences>\r\n  <CanConsumeAppPass>1</CanConsumeAppPass>\r\n  <CanvasAppType>2</CanvasAppType>\r\n  <BypassConsent>0</BypassConsent>\r\n  <EmbeddedApp></EmbeddedApp>\r\n  <IntroducedVersion>1.0</IntroducedVersion>\r\n  <CdsDependencies>{\"cdsdependencies\":[{\"componenttype\":1,\"logicalname\":\"entity\"},{\"componenttype\":1,\"logicalname\":\"solution\"},{\"componenttype\":1,\"logicalname\":\"customapi\"},{\"componenttype\":1,\"logicalname\":\"customapirequestparameter\"},{\"componenttype\":1,\"logicalname\":\"publisher\"},{\"componenttype\":1,\"logicalname\":\"customapiresponseproperty\"},{\"componenttype\":1,\"logicalname\":\"sdkmessageprocessingstep\"},{\"componenttype\":61,\"logicalname\":\"cat_DVPageLoc\",\"componenttypeplatformname\":\"WebResource\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVCommandBar\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVAutoWidthLabel\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.DVIcon\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.NavigationComponentPCF\",\"componenttypeplatformname\":\"CustomControl\"},{\"componenttype\":66,\"logicalname\":\"cat_PowerCAT.NavigationComponentPCF\",\"componenttypeplatformname\":\"CustomControl\"}]}</CdsDependencies>\r\n  <IsCustomizable>0</IsCustomizable>\r\n  <BackgroundImageUri>/CanvasApps/cat_overview_3dbf5_BackgroundImageUri</BackgroundImageUri>\r\n  <DocumentUri>/CanvasApps/cat_overview_3dbf5_DocumentUri.msapp</DocumentUri>\r\n</CanvasApp>",
+  "metadata_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-environment\\unpacked\\CanvasApps\\cat_overview_3dbf5.meta.xml",
+  "summary": {
+    "counts": {
+      "tag_count": 12,
+      "authorization_reference_count": 0,
+      "connection_reference_count": 0,
+      "database_reference_count": 1,
+      "data_source_count": 8,
+      "database_component_count": 5,
+      "cds_dependency_count": 16,
+      "has_document_asset": 1,
+      "has_background_asset": 1
+    },
+    "database_names": [
+      "default.cds"
+    ],
+    "data_source_names": [
+      "Custom API Request Parameters",
+      "Custom API Response Properties",
+      "Custom APIs",
+      "Entities",
+      "Publishers",
+      "Sdk Message Processing Steps",
+      "Solutions",
+      "environment_39a902ba"
+    ],
+    "database_component_identifiers": [
+      "cat_DVPageLoc",
+      "cat_PowerCAT.DVAutoWidthLabel",
+      "cat_PowerCAT.DVCommandBar",
+      "cat_PowerCAT.DVIcon",
+      "cat_PowerCAT.NavigationComponentPCF"
+    ],
+    "dependency_component_types": [
+      "1:customapi",
+      "1:customapirequestparameter",
+      "1:customapiresponseproperty",
+      "1:entity",
+      "1:publisher",
+      "1:sdkmessageprocessingstep",
+      "1:solution",
+      "61:WebResource",
+      "66:CustomControl"
+    ],
+    "comparison_signature": "2d3db67fe6f024e0324ad196458ab1d60dd29defe5a8af3d31a4f58da5683657",
+    "signature": "21fde3bf4b0e5829c07a041cf3113e0ba338eb8873ee31034381a6a8758e87f3"
+  }
+}

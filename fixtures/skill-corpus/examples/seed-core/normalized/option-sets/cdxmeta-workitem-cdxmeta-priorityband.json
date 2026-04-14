@@ -1,0 +1,36 @@
+{
+  "entity_logical_name": "cdxmeta_workitem",
+  "attribute_logical_name": "cdxmeta_priorityband",
+  "attribute_display_name": "Priority Band",
+  "option_set_name": "cdxmeta_priorityband",
+  "option_set_type": "picklist",
+  "is_global": true,
+  "options": [
+    {
+      "value": "727270010",
+      "label": "Low",
+      "is_hidden": "0",
+      "external_value": ""
+    },
+    {
+      "value": "727270011",
+      "label": "Medium",
+      "is_hidden": "0",
+      "external_value": ""
+    },
+    {
+      "value": "727270012",
+      "label": "High",
+      "is_hidden": "0",
+      "external_value": ""
+    }
+  ],
+  "comparison_key": "cdxmeta_workitem|cdxmeta_priorityband",
+  "summary": {
+    "counts": {
+      "option_count": 3
+    },
+    "comparison_signature": "642a1055f55bf3cb54bcd4bda1583f2ae3adfe2ce9b60082ac4895e6b0e4adcc",
+    "signature": "642a1055f55bf3cb54bcd4bda1583f2ae3adfe2ce9b60082ac4895e6b0e4adcc"
+  }
+}

@@ -1,0 +1,178 @@
+﻿[
+    {
+        "savedqueryid":  "00000000-0000-0000-00aa-000000666000",
+        "name":  "Account Advanced Find View",
+        "returnedtypecode":  "account",
+        "querytype":  1,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"00000000-0000-0000-00aa-000000666000\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"accountid\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "00000000-0000-0000-00aa-000010001001",
+        "name":  "My Active Accounts",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"00000000-0000-0000-00aa-000010001001\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"ownerid\" operator=\"eq-userid\" /\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"accountid\" /\u003e\u003clink-entity alias=\"accountprimarycontactidcontactcontactid\" name=\"contact\" from=\"contactid\" to=\"primarycontactid\" link-type=\"outer\" visible=\"false\"\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003c/link-entity\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"accountprimarycontactidcontactcontactid.emailaddress1\" width=\"150\" disableSorting=\"1\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "00000000-0000-0000-00aa-000010001002",
+        "name":  "Active Accounts",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"00000000-0000-0000-00aa-000010001002\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003clink-entity alias=\"accountprimarycontactidcontactcontactid\" name=\"contact\" from=\"contactid\" to=\"primarycontactid\" link-type=\"outer\" visible=\"false\"\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003c/link-entity\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"accountprimarycontactidcontactcontactid.emailaddress1\" width=\"150\" disableSorting=\"1\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "00000000-0000-0000-00aa-000010001031",
+        "name":  "Inactive Accounts",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"00000000-0000-0000-00aa-000010001031\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"1\" /\u003e\u003c/filter\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003clink-entity alias=\"primaryContactEmailAddress\" name=\"contact\" from=\"contactid\" to=\"primarycontactid\" link-type=\"outer\" visible=\"false\"\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003c/link-entity\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"primaryContactEmailAddress.emailaddress1\" width=\"150\" disableSorting=\"1\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "00000000-0000-0000-00aa-000010001200",
+        "name":  "Account Associated View",
+        "returnedtypecode":  "account",
+        "querytype":  2,
+        "fetchxml":  "\u003cfetch distinct=\"false\" mapping=\"logical\" savedqueryid=\"00000000-0000-0000-00aa-000010001200\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"accountid\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"accounts\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"account\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "59e57080-0cc2-e211-9b83-00155d89b902",
+        "name":  "Account BulkOperation View",
+        "returnedtypecode":  "account",
+        "querytype":  2,
+        "fetchxml":  null,
+        "layoutxml":  "\u003cgrid name=\"accounts\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"account\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "38a21ffb-4e32-4038-beb9-03172a0dd034",
+        "name":  "Account List Member View",
+        "returnedtypecode":  "account",
+        "querytype":  2,
+        "fetchxml":  null,
+        "layoutxml":  "\u003cgrid name=\"accounts\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"account\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "49fb9771-09e1-4e70-b193-198752493577",
+        "name":  "Accounts: Responded to Campaigns in Last 6 Months",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\" savedqueryid=\"49fb9771-09e1-4e70-b193-198752493577\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003clink-entity name=\"activityparty\" from=\"partyid\" to=\"accountid\" link-type=\"inner\"\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"participationtypemask\" operator=\"eq\" value=\"11\" /\u003e\u003c/filter\u003e\u003c/link-entity\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "51de84dd-732f-440f-a506-26123a19ab50",
+        "name":  "All Members",
+        "returnedtypecode":  "account",
+        "querytype":  32,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"51de84dd-732f-440f-a506-26123a19ab50\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "65ffaf9a-e8c5-432d-860b-32f841b00d87",
+        "name":  "All Accounts",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"65ffaf9a-e8c5-432d-860b-32f841b00d87\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003clink-entity alias=\"accountprimarycontactidcontactcontactid\" name=\"contact\" from=\"contactid\" to=\"primarycontactid\" link-type=\"outer\" visible=\"false\"\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003c/link-entity\u003e\u003cattribute name=\"statecode\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"accountprimarycontactidcontactcontactid.emailaddress1\" width=\"150\" disableSorting=\"1\" /\u003e\u003ccell name=\"statecode\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "31089fd8-596a-47be-9c9c-3ff82c7a8f8c",
+        "name":  "My Accounts",
+        "returnedtypecode":  "account",
+        "querytype":  8192,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"31089fd8-596a-47be-9c9c-3ff82c7a8f8c\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"accountid\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"ownerid\" operator=\"eq-userid\" /\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  null
+    },
+    {
+        "savedqueryid":  "4d149ed9-12f1-4cd3-8427-418674f21bed",
+        "name":  "Quick Find Marketing List Members",
+        "returnedtypecode":  "account",
+        "querytype":  32,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"4d149ed9-12f1-4cd3-8427-418674f21bed\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cfilter type=\"or\" isquickfindfields=\"1\"\u003e\u003ccondition attribute=\"name\" operator=\"like\" value=\"{0}\" /\u003e\u003c/filter\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "2d1187c4-23fe-4bb5-9647-43bb1c6ddbd1",
+        "name":  "Quick Find Active Accounts",
+        "returnedtypecode":  "account",
+        "querytype":  4,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"2d1187c4-23fe-4bb5-9647-43bb1c6ddbd1\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"accountnumber\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003cattribute name=\"accountid\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003cfilter type=\"or\" isquickfindfields=\"1\"\u003e\u003ccondition attribute=\"name\" operator=\"like\" value=\"{0}\" /\u003e\u003ccondition attribute=\"accountnumber\" operator=\"like\" value=\"{0}\" /\u003e\u003ccondition attribute=\"emailaddress1\" operator=\"like\" value=\"{0}\" /\u003e\u003ccondition attribute=\"telephone1\" operator=\"like\" value=\"{0}\" /\u003e\u003ccondition attribute=\"telephone2\" operator=\"like\" value=\"{0}\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"accountnumber\" width=\"100\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"emailaddress1\" width=\"200\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "a424ac61-bec9-48b0-a3e0-4bb903bd186e",
+        "name":  "Active Members",
+        "returnedtypecode":  "account",
+        "querytype":  32,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"a424ac61-bec9-48b0-a3e0-4bb903bd186e\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "d9c57fee-71ad-48e2-a17b-4ebbd01ec328",
+        "name":  "Inactive Members",
+        "returnedtypecode":  "account",
+        "querytype":  32,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"d9c57fee-71ad-48e2-a17b-4ebbd01ec328\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"1\" /\u003e\u003c/filter\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "d234426e-1f37-4944-9255-50e19b541c4c",
+        "name":  "My Connections",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\" savedqueryid=\"d234426e-1f37-4944-9255-50e19b541c4c\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003clink-entity alias=\"accountprimarycontactidcontactcontactid\" name=\"contact\" from=\"contactid\" to=\"primarycontactid\" link-type=\"outer\" visible=\"false\"\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003c/link-entity\u003e\u003clink-entity name=\"connection\" from=\"record2id\" to=\"accountid\" alias=\"MyConnections\"\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"record1id\" operator=\"eq-userid\" /\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/link-entity\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"accountprimarycontactidcontactcontactid.emailaddress1\" width=\"150\" disableSorting=\"1\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "f9e54d49-0c76-4cbd-979b-5fe94b496be0",
+        "name":  "Account De-dup lookup display",
+        "returnedtypecode":  "account",
+        "querytype":  2048,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"f9e54d49-0c76-4cbd-979b-5fe94b496be0\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003cattribute name=\"address1_stateorprovince\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"address1_city\" width=\"75\" /\u003e\u003ccell name=\"address1_stateorprovince\" width=\"25\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "f9e54d49-0c76-4cbd-979b-5fe94b496beb",
+        "name":  "Account multi-line lookup display",
+        "returnedtypecode":  "account",
+        "querytype":  2048,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"f9e54d49-0c76-4cbd-979b-5fe94b496beb\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"emailaddress1\" width=\"75\" /\u003e\u003ccell name=\"telephone1\" width=\"25\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "c147f1f7-1d78-4d10-85bf-7e03b79f74fa",
+        "name":  "Accounts: No Orders in Last 6 Months",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  null,
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "15c63745-0a6e-4322-8416-a62c84d90279",
+        "name":  "Accounts: Influenced Deals That We Won",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\" savedqueryid=\"15c63745-0a6e-4322-8416-a62c84d90279\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003clink-entity alias=\"accountprimarycontactidcontactcontactid\" name=\"contact\" from=\"contactid\" to=\"primarycontactid\" link-type=\"outer\" visible=\"false\"\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003c/link-entity\u003e\u003clink-entity name=\"connection\" from=\"record2id\" to=\"accountid\" alias=\"DealInfluencer\"\u003e\u003c/link-entity\u003e\u003cattribute name=\"accountid\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"accountprimarycontactidcontactcontactid.emailaddress1\" width=\"150\" disableSorting=\"1\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "cfbcd7af-aee5-4e45-8ecc-c040d4020581",
+        "name":  "Accounts: No Campaign Activities in Last 3 Months",
+        "returnedtypecode":  "account",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" savedqueryid=\"cfbcd7af-aee5-4e45-8ecc-c040d4020581\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"accountid\" /\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"lastusedincampaign\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003corder attribute=\"name\" descending=\"false\" /\u003e\u003cfilter type=\"or\"\u003e\u003ccondition attribute=\"lastusedincampaign\" operator=\"olderthan-x-months\" value=\"3\" /\u003e\u003ccondition attribute=\"lastusedincampaign\" operator=\"null\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"lastusedincampaign\" width=\"150\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "a9af0ab8-861d-4cfa-92a5-c6281fed7fab",
+        "name":  "Account Lookup View",
+        "returnedtypecode":  "account",
+        "querytype":  64,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"a9af0ab8-861d-4cfa-92a5-c6281fed7fab\"\u003e\u003centity name=\"account\"\u003e\u003cattribute name=\"name\" /\u003e\u003cattribute name=\"accountnumber\" /\u003e\u003cattribute name=\"primarycontactid\" /\u003e\u003cattribute name=\"address1_city\" /\u003e\u003cattribute name=\"telephone1\" /\u003e\u003cattribute name=\"emailaddress1\" /\u003e\u003cattribute name=\"accountid\" /\u003e\u003cattribute name=\"fax\" /\u003e\u003cattribute name=\"address1_name\" /\u003e\u003cattribute name=\"address1_fax\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"1\" jump=\"name\" select=\"1\" preview=\"0\" icon=\"1\"\u003e\u003crow name=\"result\" id=\"accountid\"\u003e\u003ccell name=\"name\" width=\"300\" /\u003e\u003ccell name=\"emailaddress1\" width=\"200\" /\u003e\u003ccell name=\"telephone1\" width=\"100\" /\u003e\u003ccell name=\"accountnumber\" width=\"100\" /\u003e\u003ccell name=\"primarycontactid\" width=\"150\" /\u003e\u003ccell name=\"address1_city\" width=\"100\" /\u003e\u003ccell name=\"fax\" ishidden=\"1\" width=\"100\" /\u003e\u003ccell name=\"address1_name\" ishidden=\"1\" width=\"100\" /\u003e\u003ccell name=\"address1_fax\" ishidden=\"1\" width=\"100\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    }
+]

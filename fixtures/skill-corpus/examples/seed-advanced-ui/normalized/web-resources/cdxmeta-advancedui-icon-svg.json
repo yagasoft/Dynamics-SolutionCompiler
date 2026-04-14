@@ -1,0 +1,21 @@
+{
+  "id": "{08054130-6037-f111-88b3-0022489b9600}",
+  "name": "cdxmeta_/advancedui/icon.svg",
+  "display_name": "Advanced UI Icon",
+  "description": "Neutral app shell icon for the Codex advanced UI scaffold.",
+  "type": "11",
+  "type_label": "Vector format (SVG)",
+  "language_code": "",
+  "file_name": "/WebResources/cdxmeta_advanceduiiconsvg08054130-6037-F111-88B3-0022489B9600",
+  "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked\\WebResources\\cdxmeta_\\advancedui\\icon.svg",
+  "summary": {
+    "type_label": "Vector format (SVG)",
+    "counts": {
+      "byte_count": 362,
+      "line_count": 5
+    },
+    "content_sha256": "f3a8c8498372e2081eb9367c3c999af8934be94fa5731dc29e33e42d0223960e",
+    "comparison_signature": "1322f3f026808e998656669cf8d6dc06c431f6bc66d6fe4718ac20237fb84276",
+    "signature": "6ac006a63211e59aeb23000b6f00e70ffddd8d1792ef47ac9506bc0c021d0c79"
+  }
+}

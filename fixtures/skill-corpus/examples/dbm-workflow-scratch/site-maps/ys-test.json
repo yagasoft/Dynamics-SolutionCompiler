@@ -1,0 +1,50 @@
+{
+  "unique_name": "ys_Test",
+  "display_name": "Test",
+  "enable_collapsible_groups": "False",
+  "show_home": "True",
+  "show_pinned": "True",
+  "show_recents": "True",
+  "sitemap_xml": "<SiteMap IntroducedVersion=\"7.0.0.0\">\n    <Area Id=\"area_9d903cf2\" ResourceId=\"SitemapDesigner.NewTitle\" DescriptionResourceId=\"SitemapDesigner.NewTitle\" ShowGroups=\"true\" IntroducedVersion=\"7.0.0.0\">\n      <Titles>\n        <Title LCID=\"1033\" Title=\"Area1\" />\n      </Titles>\n      <Group Id=\"group_6d8954ca\" ResourceId=\"SitemapDesigner.NewGroup\" DescriptionResourceId=\"SitemapDesigner.NewGroup\" IntroducedVersion=\"7.0.0.0\" IsProfile=\"false\" ToolTipResourseId=\"SitemapDesigner.Unknown\">\n        <SubArea Id=\"subarea_768727a5\" Icon=\"/_imgs/imagestrips/transparent_spacer.gif\" Entity=\"account\" Client=\"All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web\" AvailableOffline=\"true\" PassParams=\"false\" Sku=\"All,OnPremise,Live,SPLA\" />\n        <SubArea Id=\"subarea_a454745b\" Icon=\"/_imgs/imagestrips/transparent_spacer.gif\" Entity=\"contact\" Client=\"All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web\" AvailableOffline=\"true\" PassParams=\"false\" Sku=\"All,OnPremise,Live,SPLA\" />\n      </Group>\n    </Area>\n  </SiteMap>\n  ",
+  "summary": {
+    "counts": {
+      "area_count": 1,
+      "group_count": 1,
+      "subarea_count": 2,
+      "web_resource_subarea_count": 0,
+      "entity_subarea_count": 2
+    },
+    "areas": [
+      {
+        "id": "area_9d903cf2",
+        "title": "Area1",
+        "groups": [
+          {
+            "id": "group_6d8954ca",
+            "title": "",
+            "subareas": [
+              {
+                "id": "subarea_768727a5",
+                "title": "",
+                "url": "",
+                "entity": "account",
+                "icon": "/_imgs/imagestrips/transparent_spacer.gif",
+                "vector_icon": ""
+              },
+              {
+                "id": "subarea_a454745b",
+                "title": "",
+                "url": "",
+                "entity": "contact",
+                "icon": "/_imgs/imagestrips/transparent_spacer.gif",
+                "vector_icon": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "signature": "b6c55302a2441f142d9155378e2e954ced24135834716e4231cf049ffe7fec50",
+    "comparison_signature": "9abd8cad675b66c5aa9d9e9a3627e1df37b78307aec1645c236ff567d065c825"
+  }
+}

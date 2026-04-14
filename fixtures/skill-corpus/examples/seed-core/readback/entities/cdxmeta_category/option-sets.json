@@ -1,0 +1,42 @@
+﻿[
+    {
+        "attribute_schema_name":  "statecode",
+        "entity_logical_name":  "cdxmeta_category",
+        "option_set_name":  "cdxmeta_category_statecode",
+        "options":  [
+                        {
+                            "label":  "Active",
+                            "is_hidden":  false,
+                            "value":  "0"
+                        },
+                        {
+                            "label":  "Inactive",
+                            "is_hidden":  false,
+                            "value":  "1"
+                        }
+                    ],
+        "is_global":  null,
+        "attribute_logical_name":  "statecode",
+        "option_set_type":  "state"
+    },
+    {
+        "attribute_schema_name":  "statuscode",
+        "entity_logical_name":  "cdxmeta_category",
+        "option_set_name":  "cdxmeta_category_statuscode",
+        "options":  [
+                        {
+                            "label":  "Active",
+                            "is_hidden":  false,
+                            "value":  "1"
+                        },
+                        {
+                            "label":  "Inactive",
+                            "is_hidden":  false,
+                            "value":  "2"
+                        }
+                    ],
+        "is_global":  null,
+        "attribute_logical_name":  "statuscode",
+        "option_set_type":  "status"
+    }
+]

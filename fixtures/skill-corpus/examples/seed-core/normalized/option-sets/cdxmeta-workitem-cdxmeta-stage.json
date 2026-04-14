@@ -1,0 +1,36 @@
+{
+  "entity_logical_name": "cdxmeta_workitem",
+  "attribute_logical_name": "cdxmeta_stage",
+  "attribute_display_name": "Stage",
+  "option_set_name": "cdxmeta_workitem_cdxmeta_stage",
+  "option_set_type": "picklist",
+  "is_global": null,
+  "options": [
+    {
+      "value": "727270000",
+      "label": "Planned",
+      "is_hidden": "0",
+      "external_value": ""
+    },
+    {
+      "value": "727270001",
+      "label": "Active",
+      "is_hidden": "0",
+      "external_value": ""
+    },
+    {
+      "value": "727270002",
+      "label": "Done",
+      "is_hidden": "0",
+      "external_value": ""
+    }
+  ],
+  "comparison_key": "cdxmeta_workitem|cdxmeta_stage",
+  "summary": {
+    "counts": {
+      "option_count": 3
+    },
+    "comparison_signature": "470100dfad842a20818084b68e3d6d5d76843bb5811a2afa7515915fac7a0f8a",
+    "signature": "470100dfad842a20818084b68e3d6d5d76843bb5811a2afa7515915fac7a0f8a"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "{a0843e20-5d37-f111-88b3-0022489b9600}",
+  "name": "Codex Metadata Seed Field Security",
+  "description": "",
+  "permissions": [
+    {
+      "id": "",
+      "comparison_key": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+      "profile_name": "Codex Metadata Seed Field Security",
+      "profile_id": "{a0843e20-5d37-f111-88b3-0022489b9600}",
+      "entity_name": "cdxmeta_workitem",
+      "attribute_logical_name": "cdxmeta_details",
+      "can_create": "4",
+      "can_read": "4",
+      "can_read_unmasked": "0",
+      "can_update": "4",
+      "summary": {
+        "comparison_signature": "3040313837e2187110f672fa871e5cb1540b74ca810a3e8d6e7eb3d586790267",
+        "signature": "3040313837e2187110f672fa871e5cb1540b74ca810a3e8d6e7eb3d586790267"
+      }
+    }
+  ],
+  "summary": {
+    "comparison_signature": "22a8e86d5886b3079cb22902f8d3548a5deefca13439f84c7fbe4adfcbe3b558",
+    "signature": "22a8e86d5886b3079cb22902f8d3548a5deefca13439f84c7fbe4adfcbe3b558"
+  }
+}

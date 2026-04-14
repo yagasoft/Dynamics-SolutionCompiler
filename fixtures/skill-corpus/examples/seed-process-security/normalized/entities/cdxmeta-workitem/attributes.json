@@ -1,0 +1,8 @@
+[
+  {
+    "logical_name": "cdxmeta_details",
+    "display_name": "Details",
+    "type": "ntext",
+    "is_secured": true
+  }
+]

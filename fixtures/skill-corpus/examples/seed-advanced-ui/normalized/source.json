@@ -1,0 +1,373 @@
+{
+  "source_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked",
+  "resolved_root": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked",
+  "layout": "xml",
+  "solution": {
+    "unique_name": "CodexMetadataSeedAdvancedUI",
+    "friendly_name": "",
+    "version": "1.0.0.0",
+    "managed": "0",
+    "publisher": {
+      "unique_name": "CodexMetadata",
+      "prefix": "cdxmeta"
+    },
+    "source_files": {
+      "solution_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked\\Other\\Solution.xml",
+      "customizations_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked\\Other\\Customizations.xml"
+    }
+  },
+  "root_components": [
+    {
+      "type": "1",
+      "type_label": "Entity",
+      "family_label": "Schema and Metadata",
+      "id": "",
+      "schema_name": "account",
+      "behavior": "2",
+      "behavior_label": "Include As Shell Only"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "cdxmeta_/advancedui/icon.svg",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "61",
+      "type_label": "Web Resource",
+      "family_label": "Code and Extensibility",
+      "id": "",
+      "schema_name": "cdxmeta_/advancedui/landing.html",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "62",
+      "type_label": "Site Map",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "codex_metadata_advanced_ui_924e69cb",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    },
+    {
+      "type": "80",
+      "type_label": "App Module",
+      "family_label": "Model-Driven UI and App Shell",
+      "id": "",
+      "schema_name": "codex_metadata_advanced_ui_924e69cb",
+      "behavior": "0",
+      "behavior_label": "Include Subcomponents"
+    }
+  ],
+  "entities": {
+    "account": {
+      "logical_name": "account",
+      "schema_name": "Account",
+      "forms": [],
+      "views": [],
+      "saved_query_visualizations": [
+        {
+          "id": "{74A622C0-5193-DE11-97D4-00155DA3B01E}",
+          "name": "Accounts by Industry",
+          "description": "Shows the total number of accounts by industry.",
+          "primary_entity_type_code": "account",
+          "is_default": "0",
+          "introduced_version": "5.0.0.0",
+          "data_description": "<datadefinition>\n      <fetchcollection>\n        <fetch mapping=\"logical\" aggregate=\"true\">\n          <entity name=\"account\">\n            <attribute groupby=\"true\" alias=\"groupby_column\" name=\"industrycode\" />\n            <attribute alias=\"aggregate_column\" name=\"name\" aggregate=\"count\" />\n          </entity>\n        </fetch>\n      </fetchcollection>\n      <categorycollection>\n        <category>\n          <measurecollection>\n            <measure alias=\"aggregate_column\" />\n          </measurecollection>\n        </category>\n      </categorycollection>\n    </datadefinition>",
+          "presentation_description": "<Chart>\n      <Series>\n        <Series ChartType=\"Bar\" IsValueShownAsLabel=\"True\" Color=\"91, 151, 213\" BackSecondaryColor=\"112, 142, 50\" Font=\"{0}, 9.5px\" LabelForeColor=\"59, 59, 59\" CustomProperties=\"PointWidth=0.75, MaxPixelPointWidth=40\">\n          <SmartLabelStyle Enabled=\"True\" />\n        </Series>\n      </Series>\n      <ChartAreas>\n        <ChartArea BorderColor=\"White\" BorderDashStyle=\"Solid\">\n          <AxisY LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\">\n            <MajorGrid LineColor=\"239, 242, 246\" />\n            <LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" />\n          </AxisY>\n          <AxisX LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\">\n            <MajorGrid Enabled=\"False\" />\n            <MajorTickMark Enabled=\"False\" />\n            <LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" />\n          </AxisX>\n        </ChartArea>\n      </ChartAreas>\n      <Titles>\n        <Title Name=\"Chart Title\" DockingOffset=\"-3\" Font=\"{0}, 13px\" ForeColor=\"59, 59, 59\" Alignment=\"TopLeft\" />\n      </Titles>\n    </Chart>",
+          "comparison_key": "account|accounts by industry",
+          "summary": {
+            "counts": {
+              "fetch_count": 1,
+              "category_count": 1,
+              "series_count": 1
+            },
+            "entity_names": [
+              "account"
+            ],
+            "groupby_columns": [
+              "industrycode"
+            ],
+            "measure_aliases": [
+              "aggregate_column"
+            ],
+            "chart_types": [
+              "Bar"
+            ],
+            "title_names": [
+              "Chart Title"
+            ],
+            "comparison_signature": "54913098e748db469cdc277f9b889e8ef2b6bb3252912f59f3628eb6297c2aa0",
+            "signature": "99eebcdf2dd4a54b2e17c82acfc8833ac3b4b24b124955f3148a9f17d21d49ab"
+          }
+        }
+      ],
+      "attributes": [],
+      "option_sets": [],
+      "entity_keys": [],
+      "relationships": {
+        "one_to_many": [],
+        "many_to_one": [],
+        "many_to_many": []
+      },
+      "ribbon_diff_xml": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RibbonDiffXml xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <CustomActions />\r\n  <Templates>\r\n    <RibbonTemplates Id=\"Mscrm.Templates\"></RibbonTemplates>\r\n  </Templates>\r\n  <CommandDefinitions />\r\n  <RuleDefinitions>\r\n    <TabDisplayRules />\r\n    <DisplayRules />\r\n    <EnableRules />\r\n  </RuleDefinitions>\r\n  <LocLabels />\r\n</RibbonDiffXml>",
+      "ribbon_diff_summary": {
+        "counts": {
+          "custom_action_count": 0,
+          "command_definition_count": 0,
+          "display_rule_count": 0,
+          "enable_rule_count": 0,
+          "hide_custom_action_count": 0,
+          "button_count": 0,
+          "loc_label_count": 0,
+          "byte_length": 396
+        },
+        "custom_action_ids": [],
+        "command_definition_ids": [],
+        "button_ids": [],
+        "display_rule_ids": [],
+        "enable_rule_ids": [],
+        "hide_custom_action_ids": [],
+        "comparison_signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6",
+        "signature": "6573925ade97ef52bbb6466234d54079e842871f23693e37369dacfdc65600a6"
+      },
+      "shell_only": true
+    }
+  },
+  "global_option_sets": [],
+  "app_modules": [
+    {
+      "id": "",
+      "unique_name": "codex_metadata_advanced_ui_924e69cb",
+      "display_name": "Codex Metadata Advanced UI",
+      "description": "Neutral app-shell scaffold for advanced UI component synthesis.",
+      "web_resource_id": "953b9fac-1e5e-e611-80d6-00155ded156f",
+      "client_type": "4",
+      "form_factor": "1",
+      "navigation_type": "0",
+      "state_code": "0",
+      "status_code": "1",
+      "components": [
+        {
+          "type": "62",
+          "type_label": "Site Map",
+          "schema_name": "codex_metadata_advanced_ui_924e69cb"
+        }
+      ],
+      "role_ids": [
+        "{627090ff-40a3-4053-8790-584edc5be201}",
+        "{119f245c-3cc8-4b62-b31c-d1a046ced15d}"
+      ],
+      "app_settings": [
+        {
+          "setting_definition_unique_name": "AppChannel",
+          "value": "1"
+        }
+      ],
+      "summary": {
+        "counts": {
+          "component_count": 1,
+          "role_map_count": 2,
+          "app_setting_count": 1
+        },
+        "component_types": [
+          "62:Site Map"
+        ],
+        "comparison_signature": "7ef697c1c8c281c402aacdf3a7137650d079db509a7348bf5f51960124696f3e",
+        "signature": "33d996c49beb8a7ca52ab35c8f4a1b092d4df6a59f290b6d120ae6093bafa8e0"
+      }
+    }
+  ],
+  "site_maps": [
+    {
+      "unique_name": "codex_metadata_advanced_ui_924e69cb",
+      "display_name": "Codex Metadata Advanced UI",
+      "enable_collapsible_groups": "False",
+      "show_home": "True",
+      "show_pinned": "True",
+      "show_recents": "True",
+      "sitemap_xml": "<SiteMap>\n    <Area Id=\"cdxmeta_area\" ResourceId=\"Area_CodexMetadata\" ShowGroups=\"true\" Title=\"Codex Metadata Advanced UI\">\n      <Group Id=\"cdxmeta_group\" ResourceId=\"Group_CodexMetadata\" Title=\"Advanced UI Seed\">\n        <SubArea Id=\"cdxmeta_shell\" Title=\"Advanced UI Shell\" Url=\"$webresource:cdxmeta_/advancedui/landing.html\" Icon=\"/WebResources/cdxmeta_/advancedui/icon.svg\" AvailableOffline=\"false\" PassParams=\"false\" />\n      </Group>\n    </Area>\n  </SiteMap>\n  ",
+      "summary": {
+        "counts": {
+          "area_count": 1,
+          "group_count": 1,
+          "subarea_count": 1,
+          "web_resource_subarea_count": 1,
+          "entity_subarea_count": 0
+        },
+        "areas": [
+          {
+            "id": "cdxmeta_area",
+            "title": "",
+            "groups": [
+              {
+                "id": "cdxmeta_group",
+                "title": "",
+                "subareas": [
+                  {
+                    "id": "cdxmeta_shell",
+                    "title": "Advanced UI Shell",
+                    "url": "$webresource:cdxmeta_/advancedui/landing.html",
+                    "entity": "",
+                    "icon": "/WebResources/cdxmeta_/advancedui/icon.svg",
+                    "vector_icon": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "signature": "408575967d1201de2789246b27cf0909a06475a3e4ce2c23294ddbcbf7507423",
+        "comparison_signature": "1d48038496a5fdfde35eee6d1ce5978b4619df6b5df6aab19df59f8cf766a62a"
+      }
+    }
+  ],
+  "saved_query_visualizations": [
+    {
+      "id": "{74A622C0-5193-DE11-97D4-00155DA3B01E}",
+      "name": "Accounts by Industry",
+      "description": "Shows the total number of accounts by industry.",
+      "primary_entity_type_code": "account",
+      "is_default": "0",
+      "introduced_version": "5.0.0.0",
+      "data_description": "<datadefinition>\n      <fetchcollection>\n        <fetch mapping=\"logical\" aggregate=\"true\">\n          <entity name=\"account\">\n            <attribute groupby=\"true\" alias=\"groupby_column\" name=\"industrycode\" />\n            <attribute alias=\"aggregate_column\" name=\"name\" aggregate=\"count\" />\n          </entity>\n        </fetch>\n      </fetchcollection>\n      <categorycollection>\n        <category>\n          <measurecollection>\n            <measure alias=\"aggregate_column\" />\n          </measurecollection>\n        </category>\n      </categorycollection>\n    </datadefinition>",
+      "presentation_description": "<Chart>\n      <Series>\n        <Series ChartType=\"Bar\" IsValueShownAsLabel=\"True\" Color=\"91, 151, 213\" BackSecondaryColor=\"112, 142, 50\" Font=\"{0}, 9.5px\" LabelForeColor=\"59, 59, 59\" CustomProperties=\"PointWidth=0.75, MaxPixelPointWidth=40\">\n          <SmartLabelStyle Enabled=\"True\" />\n        </Series>\n      </Series>\n      <ChartAreas>\n        <ChartArea BorderColor=\"White\" BorderDashStyle=\"Solid\">\n          <AxisY LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\">\n            <MajorGrid LineColor=\"239, 242, 246\" />\n            <LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" />\n          </AxisY>\n          <AxisX LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\">\n            <MajorGrid Enabled=\"False\" />\n            <MajorTickMark Enabled=\"False\" />\n            <LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" />\n          </AxisX>\n        </ChartArea>\n      </ChartAreas>\n      <Titles>\n        <Title Name=\"Chart Title\" DockingOffset=\"-3\" Font=\"{0}, 13px\" ForeColor=\"59, 59, 59\" Alignment=\"TopLeft\" />\n      </Titles>\n    </Chart>",
+      "comparison_key": "account|accounts by industry",
+      "summary": {
+        "counts": {
+          "fetch_count": 1,
+          "category_count": 1,
+          "series_count": 1
+        },
+        "entity_names": [
+          "account"
+        ],
+        "groupby_columns": [
+          "industrycode"
+        ],
+        "measure_aliases": [
+          "aggregate_column"
+        ],
+        "chart_types": [
+          "Bar"
+        ],
+        "title_names": [
+          "Chart Title"
+        ],
+        "comparison_signature": "54913098e748db469cdc277f9b889e8ef2b6bb3252912f59f3628eb6297c2aa0",
+        "signature": "99eebcdf2dd4a54b2e17c82acfc8833ac3b4b24b124955f3148a9f17d21d49ab"
+      }
+    }
+  ],
+  "complex_controls": [],
+  "web_resources": [
+    {
+      "id": "{08054130-6037-f111-88b3-0022489b9600}",
+      "name": "cdxmeta_/advancedui/icon.svg",
+      "display_name": "Advanced UI Icon",
+      "description": "Neutral app shell icon for the Codex advanced UI scaffold.",
+      "type": "11",
+      "type_label": "Vector format (SVG)",
+      "language_code": "",
+      "file_name": "/WebResources/cdxmeta_advanceduiiconsvg08054130-6037-F111-88B3-0022489B9600",
+      "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked\\WebResources\\cdxmeta_\\advancedui\\icon.svg",
+      "summary": {
+        "type_label": "Vector format (SVG)",
+        "counts": {
+          "byte_count": 362,
+          "line_count": 5
+        },
+        "content_sha256": "f3a8c8498372e2081eb9367c3c999af8934be94fa5731dc29e33e42d0223960e",
+        "comparison_signature": "1322f3f026808e998656669cf8d6dc06c431f6bc66d6fe4718ac20237fb84276",
+        "signature": "6ac006a63211e59aeb23000b6f00e70ffddd8d1792ef47ac9506bc0c021d0c79"
+      }
+    },
+    {
+      "id": "{7f5c0f2a-6037-f111-88b3-0022489b9600}",
+      "name": "cdxmeta_/advancedui/landing.html",
+      "display_name": "Advanced UI Landing",
+      "description": "Neutral landing page for the Codex advanced UI scaffold.",
+      "type": "1",
+      "type_label": "Webpage (HTML)",
+      "language_code": "",
+      "file_name": "/WebResources/cdxmeta_advanceduilandinghtml7F5C0F2A-6037-F111-88B3-0022489B9600",
+      "content_path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-advanced-ui\\unpacked\\WebResources\\cdxmeta_\\advancedui\\landing.html",
+      "summary": {
+        "type_label": "Webpage (HTML)",
+        "counts": {
+          "byte_count": 1389,
+          "line_count": 30
+        },
+        "content_sha256": "769c1328ba2445211a1e99b9eca7a19657fcb0c093a32c4e05d378b56f7e7007",
+        "comparison_signature": "974edda02fb929ca2bcd867002cf66c3751b4cb8a5db1c7341a695f36bbe73f4",
+        "signature": "3283370bfff5f9e7e0c724c2ea54fc520ccf525a26cf12bd09f7806c5446503d"
+      }
+    }
+  ],
+  "custom_controls": [],
+  "custom_control_default_configs": [],
+  "environment_variable_definitions": [
+    {
+      "schema_name": "cdxmeta_AdvancedUiMode",
+      "display_name": "Advanced UI Scaffold Mode",
+      "description": "",
+      "default_value": "scaffold",
+      "type": "100000000",
+      "type_label": "String",
+      "secret_store": "0",
+      "secret_store_label": "Azure Key Vault",
+      "is_required": "0",
+      "introduced_version": "1.0.0.0",
+      "values": [
+        {
+          "value": "seed",
+          "is_customizable": "1"
+        }
+      ],
+      "summary": {
+        "counts": {
+          "value_count": 1
+        },
+        "type_label": "String",
+        "secret_store_label": "Azure Key Vault",
+        "comparison_signature": "ba6d561f4abb138853b5a11df9dec8bc812e28303ebae2dd69a38160b9c8798f",
+        "value_comparison_signature": "80b010dc26f2568c9375a299e3707eb7c45d046a13985fa1fac0c722caab0cc4",
+        "signature": "bf9d9dc249fabe15e0296e501ff28db1fb5438df5eb35225f8ac264132623770"
+      }
+    }
+  ],
+  "environment_variable_values": [
+    {
+      "schema_name": "cdxmeta_AdvancedUiMode",
+      "value": "seed",
+      "summary": {
+        "comparison_signature": "bfa8b5972f9cc879ee95645c24ac520c6881cbb5274c7ac8d8c9f469a0fb87d2"
+      }
+    }
+  ],
+  "plugin_assemblies": [],
+  "plugin_steps": [],
+  "plugin_step_images": [],
+  "workflows": [],
+  "duplicate_rules": [],
+  "duplicate_rule_conditions": [],
+  "routing_rules": [],
+  "routing_rule_items": [],
+  "slas": [],
+  "sla_items": [],
+  "similarity_rules": [],
+  "mobile_offline_profiles": [],
+  "mobile_offline_profile_items": [],
+  "roles": [],
+  "role_privileges": [],
+  "privilege_object_type_codes": [],
+  "field_security_profiles": [],
+  "field_permissions": [],
+  "connection_roles": [],
+  "warnings": [],
+  "signature": "fb85bc07a2b19bb9e988e0c01f3d0e66790f5f380b4bbba3554f713ae9c1a6c7"
+}

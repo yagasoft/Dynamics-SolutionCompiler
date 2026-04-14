@@ -1,0 +1,188 @@
+{
+  "source_path": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins",
+  "counts": {
+    "files_scanned": 8,
+    "matching_file_count": 2,
+    "step_registration_count": 1,
+    "step_image_registration_count": 1
+  },
+  "keyword_counts": {
+    "sdkmessage": 31,
+    "sdkmessagefilter": 6,
+    "sdkmessageprocessingstep": 9,
+    "sdkmessageprocessingstepimage": 2,
+    "serviceendpoint": 1,
+    "connector": 3,
+    "plugintype": 8,
+    "pluginassembly": 1
+  },
+  "matching_files": [
+    "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+    "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+  ],
+  "mention_files": {
+    "sdkmessage": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ],
+    "sdkmessagefilter": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ],
+    "sdkmessageprocessingstep": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ],
+    "sdkmessageprocessingstepimage": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ],
+    "serviceendpoint": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ],
+    "connector": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ],
+    "plugintype": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ],
+    "pluginassembly": [
+      "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\CrmSchema-Config.json"
+    ]
+  },
+  "step_registrations": [
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9557,
+      "logical_name": "sdkmessageprocessingstep",
+      "assignments": {
+        "name": "stepName",
+        "rank": "999",
+        "stage": "new OptionSetValue((int)pluginConfig.Stage)",
+        "supporteddeployment": "new OptionSetValue(0)",
+        "sdkmessageid": "new EntityReference(\"sdkmessage\", message.MessageId)",
+        "sdkmessagefilterid": "new EntityReference(\"sdkmessagefilter\", message.FilteredId)",
+        "eventhandler": "new EntityReference(\"plugintype\", message.PluginTypeId)"
+      }
+    }
+  ],
+  "step_image_registrations": [
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9623,
+      "logical_name": "sdkmessageprocessingstepimage",
+      "assignments": {
+        "name": "\"image\"",
+        "entityalias": "\"image\"",
+        "imagetype": "new OptionSetValue(imageType)",
+        "messagepropertyname": "pluginConfig.Message == \"Create\" ? \"Id\" : \"Target\"",
+        "sdkmessageprocessingstepid": "new EntityReference(\"sdkmessageprocessingstep\", stepId)"
+      }
+    }
+  ],
+  "query_patterns": [
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9683,
+      "kind": "queryexpression",
+      "entity": "sdkmessageprocessingstep"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9551,
+      "kind": "fetch-clue",
+      "entity": "service.Delete(\"sdkmessageprocessingstep\", step.Id);"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9557,
+      "kind": "fetch-clue",
+      "entity": "?? new Entity(\"sdkmessageprocessingstep\")"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9563,
+      "kind": "fetch-clue",
+      "entity": "[\"sdkmessageid\"] = new EntityReference(\"sdkmessage\", message.MessageId),"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9564,
+      "kind": "fetch-clue",
+      "entity": "[\"sdkmessagefilterid\"] = new EntityReference(\"sdkmessagefilter\", message.FilteredId),"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9623,
+      "kind": "fetch-clue",
+      "entity": "new Entity(\"sdkmessageprocessingstepimage\")"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9629,
+      "kind": "fetch-clue",
+      "entity": "[\"sdkmessageprocessingstepid\"] = new EntityReference(\"sdkmessageprocessingstep\", stepId)"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9634,
+      "kind": "fetch-clue",
+      "entity": "private static SdkMessageInfo GetMessage(IOrganizationService service, string entityName, string messageName,"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9643,
+      "kind": "fetch-clue",
+      "entity": "\"  <entity name='sdkmessage' >\" +"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9645,
+      "kind": "fetch-clue",
+      "entity": "\"    <attribute name='sdkmessageid' />\" +"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9649,
+      "kind": "fetch-clue",
+      "entity": "\"    <link-entity name='sdkmessagefilter' from='sdkmessageid' to='sdkmessageid' alias='messagefilter' >\" +"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9650,
+      "kind": "fetch-clue",
+      "entity": "\"      <attribute name='sdkmessagefilterid' />\" +"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9661,
+      "kind": "fetch-clue",
+      "entity": "new SdkMessageInfo"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9663,
+      "kind": "fetch-clue",
+      "entity": "MessageId = e.GetAttributeValue<Guid>(\"sdkmessageid\"),"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9666,
+      "kind": "fetch-clue",
+      "entity": "(e.GetAttributeValue<AliasedValue>(\"messagefilter.sdkmessagefilterid\")?.Value ?? Guid.Empty)"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9683,
+      "kind": "fetch-clue",
+      "entity": "new QueryExpression(\"sdkmessageprocessingstep\")"
+    },
+    {
+      "file": "C:\\Git\\Dynamics-BusinessMachine\\DbmSolution\\Plugins\\Common.cs",
+      "line": 9713,
+      "kind": "fetch-clue",
+      "entity": "public class SdkMessageInfo"
+    }
+  ]
+}

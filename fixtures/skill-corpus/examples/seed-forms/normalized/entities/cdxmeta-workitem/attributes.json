@@ -1,0 +1,158 @@
+[
+  {
+    "logical_name": "cdxmeta_categoryid",
+    "display_name": "Category",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_details",
+    "display_name": "Details",
+    "type": "ntext",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_duedate",
+    "display_name": "Due Date",
+    "type": "datetime",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_efforthours",
+    "display_name": "Effort Hours",
+    "type": "decimal",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_isblocked",
+    "display_name": "Blocked",
+    "type": "bit",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_priority",
+    "display_name": "Priority",
+    "type": "int",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_stage",
+    "display_name": "Stage",
+    "type": "picklist",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_summary",
+    "display_name": "Summary",
+    "type": "nvarchar",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_workitemid",
+    "display_name": "Work Item",
+    "type": "primarykey",
+    "is_secured": false
+  },
+  {
+    "logical_name": "cdxmeta_workitemname",
+    "display_name": "Work Item Name",
+    "type": "nvarchar",
+    "is_secured": false
+  },
+  {
+    "logical_name": "createdby",
+    "display_name": "Created By",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "createdon",
+    "display_name": "Created On",
+    "type": "datetime",
+    "is_secured": false
+  },
+  {
+    "logical_name": "createdonbehalfby",
+    "display_name": "Created By (Delegate)",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "importsequencenumber",
+    "display_name": "Import Sequence Number",
+    "type": "int",
+    "is_secured": false
+  },
+  {
+    "logical_name": "modifiedby",
+    "display_name": "Modified By",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "modifiedon",
+    "display_name": "Modified On",
+    "type": "datetime",
+    "is_secured": false
+  },
+  {
+    "logical_name": "modifiedonbehalfby",
+    "display_name": "Modified By (Delegate)",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "overriddencreatedon",
+    "display_name": "Record Created On",
+    "type": "datetime",
+    "is_secured": false
+  },
+  {
+    "logical_name": "ownerid",
+    "display_name": "Owner",
+    "type": "owner",
+    "is_secured": false
+  },
+  {
+    "logical_name": "owningbusinessunit",
+    "display_name": "Owning Business Unit",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "owningteam",
+    "display_name": "Owning Team",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "owninguser",
+    "display_name": "Owning User",
+    "type": "lookup",
+    "is_secured": false
+  },
+  {
+    "logical_name": "statecode",
+    "display_name": "Status",
+    "type": "state",
+    "is_secured": false
+  },
+  {
+    "logical_name": "statuscode",
+    "display_name": "Status Reason",
+    "type": "status",
+    "is_secured": false
+  },
+  {
+    "logical_name": "timezoneruleversionnumber",
+    "display_name": "Time Zone Rule Version Number",
+    "type": "int",
+    "is_secured": false
+  },
+  {
+    "logical_name": "utcconversiontimezonecode",
+    "display_name": "UTC Conversion Time Zone Code",
+    "type": "int",
+    "is_secured": false
+  }
+]

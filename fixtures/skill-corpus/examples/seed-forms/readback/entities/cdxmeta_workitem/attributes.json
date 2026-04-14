@@ -1,0 +1,354 @@
+﻿[
+    {
+        "LogicalName":  "cdxmeta_categoryid",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_CategoryId",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_categoryidname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_CategoryIdName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_details",
+        "DisplayName":  null,
+        "AttributeType":  "Memo",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_Details",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_duedate",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_DueDate",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_efforthours",
+        "DisplayName":  null,
+        "AttributeType":  "Decimal",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_EffortHours",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_isblocked",
+        "DisplayName":  null,
+        "AttributeType":  "Boolean",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_IsBlocked",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_isblockedname",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_isblockedName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_priority",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_Priority",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_stage",
+        "DisplayName":  null,
+        "AttributeType":  "Picklist",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_Stage",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_stagename",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_stageName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_summary",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_Summary",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_workitemid",
+        "DisplayName":  null,
+        "AttributeType":  "Uniqueidentifier",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_WorkItemId",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_workitemname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_WorkItemName",
+        "IsPrimaryName":  true
+    },
+    {
+        "LogicalName":  "createdby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdon",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOn",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdonbehalfby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOnBehalfBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdonbehalfbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOnBehalfByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdonbehalfbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOnBehalfByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "importsequencenumber",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ImportSequenceNumber",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedon",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOn",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedonbehalfby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOnBehalfBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedonbehalfbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOnBehalfByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedonbehalfbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOnBehalfByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "overriddencreatedon",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OverriddenCreatedOn",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "ownerid",
+        "DisplayName":  null,
+        "AttributeType":  "Owner",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerId",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owneridname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerIdName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owneridtype",
+        "DisplayName":  null,
+        "AttributeType":  "EntityName",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerIdType",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owneridyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerIdYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owningbusinessunit",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningBusinessUnit",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owningbusinessunitname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningBusinessUnitName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owningteam",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningTeam",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owninguser",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningUser",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "statecode",
+        "DisplayName":  null,
+        "AttributeType":  "State",
+        "AttributeTypeName":  null,
+        "SchemaName":  "statecode",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "statecodename",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "AttributeTypeName":  null,
+        "SchemaName":  "statecodeName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "statuscode",
+        "DisplayName":  null,
+        "AttributeType":  "Status",
+        "AttributeTypeName":  null,
+        "SchemaName":  "statuscode",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "statuscodename",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "AttributeTypeName":  null,
+        "SchemaName":  "statuscodeName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "timezoneruleversionnumber",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "AttributeTypeName":  null,
+        "SchemaName":  "TimeZoneRuleVersionNumber",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "utcconversiontimezonecode",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "AttributeTypeName":  null,
+        "SchemaName":  "UTCConversionTimeZoneCode",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "versionnumber",
+        "DisplayName":  null,
+        "AttributeType":  "BigInt",
+        "AttributeTypeName":  null,
+        "SchemaName":  "VersionNumber",
+        "IsPrimaryName":  false
+    }
+]

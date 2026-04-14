@@ -1,0 +1,3785 @@
+{
+  "source": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+  "forms": [
+    {
+      "counts": {
+        "tab_count": 1,
+        "section_count": 1,
+        "control_count": 2,
+        "quickform_count": 0,
+        "subgrid_count": 0,
+        "webresource_count": 0,
+        "header_control_count": 0,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "hierarchy",
+          "label": "Hierarchy",
+          "section_count": 1,
+          "sections": [
+            {
+              "name": "account tile",
+              "label": "Information",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "",
+                  "classid": "{270bd3db-d9af-4782-9025-509e298dec0a}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "lookup",
+                  "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "ownerid",
+                  "uniqueid": "",
+                  "classid": "{270bd3db-d9af-4782-9025-509e298dec0a}",
+                  "datafieldname": "ownerid",
+                  "kind": "lookup",
+                  "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                  "label": "Owner"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "5ff7f19fffa1173f41f685df843516bb9ffb0eb1238aad3ca1277f2f0804b930",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Account Hierarchy Tile Form",
+        "form_type": 6
+      },
+      "xml_control_index": {
+        "primarycontactid": {
+          "id": "primarycontactid",
+          "datafieldname": "primarycontactid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "ownerid": {
+          "id": "ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": []
+    },
+    {
+      "counts": {
+        "tab_count": 1,
+        "section_count": 1,
+        "control_count": 1,
+        "quickform_count": 0,
+        "subgrid_count": 1,
+        "webresource_count": 0,
+        "header_control_count": 0,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "general",
+          "label": "",
+          "section_count": 1,
+          "sections": [
+            {
+              "name": "SOCIALPROFILES",
+              "label": "RELATED SOCIAL PROFILES",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "subgrid_spaccount",
+                  "uniqueid": "",
+                  "classid": "{E7A81278-8635-4d9e-8D4D-59480B391C5B}",
+                  "datafieldname": "",
+                  "kind": "subgrid",
+                  "view_id": "{7394679c-9224-4e61-b14c-219aaa7dd941}",
+                  "relationship_name": "Socialprofile_customer_accounts",
+                  "target_entity_type": "socialprofile",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "542f250235b098f40a32a90aa45cc38ec2b3802b96ffcee80986fc15ab90bea4",
+                  "label": "Social Profiles"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "15300892aeb49572e6c7f4caa68cc4f5dfb572e2c7be2815b20300661919faaa",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Social Profiles",
+        "form_type": 6
+      },
+      "xml_control_index": {
+        "subgrid_spaccount": {
+          "id": "subgrid_spaccount",
+          "datafieldname": null,
+          "classid": "e7a81278-8635-4d9e-8d4d-59480b391c5b",
+          "parameters": [
+            "ViewId={7394679c-9224-4e61-b14c-219aaa7dd941}",
+            "IsUserView=false",
+            "RelationshipName=Socialprofile_customer_accounts",
+            "TargetEntityType=socialprofile",
+            "AutoExpand=Auto",
+            "EnableQuickFind=false",
+            "EnableViewPicker=false",
+            "EnableJumpBar=false",
+            "ChartGridMode=Grid",
+            "VisualizationId",
+            "IsUserChart=false",
+            "EnableChartPicker=false",
+            "RecordsPerPage=3",
+            "EnableContextualActions=false"
+          ]
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `subgrid_spaccount` (subgrid; class `e7a81278-8635-4d9e-8d4d-59480b391c5b`; parameters `ViewId={7394679c-9224-4e61-b14c-219aaa7dd941}; IsUserView=false; RelationshipName=Socialprofile_customer_accounts; TargetEntityType=socialprofile; AutoExpand=Auto; EnableQuickFind=false; EnableViewPicker=false; EnableJumpBar=false; ChartGridMode=Grid; VisualizationId; IsUserChart=false; EnableChartPicker=false; RecordsPerPage=3; EnableContextualActions=false`; path `general / RELATED SOCIAL PROFILES`)"
+      ]
+    },
+    {
+      "counts": {
+        "tab_count": 1,
+        "section_count": 4,
+        "control_count": 6,
+        "quickform_count": 0,
+        "subgrid_count": 0,
+        "webresource_count": 0,
+        "header_control_count": 0,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "",
+          "label": "Account Card",
+          "section_count": 4,
+          "sections": [
+            {
+              "name": "ColorStrip",
+              "label": "ColorStrip",
+              "control_count": 0,
+              "controls": []
+            },
+            {
+              "name": "CardHeader",
+              "label": "Header",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "lookup",
+                  "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "ownerid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "ownerid",
+                  "kind": "lookup",
+                  "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                  "label": "Owner"
+                }
+              ]
+            },
+            {
+              "name": "CardDetails",
+              "label": "Details",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "name",
+                  "kind": "single-line-text",
+                  "signature": "d7114ea0c67e421e98af9078e306f7b808c62da667e0cbb06b749190edc05dbd",
+                  "label": "Account Name"
+                },
+                {
+                  "id": "address1_city",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_city",
+                  "kind": "single-line-text",
+                  "signature": "c3dbc6b656efbd83c5c99c99250ae16db67d8d40252ea67fe7c1f52fca7d4f74",
+                  "label": "Address 1: City"
+                }
+              ]
+            },
+            {
+              "name": "CardFooter",
+              "label": "Footer",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone1",
+                  "kind": "single-line-text",
+                  "signature": "b31656cebd4959f9c0c4e688ba4293bc9b10e5757e9a22eb7d75e11f179465a3",
+                  "label": "Main Phone"
+                },
+                {
+                  "id": "emailaddress1",
+                  "uniqueid": "",
+                  "classid": "{ADA2203E-B4CD-49be-9DDF-234642B43B52}",
+                  "datafieldname": "emailaddress1",
+                  "kind": "field",
+                  "signature": "22983747bccce7795a5cc30e100533cbc70edbef5d0d2c197a640984a068451c",
+                  "label": "Email"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "b43ac2769aab5027ce19e576b04740d80c250762a12ecc51d757ae4c5f17b93d",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Account Card form",
+        "form_type": 11
+      },
+      "xml_control_index": {
+        "primarycontactid": {
+          "id": "primarycontactid",
+          "datafieldname": "primarycontactid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "ownerid": {
+          "id": "ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "name": {
+          "id": "name",
+          "datafieldname": "name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_city": {
+          "id": "address1_city",
+          "datafieldname": "address1_city",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "telephone1": {
+          "id": "telephone1",
+          "datafieldname": "telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "emailaddress1": {
+          "id": "emailaddress1",
+          "datafieldname": "emailaddress1",
+          "classid": "ada2203e-b4cd-49be-9ddf-234642b43b52",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `emailaddress1` (field; class `ada2203e-b4cd-49be-9ddf-234642b43b52`; path `Account Card / Footer`)"
+      ]
+    },
+    {
+      "counts": {
+        "tab_count": 1,
+        "section_count": 2,
+        "control_count": 11,
+        "quickform_count": 0,
+        "subgrid_count": 0,
+        "webresource_count": 0,
+        "header_control_count": 0,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "tab_1",
+          "label": "",
+          "section_count": 2,
+          "sections": [
+            {
+              "name": "tab_1_column_1_section_1",
+              "label": "ACCOUNT DETAILS",
+              "control_count": 8,
+              "controls": [
+                {
+                  "id": "name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "name",
+                  "kind": "single-line-text",
+                  "signature": "d7114ea0c67e421e98af9078e306f7b808c62da667e0cbb06b749190edc05dbd",
+                  "label": "Account Name"
+                },
+                {
+                  "id": "revenue",
+                  "uniqueid": "",
+                  "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+                  "datafieldname": "revenue",
+                  "kind": "field",
+                  "signature": "51e67ed21d4ec315e7072e81bf54f936e57a23173a582a8b93d49e1715b8a50f",
+                  "label": "Annual Revenue"
+                },
+                {
+                  "id": "numberofemployees",
+                  "uniqueid": "",
+                  "classid": "{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}",
+                  "datafieldname": "numberofemployees",
+                  "kind": "number",
+                  "signature": "7e461da361e4cd1159a609b952072e3a2ac476dff012d7a4ca622b8e884a2624",
+                  "label": "Number of Employees"
+                },
+                {
+                  "id": "address1_line1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_line1",
+                  "kind": "single-line-text",
+                  "signature": "a91f38a61db75fc462b5bcd070c133fc68e2d513f3bd9c26080587ce660ebf29",
+                  "label": "Address 1: Street 1"
+                },
+                {
+                  "id": "address1_line2",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_line2",
+                  "kind": "single-line-text",
+                  "signature": "8afe51d926ca62d4f445fd2a32a8cae3ac7ab41f8952e3366faf2b4bcee84556",
+                  "label": "Address 1: Street 2"
+                },
+                {
+                  "id": "address1_city",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_city",
+                  "kind": "single-line-text",
+                  "signature": "c3dbc6b656efbd83c5c99c99250ae16db67d8d40252ea67fe7c1f52fca7d4f74",
+                  "label": "Address 1: City"
+                },
+                {
+                  "id": "address1_postalcode",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_postalcode",
+                  "kind": "single-line-text",
+                  "signature": "fe904d8cd5f50e0fcab877e00272bc6d295a2a9681341c6b5571f4cc1f63f962",
+                  "label": "Address 1: ZIP/Postal Code"
+                },
+                {
+                  "id": "ownerid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "ownerid",
+                  "kind": "lookup",
+                  "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                  "label": "Owner"
+                }
+              ]
+            },
+            {
+              "name": "tab_1_section_2",
+              "label": "OTHER DETAILS",
+              "control_count": 3,
+              "controls": [
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "lookup",
+                  "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "emailaddress1",
+                  "uniqueid": "",
+                  "classid": "{ADA2203E-B4CD-49be-9DDF-234642B43B52}",
+                  "datafieldname": "emailaddress1",
+                  "kind": "field",
+                  "signature": "22983747bccce7795a5cc30e100533cbc70edbef5d0d2c197a640984a068451c",
+                  "label": "Email"
+                },
+                {
+                  "id": "telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone1",
+                  "kind": "single-line-text",
+                  "signature": "b31656cebd4959f9c0c4e688ba4293bc9b10e5757e9a22eb7d75e11f179465a3",
+                  "label": "Main Phone"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "1020bb59ad31f6b1538e87d17251e872a315acc4dc38e1251192f24b9cb84d94",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Account Reference Panel",
+        "form_type": 6
+      },
+      "xml_control_index": {
+        "name": {
+          "id": "name",
+          "datafieldname": "name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "revenue": {
+          "id": "revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "numberofemployees": {
+          "id": "numberofemployees",
+          "datafieldname": "numberofemployees",
+          "classid": "c6d124ca-7eda-4a60-aea9-7fb8d318b68f",
+          "parameters": []
+        },
+        "address1_line1": {
+          "id": "address1_line1",
+          "datafieldname": "address1_line1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_line2": {
+          "id": "address1_line2",
+          "datafieldname": "address1_line2",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_city": {
+          "id": "address1_city",
+          "datafieldname": "address1_city",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_postalcode": {
+          "id": "address1_postalcode",
+          "datafieldname": "address1_postalcode",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "ownerid": {
+          "id": "ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "primarycontactid": {
+          "id": "primarycontactid",
+          "datafieldname": "primarycontactid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "emailaddress1": {
+          "id": "emailaddress1",
+          "datafieldname": "emailaddress1",
+          "classid": "ada2203e-b4cd-49be-9ddf-234642b43b52",
+          "parameters": []
+        },
+        "telephone1": {
+          "id": "telephone1",
+          "datafieldname": "telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `revenue` (field; class `533b9e00-756b-4312-95a0-dc888637ac78`; path `tab_1 / ACCOUNT DETAILS`)",
+        "- `emailaddress1` (field; class `ada2203e-b4cd-49be-9ddf-234642b43b52`; path `tab_1 / OTHER DETAILS`)"
+      ]
+    },
+    {
+      "counts": {
+        "tab_count": 2,
+        "section_count": 8,
+        "control_count": 27,
+        "quickform_count": 1,
+        "subgrid_count": 1,
+        "webresource_count": 0,
+        "header_control_count": 3,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "SUMMARY_TAB",
+          "label": "Summary",
+          "section_count": 3,
+          "sections": [
+            {
+              "name": "ACCOUNT_INFORMATION",
+              "label": "ACCOUNT INFORMATION",
+              "control_count": 8,
+              "controls": [
+                {
+                  "id": "contactquickform",
+                  "uniqueid": "",
+                  "classid": "{5C5600E0-1D6E-4205-A272-BE80DA87FD42}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "quickform",
+                  "view_id": "",
+                  "relationship_name": "",
+                  "target_entity_type": "",
+                  "quick_forms": [
+                    "contact:29de27bc-a257-4f29-99cf-bab4a84e688f"
+                  ],
+                  "url": "",
+                  "signature": "08ccd68777e4d77bc476c89b9dbb69b383a8d378fb892631bf61a7d20f5882be",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "name",
+                  "kind": "single-line-text",
+                  "signature": "d7114ea0c67e421e98af9078e306f7b808c62da667e0cbb06b749190edc05dbd",
+                  "label": "Account Name"
+                },
+                {
+                  "id": "telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone1",
+                  "kind": "single-line-text",
+                  "signature": "b31656cebd4959f9c0c4e688ba4293bc9b10e5757e9a22eb7d75e11f179465a3",
+                  "label": "Phone"
+                },
+                {
+                  "id": "fax",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "fax",
+                  "kind": "single-line-text",
+                  "signature": "717adc543d86f0f6c56bcb13f2723aa9ac71e9b9d9fc6df77c23f96dcbcac1e1",
+                  "label": "Fax"
+                },
+                {
+                  "id": "websiteurl",
+                  "uniqueid": "",
+                  "classid": "{71716B6C-711E-476c-8AB8-5D11542BFB47}",
+                  "datafieldname": "websiteurl",
+                  "kind": "field",
+                  "signature": "1f2e9287a2a6d6d70318165c88e1caaf6e1de10dc2e787b459d0ec0fc37a0551",
+                  "label": "Website"
+                },
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "lookup",
+                  "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "parentaccountid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "parentaccountid",
+                  "kind": "lookup",
+                  "signature": "7f068012a1e08e32db94ac5293d01bdcb8a2125bf310a1e4c546dd9110c3e41d",
+                  "label": "Parent Account"
+                },
+                {
+                  "id": "address1_composite",
+                  "uniqueid": "",
+                  "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                  "datafieldname": "address1_composite",
+                  "kind": "multiline-text",
+                  "signature": "6411fbfa2c73c871c18b37097eebce160d8a38f09dc6edb5103b776a880d6665",
+                  "label": "Address 1"
+                }
+              ]
+            },
+            {
+              "name": "Timeline",
+              "label": "TIMELINE",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "notescontrol",
+                  "uniqueid": "",
+                  "classid": "{06375649-c143-495e-a496-c962e5b4488e}",
+                  "datafieldname": "",
+                  "kind": "field",
+                  "signature": "e2c4cdf5122fdd7be43760bc0cd5845d30433fdf51574c4bc28513f3ac234c82",
+                  "label": "Conversation Tabs"
+                }
+              ]
+            },
+            {
+              "name": "ref_pan_SUMMARY_TAB_section_6",
+              "label": "RELATED",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "Contacts",
+                  "uniqueid": "",
+                  "classid": "{02D4264B-47E2-4B4C-AA95-F439F3F4D458}",
+                  "datafieldname": "",
+                  "kind": "subgrid",
+                  "view_id": "{73BC2D9B-4E0E-424C-8839-ED59D6817E3A}",
+                  "relationship_name": "contact_customer_accounts",
+                  "target_entity_type": "contact",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "9d1a34dac1542e1610135dfab9ffcfa6a5b34e1932879cd446704b9245656c88",
+                  "label": "CONTACTS"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DETAILS_TAB",
+          "label": "Details",
+          "section_count": 5,
+          "sections": [
+            {
+              "name": "COMPANY_PROFILE",
+              "label": "COMPANY PROFILE",
+              "control_count": 3,
+              "controls": [
+                {
+                  "id": "industrycode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "industrycode",
+                  "kind": "optionset",
+                  "signature": "3c505f8345591616762778ec402b0ece24eab6ce6fda79ecfe6a59eb47e88072",
+                  "label": "Industry"
+                },
+                {
+                  "id": "sic",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "sic",
+                  "kind": "single-line-text",
+                  "signature": "1f83022860049adf2d92bb66b8e1dc85ded902ac537026f6af2df1d3c0538c49",
+                  "label": "SIC Code"
+                },
+                {
+                  "id": "ownershipcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "ownershipcode",
+                  "kind": "optionset",
+                  "signature": "6722dbbf492d56344f72dc66d49bca15afaa720b029432e4a42838bc307aafcf",
+                  "label": "Ownership"
+                }
+              ]
+            },
+            {
+              "name": "DETAILS_TAB_section_6",
+              "label": "DESCRIPTION",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "description",
+                  "uniqueid": "",
+                  "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                  "datafieldname": "description",
+                  "kind": "multiline-text",
+                  "signature": "a853343070b4022657203723aa6958054634036e4ca55ba0a63d4cb7fa84e123",
+                  "label": "Description"
+                }
+              ]
+            },
+            {
+              "name": "CONTACT_PREFERENCES",
+              "label": "CONTACT PREFERENCES",
+              "control_count": 7,
+              "controls": [
+                {
+                  "id": "preferredcontactmethodcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "preferredcontactmethodcode",
+                  "kind": "optionset",
+                  "signature": "ddf0034ffcb4a13b34aa39d9c502e023230302ec06c4ccdef42e7436d6956f02",
+                  "label": "Contact Method"
+                },
+                {
+                  "id": "donotemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotemail",
+                  "kind": "two-options",
+                  "signature": "ca067c8d68151edd77a82143aef42fe78402a3b177bbe97c5ca0e8b3a0814849",
+                  "label": "Email"
+                },
+                {
+                  "id": "followemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "followemail",
+                  "kind": "two-options",
+                  "signature": "e6b72ffbb831b5388b4e87a3d96ef1e225c42c2162855fa3e33808563982159b",
+                  "label": "Follow Email"
+                },
+                {
+                  "id": "donotbulkemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotbulkemail",
+                  "kind": "two-options",
+                  "signature": "92c713c75884c56dd99b2d47a353f3b78afffb8dd6f6741332f4541e3e8458b5",
+                  "label": "Bulk Email"
+                },
+                {
+                  "id": "donotphone",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotphone",
+                  "kind": "two-options",
+                  "signature": "bbcf640d8a262be4ed601e1c2d150361aea342ed4986d74531a45b5960e3f1fe",
+                  "label": "Phone"
+                },
+                {
+                  "id": "donotfax",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotfax",
+                  "kind": "two-options",
+                  "signature": "3dc094a0cca7587adcbc78da6a1c8ee21e01f8be9876c0cd8a96e35cfe623787",
+                  "label": "Fax"
+                },
+                {
+                  "id": "donotpostalmail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotpostalmail",
+                  "kind": "two-options",
+                  "signature": "ea1cf8a2e48fdde206b0752bf4c2c680f73ed208b2b24369c2fd47b06dfd9c02",
+                  "label": "Mail"
+                }
+              ]
+            },
+            {
+              "name": "BILLING",
+              "label": "BILLING",
+              "control_count": 4,
+              "controls": [
+                {
+                  "id": "transactioncurrencyid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "transactioncurrencyid",
+                  "kind": "lookup",
+                  "signature": "63e16916c80fd2255b299e8639c6af44be2076fad6d247d19bbea45c2f3e0ab0",
+                  "label": "Currency"
+                },
+                {
+                  "id": "creditlimit",
+                  "uniqueid": "",
+                  "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+                  "datafieldname": "creditlimit",
+                  "kind": "field",
+                  "signature": "14e29e9184b0b3ce684a979f935b25b3b500006b5050b5f398d9194d3cafa928",
+                  "label": "Credit Limit"
+                },
+                {
+                  "id": "creditonhold",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "creditonhold",
+                  "kind": "two-options",
+                  "signature": "f8b34bc14086f09397004bd35cde3ec2d61f3071437594b0aa1a30fe72b83f5b",
+                  "label": "Credit Hold"
+                },
+                {
+                  "id": "paymenttermscode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "paymenttermscode",
+                  "kind": "optionset",
+                  "signature": "53d02e7297600a690c553526b5ab681900222c0234e40bb7cdabe22013db5c6a",
+                  "label": "Payment Terms"
+                }
+              ]
+            },
+            {
+              "name": "SHIPPING",
+              "label": "SHIPPING",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "address1_shippingmethodcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "address1_shippingmethodcode",
+                  "kind": "optionset",
+                  "signature": "1f441afb985c9a358d6dd045417abcfc4c498c17590f5ac9d8195e8a742a8f12",
+                  "label": "Shipping Method"
+                },
+                {
+                  "id": "address1_freighttermscode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "address1_freighttermscode",
+                  "kind": "optionset",
+                  "signature": "053778507b34d3d5c0b22358ff0fb0c4995cfe2023fa11ed4df030bb6bb2a112",
+                  "label": "Freight Terms"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [
+        {
+          "id": "header_revenue",
+          "uniqueid": "",
+          "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+          "datafieldname": "revenue",
+          "kind": "field",
+          "signature": "51e67ed21d4ec315e7072e81bf54f936e57a23173a582a8b93d49e1715b8a50f",
+          "label": "Annual Revenue"
+        },
+        {
+          "id": "header_numberofemployees",
+          "uniqueid": "",
+          "classid": "{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}",
+          "datafieldname": "numberofemployees",
+          "kind": "number",
+          "signature": "7e461da361e4cd1159a609b952072e3a2ac476dff012d7a4ca622b8e884a2624",
+          "label": "Number of Employees"
+        },
+        {
+          "id": "header_ownerid",
+          "uniqueid": "",
+          "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+          "datafieldname": "ownerid",
+          "kind": "lookup",
+          "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+          "label": "Owner"
+        }
+      ],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "7552c30d64ca7a42e2591926bf24d90929c8e344dbd7d61e08449c7129a6f3da",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Account for Interactive experience",
+        "form_type": 2
+      },
+      "xml_control_index": {
+        "contactquickform": {
+          "id": "contactquickform",
+          "datafieldname": "primarycontactid",
+          "classid": "5c5600e0-1d6e-4205-a272-be80da87fd42",
+          "parameters": [
+            "QuickForms -> contact:29de27bc-a257-4f29-99cf-bab4a84e688f",
+            "ControlMode=Edit",
+            "DisplayAsCustomer360Tile=true"
+          ]
+        },
+        "primarycontactid": {
+          "id": "primarycontactid",
+          "datafieldname": "primarycontactid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "name": {
+          "id": "name",
+          "datafieldname": "name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "telephone1": {
+          "id": "telephone1",
+          "datafieldname": "telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "fax": {
+          "id": "fax",
+          "datafieldname": "fax",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "websiteurl": {
+          "id": "websiteurl",
+          "datafieldname": "websiteurl",
+          "classid": "71716b6c-711e-476c-8ab8-5d11542bfb47",
+          "parameters": []
+        },
+        "parentaccountid": {
+          "id": "parentaccountid",
+          "datafieldname": "parentaccountid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "address1_composite": {
+          "id": "address1_composite",
+          "datafieldname": "address1_composite",
+          "classid": "e0dece4b-6fc8-4a8f-a065-082708572369",
+          "parameters": []
+        },
+        "notescontrol": {
+          "id": "notescontrol",
+          "datafieldname": null,
+          "classid": "06375649-c143-495e-a496-c962e5b4488e",
+          "parameters": []
+        },
+        "Contacts": {
+          "id": "Contacts",
+          "datafieldname": null,
+          "classid": "02d4264b-47e2-4b4c-aa95-f439f3f4d458",
+          "parameters": [
+            "ViewId={73BC2D9B-4E0E-424C-8839-ED59D6817E3A}",
+            "IsUserView=false",
+            "RelationshipName=contact_customer_accounts",
+            "TargetEntityType=contact",
+            "AutoExpand=Auto",
+            "EnableQuickFind=false",
+            "EnableViewPicker=false",
+            "ViewIds",
+            "EnableJumpBar=false",
+            "ChartGridMode=Grid",
+            "VisualizationId",
+            "IsUserChart=false",
+            "EnableChartPicker=false",
+            "RecordsPerPage=6",
+            "ReferencePanelSubgridIconUrl=/_imgs/FormEditorRibbon/Contact_16.png"
+          ]
+        },
+        "industrycode": {
+          "id": "industrycode",
+          "datafieldname": "industrycode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "sic": {
+          "id": "sic",
+          "datafieldname": "sic",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "ownershipcode": {
+          "id": "ownershipcode",
+          "datafieldname": "ownershipcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "description": {
+          "id": "description",
+          "datafieldname": "description",
+          "classid": "e0dece4b-6fc8-4a8f-a065-082708572369",
+          "parameters": []
+        },
+        "preferredcontactmethodcode": {
+          "id": "preferredcontactmethodcode",
+          "datafieldname": "preferredcontactmethodcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "donotemail": {
+          "id": "donotemail",
+          "datafieldname": "donotemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "followemail": {
+          "id": "followemail",
+          "datafieldname": "followemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotbulkemail": {
+          "id": "donotbulkemail",
+          "datafieldname": "donotbulkemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotphone": {
+          "id": "donotphone",
+          "datafieldname": "donotphone",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotfax": {
+          "id": "donotfax",
+          "datafieldname": "donotfax",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotpostalmail": {
+          "id": "donotpostalmail",
+          "datafieldname": "donotpostalmail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "transactioncurrencyid": {
+          "id": "transactioncurrencyid",
+          "datafieldname": "transactioncurrencyid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "creditlimit": {
+          "id": "creditlimit",
+          "datafieldname": "creditlimit",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "creditonhold": {
+          "id": "creditonhold",
+          "datafieldname": "creditonhold",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "paymenttermscode": {
+          "id": "paymenttermscode",
+          "datafieldname": "paymenttermscode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "address1_shippingmethodcode": {
+          "id": "address1_shippingmethodcode",
+          "datafieldname": "address1_shippingmethodcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "address1_freighttermscode": {
+          "id": "address1_freighttermscode",
+          "datafieldname": "address1_freighttermscode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "revenue": {
+          "id": "header_revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "header_revenue": {
+          "id": "header_revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "header_numberofemployees": {
+          "id": "header_numberofemployees",
+          "datafieldname": "numberofemployees",
+          "classid": "c6d124ca-7eda-4a60-aea9-7fb8d318b68f",
+          "parameters": []
+        },
+        "numberofemployees": {
+          "id": "header_numberofemployees",
+          "datafieldname": "numberofemployees",
+          "classid": "c6d124ca-7eda-4a60-aea9-7fb8d318b68f",
+          "parameters": []
+        },
+        "ownerid": {
+          "id": "header_ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "header_ownerid": {
+          "id": "header_ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `primarycontactid` (quickform; class `5c5600e0-1d6e-4205-a272-be80da87fd42`; parameters `QuickForms -> contact:29de27bc-a257-4f29-99cf-bab4a84e688f; ControlMode=Edit; DisplayAsCustomer360Tile=true`; path `Summary / ACCOUNT INFORMATION`)",
+        "- `websiteurl` (field; class `71716b6c-711e-476c-8ab8-5d11542bfb47`; path `Summary / ACCOUNT INFORMATION`)",
+        "- `notescontrol` (field; class `06375649-c143-495e-a496-c962e5b4488e`; path `Summary / TIMELINE`)",
+        "- `Contacts` (subgrid; class `02d4264b-47e2-4b4c-aa95-f439f3f4d458`; parameters `ViewId={73BC2D9B-4E0E-424C-8839-ED59D6817E3A}; IsUserView=false; RelationshipName=contact_customer_accounts; TargetEntityType=contact; AutoExpand=Auto; EnableQuickFind=false; EnableViewPicker=false; ViewIds; EnableJumpBar=false; ChartGridMode=Grid; VisualizationId; IsUserChart=false; EnableChartPicker=false; RecordsPerPage=6; ReferencePanelSubgridIconUrl=/_imgs/FormEditorRibbon/Contact_16.png`; path `Summary / RELATED`)",
+        "- `creditlimit` (field; class `533b9e00-756b-4312-95a0-dc888637ac78`; path `Details / BILLING`)"
+      ]
+    },
+    {
+      "counts": {
+        "tab_count": 1,
+        "section_count": 1,
+        "control_count": 3,
+        "quickform_count": 0,
+        "subgrid_count": 0,
+        "webresource_count": 0,
+        "header_control_count": 0,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "general",
+          "label": "General",
+          "section_count": 1,
+          "sections": [
+            {
+              "name": "information",
+              "label": "CUSTOMER DETAILS",
+              "control_count": 3,
+              "controls": [
+                {
+                  "id": "name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "name",
+                  "kind": "single-line-text",
+                  "signature": "d7114ea0c67e421e98af9078e306f7b808c62da667e0cbb06b749190edc05dbd",
+                  "label": "Account Name"
+                },
+                {
+                  "id": "emailaddress1",
+                  "uniqueid": "",
+                  "classid": "{ADA2203E-B4CD-49be-9DDF-234642B43B52}",
+                  "datafieldname": "emailaddress1",
+                  "kind": "field",
+                  "signature": "22983747bccce7795a5cc30e100533cbc70edbef5d0d2c197a640984a068451c",
+                  "label": "Email"
+                },
+                {
+                  "id": "telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone1",
+                  "kind": "single-line-text",
+                  "signature": "b31656cebd4959f9c0c4e688ba4293bc9b10e5757e9a22eb7d75e11f179465a3",
+                  "label": "Phone"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "127da53f736715b8ce20206accf61f898bcb28fbd52407c0d331a13f85c75fd6",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "account card",
+        "form_type": 6
+      },
+      "xml_control_index": {
+        "name": {
+          "id": "name",
+          "datafieldname": "name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "emailaddress1": {
+          "id": "emailaddress1",
+          "datafieldname": "emailaddress1",
+          "classid": "ada2203e-b4cd-49be-9ddf-234642b43b52",
+          "parameters": []
+        },
+        "telephone1": {
+          "id": "telephone1",
+          "datafieldname": "telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `emailaddress1` (field; class `ada2203e-b4cd-49be-9ddf-234642b43b52`; path `General / CUSTOMER DETAILS`)"
+      ]
+    },
+    {
+      "counts": {
+        "tab_count": 5,
+        "section_count": 12,
+        "control_count": 45,
+        "quickform_count": 0,
+        "subgrid_count": 2,
+        "webresource_count": 0,
+        "header_control_count": 5,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "general",
+          "label": "General",
+          "section_count": 4,
+          "sections": [
+            {
+              "name": "account information",
+              "label": "Account Information",
+              "control_count": 9,
+              "controls": [
+                {
+                  "id": "name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "name",
+                  "kind": "single-line-text",
+                  "signature": "d7114ea0c67e421e98af9078e306f7b808c62da667e0cbb06b749190edc05dbd",
+                  "label": "Account Name"
+                },
+                {
+                  "id": "telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone1",
+                  "kind": "single-line-text",
+                  "signature": "b31656cebd4959f9c0c4e688ba4293bc9b10e5757e9a22eb7d75e11f179465a3",
+                  "label": "Main Phone"
+                },
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "lookup",
+                  "view_id": "",
+                  "relationship_name": "",
+                  "target_entity_type": "",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "telephone2",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone2",
+                  "kind": "single-line-text",
+                  "signature": "3875b9d1eda3805f5614ee3818e1b14cd2d7ae6d3c4f53569810caba15b73e8d",
+                  "label": "Other Phone"
+                },
+                {
+                  "id": "accountnumber",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "accountnumber",
+                  "kind": "single-line-text",
+                  "signature": "a2dee99cefd0f69782ecde40a4e7e4e156a3f9cdef533e6e81caf7a61aacaa2e",
+                  "label": "Account Number"
+                },
+                {
+                  "id": "fax",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "fax",
+                  "kind": "single-line-text",
+                  "signature": "717adc543d86f0f6c56bcb13f2723aa9ac71e9b9d9fc6df77c23f96dcbcac1e1",
+                  "label": "Fax"
+                },
+                {
+                  "id": "parentaccountid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "parentaccountid",
+                  "kind": "lookup",
+                  "signature": "7f068012a1e08e32db94ac5293d01bdcb8a2125bf310a1e4c546dd9110c3e41d",
+                  "label": "Parent Account"
+                },
+                {
+                  "id": "websiteurl",
+                  "uniqueid": "",
+                  "classid": "{71716B6C-711E-476c-8AB8-5D11542BFB47}",
+                  "datafieldname": "websiteurl",
+                  "kind": "field",
+                  "signature": "1f2e9287a2a6d6d70318165c88e1caaf6e1de10dc2e787b459d0ec0fc37a0551",
+                  "label": "Website"
+                },
+                {
+                  "id": "emailaddress1",
+                  "uniqueid": "",
+                  "classid": "{ADA2203E-B4CD-49be-9DDF-234642B43B52}",
+                  "datafieldname": "emailaddress1",
+                  "kind": "field",
+                  "signature": "22983747bccce7795a5cc30e100533cbc70edbef5d0d2c197a640984a068451c",
+                  "label": "Email"
+                }
+              ]
+            },
+            {
+              "name": "address",
+              "label": "Address",
+              "control_count": 10,
+              "controls": [
+                {
+                  "id": "address1_addresstypecode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "address1_addresstypecode",
+                  "kind": "optionset",
+                  "signature": "291065f4493d2c6397bee32f96f4ff7945cf8b9a42e44fbc6866f679590c683f",
+                  "label": "Address Type"
+                },
+                {
+                  "id": "address1_city",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_city",
+                  "kind": "single-line-text",
+                  "signature": "c3dbc6b656efbd83c5c99c99250ae16db67d8d40252ea67fe7c1f52fca7d4f74",
+                  "label": "City"
+                },
+                {
+                  "id": "address1_name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_name",
+                  "kind": "single-line-text",
+                  "signature": "199c2625e002984e42ba0cf24ee18367671dcc35d6ac6922e17787e66b05bfc8",
+                  "label": "Address Name"
+                },
+                {
+                  "id": "address1_stateorprovince",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_stateorprovince",
+                  "kind": "single-line-text",
+                  "signature": "474d21299a62548ee1f87b263d413ae7572276516bafd74ee582384c245247f7",
+                  "label": "State/Province"
+                },
+                {
+                  "id": "address1_line1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_line1",
+                  "kind": "single-line-text",
+                  "signature": "a91f38a61db75fc462b5bcd070c133fc68e2d513f3bd9c26080587ce660ebf29",
+                  "label": "Street"
+                },
+                {
+                  "id": "address1_postalcode",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_postalcode",
+                  "kind": "single-line-text",
+                  "signature": "fe904d8cd5f50e0fcab877e00272bc6d295a2a9681341c6b5571f4cc1f63f962",
+                  "label": "ZIP/Postal Code"
+                },
+                {
+                  "id": "address1_line2",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_line2",
+                  "kind": "single-line-text",
+                  "signature": "8afe51d926ca62d4f445fd2a32a8cae3ac7ab41f8952e3366faf2b4bcee84556",
+                  "label": "Street 2"
+                },
+                {
+                  "id": "address1_country",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_country",
+                  "kind": "single-line-text",
+                  "signature": "d2c6568fd0645c4c03e01767804f6ea6973e19fc53064e5c9e2bdf4f4c4fd752",
+                  "label": "Country/Region"
+                },
+                {
+                  "id": "address1_line3",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_line3",
+                  "kind": "single-line-text",
+                  "signature": "58a46773cf8fcf1085663ec0a131ec0a82beaf1ca853f66a841ee4470b1d5d32",
+                  "label": "Street 3"
+                },
+                {
+                  "id": "address1_telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_telephone1",
+                  "kind": "single-line-text",
+                  "signature": "677b1c67f2d051ef57d526ae1986c8cc4ed548dc6a102d7fc729d5bcdb02e884",
+                  "label": "Phone"
+                }
+              ]
+            },
+            {
+              "name": "shipping information",
+              "label": "Shipping Information",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "address1_shippingmethodcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "address1_shippingmethodcode",
+                  "kind": "optionset",
+                  "signature": "1f441afb985c9a358d6dd045417abcfc4c498c17590f5ac9d8195e8a742a8f12",
+                  "label": "Shipping Method"
+                },
+                {
+                  "id": "address1_freighttermscode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "address1_freighttermscode",
+                  "kind": "optionset",
+                  "signature": "053778507b34d3d5c0b22358ff0fb0c4995cfe2023fa11ed4df030bb6bb2a112",
+                  "label": "Freight Terms"
+                }
+              ]
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "description",
+                  "uniqueid": "",
+                  "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                  "datafieldname": "description",
+                  "kind": "multiline-text",
+                  "signature": "a853343070b4022657203723aa6958054634036e4ca55ba0a63d4cb7fa84e123",
+                  "label": "Description"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "details",
+          "label": "Details",
+          "section_count": 3,
+          "sections": [
+            {
+              "name": "professional information",
+              "label": "Professional Information",
+              "control_count": 6,
+              "controls": [
+                {
+                  "id": "industrycode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "industrycode",
+                  "kind": "optionset",
+                  "signature": "3c505f8345591616762778ec402b0ece24eab6ce6fda79ecfe6a59eb47e88072",
+                  "label": "Industry"
+                },
+                {
+                  "id": "revenue",
+                  "uniqueid": "",
+                  "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+                  "datafieldname": "revenue",
+                  "kind": "field",
+                  "signature": "51e67ed21d4ec315e7072e81bf54f936e57a23173a582a8b93d49e1715b8a50f",
+                  "label": "Annual Revenue"
+                },
+                {
+                  "id": "ownershipcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "ownershipcode",
+                  "kind": "optionset",
+                  "signature": "6722dbbf492d56344f72dc66d49bca15afaa720b029432e4a42838bc307aafcf",
+                  "label": "Ownership"
+                },
+                {
+                  "id": "numberofemployees",
+                  "uniqueid": "",
+                  "classid": "{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}",
+                  "datafieldname": "numberofemployees",
+                  "kind": "number",
+                  "signature": "7e461da361e4cd1159a609b952072e3a2ac476dff012d7a4ca622b8e884a2624",
+                  "label": "Number of Employees"
+                },
+                {
+                  "id": "tickersymbol",
+                  "uniqueid": "",
+                  "classid": "{1E1FC551-F7A8-43af-AC34-A8DC35C7B6D4}",
+                  "datafieldname": "tickersymbol",
+                  "kind": "field",
+                  "signature": "a53729f87964cf08878270736e283f41f03b2134cc2166f4674e38b0b6a9edbb",
+                  "label": "Ticker Symbol"
+                },
+                {
+                  "id": "sic",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "sic",
+                  "kind": "single-line-text",
+                  "signature": "1f83022860049adf2d92bb66b8e1dc85ded902ac537026f6af2df1d3c0538c49",
+                  "label": "SIC Code"
+                }
+              ]
+            },
+            {
+              "name": "description_2",
+              "label": "Description",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "accountcategorycode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "accountcategorycode",
+                  "kind": "optionset",
+                  "signature": "d76dca48df7b2de36e389428b24ac5459fab2f553bdaff3189250fc712419a12",
+                  "label": "Category"
+                },
+                {
+                  "id": "customertypecode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "customertypecode",
+                  "kind": "optionset",
+                  "signature": "17ab674ec57f976890f75f8c310c276aa619f0aaf386612068df1be7421a3a02",
+                  "label": "Relationship Type"
+                }
+              ]
+            },
+            {
+              "name": "billing information",
+              "label": "Billing Information",
+              "control_count": 4,
+              "controls": [
+                {
+                  "id": "transactioncurrencyid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "transactioncurrencyid",
+                  "kind": "lookup",
+                  "signature": "63e16916c80fd2255b299e8639c6af44be2076fad6d247d19bbea45c2f3e0ab0",
+                  "label": "Currency"
+                },
+                {
+                  "id": "paymenttermscode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "paymenttermscode",
+                  "kind": "optionset",
+                  "signature": "53d02e7297600a690c553526b5ab681900222c0234e40bb7cdabe22013db5c6a",
+                  "label": "Payment Terms"
+                },
+                {
+                  "id": "creditlimit",
+                  "uniqueid": "",
+                  "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+                  "datafieldname": "creditlimit",
+                  "kind": "field",
+                  "signature": "14e29e9184b0b3ce684a979f935b25b3b500006b5050b5f398d9194d3cafa928",
+                  "label": "Credit Limit"
+                },
+                {
+                  "id": "creditonhold",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "creditonhold",
+                  "kind": "two-options",
+                  "signature": "f8b34bc14086f09397004bd35cde3ec2d61f3071437594b0aa1a30fe72b83f5b",
+                  "label": "Credit Hold"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contacts",
+          "label": "Contacts",
+          "section_count": 1,
+          "sections": [
+            {
+              "name": "contacts",
+              "label": "Contacts",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "accountContactsGrid",
+                  "uniqueid": "",
+                  "classid": "{E7A81278-8635-4d9e-8D4D-59480B391C5B}",
+                  "datafieldname": "",
+                  "kind": "subgrid",
+                  "view_id": "{00000000-0000-0000-00AA-000010001003}",
+                  "relationship_name": "contact_customer_accounts",
+                  "target_entity_type": "contact",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "9d1a34dac1542e1610135dfab9ffcfa6a5b34e1932879cd446704b9245656c88",
+                  "label": "Contacts"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "notes and activities",
+          "label": "Notes & Activities",
+          "section_count": 2,
+          "sections": [
+            {
+              "name": "activities",
+              "label": "Activities",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "accountactivitiesgrid",
+                  "uniqueid": "",
+                  "classid": "{E7A81278-8635-4d9e-8D4D-59480B391C5B}",
+                  "datafieldname": "",
+                  "kind": "subgrid",
+                  "view_id": "{00000000-0000-0000-00AA-000010001900}",
+                  "relationship_name": "Account_ActivityPointers",
+                  "target_entity_type": "activitypointer",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "118387854cc4b60eec25035e033da7441e400d84b92ef90bdfc38a218d7507d6",
+                  "label": "Activities"
+                }
+              ]
+            },
+            {
+              "name": "notes",
+              "label": "Notes",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "notescontrol",
+                  "uniqueid": "",
+                  "classid": "{06375649-C143-495E-A496-C962E5B4488E}",
+                  "datafieldname": "",
+                  "kind": "field",
+                  "signature": "e2c4cdf5122fdd7be43760bc0cd5845d30433fdf51574c4bc28513f3ac234c82",
+                  "label": "Note Text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "administration",
+          "label": "Preferences",
+          "section_count": 2,
+          "sections": [
+            {
+              "name": "internal information",
+              "label": "Internal Information",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "ownerid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "ownerid",
+                  "kind": "lookup",
+                  "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+                  "label": "Owner"
+                }
+              ]
+            },
+            {
+              "name": "contact methods",
+              "label": "Contact Methods",
+              "control_count": 7,
+              "controls": [
+                {
+                  "id": "preferredcontactmethodcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "preferredcontactmethodcode",
+                  "kind": "optionset",
+                  "signature": "ddf0034ffcb4a13b34aa39d9c502e023230302ec06c4ccdef42e7436d6956f02",
+                  "label": "Contact Method"
+                },
+                {
+                  "id": "followemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "followemail",
+                  "kind": "two-options",
+                  "signature": "e6b72ffbb831b5388b4e87a3d96ef1e225c42c2162855fa3e33808563982159b",
+                  "label": "Follow Email"
+                },
+                {
+                  "id": "donotbulkemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotbulkemail",
+                  "kind": "two-options",
+                  "signature": "92c713c75884c56dd99b2d47a353f3b78afffb8dd6f6741332f4541e3e8458b5",
+                  "label": "Bulk Email"
+                },
+                {
+                  "id": "donotemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotemail",
+                  "kind": "two-options",
+                  "signature": "ca067c8d68151edd77a82143aef42fe78402a3b177bbe97c5ca0e8b3a0814849",
+                  "label": "Email"
+                },
+                {
+                  "id": "donotfax",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotfax",
+                  "kind": "two-options",
+                  "signature": "3dc094a0cca7587adcbc78da6a1c8ee21e01f8be9876c0cd8a96e35cfe623787",
+                  "label": "Fax"
+                },
+                {
+                  "id": "donotphone",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotphone",
+                  "kind": "two-options",
+                  "signature": "bbcf640d8a262be4ed601e1c2d150361aea342ed4986d74531a45b5960e3f1fe",
+                  "label": "Phone"
+                },
+                {
+                  "id": "donotpostalmail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotpostalmail",
+                  "kind": "two-options",
+                  "signature": "ea1cf8a2e48fdde206b0752bf4c2c680f73ed208b2b24369c2fd47b06dfd9c02",
+                  "label": "Mail"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [
+        {
+          "id": "header_primarycontactid",
+          "uniqueid": "",
+          "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+          "datafieldname": "primarycontactid",
+          "kind": "lookup",
+          "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+          "label": "Primary Contact"
+        },
+        {
+          "id": "header_preferredcontactmethodcode",
+          "uniqueid": "",
+          "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+          "datafieldname": "preferredcontactmethodcode",
+          "kind": "optionset",
+          "signature": "ddf0034ffcb4a13b34aa39d9c502e023230302ec06c4ccdef42e7436d6956f02",
+          "label": "Preferred Method of Contact"
+        },
+        {
+          "id": "header_ownerid",
+          "uniqueid": "",
+          "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+          "datafieldname": "ownerid",
+          "kind": "lookup",
+          "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+          "label": "Owner"
+        },
+        {
+          "id": "header_creditlimit",
+          "uniqueid": "",
+          "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+          "datafieldname": "creditlimit",
+          "kind": "field",
+          "signature": "14e29e9184b0b3ce684a979f935b25b3b500006b5050b5f398d9194d3cafa928",
+          "label": "Credit Limit"
+        },
+        {
+          "id": "header_revenue",
+          "uniqueid": "",
+          "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+          "datafieldname": "revenue",
+          "kind": "field",
+          "signature": "51e67ed21d4ec315e7072e81bf54f936e57a23173a582a8b93d49e1715b8a50f",
+          "label": "Annual Revenue"
+        }
+      ],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "a9f7211477a03b1167e74d3177576b29dfafcec70c5d88c9196c9d14fe93c4c1",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Information",
+        "form_type": 2
+      },
+      "xml_control_index": {
+        "name": {
+          "id": "name",
+          "datafieldname": "name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "telephone1": {
+          "id": "telephone1",
+          "datafieldname": "telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "primarycontactid": {
+          "id": "header_primarycontactid",
+          "datafieldname": "primarycontactid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "telephone2": {
+          "id": "telephone2",
+          "datafieldname": "telephone2",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "accountnumber": {
+          "id": "accountnumber",
+          "datafieldname": "accountnumber",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "fax": {
+          "id": "fax",
+          "datafieldname": "fax",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "parentaccountid": {
+          "id": "parentaccountid",
+          "datafieldname": "parentaccountid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "websiteurl": {
+          "id": "websiteurl",
+          "datafieldname": "websiteurl",
+          "classid": "71716b6c-711e-476c-8ab8-5d11542bfb47",
+          "parameters": []
+        },
+        "emailaddress1": {
+          "id": "emailaddress1",
+          "datafieldname": "emailaddress1",
+          "classid": "ada2203e-b4cd-49be-9ddf-234642b43b52",
+          "parameters": []
+        },
+        "address1_addresstypecode": {
+          "id": "address1_addresstypecode",
+          "datafieldname": "address1_addresstypecode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "address1_city": {
+          "id": "address1_city",
+          "datafieldname": "address1_city",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_name": {
+          "id": "address1_name",
+          "datafieldname": "address1_name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_stateorprovince": {
+          "id": "address1_stateorprovince",
+          "datafieldname": "address1_stateorprovince",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_line1": {
+          "id": "address1_line1",
+          "datafieldname": "address1_line1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_postalcode": {
+          "id": "address1_postalcode",
+          "datafieldname": "address1_postalcode",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_line2": {
+          "id": "address1_line2",
+          "datafieldname": "address1_line2",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_country": {
+          "id": "address1_country",
+          "datafieldname": "address1_country",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_line3": {
+          "id": "address1_line3",
+          "datafieldname": "address1_line3",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_telephone1": {
+          "id": "address1_telephone1",
+          "datafieldname": "address1_telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_shippingmethodcode": {
+          "id": "address1_shippingmethodcode",
+          "datafieldname": "address1_shippingmethodcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "address1_freighttermscode": {
+          "id": "address1_freighttermscode",
+          "datafieldname": "address1_freighttermscode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "description": {
+          "id": "description",
+          "datafieldname": "description",
+          "classid": "e0dece4b-6fc8-4a8f-a065-082708572369",
+          "parameters": []
+        },
+        "industrycode": {
+          "id": "industrycode",
+          "datafieldname": "industrycode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "revenue": {
+          "id": "header_revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "ownershipcode": {
+          "id": "ownershipcode",
+          "datafieldname": "ownershipcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "numberofemployees": {
+          "id": "numberofemployees",
+          "datafieldname": "numberofemployees",
+          "classid": "c6d124ca-7eda-4a60-aea9-7fb8d318b68f",
+          "parameters": []
+        },
+        "tickersymbol": {
+          "id": "tickersymbol",
+          "datafieldname": "tickersymbol",
+          "classid": "1e1fc551-f7a8-43af-ac34-a8dc35c7b6d4",
+          "parameters": []
+        },
+        "sic": {
+          "id": "sic",
+          "datafieldname": "sic",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "accountcategorycode": {
+          "id": "accountcategorycode",
+          "datafieldname": "accountcategorycode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "customertypecode": {
+          "id": "customertypecode",
+          "datafieldname": "customertypecode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "transactioncurrencyid": {
+          "id": "transactioncurrencyid",
+          "datafieldname": "transactioncurrencyid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "paymenttermscode": {
+          "id": "paymenttermscode",
+          "datafieldname": "paymenttermscode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "creditlimit": {
+          "id": "header_creditlimit",
+          "datafieldname": "creditlimit",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "creditonhold": {
+          "id": "creditonhold",
+          "datafieldname": "creditonhold",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "accountContactsGrid": {
+          "id": "accountContactsGrid",
+          "datafieldname": null,
+          "classid": "e7a81278-8635-4d9e-8d4d-59480b391c5b",
+          "parameters": [
+            "ViewId={00000000-0000-0000-00AA-000010001003}",
+            "RelationshipName=contact_customer_accounts",
+            "TargetEntityType=contact",
+            "AutoExpand=Fixed",
+            "EnableQuickFind=false",
+            "EnableViewPicker=true",
+            "EnableJumpBar=false",
+            "EnableChartPicker=false",
+            "RecordsPerPage=10"
+          ]
+        },
+        "accountactivitiesgrid": {
+          "id": "accountactivitiesgrid",
+          "datafieldname": null,
+          "classid": "e7a81278-8635-4d9e-8d4d-59480b391c5b",
+          "parameters": [
+            "ViewId={00000000-0000-0000-00AA-000010001900}",
+            "RelationshipName=Account_ActivityPointers",
+            "TargetEntityType=activitypointer",
+            "AutoExpand=Fixed",
+            "EnableQuickFind=false",
+            "EnableViewPicker=true",
+            "EnableJumpBar=false",
+            "EnableChartPicker=false",
+            "RecordsPerPage=10"
+          ]
+        },
+        "notescontrol": {
+          "id": "notescontrol",
+          "datafieldname": null,
+          "classid": "06375649-c143-495e-a496-c962e5b4488e",
+          "parameters": []
+        },
+        "ownerid": {
+          "id": "header_ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "preferredcontactmethodcode": {
+          "id": "header_preferredcontactmethodcode",
+          "datafieldname": "preferredcontactmethodcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "followemail": {
+          "id": "followemail",
+          "datafieldname": "followemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotbulkemail": {
+          "id": "donotbulkemail",
+          "datafieldname": "donotbulkemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotemail": {
+          "id": "donotemail",
+          "datafieldname": "donotemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotfax": {
+          "id": "donotfax",
+          "datafieldname": "donotfax",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotphone": {
+          "id": "donotphone",
+          "datafieldname": "donotphone",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotpostalmail": {
+          "id": "donotpostalmail",
+          "datafieldname": "donotpostalmail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "header_primarycontactid": {
+          "id": "header_primarycontactid",
+          "datafieldname": "primarycontactid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "header_preferredcontactmethodcode": {
+          "id": "header_preferredcontactmethodcode",
+          "datafieldname": "preferredcontactmethodcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "header_ownerid": {
+          "id": "header_ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "header_creditlimit": {
+          "id": "header_creditlimit",
+          "datafieldname": "creditlimit",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "header_revenue": {
+          "id": "header_revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `websiteurl` (field; class `71716b6c-711e-476c-8ab8-5d11542bfb47`; path `General / Account Information`)",
+        "- `emailaddress1` (field; class `ada2203e-b4cd-49be-9ddf-234642b43b52`; path `General / Account Information`)",
+        "- `revenue` (field; class `533b9e00-756b-4312-95a0-dc888637ac78`; path `Details / Professional Information`)",
+        "- `tickersymbol` (field; class `1e1fc551-f7a8-43af-ac34-a8dc35c7b6d4`; path `Details / Professional Information`)",
+        "- `creditlimit` (field; class `533b9e00-756b-4312-95a0-dc888637ac78`; path `Details / Billing Information`)",
+        "- `accountContactsGrid` (subgrid; class `e7a81278-8635-4d9e-8d4d-59480b391c5b`; parameters `ViewId={00000000-0000-0000-00AA-000010001003}; RelationshipName=contact_customer_accounts; TargetEntityType=contact; AutoExpand=Fixed; EnableQuickFind=false; EnableViewPicker=true; EnableJumpBar=false; EnableChartPicker=false; RecordsPerPage=10`; path `Contacts / Contacts`)",
+        "- `accountactivitiesgrid` (subgrid; class `e7a81278-8635-4d9e-8d4d-59480b391c5b`; parameters `ViewId={00000000-0000-0000-00AA-000010001900}; RelationshipName=Account_ActivityPointers; TargetEntityType=activitypointer; AutoExpand=Fixed; EnableQuickFind=false; EnableViewPicker=true; EnableJumpBar=false; EnableChartPicker=false; RecordsPerPage=10`; path `Notes & Activities / Activities`)",
+        "- `notescontrol` (field; class `06375649-c143-495e-a496-c962e5b4488e`; path `Notes & Activities / Notes`)"
+      ]
+    },
+    {
+      "counts": {
+        "tab_count": 1,
+        "section_count": 3,
+        "control_count": 10,
+        "quickform_count": 0,
+        "subgrid_count": 0,
+        "webresource_count": 0,
+        "header_control_count": 0,
+        "footer_control_count": 0,
+        "control_description_count": 0,
+        "custom_control_host_count": 0,
+        "custom_control_instance_count": 0,
+        "custom_control_family_count": 0,
+        "custom_control_reference_count": 0,
+        "custom_control_manifest_count": 0
+      },
+      "tabs": [
+        {
+          "name": "tab_1",
+          "label": "Tab",
+          "section_count": 3,
+          "sections": [
+            {
+              "name": "tab_1_column_1_section_1",
+              "label": "Details",
+              "control_count": 3,
+              "controls": [
+                {
+                  "id": "name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "name",
+                  "kind": "single-line-text",
+                  "signature": "d7114ea0c67e421e98af9078e306f7b808c62da667e0cbb06b749190edc05dbd",
+                  "label": "Account Name"
+                },
+                {
+                  "id": "telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone1",
+                  "kind": "single-line-text",
+                  "signature": "b31656cebd4959f9c0c4e688ba4293bc9b10e5757e9a22eb7d75e11f179465a3",
+                  "label": "Main Phone"
+                },
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "lookup",
+                  "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+                  "label": "Primary Contact"
+                }
+              ]
+            },
+            {
+              "name": "tab_1_column_2_section_1",
+              "label": "Description",
+              "control_count": 3,
+              "controls": [
+                {
+                  "id": "revenue",
+                  "uniqueid": "",
+                  "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+                  "datafieldname": "revenue",
+                  "kind": "field",
+                  "signature": "51e67ed21d4ec315e7072e81bf54f936e57a23173a582a8b93d49e1715b8a50f",
+                  "label": "Annual Revenue"
+                },
+                {
+                  "id": "numberofemployees",
+                  "uniqueid": "",
+                  "classid": "{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}",
+                  "datafieldname": "numberofemployees",
+                  "kind": "number",
+                  "signature": "7e461da361e4cd1159a609b952072e3a2ac476dff012d7a4ca622b8e884a2624",
+                  "label": "Number of Employees"
+                },
+                {
+                  "id": "description",
+                  "uniqueid": "",
+                  "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                  "datafieldname": "description",
+                  "kind": "multiline-text",
+                  "signature": "a853343070b4022657203723aa6958054634036e4ca55ba0a63d4cb7fa84e123",
+                  "label": "Description"
+                }
+              ]
+            },
+            {
+              "name": "tab_1_column_3_section_1",
+              "label": "Address",
+              "control_count": 4,
+              "controls": [
+                {
+                  "id": "address1_line1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_line1",
+                  "kind": "single-line-text",
+                  "signature": "a91f38a61db75fc462b5bcd070c133fc68e2d513f3bd9c26080587ce660ebf29",
+                  "label": "Street 1"
+                },
+                {
+                  "id": "address1_line2",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_line2",
+                  "kind": "single-line-text",
+                  "signature": "8afe51d926ca62d4f445fd2a32a8cae3ac7ab41f8952e3366faf2b4bcee84556",
+                  "label": "Street 2"
+                },
+                {
+                  "id": "address1_city",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_city",
+                  "kind": "single-line-text",
+                  "signature": "c3dbc6b656efbd83c5c99c99250ae16db67d8d40252ea67fe7c1f52fca7d4f74",
+                  "label": "City"
+                },
+                {
+                  "id": "address1_postalcode",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "address1_postalcode",
+                  "kind": "single-line-text",
+                  "signature": "fe904d8cd5f50e0fcab877e00272bc6d295a2a9681341c6b5571f4cc1f63f962",
+                  "label": "ZIP/Postal Code"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [],
+      "footer": [],
+      "control_descriptions": [],
+      "embedded_custom_controls": {
+        "host_controls": [],
+        "families": [],
+        "registration_reference_ids": [],
+        "manifest_names": [],
+        "form_factors": [],
+        "bind_attributes": [],
+        "data_field_names": [],
+        "dataset_names": [],
+        "default_view_ids": [],
+        "quick_forms": []
+      },
+      "signature": "46fe500edc66a4488198f3a21c256ac6c1bc269273805015315da4cc96bfc668",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Account Quick Create",
+        "form_type": 7
+      },
+      "xml_control_index": {
+        "name": {
+          "id": "name",
+          "datafieldname": "name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "telephone1": {
+          "id": "telephone1",
+          "datafieldname": "telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "primarycontactid": {
+          "id": "primarycontactid",
+          "datafieldname": "primarycontactid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "revenue": {
+          "id": "revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "numberofemployees": {
+          "id": "numberofemployees",
+          "datafieldname": "numberofemployees",
+          "classid": "c6d124ca-7eda-4a60-aea9-7fb8d318b68f",
+          "parameters": []
+        },
+        "description": {
+          "id": "description",
+          "datafieldname": "description",
+          "classid": "e0dece4b-6fc8-4a8f-a065-082708572369",
+          "parameters": []
+        },
+        "address1_line1": {
+          "id": "address1_line1",
+          "datafieldname": "address1_line1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_line2": {
+          "id": "address1_line2",
+          "datafieldname": "address1_line2",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_city": {
+          "id": "address1_city",
+          "datafieldname": "address1_city",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "address1_postalcode": {
+          "id": "address1_postalcode",
+          "datafieldname": "address1_postalcode",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `revenue` (field; class `533b9e00-756b-4312-95a0-dc888637ac78`; path `Tab / Description`)"
+      ]
+    },
+    {
+      "counts": {
+        "tab_count": 2,
+        "section_count": 12,
+        "control_count": 32,
+        "quickform_count": 1,
+        "subgrid_count": 2,
+        "webresource_count": 0,
+        "header_control_count": 3,
+        "footer_control_count": 0,
+        "control_description_count": 2,
+        "custom_control_host_count": 2,
+        "custom_control_instance_count": 8,
+        "custom_control_family_count": 3,
+        "custom_control_reference_count": 1,
+        "custom_control_manifest_count": 2
+      },
+      "tabs": [
+        {
+          "name": "SUMMARY_TAB",
+          "label": "Summary",
+          "section_count": 6,
+          "sections": [
+            {
+              "name": "ACCOUNT_INFORMATION",
+              "label": "ACCOUNT INFORMATION",
+              "control_count": 6,
+              "controls": [
+                {
+                  "id": "name",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "name",
+                  "kind": "single-line-text",
+                  "signature": "d7114ea0c67e421e98af9078e306f7b808c62da667e0cbb06b749190edc05dbd",
+                  "label": "Account Name"
+                },
+                {
+                  "id": "telephone1",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "telephone1",
+                  "kind": "single-line-text",
+                  "signature": "b31656cebd4959f9c0c4e688ba4293bc9b10e5757e9a22eb7d75e11f179465a3",
+                  "label": "Phone"
+                },
+                {
+                  "id": "fax",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "fax",
+                  "kind": "single-line-text",
+                  "signature": "717adc543d86f0f6c56bcb13f2723aa9ac71e9b9d9fc6df77c23f96dcbcac1e1",
+                  "label": "Fax"
+                },
+                {
+                  "id": "websiteurl",
+                  "uniqueid": "",
+                  "classid": "{71716B6C-711E-476c-8AB8-5D11542BFB47}",
+                  "datafieldname": "websiteurl",
+                  "kind": "field",
+                  "signature": "1f2e9287a2a6d6d70318165c88e1caaf6e1de10dc2e787b459d0ec0fc37a0551",
+                  "label": "Website"
+                },
+                {
+                  "id": "parentaccountid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "parentaccountid",
+                  "kind": "lookup",
+                  "signature": "7f068012a1e08e32db94ac5293d01bdcb8a2125bf310a1e4c546dd9110c3e41d",
+                  "label": "Parent Account"
+                },
+                {
+                  "id": "tickersymbol",
+                  "uniqueid": "",
+                  "classid": "{1E1FC551-F7A8-43af-AC34-A8DC35C7B6D4}",
+                  "datafieldname": "tickersymbol",
+                  "kind": "field",
+                  "signature": "a53729f87964cf08878270736e283f41f03b2134cc2166f4674e38b0b6a9edbb",
+                  "label": "Ticker Symbol"
+                }
+              ]
+            },
+            {
+              "name": "ADDRESS",
+              "label": "ADDRESS",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "address1_composite",
+                  "uniqueid": "",
+                  "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                  "datafieldname": "address1_composite",
+                  "kind": "multiline-text",
+                  "signature": "6411fbfa2c73c871c18b37097eebce160d8a38f09dc6edb5103b776a880d6665",
+                  "label": "Address 1"
+                }
+              ]
+            },
+            {
+              "name": "MapSection",
+              "label": "",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "mapcontrol",
+                  "uniqueid": "",
+                  "classid": "{62B0DF79-0464-470F-8AF7-4483CFEA0C7D}",
+                  "datafieldname": "",
+                  "kind": "field",
+                  "view_id": "",
+                  "relationship_name": "",
+                  "target_entity_type": "",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "e2c4cdf5122fdd7be43760bc0cd5845d30433fdf51574c4bc28513f3ac234c82",
+                  "label": "Map View"
+                }
+              ]
+            },
+            {
+              "name": "SOCIAL_PANE_TAB",
+              "label": "SOCIAL PANE",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "notescontrol",
+                  "uniqueid": "",
+                  "classid": "{06375649-c143-495e-a496-c962e5b4488e}",
+                  "datafieldname": "",
+                  "kind": "field",
+                  "signature": "e2c4cdf5122fdd7be43760bc0cd5845d30433fdf51574c4bc28513f3ac234c82",
+                  "label": ""
+                }
+              ]
+            },
+            {
+              "name": "Summary_section_6",
+              "label": "Assistant",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "ActionCards",
+                  "uniqueid": "{3FF9A528-DD50-4ACA-8F10-2E5ED73513AD}",
+                  "classid": "{F9A8A302-114E-466A-B582-6771B2AE0D92}",
+                  "datafieldname": "",
+                  "kind": "field",
+                  "view_id": "{92AFD454-0F2E-4397-A1C8-05E37C6AD699}",
+                  "relationship_name": "",
+                  "target_entity_type": "actioncard",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "21dccec376d5ced0549af8e152d4963164899204b57f3c2c540db02e926852aa",
+                  "label": "Assistant"
+                }
+              ]
+            },
+            {
+              "name": "SUMMARY_TAB_section_6",
+              "label": "Section",
+              "control_count": 4,
+              "controls": [
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "lookup",
+                  "view_id": "",
+                  "relationship_name": "",
+                  "target_entity_type": "",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "1d5641a90dc7630fa4d3a9790044fc1775f0505e9c0af4f3211afc1d34c23551",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "primarycontactid",
+                  "uniqueid": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+                  "classid": "{F9A8A302-114E-466A-B582-6771B2AE0D92}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "field",
+                  "view_id": "",
+                  "relationship_name": "",
+                  "target_entity_type": "",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "5dd6a413b28825d8ef3e70bdbd2c225f2c76951a7528ac91bf18d7eead913aa4",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "contactquickform",
+                  "uniqueid": "",
+                  "classid": "{5C5600E0-1D6E-4205-A272-BE80DA87FD42}",
+                  "datafieldname": "primarycontactid",
+                  "kind": "quickform",
+                  "view_id": "",
+                  "relationship_name": "",
+                  "target_entity_type": "",
+                  "quick_forms": [
+                    "contact:29DE27BC-A257-4F29-99CF-BAB4A84E688F"
+                  ],
+                  "url": "",
+                  "signature": "85d99d2bb364715898ce165fc46678f4943755246ea52ff20399ee9891e91f41",
+                  "label": "Primary Contact"
+                },
+                {
+                  "id": "Contacts",
+                  "uniqueid": "",
+                  "classid": "{E7A81278-8635-4d9e-8D4D-59480B391C5B}",
+                  "datafieldname": "",
+                  "kind": "subgrid",
+                  "view_id": "{73BC2D9B-4E0E-424C-8839-ED59D6817E3A}",
+                  "relationship_name": "contact_customer_accounts",
+                  "target_entity_type": "contact",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "9d1a34dac1542e1610135dfab9ffcfa6a5b34e1932879cd446704b9245656c88",
+                  "label": "CONTACTS"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DETAILS_TAB",
+          "label": "Details",
+          "section_count": 6,
+          "sections": [
+            {
+              "name": "COMPANY_PROFILE",
+              "label": "COMPANY PROFILE",
+              "control_count": 3,
+              "controls": [
+                {
+                  "id": "industrycode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "industrycode",
+                  "kind": "optionset",
+                  "signature": "3c505f8345591616762778ec402b0ece24eab6ce6fda79ecfe6a59eb47e88072",
+                  "label": "Industry"
+                },
+                {
+                  "id": "sic",
+                  "uniqueid": "",
+                  "classid": "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}",
+                  "datafieldname": "sic",
+                  "kind": "single-line-text",
+                  "signature": "1f83022860049adf2d92bb66b8e1dc85ded902ac537026f6af2df1d3c0538c49",
+                  "label": "SIC Code"
+                },
+                {
+                  "id": "ownershipcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "ownershipcode",
+                  "kind": "optionset",
+                  "signature": "6722dbbf492d56344f72dc66d49bca15afaa720b029432e4a42838bc307aafcf",
+                  "label": "Ownership"
+                }
+              ]
+            },
+            {
+              "name": "DETAILS_TAB_section_6",
+              "label": "Description",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "description",
+                  "uniqueid": "",
+                  "classid": "{E0DECE4B-6FC8-4a8f-A065-082708572369}",
+                  "datafieldname": "description",
+                  "kind": "multiline-text",
+                  "signature": "a853343070b4022657203723aa6958054634036e4ca55ba0a63d4cb7fa84e123",
+                  "label": "Description"
+                }
+              ]
+            },
+            {
+              "name": "CONTACT_PREFERENCES",
+              "label": "CONTACT PREFERENCES",
+              "control_count": 7,
+              "controls": [
+                {
+                  "id": "preferredcontactmethodcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "preferredcontactmethodcode",
+                  "kind": "optionset",
+                  "signature": "ddf0034ffcb4a13b34aa39d9c502e023230302ec06c4ccdef42e7436d6956f02",
+                  "label": "Contact Method"
+                },
+                {
+                  "id": "donotemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotemail",
+                  "kind": "two-options",
+                  "signature": "ca067c8d68151edd77a82143aef42fe78402a3b177bbe97c5ca0e8b3a0814849",
+                  "label": "Email"
+                },
+                {
+                  "id": "followemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "followemail",
+                  "kind": "two-options",
+                  "signature": "e6b72ffbb831b5388b4e87a3d96ef1e225c42c2162855fa3e33808563982159b",
+                  "label": "Follow Email"
+                },
+                {
+                  "id": "donotbulkemail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotbulkemail",
+                  "kind": "two-options",
+                  "signature": "92c713c75884c56dd99b2d47a353f3b78afffb8dd6f6741332f4541e3e8458b5",
+                  "label": "Bulk Email"
+                },
+                {
+                  "id": "donotphone",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotphone",
+                  "kind": "two-options",
+                  "signature": "bbcf640d8a262be4ed601e1c2d150361aea342ed4986d74531a45b5960e3f1fe",
+                  "label": "Phone"
+                },
+                {
+                  "id": "donotfax",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotfax",
+                  "kind": "two-options",
+                  "signature": "3dc094a0cca7587adcbc78da6a1c8ee21e01f8be9876c0cd8a96e35cfe623787",
+                  "label": "Fax"
+                },
+                {
+                  "id": "donotpostalmail",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "donotpostalmail",
+                  "kind": "two-options",
+                  "signature": "ea1cf8a2e48fdde206b0752bf4c2c680f73ed208b2b24369c2fd47b06dfd9c02",
+                  "label": "Mail"
+                }
+              ]
+            },
+            {
+              "name": "BILLING",
+              "label": "BILLING",
+              "control_count": 4,
+              "controls": [
+                {
+                  "id": "transactioncurrencyid",
+                  "uniqueid": "",
+                  "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+                  "datafieldname": "transactioncurrencyid",
+                  "kind": "lookup",
+                  "signature": "63e16916c80fd2255b299e8639c6af44be2076fad6d247d19bbea45c2f3e0ab0",
+                  "label": "Currency"
+                },
+                {
+                  "id": "creditlimit",
+                  "uniqueid": "",
+                  "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+                  "datafieldname": "creditlimit",
+                  "kind": "field",
+                  "signature": "14e29e9184b0b3ce684a979f935b25b3b500006b5050b5f398d9194d3cafa928",
+                  "label": "Credit Limit"
+                },
+                {
+                  "id": "creditonhold",
+                  "uniqueid": "",
+                  "classid": "{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}",
+                  "datafieldname": "creditonhold",
+                  "kind": "two-options",
+                  "signature": "f8b34bc14086f09397004bd35cde3ec2d61f3071437594b0aa1a30fe72b83f5b",
+                  "label": "Credit Hold"
+                },
+                {
+                  "id": "paymenttermscode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "paymenttermscode",
+                  "kind": "optionset",
+                  "signature": "53d02e7297600a690c553526b5ab681900222c0234e40bb7cdabe22013db5c6a",
+                  "label": "Payment Terms"
+                }
+              ]
+            },
+            {
+              "name": "SHIPPING",
+              "label": "SHIPPING",
+              "control_count": 2,
+              "controls": [
+                {
+                  "id": "address1_shippingmethodcode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "address1_shippingmethodcode",
+                  "kind": "optionset",
+                  "signature": "1f441afb985c9a358d6dd045417abcfc4c498c17590f5ac9d8195e8a742a8f12",
+                  "label": "Shipping Method"
+                },
+                {
+                  "id": "address1_freighttermscode",
+                  "uniqueid": "",
+                  "classid": "{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}",
+                  "datafieldname": "address1_freighttermscode",
+                  "kind": "optionset",
+                  "signature": "053778507b34d3d5c0b22358ff0fb0c4995cfe2023fa11ed4df030bb6bb2a112",
+                  "label": "Freight Terms"
+                }
+              ]
+            },
+            {
+              "name": "ChildAccounts",
+              "label": "CHILD ACCOUNTS",
+              "control_count": 1,
+              "controls": [
+                {
+                  "id": "ChildAccounts",
+                  "uniqueid": "",
+                  "classid": "{E7A81278-8635-4d9e-8D4D-59480B391C5B}",
+                  "datafieldname": "",
+                  "kind": "subgrid",
+                  "view_id": "{00000000-0000-0000-00AA-000010001002}",
+                  "relationship_name": "account_parent_account",
+                  "target_entity_type": "account",
+                  "quick_forms": [],
+                  "url": "",
+                  "signature": "a57871e5ce73120a9a05c5ca76c29ea9071bdaee1b17ae9fcf72030d1df1acf3",
+                  "label": "Child Accounts"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "header": [
+        {
+          "id": "header_revenue",
+          "uniqueid": "",
+          "classid": "{533B9E00-756B-4312-95A0-DC888637AC78}",
+          "datafieldname": "revenue",
+          "kind": "field",
+          "signature": "51e67ed21d4ec315e7072e81bf54f936e57a23173a582a8b93d49e1715b8a50f",
+          "label": "Annual Revenue"
+        },
+        {
+          "id": "header_numberofemployees",
+          "uniqueid": "",
+          "classid": "{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}",
+          "datafieldname": "numberofemployees",
+          "kind": "number",
+          "signature": "7e461da361e4cd1159a609b952072e3a2ac476dff012d7a4ca622b8e884a2624",
+          "label": "Number of Employees"
+        },
+        {
+          "id": "header_ownerid",
+          "uniqueid": "",
+          "classid": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+          "datafieldname": "ownerid",
+          "kind": "lookup",
+          "signature": "7e97c96e7b4a50816adb45bb60b8117f33d11beadf45dae90e8208f5341ab1fb",
+          "label": "Owner"
+        }
+      ],
+      "footer": [],
+      "control_descriptions": [
+        {
+          "for_control": "{3FF9A528-DD50-4ACA-8F10-2E5ED73513AD}",
+          "host_control": {
+            "id": "ActionCards",
+            "uniqueid": "{3FF9A528-DD50-4ACA-8F10-2E5ED73513AD}",
+            "label": "Assistant",
+            "datafieldname": "",
+            "kind": "field"
+          },
+          "families": [
+            "MscrmControls.CardFeedContainer.CardFeedContainer"
+          ],
+          "custom_controls": [
+            {
+              "name": "MscrmControls.CardFeedContainer.CardFeedContainer",
+              "id": "",
+              "form_factor": "2",
+              "control_mode": "embedded-manifest",
+              "data_field_name": "",
+              "bind_attribute": "",
+              "default_view_id": "",
+              "target_entity_type": "actioncard",
+              "parameter_keys": [
+                "EntityTypeCode",
+                "Location",
+                "data-set",
+                "msinternal.isvisibleinmocaonly"
+              ],
+              "value_keys": [],
+              "dataset_names": [
+                "SubGrid"
+              ],
+              "data_field_names": [],
+              "bind_attributes": [],
+              "default_view_ids": [],
+              "view_ids": [
+                "{92AFD454-0F2E-4397-A1C8-05E37C6AD699}"
+              ],
+              "target_entity_types": [
+                "actioncard"
+              ],
+              "quick_forms": []
+            },
+            {
+              "name": "MscrmControls.CardFeedContainer.CardFeedContainer",
+              "id": "",
+              "form_factor": "0",
+              "control_mode": "embedded-manifest",
+              "data_field_name": "",
+              "bind_attribute": "",
+              "default_view_id": "",
+              "target_entity_type": "actioncard",
+              "parameter_keys": [
+                "EntityTypeCode",
+                "Location",
+                "data-set",
+                "msinternal.isvisibleinmocaonly"
+              ],
+              "value_keys": [],
+              "dataset_names": [
+                "SubGrid"
+              ],
+              "data_field_names": [],
+              "bind_attributes": [],
+              "default_view_ids": [],
+              "view_ids": [
+                "{92AFD454-0F2E-4397-A1C8-05E37C6AD699}"
+              ],
+              "target_entity_types": [
+                "actioncard"
+              ],
+              "quick_forms": []
+            },
+            {
+              "name": "MscrmControls.CardFeedContainer.CardFeedContainer",
+              "id": "",
+              "form_factor": "1",
+              "control_mode": "embedded-manifest",
+              "data_field_name": "",
+              "bind_attribute": "",
+              "default_view_id": "",
+              "target_entity_type": "actioncard",
+              "parameter_keys": [
+                "EntityTypeCode",
+                "Location",
+                "data-set",
+                "msinternal.isvisibleinmocaonly"
+              ],
+              "value_keys": [],
+              "dataset_names": [
+                "SubGrid"
+              ],
+              "data_field_names": [],
+              "bind_attributes": [],
+              "default_view_ids": [],
+              "view_ids": [
+                "{92AFD454-0F2E-4397-A1C8-05E37C6AD699}"
+              ],
+              "target_entity_types": [
+                "actioncard"
+              ],
+              "quick_forms": []
+            }
+          ],
+          "signature": "cc7ae61b1ae301aab2b8679b9134051e816054cda55642c021fc08269f74b55d"
+        },
+        {
+          "for_control": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+          "host_control": {
+            "id": "primarycontactid",
+            "uniqueid": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+            "label": "Primary Contact",
+            "datafieldname": "primarycontactid",
+            "kind": "field"
+          },
+          "families": [
+            "MscrmControls.ModelForm.ModelFormControl",
+            "id:{270BD3DB-D9AF-4782-9025-509E298DEC0A}"
+          ],
+          "custom_controls": [
+            {
+              "name": "",
+              "id": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+              "form_factor": "",
+              "control_mode": "registration-reference",
+              "data_field_name": "primarycontactid",
+              "bind_attribute": "",
+              "default_view_id": "",
+              "target_entity_type": "",
+              "parameter_keys": [
+                "datafieldname"
+              ],
+              "value_keys": [],
+              "dataset_names": [],
+              "data_field_names": [
+                "primarycontactid"
+              ],
+              "bind_attributes": [],
+              "default_view_ids": [],
+              "view_ids": [],
+              "target_entity_types": [],
+              "quick_forms": []
+            },
+            {
+              "name": "",
+              "id": "{270BD3DB-D9AF-4782-9025-509E298DEC0A}",
+              "form_factor": "",
+              "control_mode": "registration-reference",
+              "data_field_name": "primarycontactid",
+              "bind_attribute": "",
+              "default_view_id": "",
+              "target_entity_type": "",
+              "parameter_keys": [
+                "datafieldname"
+              ],
+              "value_keys": [],
+              "dataset_names": [],
+              "data_field_names": [
+                "primarycontactid"
+              ],
+              "bind_attributes": [],
+              "default_view_ids": [],
+              "view_ids": [],
+              "target_entity_types": [],
+              "quick_forms": []
+            },
+            {
+              "name": "MscrmControls.ModelForm.ModelFormControl",
+              "id": "",
+              "form_factor": "0",
+              "control_mode": "embedded-manifest",
+              "data_field_name": "",
+              "bind_attribute": "primarycontactid",
+              "default_view_id": "{A2D479C5-53E3-4C69-ADDD-802327E67A0D}",
+              "target_entity_type": "",
+              "parameter_keys": [
+                "AddToRecentItems",
+                "DisplayFormSelector",
+                "EnableHighDensityPageHeader",
+                "QuickForms",
+                "SaveMode",
+                "value"
+              ],
+              "value_keys": [
+                "AllowFilterOff",
+                "AvailableViewIds",
+                "BindAttribute",
+                "DefaultViewId",
+                "DependentAttributeName",
+                "DependentAttributeType",
+                "DisableQuickFind",
+                "DisableViewPicker",
+                "FilterRelationshipName"
+              ],
+              "dataset_names": [],
+              "data_field_names": [],
+              "bind_attributes": [
+                "primarycontactid"
+              ],
+              "default_view_ids": [
+                "{A2D479C5-53E3-4C69-ADDD-802327E67A0D}"
+              ],
+              "view_ids": [],
+              "target_entity_types": [],
+              "quick_forms": [
+                "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+              ]
+            },
+            {
+              "name": "MscrmControls.ModelForm.ModelFormControl",
+              "id": "",
+              "form_factor": "2",
+              "control_mode": "embedded-manifest",
+              "data_field_name": "",
+              "bind_attribute": "primarycontactid",
+              "default_view_id": "{A2D479C5-53E3-4C69-ADDD-802327E67A0D}",
+              "target_entity_type": "",
+              "parameter_keys": [
+                "AddToRecentItems",
+                "DisplayFormSelector",
+                "EnableHighDensityPageHeader",
+                "QuickForms",
+                "SaveMode",
+                "value"
+              ],
+              "value_keys": [
+                "AllowFilterOff",
+                "AvailableViewIds",
+                "BindAttribute",
+                "DefaultViewId",
+                "DependentAttributeName",
+                "DependentAttributeType",
+                "DisableQuickFind",
+                "DisableViewPicker",
+                "FilterRelationshipName"
+              ],
+              "dataset_names": [],
+              "data_field_names": [],
+              "bind_attributes": [
+                "primarycontactid"
+              ],
+              "default_view_ids": [
+                "{A2D479C5-53E3-4C69-ADDD-802327E67A0D}"
+              ],
+              "view_ids": [],
+              "target_entity_types": [],
+              "quick_forms": [
+                "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+              ]
+            },
+            {
+              "name": "MscrmControls.ModelForm.ModelFormControl",
+              "id": "",
+              "form_factor": "1",
+              "control_mode": "embedded-manifest",
+              "data_field_name": "",
+              "bind_attribute": "primarycontactid",
+              "default_view_id": "{A2D479C5-53E3-4C69-ADDD-802327E67A0D}",
+              "target_entity_type": "",
+              "parameter_keys": [
+                "AddToRecentItems",
+                "DisplayFormSelector",
+                "EnableHighDensityPageHeader",
+                "QuickForms",
+                "SaveMode",
+                "value"
+              ],
+              "value_keys": [
+                "AllowFilterOff",
+                "AvailableViewIds",
+                "BindAttribute",
+                "DefaultViewId",
+                "DependentAttributeName",
+                "DependentAttributeType",
+                "DisableQuickFind",
+                "DisableViewPicker",
+                "FilterRelationshipName"
+              ],
+              "dataset_names": [],
+              "data_field_names": [],
+              "bind_attributes": [
+                "primarycontactid"
+              ],
+              "default_view_ids": [
+                "{A2D479C5-53E3-4C69-ADDD-802327E67A0D}"
+              ],
+              "view_ids": [],
+              "target_entity_types": [],
+              "quick_forms": [
+                "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+              ]
+            }
+          ],
+          "signature": "198f7a92c1aef03c9fa37b2d1ada0be3b7a12bbbc80db2f78fcd2da8306b7edc"
+        }
+      ],
+      "embedded_custom_controls": {
+        "host_controls": [
+          {
+            "id": "ActionCards",
+            "uniqueid": "{3FF9A528-DD50-4ACA-8F10-2E5ED73513AD}",
+            "label": "Assistant",
+            "datafieldname": "",
+            "kind": "field"
+          },
+          {
+            "id": "primarycontactid",
+            "uniqueid": "{d3a69167-9d39-4dc5-9c81-6ad8522c7f8e}",
+            "label": "Primary Contact",
+            "datafieldname": "primarycontactid",
+            "kind": "field"
+          }
+        ],
+        "families": [
+          "MscrmControls.CardFeedContainer.CardFeedContainer",
+          "MscrmControls.ModelForm.ModelFormControl",
+          "id:{270BD3DB-D9AF-4782-9025-509E298DEC0A}"
+        ],
+        "registration_reference_ids": [
+          "{270BD3DB-D9AF-4782-9025-509E298DEC0A}"
+        ],
+        "manifest_names": [
+          "MscrmControls.CardFeedContainer.CardFeedContainer",
+          "MscrmControls.ModelForm.ModelFormControl"
+        ],
+        "form_factors": [
+          "0",
+          "1",
+          "2"
+        ],
+        "bind_attributes": [
+          "primarycontactid"
+        ],
+        "data_field_names": [
+          "primarycontactid"
+        ],
+        "dataset_names": [
+          "SubGrid"
+        ],
+        "default_view_ids": [
+          "{A2D479C5-53E3-4C69-ADDD-802327E67A0D}"
+        ],
+        "quick_forms": [
+          "contact:1fed44d1-ae68-4a41-bd2b-f13acac4acfa"
+        ]
+      },
+      "signature": "b97fc2b80066d163262d7bac4666cbda4c290d7d09f9e318a21c776b8057e4e0",
+      "source": {
+        "path": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\seed-process-policy\\readback\\readback.json",
+        "kind": "readback_bundle",
+        "entity": "account",
+        "form_name": "Account",
+        "form_type": 2
+      },
+      "xml_control_index": {
+        "name": {
+          "id": "name",
+          "datafieldname": "name",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "telephone1": {
+          "id": "telephone1",
+          "datafieldname": "telephone1",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "fax": {
+          "id": "fax",
+          "datafieldname": "fax",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "websiteurl": {
+          "id": "websiteurl",
+          "datafieldname": "websiteurl",
+          "classid": "71716b6c-711e-476c-8ab8-5d11542bfb47",
+          "parameters": []
+        },
+        "parentaccountid": {
+          "id": "parentaccountid",
+          "datafieldname": "parentaccountid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "tickersymbol": {
+          "id": "tickersymbol",
+          "datafieldname": "tickersymbol",
+          "classid": "1e1fc551-f7a8-43af-ac34-a8dc35c7b6d4",
+          "parameters": []
+        },
+        "address1_composite": {
+          "id": "address1_composite",
+          "datafieldname": "address1_composite",
+          "classid": "e0dece4b-6fc8-4a8f-a065-082708572369",
+          "parameters": []
+        },
+        "mapcontrol": {
+          "id": "mapcontrol",
+          "datafieldname": null,
+          "classid": "62b0df79-0464-470f-8af7-4483cfea0c7d",
+          "parameters": [
+            "AddressField=address1_composite"
+          ]
+        },
+        "notescontrol": {
+          "id": "notescontrol",
+          "datafieldname": null,
+          "classid": "06375649-c143-495e-a496-c962e5b4488e",
+          "parameters": []
+        },
+        "ActionCards": {
+          "id": "ActionCards",
+          "datafieldname": null,
+          "classid": "f9a8a302-114e-466a-b582-6771b2ae0d92",
+          "parameters": [
+            "ViewId={92AFD454-0F2E-4397-A1C8-05E37C6AD699}",
+            "IsUserView=false",
+            "RelationshipName",
+            "TargetEntityType=actioncard",
+            "AutoExpand=Fixed",
+            "EnableViewPicker=false",
+            "EnableJumpBar=false",
+            "ChartGridMode=All",
+            "VisualizationId",
+            "IsUserChart=false",
+            "EnableChartPicker=false",
+            "RecordsPerPage=4"
+          ]
+        },
+        "primarycontactid": {
+          "id": "contactquickform",
+          "datafieldname": "primarycontactid",
+          "classid": "5c5600e0-1d6e-4205-a272-be80da87fd42",
+          "parameters": [
+            "QuickForms -> contact:29DE27BC-A257-4F29-99CF-BAB4A84E688F",
+            "ControlMode=Edit"
+          ]
+        },
+        "contactquickform": {
+          "id": "contactquickform",
+          "datafieldname": "primarycontactid",
+          "classid": "5c5600e0-1d6e-4205-a272-be80da87fd42",
+          "parameters": [
+            "QuickForms -> contact:29DE27BC-A257-4F29-99CF-BAB4A84E688F",
+            "ControlMode=Edit"
+          ]
+        },
+        "Contacts": {
+          "id": "Contacts",
+          "datafieldname": null,
+          "classid": "e7a81278-8635-4d9e-8d4d-59480b391c5b",
+          "parameters": [
+            "ViewId={73BC2D9B-4E0E-424C-8839-ED59D6817E3A}",
+            "IsUserView=false",
+            "RelationshipName=contact_customer_accounts",
+            "TargetEntityType=contact",
+            "AutoExpand=Auto",
+            "EnableQuickFind=false",
+            "EnableViewPicker=false",
+            "ViewIds",
+            "EnableJumpBar=false",
+            "ChartGridMode=Grid",
+            "VisualizationId",
+            "IsUserChart=false",
+            "EnableChartPicker=false",
+            "RecordsPerPage=6"
+          ]
+        },
+        "industrycode": {
+          "id": "industrycode",
+          "datafieldname": "industrycode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "sic": {
+          "id": "sic",
+          "datafieldname": "sic",
+          "classid": "4273edbd-ac1d-40d3-9fb2-095c621b552d",
+          "parameters": []
+        },
+        "ownershipcode": {
+          "id": "ownershipcode",
+          "datafieldname": "ownershipcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "description": {
+          "id": "description",
+          "datafieldname": "description",
+          "classid": "e0dece4b-6fc8-4a8f-a065-082708572369",
+          "parameters": []
+        },
+        "preferredcontactmethodcode": {
+          "id": "preferredcontactmethodcode",
+          "datafieldname": "preferredcontactmethodcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "donotemail": {
+          "id": "donotemail",
+          "datafieldname": "donotemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "followemail": {
+          "id": "followemail",
+          "datafieldname": "followemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotbulkemail": {
+          "id": "donotbulkemail",
+          "datafieldname": "donotbulkemail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotphone": {
+          "id": "donotphone",
+          "datafieldname": "donotphone",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotfax": {
+          "id": "donotfax",
+          "datafieldname": "donotfax",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "donotpostalmail": {
+          "id": "donotpostalmail",
+          "datafieldname": "donotpostalmail",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "transactioncurrencyid": {
+          "id": "transactioncurrencyid",
+          "datafieldname": "transactioncurrencyid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "creditlimit": {
+          "id": "creditlimit",
+          "datafieldname": "creditlimit",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "creditonhold": {
+          "id": "creditonhold",
+          "datafieldname": "creditonhold",
+          "classid": "67fac785-cd58-4f9f-abb3-4b7ddc6ed5ed",
+          "parameters": []
+        },
+        "paymenttermscode": {
+          "id": "paymenttermscode",
+          "datafieldname": "paymenttermscode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "address1_shippingmethodcode": {
+          "id": "address1_shippingmethodcode",
+          "datafieldname": "address1_shippingmethodcode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "address1_freighttermscode": {
+          "id": "address1_freighttermscode",
+          "datafieldname": "address1_freighttermscode",
+          "classid": "3ef39988-22bb-4f0b-bbbe-64b5a3748aee",
+          "parameters": []
+        },
+        "ChildAccounts": {
+          "id": "ChildAccounts",
+          "datafieldname": null,
+          "classid": "e7a81278-8635-4d9e-8d4d-59480b391c5b",
+          "parameters": [
+            "ViewId={00000000-0000-0000-00AA-000010001002}",
+            "IsUserView=false",
+            "RelationshipName=account_parent_account",
+            "TargetEntityType=account",
+            "AutoExpand=Fixed",
+            "EnableQuickFind=false",
+            "EnableViewPicker=false",
+            "ViewIds={00000000-0000-0000-00AA-000010001002},{00000000-0000-0000-00AA-000010001001}",
+            "EnableJumpBar=false",
+            "ChartGridMode=Grid",
+            "VisualizationId={74A622C0-5193-DE11-97D4-00155DA3B01E}",
+            "IsUserChart=false",
+            "EnableChartPicker=false",
+            "RecordsPerPage=4"
+          ]
+        },
+        "revenue": {
+          "id": "header_revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "header_revenue": {
+          "id": "header_revenue",
+          "datafieldname": "revenue",
+          "classid": "533b9e00-756b-4312-95a0-dc888637ac78",
+          "parameters": []
+        },
+        "header_numberofemployees": {
+          "id": "header_numberofemployees",
+          "datafieldname": "numberofemployees",
+          "classid": "c6d124ca-7eda-4a60-aea9-7fb8d318b68f",
+          "parameters": []
+        },
+        "numberofemployees": {
+          "id": "header_numberofemployees",
+          "datafieldname": "numberofemployees",
+          "classid": "c6d124ca-7eda-4a60-aea9-7fb8d318b68f",
+          "parameters": []
+        },
+        "ownerid": {
+          "id": "header_ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        },
+        "header_ownerid": {
+          "id": "header_ownerid",
+          "datafieldname": "ownerid",
+          "classid": "270bd3db-d9af-4782-9025-509e298dec0a",
+          "parameters": []
+        }
+      },
+      "custom_control_configurations": [
+        {
+          "unique_id": "3ff9a528-dd50-4aca-8f10-2e5ed73513ad",
+          "primary_entity_type": null,
+          "version_number": 0,
+          "overall_version_number": 0,
+          "controls": [
+            {
+              "name": "MscrmControls.CardFeedContainer.CardFeedContainer",
+              "custom_control_id": "00000000-0000-0000-0000-000000000000",
+              "form_factor": 2,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": true,
+              "parameters": [
+                "SubGrid -> actioncard",
+                "EntityTypeCode=1",
+                "Location=1",
+                "msinternal.isvisibleinmocaonly=true"
+              ]
+            },
+            {
+              "name": "MscrmControls.CardFeedContainer.CardFeedContainer",
+              "custom_control_id": "00000000-0000-0000-0000-000000000000",
+              "form_factor": 0,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": true,
+              "parameters": [
+                "SubGrid -> actioncard",
+                "EntityTypeCode=1",
+                "Location=1",
+                "msinternal.isvisibleinmocaonly=true"
+              ]
+            },
+            {
+              "name": "MscrmControls.CardFeedContainer.CardFeedContainer",
+              "custom_control_id": "00000000-0000-0000-0000-000000000000",
+              "form_factor": 1,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": true,
+              "parameters": [
+                "SubGrid -> actioncard",
+                "EntityTypeCode=1",
+                "Location=1",
+                "msinternal.isvisibleinmocaonly=true"
+              ]
+            }
+          ]
+        },
+        {
+          "unique_id": "d3a69167-9d39-4dc5-9c81-6ad8522c7f8e",
+          "primary_entity_type": null,
+          "version_number": 0,
+          "overall_version_number": 0,
+          "controls": [
+            {
+              "name": "custom-control",
+              "custom_control_id": "270bd3db-d9af-4782-9025-509e298dec0a",
+              "form_factor": -1,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": false,
+              "parameters": [
+                "datafieldname=primarycontactid"
+              ]
+            },
+            {
+              "name": "custom-control",
+              "custom_control_id": "270bd3db-d9af-4782-9025-509e298dec0a",
+              "form_factor": -1,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": false,
+              "parameters": [
+                "datafieldname=primarycontactid"
+              ]
+            },
+            {
+              "name": "MscrmControls.ModelForm.ModelFormControl",
+              "custom_control_id": "00000000-0000-0000-0000-000000000000",
+              "form_factor": 0,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": false,
+              "parameters": [
+                "value=primarycontactid{A2D479C5-53E3-4C69-ADDD-802327E67A0D}falsefalsefalse",
+                "QuickForms=<QuickForms><QuickFormIds><QuickFormId entityname=\"contact\">1fed44d1-ae68-4a41-bd2b-f13acac4acfa</QuickFormId></QuickFormIds></QuickForms>",
+                "SaveMode=0",
+                "EnableHighDensityPageHeader=false",
+                "DisplayFormSelector=false",
+                "AddToRecentItems=false"
+              ]
+            },
+            {
+              "name": "MscrmControls.ModelForm.ModelFormControl",
+              "custom_control_id": "00000000-0000-0000-0000-000000000000",
+              "form_factor": 2,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": false,
+              "parameters": [
+                "value=primarycontactid{A2D479C5-53E3-4C69-ADDD-802327E67A0D}falsefalsefalse",
+                "QuickForms=<QuickForms><QuickFormIds><QuickFormId entityname=\"contact\">1fed44d1-ae68-4a41-bd2b-f13acac4acfa</QuickFormId></QuickFormIds></QuickForms>",
+                "SaveMode=0",
+                "EnableHighDensityPageHeader=false",
+                "DisplayFormSelector=false",
+                "AddToRecentItems=false"
+              ]
+            },
+            {
+              "name": "MscrmControls.ModelForm.ModelFormControl",
+              "custom_control_id": "00000000-0000-0000-0000-000000000000",
+              "form_factor": 1,
+              "version": null,
+              "display_name_key": null,
+              "should_override_control_visible": false,
+              "parameters": [
+                "value=primarycontactid{A2D479C5-53E3-4C69-ADDD-802327E67A0D}falsefalsefalse",
+                "QuickForms=<QuickForms><QuickFormIds><QuickFormId entityname=\"contact\">1fed44d1-ae68-4a41-bd2b-f13acac4acfa</QuickFormId></QuickFormIds></QuickForms>",
+                "SaveMode=0",
+                "EnableHighDensityPageHeader=false",
+                "DisplayFormSelector=false",
+                "AddToRecentItems=false"
+              ]
+            }
+          ]
+        }
+      ],
+      "embedded_control_details": [
+        "",
+        "## Embedded Control Details",
+        "- `websiteurl` (field; class `71716b6c-711e-476c-8ab8-5d11542bfb47`; path `Summary / ACCOUNT INFORMATION`)",
+        "- `tickersymbol` (field; class `1e1fc551-f7a8-43af-ac34-a8dc35c7b6d4`; path `Summary / ACCOUNT INFORMATION`)",
+        "- `mapcontrol` (field; class `62b0df79-0464-470f-8af7-4483cfea0c7d`; parameters `AddressField=address1_composite`; path `Summary / MapSection`)",
+        "- `notescontrol` (field; class `06375649-c143-495e-a496-c962e5b4488e`; path `Summary / SOCIAL PANE`)",
+        "- `ActionCards` (field; class `f9a8a302-114e-466a-b582-6771b2ae0d92`; parameters `ViewId={92AFD454-0F2E-4397-A1C8-05E37C6AD699}; IsUserView=false; RelationshipName; TargetEntityType=actioncard; AutoExpand=Fixed; EnableViewPicker=false; EnableJumpBar=false; ChartGridMode=All; VisualizationId; IsUserChart=false; EnableChartPicker=false; RecordsPerPage=4`; path `Summary / Assistant`)",
+        "- `primarycontactid` (lookup; class `5c5600e0-1d6e-4205-a272-be80da87fd42`; parameters `QuickForms -> contact:29DE27BC-A257-4F29-99CF-BAB4A84E688F; ControlMode=Edit`; path `Summary / Section`)",
+        "- `primarycontactid` (field; class `5c5600e0-1d6e-4205-a272-be80da87fd42`; parameters `QuickForms -> contact:29DE27BC-A257-4F29-99CF-BAB4A84E688F; ControlMode=Edit`; path `Summary / Section`)",
+        "- `primarycontactid` (quickform; class `5c5600e0-1d6e-4205-a272-be80da87fd42`; parameters `QuickForms -> contact:29DE27BC-A257-4F29-99CF-BAB4A84E688F; ControlMode=Edit`; path `Summary / Section`)",
+        "- `Contacts` (subgrid; class `e7a81278-8635-4d9e-8d4d-59480b391c5b`; parameters `ViewId={73BC2D9B-4E0E-424C-8839-ED59D6817E3A}; IsUserView=false; RelationshipName=contact_customer_accounts; TargetEntityType=contact; AutoExpand=Auto; EnableQuickFind=false; EnableViewPicker=false; ViewIds; EnableJumpBar=false; ChartGridMode=Grid; VisualizationId; IsUserChart=false; EnableChartPicker=false; RecordsPerPage=6`; path `Summary / Section`)",
+        "- `creditlimit` (field; class `533b9e00-756b-4312-95a0-dc888637ac78`; path `Details / BILLING`)",
+        "- `ChildAccounts` (subgrid; class `e7a81278-8635-4d9e-8d4d-59480b391c5b`; parameters `ViewId={00000000-0000-0000-00AA-000010001002}; IsUserView=false; RelationshipName=account_parent_account; TargetEntityType=account; AutoExpand=Fixed; EnableQuickFind=false; EnableViewPicker=false; ViewIds={00000000-0000-0000-00AA-000010001002},{00000000-0000-0000-00AA-000010001001}; EnableJumpBar=false; ChartGridMode=Grid; VisualizationId={74A622C0-5193-DE11-97D4-00155DA3B01E}; IsUserChart=false; EnableChartPicker=false; RecordsPerPage=4`; path `Details / CHILD ACCOUNTS`)"
+      ]
+    }
+  ]
+}

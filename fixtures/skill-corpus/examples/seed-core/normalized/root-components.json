@@ -1,0 +1,29 @@
+[
+  {
+    "type": "1",
+    "type_label": "Entity",
+    "family_label": "Schema and Metadata",
+    "id": "",
+    "schema_name": "cdxmeta_category",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "1",
+    "type_label": "Entity",
+    "family_label": "Schema and Metadata",
+    "id": "",
+    "schema_name": "cdxmeta_workitem",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  },
+  {
+    "type": "9",
+    "type_label": "Option Set",
+    "family_label": "Schema and Metadata",
+    "id": "",
+    "schema_name": "cdxmeta_priorityband",
+    "behavior": "0",
+    "behavior_label": "Include Subcomponents"
+  }
+]

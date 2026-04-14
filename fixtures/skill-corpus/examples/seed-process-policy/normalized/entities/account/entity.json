@@ -1,0 +1,25 @@
+{
+  "logical_name": "account",
+  "schema_name": "Account",
+  "forms": [],
+  "views": [],
+  "attributes": [],
+  "relationships": {
+    "one_to_many": [],
+    "many_to_one": [],
+    "many_to_many": []
+  },
+  "ribbon_diff_xml": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RibbonDiffXml xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <CustomActions />\r\n  <Templates>\r\n    <RibbonTemplates Id=\"Mscrm.Templates\"></RibbonTemplates>\r\n  </Templates>\r\n  <CommandDefinitions />\r\n  <RuleDefinitions>\r\n    <TabDisplayRules />\r\n    <DisplayRules />\r\n    <EnableRules />\r\n  </RuleDefinitions>\r\n  <LocLabels />\r\n</RibbonDiffXml>",
+  "ribbon_diff_summary": {
+    "counts": {
+      "custom_action_count": 0,
+      "command_definition_count": 0,
+      "rule_definition_count": 1,
+      "button_count": 0,
+      "loc_label_count": 0,
+      "byte_length": 396
+    },
+    "comparison_signature": "45469c0c5357f7d3e1822937bf1bc2541588f07f8c59cd93f97913f5744c361a",
+    "signature": "45469c0c5357f7d3e1822937bf1bc2541588f07f8c59cd93f97913f5744c361a"
+  }
+}

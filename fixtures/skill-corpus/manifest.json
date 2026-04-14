@@ -1,0 +1,36 @@
+{
+  "sourceSkill": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis",
+  "capturedOn": "2026-04-14",
+  "purpose": "Seed regression corpus and reference surface for the .NET 10 Dataverse Solution Compiler.",
+  "referenceFiles": [
+    "app-shell-extensibility.md",
+    "code-extensibility.md",
+    "component-catalog.md",
+    "component-coverage-matrix.md",
+    "drift-readback.md",
+    "environment-config.md",
+    "formxml-systemform.md",
+    "metadata-api-operations.md",
+    "pac-packaging.md",
+    "process-service-policy.md",
+    "schema-detail.md",
+    "security-access.md",
+    "solution-structure.md",
+    "ui-shell-advanced.md"
+  ],
+  "exampleDirectories": [
+    "dbm-baseline",
+    "dbm-sdk-registration",
+    "dbm-workflow-scratch",
+    "seed-advanced-ui",
+    "seed-app-shell",
+    "seed-core",
+    "seed-environment",
+    "seed-forms",
+    "seed-process-policy",
+    "seed-process-security",
+    "seed-process-security+",
+    "source-only-similarity-rule",
+    "source-only-sla"
+  ]
+}

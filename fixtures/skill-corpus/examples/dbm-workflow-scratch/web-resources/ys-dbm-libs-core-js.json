@@ -1,0 +1,21 @@
+{
+  "id": "{a7b23fee-0ef0-ee11-af4b-00155d016516}",
+  "name": "ys_/dbm/libs/core.js",
+  "display_name": "DBM Core Library JS",
+  "description": "",
+  "type": "3",
+  "type_label": "Script (JScript)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmlibscorejsA7B23FEE-0EF0-EE11-AF4B-00155D016516",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\libs\\core.js",
+  "summary": {
+    "type_label": "Script (JScript)",
+    "counts": {
+      "byte_count": 12246,
+      "line_count": 1
+    },
+    "content_sha256": "96ee7fde3b589bfaa7da1d4b8b5304f6772dc71af44d746e1354f14de1473fb9",
+    "comparison_signature": "4e4a4211ddf8fb97396443b78021d6ec7b112ac9c75f9e10635f776f39d30980",
+    "signature": "7d60f63521ec984b6c01d6c908945741e5c8344d60505cee95e1c5181dc969ad"
+  }
+}

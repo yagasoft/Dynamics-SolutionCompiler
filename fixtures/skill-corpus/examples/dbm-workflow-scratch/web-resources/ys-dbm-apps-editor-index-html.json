@@ -1,0 +1,21 @@
+{
+  "id": "{aadd6d78-aaf8-ee11-a1fe-0022489f971b}",
+  "name": "ys_/dbm/apps/editor/index.html",
+  "display_name": "DBM Editor App - HTML",
+  "description": "",
+  "type": "1",
+  "type_label": "Webpage (HTML)",
+  "language_code": "",
+  "file_name": "/WebResources/ys_dbmappseditorindexhtmlAADD6D78-AAF8-EE11-A1FE-0022489F971B",
+  "content_path": "C:\\Git\\Dynamics-BusinessMachine\\artifacts\\r123-temp-clone\\Temp\\src\\WebResources\\ys_\\dbm\\apps\\editor\\index.html",
+  "summary": {
+    "type_label": "Webpage (HTML)",
+    "counts": {
+      "byte_count": 216,
+      "line_count": 1
+    },
+    "content_sha256": "2fc95e1589e315c81b014ab59a0059874ac2f73494c7e52adcb58aa8edab1889",
+    "comparison_signature": "9e71da05e41310ff3795e99a0e9d42d9d6e0670b6a8a18c060d49e0c519faccf",
+    "signature": "a90490e790ad785ffa4f8c720946428b6abb4fce86efc6b8106d18ff48804a24"
+  }
+}

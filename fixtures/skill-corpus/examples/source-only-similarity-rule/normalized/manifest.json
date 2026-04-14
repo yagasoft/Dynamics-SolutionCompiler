@@ -1,0 +1,14 @@
+{
+  "unique_name": "CodexMetadataSourceOnlySimilarityRule",
+  "friendly_name": "",
+  "version": "1.0.0.0",
+  "managed": "0",
+  "publisher": {
+    "unique_name": "CodexMetadata",
+    "prefix": "cdxmeta"
+  },
+  "source_files": {
+    "solution_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\source-only-similarity-rule\\unpacked\\Other\\Solution.xml",
+    "customizations_xml": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis\\references\\examples\\source-only-similarity-rule\\unpacked\\Other\\Customizations.xml"
+  }
+}

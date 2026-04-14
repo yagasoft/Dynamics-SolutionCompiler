@@ -1,0 +1,535 @@
+﻿[
+    {
+        "LogicalName":  "cdxmeta_categoryid",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_CategoryId",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_categoryidname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_CategoryIdName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_details",
+        "DisplayName":  null,
+        "AttributeType":  "Memo",
+        "IsSecured":  true,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_Details",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_duedate",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_DueDate",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_efforthours",
+        "DisplayName":  null,
+        "AttributeType":  "Decimal",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_EffortHours",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_externalcode",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_ExternalCode",
+        "IsPrimaryName":  false
+    },
+    {
+        "DisplayName":  null,
+        "IsSecured":  false,
+        "SchemaName":  "cdxmeta_IsBlocked",
+        "IsPrimaryName":  false,
+        "AttributeType":  "Boolean",
+        "LogicalName":  "cdxmeta_isblocked",
+        "AttributeTypeName":  null,
+        "OptionSet":  {
+                          "attribute_schema_name":  "cdxmeta_IsBlocked",
+                          "entity_logical_name":  "cdxmeta_workitem",
+                          "option_set_name":  "cdxmeta_workitem_cdxmeta_isblocked",
+                          "options":  [
+                                          {
+                                              "label":  "No",
+                                              "is_hidden":  false,
+                                              "value":  "0"
+                                          },
+                                          {
+                                              "label":  "Yes",
+                                              "is_hidden":  false,
+                                              "value":  "1"
+                                          }
+                                      ],
+                          "is_global":  null,
+                          "attribute_logical_name":  "cdxmeta_isblocked",
+                          "option_set_type":  "boolean"
+                      }
+    },
+    {
+        "LogicalName":  "cdxmeta_isblockedname",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_isblockedName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_priority",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_Priority",
+        "IsPrimaryName":  false
+    },
+    {
+        "DisplayName":  null,
+        "IsSecured":  false,
+        "SchemaName":  "cdxmeta_PriorityBand",
+        "IsPrimaryName":  false,
+        "AttributeType":  "Picklist",
+        "LogicalName":  "cdxmeta_priorityband",
+        "AttributeTypeName":  null,
+        "OptionSet":  {
+                          "attribute_schema_name":  "cdxmeta_PriorityBand",
+                          "entity_logical_name":  "cdxmeta_workitem",
+                          "option_set_name":  "cdxmeta_priorityband",
+                          "options":  [
+                                          {
+                                              "label":  "Low",
+                                              "is_hidden":  false,
+                                              "value":  "727270010"
+                                          },
+                                          {
+                                              "label":  "Medium",
+                                              "is_hidden":  false,
+                                              "value":  "727270011"
+                                          },
+                                          {
+                                              "label":  "High",
+                                              "is_hidden":  false,
+                                              "value":  "727270012"
+                                          }
+                                      ],
+                          "is_global":  true,
+                          "attribute_logical_name":  "cdxmeta_priorityband",
+                          "option_set_type":  "picklist"
+                      }
+    },
+    {
+        "LogicalName":  "cdxmeta_prioritybandname",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_prioritybandName",
+        "IsPrimaryName":  false
+    },
+    {
+        "DisplayName":  null,
+        "IsSecured":  false,
+        "SchemaName":  "cdxmeta_Stage",
+        "IsPrimaryName":  false,
+        "AttributeType":  "Picklist",
+        "LogicalName":  "cdxmeta_stage",
+        "AttributeTypeName":  null,
+        "OptionSet":  {
+                          "attribute_schema_name":  "cdxmeta_Stage",
+                          "entity_logical_name":  "cdxmeta_workitem",
+                          "option_set_name":  "cdxmeta_workitem_cdxmeta_stage",
+                          "options":  [
+                                          {
+                                              "label":  "Planned",
+                                              "is_hidden":  false,
+                                              "value":  "727270000"
+                                          },
+                                          {
+                                              "label":  "Active",
+                                              "is_hidden":  false,
+                                              "value":  "727270001"
+                                          },
+                                          {
+                                              "label":  "Done",
+                                              "is_hidden":  false,
+                                              "value":  "727270002"
+                                          }
+                                      ],
+                          "is_global":  false,
+                          "attribute_logical_name":  "cdxmeta_stage",
+                          "option_set_type":  "picklist"
+                      }
+    },
+    {
+        "LogicalName":  "cdxmeta_stagename",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_stageName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_summary",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_Summary",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_workitemid",
+        "DisplayName":  null,
+        "AttributeType":  "Uniqueidentifier",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_WorkItemId",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "cdxmeta_workitemname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "cdxmeta_WorkItemName",
+        "IsPrimaryName":  true
+    },
+    {
+        "LogicalName":  "createdby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdon",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOn",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdonbehalfby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOnBehalfBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdonbehalfbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOnBehalfByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "createdonbehalfbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "CreatedOnBehalfByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "importsequencenumber",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ImportSequenceNumber",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedon",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOn",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedonbehalfby",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOnBehalfBy",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedonbehalfbyname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOnBehalfByName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "modifiedonbehalfbyyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "ModifiedOnBehalfByYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "overriddencreatedon",
+        "DisplayName":  null,
+        "AttributeType":  "DateTime",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OverriddenCreatedOn",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "ownerid",
+        "DisplayName":  null,
+        "AttributeType":  "Owner",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerId",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owneridname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerIdName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owneridtype",
+        "DisplayName":  null,
+        "AttributeType":  "EntityName",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerIdType",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owneridyominame",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwnerIdYomiName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owningbusinessunit",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningBusinessUnit",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owningbusinessunitname",
+        "DisplayName":  null,
+        "AttributeType":  "String",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningBusinessUnitName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owningteam",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningTeam",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "owninguser",
+        "DisplayName":  null,
+        "AttributeType":  "Lookup",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "OwningUser",
+        "IsPrimaryName":  false
+    },
+    {
+        "DisplayName":  null,
+        "IsSecured":  false,
+        "SchemaName":  "statecode",
+        "IsPrimaryName":  false,
+        "AttributeType":  "State",
+        "LogicalName":  "statecode",
+        "AttributeTypeName":  null,
+        "OptionSet":  {
+                          "attribute_schema_name":  "statecode",
+                          "entity_logical_name":  "cdxmeta_workitem",
+                          "option_set_name":  "cdxmeta_workitem_statecode",
+                          "options":  [
+                                          {
+                                              "label":  "Active",
+                                              "is_hidden":  false,
+                                              "value":  "0"
+                                          },
+                                          {
+                                              "label":  "Inactive",
+                                              "is_hidden":  false,
+                                              "value":  "1"
+                                          }
+                                      ],
+                          "is_global":  null,
+                          "attribute_logical_name":  "statecode",
+                          "option_set_type":  "state"
+                      }
+    },
+    {
+        "LogicalName":  "statecodename",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "statecodeName",
+        "IsPrimaryName":  false
+    },
+    {
+        "DisplayName":  null,
+        "IsSecured":  false,
+        "SchemaName":  "statuscode",
+        "IsPrimaryName":  false,
+        "AttributeType":  "Status",
+        "LogicalName":  "statuscode",
+        "AttributeTypeName":  null,
+        "OptionSet":  {
+                          "attribute_schema_name":  "statuscode",
+                          "entity_logical_name":  "cdxmeta_workitem",
+                          "option_set_name":  "cdxmeta_workitem_statuscode",
+                          "options":  [
+                                          {
+                                              "label":  "Active",
+                                              "is_hidden":  false,
+                                              "value":  "1"
+                                          },
+                                          {
+                                              "label":  "Inactive",
+                                              "is_hidden":  false,
+                                              "value":  "2"
+                                          }
+                                      ],
+                          "is_global":  null,
+                          "attribute_logical_name":  "statuscode",
+                          "option_set_type":  "status"
+                      }
+    },
+    {
+        "LogicalName":  "statuscodename",
+        "DisplayName":  null,
+        "AttributeType":  "Virtual",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "statuscodeName",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "timezoneruleversionnumber",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "TimeZoneRuleVersionNumber",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "utcconversiontimezonecode",
+        "DisplayName":  null,
+        "AttributeType":  "Integer",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "UTCConversionTimeZoneCode",
+        "IsPrimaryName":  false
+    },
+    {
+        "LogicalName":  "versionnumber",
+        "DisplayName":  null,
+        "AttributeType":  "BigInt",
+        "IsSecured":  false,
+        "AttributeTypeName":  null,
+        "SchemaName":  "VersionNumber",
+        "IsPrimaryName":  false
+    }
+]

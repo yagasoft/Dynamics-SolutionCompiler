@@ -1,0 +1,28 @@
+{
+  "schema_name": "cdxmeta_AdvancedUiMode",
+  "display_name": "Advanced UI Scaffold Mode",
+  "description": "",
+  "default_value": "scaffold",
+  "type": "100000000",
+  "type_label": "String",
+  "secret_store": "0",
+  "secret_store_label": "Azure Key Vault",
+  "is_required": "0",
+  "introduced_version": "1.0.0.0",
+  "values": [
+    {
+      "value": "seed",
+      "is_customizable": "1"
+    }
+  ],
+  "summary": {
+    "counts": {
+      "value_count": 1
+    },
+    "type_label": "String",
+    "secret_store_label": "Azure Key Vault",
+    "comparison_signature": "ba6d561f4abb138853b5a11df9dec8bc812e28303ebae2dd69a38160b9c8798f",
+    "value_comparison_signature": "80b010dc26f2568c9375a299e3707eb7c45d046a13985fa1fac0c722caab0cc4",
+    "signature": "bf9d9dc249fabe15e0296e501ff28db1fb5438df5eb35225f8ac264132623770"
+  }
+}

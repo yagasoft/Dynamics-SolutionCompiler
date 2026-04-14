@@ -1,0 +1,58 @@
+﻿[
+    {
+        "savedqueryid":  "03280ae5-3a37-f111-88b3-0022489b9600",
+        "name":  "My Categories",
+        "returnedtypecode":  "cdxmeta_category",
+        "querytype":  8192,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" output-format=\"xml-platform\" savedqueryid=\"03280ae5-3a37-f111-88b3-0022489b9600\"\u003e\u003centity name=\"cdxmeta_category\"\u003e\u003cattribute name=\"cdxmeta_categoryid\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003ccondition attribute=\"ownerid\" operator=\"eq-userid\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  null
+    },
+    {
+        "savedqueryid":  "8daa158f-e559-497d-bb01-05e35b9fdfca",
+        "name":  "Category Advanced Find View",
+        "returnedtypecode":  "cdxmeta_category",
+        "querytype":  1,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"8daa158f-e559-497d-bb01-05e35b9fdfca\"\u003e\u003centity name=\"cdxmeta_category\"\u003e\u003cattribute name=\"cdxmeta_categoryid\" /\u003e\u003cattribute name=\"cdxmeta_categoryname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_categoryname\" descending=\"false\" /\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10782\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_categoryid\"\u003e\u003ccell name=\"cdxmeta_categoryname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "9f07e63b-ab5d-4add-879e-2b48494194b0",
+        "name":  "Category Lookup View",
+        "returnedtypecode":  "cdxmeta_category",
+        "querytype":  64,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"9f07e63b-ab5d-4add-879e-2b48494194b0\"\u003e\u003centity name=\"cdxmeta_category\"\u003e\u003cattribute name=\"cdxmeta_categoryid\" /\u003e\u003cattribute name=\"cdxmeta_categoryname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"cdxmeta_categories\" object=\"10782\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"0\"\u003e\u003crow name=\"cdxmeta_category\" id=\"cdxmeta_categoryid\"\u003e\u003ccell name=\"cdxmeta_categoryname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "73dde9da-0858-44c0-955e-43268e41a484",
+        "name":  "Quick Find Active Categories",
+        "returnedtypecode":  "cdxmeta_category",
+        "querytype":  4,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"73dde9da-0858-44c0-955e-43268e41a484\"\u003e\u003centity name=\"cdxmeta_category\"\u003e\u003cattribute name=\"cdxmeta_categoryid\" /\u003e\u003cattribute name=\"cdxmeta_categoryname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_categoryname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003cfilter type=\"or\" isquickfindfields=\"1\"\u003e\u003ccondition attribute=\"cdxmeta_categoryname\" operator=\"like\" value=\"{0}\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10782\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_categoryid\"\u003e\u003ccell name=\"cdxmeta_categoryname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "d28a8ea1-577b-46dc-90b0-86d153e00a22",
+        "name":  "Category Associated View",
+        "returnedtypecode":  "cdxmeta_category",
+        "querytype":  2,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"d28a8ea1-577b-46dc-90b0-86d153e00a22\"\u003e\u003centity name=\"cdxmeta_category\"\u003e\u003cattribute name=\"cdxmeta_categoryid\" /\u003e\u003cattribute name=\"cdxmeta_categoryname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_categoryname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"cdxmeta_categories\" object=\"10782\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"cdxmeta_category\" id=\"cdxmeta_categoryid\"\u003e\u003ccell name=\"cdxmeta_categoryname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "8ac7c1c7-0374-4606-9ab7-cfa2b95ead12",
+        "name":  "Inactive Categories",
+        "returnedtypecode":  "cdxmeta_category",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"8ac7c1c7-0374-4606-9ab7-cfa2b95ead12\"\u003e\u003centity name=\"cdxmeta_category\"\u003e\u003cattribute name=\"cdxmeta_categoryid\" /\u003e\u003cattribute name=\"cdxmeta_categoryname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_categoryname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"1\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10782\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_categoryid\"\u003e\u003ccell name=\"cdxmeta_categoryname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    },
+    {
+        "savedqueryid":  "2eb30f58-5138-4a2e-9bc5-fc21fd1de9f9",
+        "name":  "Active Categories",
+        "returnedtypecode":  "cdxmeta_category",
+        "querytype":  0,
+        "fetchxml":  "\u003cfetch version=\"1.0\" mapping=\"logical\" savedqueryid=\"2eb30f58-5138-4a2e-9bc5-fc21fd1de9f9\"\u003e\u003centity name=\"cdxmeta_category\"\u003e\u003cattribute name=\"cdxmeta_categoryid\" /\u003e\u003cattribute name=\"cdxmeta_categoryname\" /\u003e\u003cattribute name=\"createdon\" /\u003e\u003corder attribute=\"cdxmeta_categoryname\" descending=\"false\" /\u003e\u003cfilter type=\"and\"\u003e\u003ccondition attribute=\"statecode\" operator=\"eq\" value=\"0\" /\u003e\u003c/filter\u003e\u003c/entity\u003e\u003c/fetch\u003e",
+        "layoutxml":  "\u003cgrid name=\"resultset\" object=\"10782\" jump=\"cdxmeta_categoryname\" select=\"1\" icon=\"1\" preview=\"1\"\u003e\u003crow name=\"result\" id=\"cdxmeta_categoryid\"\u003e\u003ccell name=\"cdxmeta_categoryname\" width=\"300\" /\u003e\u003ccell name=\"createdon\" width=\"125\" /\u003e\u003c/row\u003e\u003c/grid\u003e"
+    }
+]

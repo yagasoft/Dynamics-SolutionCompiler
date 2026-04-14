@@ -1,0 +1,28 @@
+{
+  "schema_name": "cdxmeta_AppShellMode",
+  "display_name": "App Shell Mode",
+  "description": "Neutral environment variable for the Dataverse metadata synthesis app-shell seed.",
+  "default_value": "standard",
+  "type": "100000000",
+  "type_label": "String",
+  "secret_store": "0",
+  "secret_store_label": "Azure Key Vault",
+  "is_required": "0",
+  "introduced_version": "1.0.0.0",
+  "values": [
+    {
+      "value": "guided",
+      "is_customizable": "1"
+    }
+  ],
+  "summary": {
+    "counts": {
+      "value_count": 1
+    },
+    "type_label": "String",
+    "secret_store_label": "Azure Key Vault",
+    "comparison_signature": "a3f2764132312538b1b4dee39b9b79086807baa43c841350a2241c35a5e05158",
+    "value_comparison_signature": "b8584edfd6156d9f5889ba6ca821b0e860874a17ae3c1024b5f4cf50a44c0737",
+    "signature": "e40b5a813ea37a05e284440b264b91528da523b423ae48e4f473bcf168dbd523"
+  }
+}

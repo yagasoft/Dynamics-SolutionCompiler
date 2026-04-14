@@ -1,0 +1,1 @@
+<fetch mapping="logical" version="1.0"><entity name="cdxmeta_checkpoint"><attribute name="cdxmeta_checkpointid" /><attribute name="cdxmeta_checkpointname" /><attribute name="createdon" /><order attribute="cdxmeta_checkpointname" descending="false" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /></filter></entity></fetch>

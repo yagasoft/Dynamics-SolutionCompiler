@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26033.170" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26033.00170">
+  <Entities />
+  <Roles />
+  <Workflows />
+  <FieldSecurityProfiles />
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <RoutingRules />
+  <MobileOfflineProfiles />
+  <CustomControls />
+  <SimilarityRules>
+    <SimilarityRule SimilarityRuleId="{3B0D5FB7-7F92-4A8A-AE36-6FC1C7A96165}" Name="Codex Metadata Account Similarity Rule">
+      <Description>Compact source-only similarity-rule parser fixture.</Description>
+      <BaseEntityName>account</BaseEntityName>
+      <MatchingEntityName>account</MatchingEntityName>
+      <ExcludeInactiveRecords>1</ExcludeInactiveRecords>
+      <MaxKeywords>5</MaxKeywords>
+      <NgramSize>2</NgramSize>
+    </SimilarityRule>
+  </SimilarityRules>
+  <EntityDataProviders />
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

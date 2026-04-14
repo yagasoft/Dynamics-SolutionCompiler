@@ -1,0 +1,25 @@
+{
+  "name": "Work Item Advanced Find View",
+  "id": "{a806b807-120e-4225-be4d-780c04932180}",
+  "returned_type_code": "",
+  "fetchxml": "<fetch version=\"1.0\" mapping=\"logical\">\n        <entity name=\"cdxmeta_workitem\">\n          <attribute name=\"cdxmeta_workitemid\" />\n          <attribute name=\"cdxmeta_workitemname\" />\n          <attribute name=\"createdon\" />\n          <order attribute=\"cdxmeta_workitemname\" descending=\"false\" />\n        </entity>\n      </fetch>",
+  "layoutxml": "<grid name=\"resultset\" jump=\"cdxmeta_workitemname\" select=\"1\" icon=\"1\" preview=\"1\">\n        <row name=\"result\" id=\"cdxmeta_workitemid\">\n          <cell name=\"cdxmeta_workitemname\" width=\"300\" />\n          <cell name=\"createdon\" width=\"125\" />\n        </row>\n      </grid>",
+  "summary": {
+    "target_entity": "cdxmeta_workitem",
+    "layout_columns": [
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "fetch_attributes": [
+      "cdxmeta_workitemid",
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "link_entities": [],
+    "filters": [],
+    "orders": [
+      "cdxmeta_workitemname"
+    ],
+    "signature": "b7dcca6ce8c040d4b0c6b7eb2ef8fe7d09f0f474f11fd324348af4a0d92b5eee"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "{4c205db4-6737-f111-88b3-0022489b9600}",
+  "name": "Codex Metadata Routing Rule",
+  "description": "Neutral routing rule for Dataverse metadata synthesis.",
+  "workflow_id": "",
+  "state_code": "",
+  "status_code": "",
+  "items": [
+    {
+      "id": "bdd324c4-6737-f111-88b3-0022489b9600",
+      "name": "Codex Metadata Routing Rule Item",
+      "comparison_key": "codex metadata routing rule|Route all",
+      "routing_rule_name": "Codex Metadata Routing Rule",
+      "routing_rule_id": "{4c205db4-6737-f111-88b3-0022489b9600}",
+      "assign_object_id": "",
+      "assign_object_id_type": "",
+      "description": "Route all",
+      "condition_xml": "<conditions />",
+      "summary": {
+        "comparison_signature": "1b0c8d090e0d08c0b2e0013d09bee01617fb379e3a2b251e15fa59b370860f99",
+        "signature": "1b0c8d090e0d08c0b2e0013d09bee01617fb379e3a2b251e15fa59b370860f99"
+      }
+    }
+  ],
+  "summary": {
+    "comparison_signature": "4cfbc2baf6c64bb5a9cdd932b2e64712a6f7e5afef5a04594b5bac2f8ffc4423",
+    "signature": "9ef804ce76f7416e508a644d4cc24d407af4e41b75f7f74361047f9a957da973"
+  }
+}

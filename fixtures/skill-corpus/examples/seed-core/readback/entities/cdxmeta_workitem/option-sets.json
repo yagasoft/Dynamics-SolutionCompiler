@@ -1,0 +1,112 @@
+﻿[
+    {
+        "attribute_schema_name":  "cdxmeta_PriorityBand",
+        "entity_logical_name":  "cdxmeta_workitem",
+        "option_set_name":  "cdxmeta_priorityband",
+        "options":  [
+                        {
+                            "label":  "Low",
+                            "is_hidden":  false,
+                            "value":  "727270010"
+                        },
+                        {
+                            "label":  "Medium",
+                            "is_hidden":  false,
+                            "value":  "727270011"
+                        },
+                        {
+                            "label":  "High",
+                            "is_hidden":  false,
+                            "value":  "727270012"
+                        }
+                    ],
+        "is_global":  true,
+        "attribute_logical_name":  "cdxmeta_priorityband",
+        "option_set_type":  "picklist"
+    },
+    {
+        "attribute_schema_name":  "cdxmeta_Stage",
+        "entity_logical_name":  "cdxmeta_workitem",
+        "option_set_name":  "cdxmeta_workitem_cdxmeta_stage",
+        "options":  [
+                        {
+                            "label":  "Planned",
+                            "is_hidden":  false,
+                            "value":  "727270000"
+                        },
+                        {
+                            "label":  "Active",
+                            "is_hidden":  false,
+                            "value":  "727270001"
+                        },
+                        {
+                            "label":  "Done",
+                            "is_hidden":  false,
+                            "value":  "727270002"
+                        }
+                    ],
+        "is_global":  false,
+        "attribute_logical_name":  "cdxmeta_stage",
+        "option_set_type":  "picklist"
+    },
+    {
+        "attribute_schema_name":  "cdxmeta_IsBlocked",
+        "entity_logical_name":  "cdxmeta_workitem",
+        "option_set_name":  "cdxmeta_workitem_cdxmeta_isblocked",
+        "options":  [
+                        {
+                            "label":  "No",
+                            "is_hidden":  false,
+                            "value":  "0"
+                        },
+                        {
+                            "label":  "Yes",
+                            "is_hidden":  false,
+                            "value":  "1"
+                        }
+                    ],
+        "is_global":  null,
+        "attribute_logical_name":  "cdxmeta_isblocked",
+        "option_set_type":  "boolean"
+    },
+    {
+        "attribute_schema_name":  "statecode",
+        "entity_logical_name":  "cdxmeta_workitem",
+        "option_set_name":  "cdxmeta_workitem_statecode",
+        "options":  [
+                        {
+                            "label":  "Active",
+                            "is_hidden":  false,
+                            "value":  "0"
+                        },
+                        {
+                            "label":  "Inactive",
+                            "is_hidden":  false,
+                            "value":  "1"
+                        }
+                    ],
+        "is_global":  null,
+        "attribute_logical_name":  "statecode",
+        "option_set_type":  "state"
+    },
+    {
+        "attribute_schema_name":  "statuscode",
+        "entity_logical_name":  "cdxmeta_workitem",
+        "option_set_name":  "cdxmeta_workitem_statuscode",
+        "options":  [
+                        {
+                            "label":  "Active",
+                            "is_hidden":  false,
+                            "value":  "1"
+                        },
+                        {
+                            "label":  "Inactive",
+                            "is_hidden":  false,
+                            "value":  "2"
+                        }
+                    ],
+        "is_global":  null,
+        "attribute_logical_name":  "statuscode",
+        "option_set_type":  "status"
+    }
+]

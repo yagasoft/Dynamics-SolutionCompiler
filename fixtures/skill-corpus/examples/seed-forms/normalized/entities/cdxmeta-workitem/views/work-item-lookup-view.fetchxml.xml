@@ -1,0 +1,1 @@
+<fetch mapping="logical" version="1.0"><entity name="cdxmeta_workitem"><attribute name="cdxmeta_workitemid" /><attribute name="cdxmeta_workitemname" /><attribute name="createdon" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /></filter></entity></fetch>

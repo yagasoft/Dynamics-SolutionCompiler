@@ -1,0 +1,41 @@
+{
+  "id": "",
+  "unique_name": "codex_metadata_shell_dd96cf20",
+  "display_name": "Codex Metadata Shell",
+  "description": "Neutral model-driven app for Dataverse metadata synthesis skill coverage.",
+  "web_resource_id": "953b9fac-1e5e-e611-80d6-00155ded156f",
+  "client_type": "4",
+  "form_factor": "1",
+  "navigation_type": "0",
+  "state_code": "0",
+  "status_code": "1",
+  "components": [
+    {
+      "type": "62",
+      "type_label": "Site Map",
+      "schema_name": "codex_metadata_shell_dd96cf20"
+    }
+  ],
+  "role_ids": [
+    "{627090ff-40a3-4053-8790-584edc5be201}",
+    "{119f245c-3cc8-4b62-b31c-d1a046ced15d}"
+  ],
+  "app_settings": [
+    {
+      "setting_definition_unique_name": "AppChannel",
+      "value": "1"
+    }
+  ],
+  "summary": {
+    "counts": {
+      "component_count": 1,
+      "role_map_count": 2,
+      "app_setting_count": 1
+    },
+    "component_types": [
+      "62:Site Map"
+    ],
+    "comparison_signature": "543fd26e1e00f3eff071ca00730f84a9d971cc1aae50a7e35b0a89f715016e54",
+    "signature": "6f69faa56ef2bf3c411b01d349069689b47fa674c86f1d0d88e96e0cf6642667"
+  }
+}

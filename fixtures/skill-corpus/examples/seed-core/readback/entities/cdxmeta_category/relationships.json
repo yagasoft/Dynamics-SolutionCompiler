@@ -1,0 +1,105 @@
+﻿{
+    "many_to_many":  [
+
+                     ],
+    "one_to_many":  [
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_workitem",
+                            "ReferencingAttribute":  "cdxmeta_categoryid",
+                            "ReferencingEntity":  "cdxmeta_workitem"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_SyncErrors",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "syncerror"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_AsyncOperations",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "asyncoperation"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_MailboxTrackingFolders",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "mailboxtrackingfolder"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_UserEntityInstanceDatas",
+                            "ReferencingAttribute":  "objectid",
+                            "ReferencingEntity":  "userentityinstancedata"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_ProcessSession",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "processsession"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_BulkDeleteFailures",
+                            "ReferencingAttribute":  "regardingobjectid",
+                            "ReferencingEntity":  "bulkdeletefailure"
+                        },
+                        {
+                            "ReferencedEntity":  "cdxmeta_category",
+                            "SchemaName":  "cdxmeta_category_PrincipalObjectAttributeAccesses",
+                            "ReferencingAttribute":  "objectid",
+                            "ReferencingEntity":  "principalobjectattributeaccess"
+                        }
+                    ],
+    "many_to_one":  [
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_category_createdby",
+                            "ReferencingAttribute":  "createdby",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_category_createdonbehalfby",
+                            "ReferencingAttribute":  "createdonbehalfby",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_category_modifiedby",
+                            "ReferencingAttribute":  "modifiedby",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "lk_cdxmeta_category_modifiedonbehalfby",
+                            "ReferencingAttribute":  "modifiedonbehalfby",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        },
+                        {
+                            "ReferencedEntity":  "systemuser",
+                            "SchemaName":  "user_cdxmeta_category",
+                            "ReferencingAttribute":  "owninguser",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        },
+                        {
+                            "ReferencedEntity":  "team",
+                            "SchemaName":  "team_cdxmeta_category",
+                            "ReferencingAttribute":  "owningteam",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        },
+                        {
+                            "ReferencedEntity":  "owner",
+                            "SchemaName":  "owner_cdxmeta_category",
+                            "ReferencingAttribute":  "ownerid",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        },
+                        {
+                            "ReferencedEntity":  "businessunit",
+                            "SchemaName":  "business_unit_cdxmeta_category",
+                            "ReferencingAttribute":  "owningbusinessunit",
+                            "ReferencingEntity":  "cdxmeta_category"
+                        }
+                    ]
+}

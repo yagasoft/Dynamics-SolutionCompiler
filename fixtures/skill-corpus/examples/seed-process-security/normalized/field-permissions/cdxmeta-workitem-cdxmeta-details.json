@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "comparison_key": "cdxmeta_workitem|cdxmeta_details",
+  "profile_name": "",
+  "profile_id": "",
+  "entity_name": "cdxmeta_workitem",
+  "attribute_logical_name": "cdxmeta_details",
+  "can_create": "4",
+  "can_read": "4",
+  "can_read_unmasked": "0",
+  "can_update": "4",
+  "summary": {
+    "comparison_signature": "bb6c96f9f2f6b71cfb010f787b4648aeb48afbb6b50ef6f4d0d2740ce6efc734",
+    "signature": "bb6c96f9f2f6b71cfb010f787b4648aeb48afbb6b50ef6f4d0d2740ce6efc734"
+  }
+}

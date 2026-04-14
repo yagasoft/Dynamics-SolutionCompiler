@@ -1,0 +1,1 @@
+<fetch mapping="logical" output-format="xml-platform" version="1.0"><entity name="cdxmeta_category"><attribute name="cdxmeta_categoryid" /><filter type="and"><condition attribute="statecode" operator="eq" value="0" /><condition attribute="ownerid" operator="eq-userid" /></filter></entity></fetch>

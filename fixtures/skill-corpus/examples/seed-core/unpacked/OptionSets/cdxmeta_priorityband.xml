@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<optionset Name="cdxmeta_priorityband" localizedName="Priority Band" description="Reusable global choice for neutral schema-detail coverage." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OptionSetType>picklist</OptionSetType>
+  <IsGlobal>1</IsGlobal>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <displaynames>
+    <displayname description="Priority Band" languagecode="1033" />
+  </displaynames>
+  <Descriptions>
+    <Description description="Reusable global choice for neutral schema-detail coverage." languagecode="1033" />
+  </Descriptions>
+  <options>
+    <option value="727270010" ExternalValue="" IsHidden="0">
+      <labels>
+        <label description="Low" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="727270011" ExternalValue="" IsHidden="0">
+      <labels>
+        <label description="Medium" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="727270012" ExternalValue="" IsHidden="0">
+      <labels>
+        <label description="High" languagecode="1033" />
+      </labels>
+    </option>
+  </options>
+</optionset>

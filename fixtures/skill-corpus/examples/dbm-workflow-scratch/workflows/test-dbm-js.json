@@ -1,0 +1,23 @@
+{
+  "id": "{1fe4d3dc-dad0-4b93-bed0-2129d8e9639d}",
+  "name": "Test DBM JS",
+  "category": "0",
+  "mode": "1",
+  "scope": "4",
+  "on_demand": "1",
+  "primary_entity": "Contact",
+  "state_code": "0",
+  "status_code": "1",
+  "xaml_file_name": "/Workflows/TestDBMJS-1FE4D3DC-DAD0-4B93-BED0-2129D8E9639D.xaml",
+  "xaml_text": "<Activity x:Class=\"XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d\" xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:mva=\"clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:mxs=\"clr-namespace:Microsoft.Xrm.Sdk;assembly=Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:mxswa=\"clr-namespace:Microsoft.Xrm.Sdk.Workflow.Activities;assembly=Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\" xmlns:scg=\"clr-namespace:System.Collections.Generic;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\" xmlns:srs=\"clr-namespace:System.Runtime.Serialization;assembly=System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\" xmlns:this=\"clr-namespace:\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\">\r\n  <x:Members>\r\n    <x:Property Name=\"InputEntities\" Type=\"InArgument(scg:IDictionary(x:String, mxs:Entity))\" />\r\n    <x:Property Name=\"CreatedEntities\" Type=\"InArgument(scg:IDictionary(x:String, mxs:Entity))\" />\r\n  </x:Members>\r\n  <this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.InputEntities>\r\n    <InArgument x:TypeArguments=\"scg:IDictionary(x:String, mxs:Entity)\" />\r\n  </this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.InputEntities>\r\n  <this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.CreatedEntities>\r\n    <InArgument x:TypeArguments=\"scg:IDictionary(x:String, mxs:Entity)\" />\r\n  </this:XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d.CreatedEntities>\r\n  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>\r\n  <mxswa:Workflow />\r\n</Activity>",
+  "summary": {
+    "counts": {
+      "activity_count": 10,
+      "xaml_length": 1791
+    },
+    "xaml_root_tag": "Activity",
+    "xaml_class": "XrmWorkflow1fe4d3dcdad04b93bed02129d8e9639d",
+    "comparison_signature": "be5b63551c5369d16631abc200199845c7521099b3c09aabba68c5870a58be1c",
+    "signature": "e3789012d0834211addb6eca24581bb7806c2595fa18efa042433918e6b8c61c"
+  }
+}
