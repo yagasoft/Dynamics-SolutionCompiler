@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_checkpoint",
+  "DisplayName": "Checkpoint",
+  "schemaName": "cdxmeta_Checkpoint",
+  "description": "Child records used to demonstrate related-data form composition.",
+  "entitySetName": "cdxmeta_checkpoints",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_checkpointid",
+  "primaryNameAttribute": "cdxmeta_checkpointname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

@@ -1,0 +1,16 @@
+{
+  "Family": 15,
+  "LogicalName": "cdxmeta_/shell/icon.svg",
+  "DisplayName": "Codex Metadata Shell Icon SVG",
+  "metadataSourcePath": "WebResources/cdxmeta_/shell/icon.svg.data.xml",
+  "assetSourcePaths": [
+    "WebResources/cdxmeta_/shell/icon.svg"
+  ],
+  "properties": {
+    "byteLength": "243",
+    "contentHash": "f3ab323557e9683e58cec264aeb606427cba2ee402ee61a318c8c65970394a99",
+    "description": "Neutral SVG icon for the app-shell seed.",
+    "webResourceType": "11",
+    "webResourceTypeLabel": "svg"
+  }
+}

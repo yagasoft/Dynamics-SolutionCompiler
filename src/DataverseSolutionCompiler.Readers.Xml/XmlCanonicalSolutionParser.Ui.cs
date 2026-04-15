@@ -196,6 +196,7 @@ internal sealed partial class XmlCanonicalSolutionParser
             var fetchEntity = dataDefinition?.Descendants().FirstOrDefault(element => element.Name.LocalName.Equals("entity", StringComparison.OrdinalIgnoreCase));
             var targetEntity = NormalizeLogicalName(fetchEntity?.AttributeValue("name") ?? entityLogicalName);
             var displayName = LocalizedDescription(visualization.ElementLocal("LocalizedNames")) ?? Text(visualization.ElementLocal("savedqueryvisualizationid")) ?? Path.GetFileNameWithoutExtension(file);
+            var visualizationId = NormalizeGuid(Text(visualization.ElementLocal("savedqueryvisualizationid")));
             var chartTypes = visualization
                 .ElementLocal("presentationdescription")
                 ?.Descendants()
@@ -252,6 +253,9 @@ internal sealed partial class XmlCanonicalSolutionParser
                 CreateProperties(
                     (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
                     (ArtifactPropertyKeys.TargetEntity, targetEntity),
+                    (ArtifactPropertyKeys.VisualizationId, visualizationId),
+                    (ArtifactPropertyKeys.Description, LocalizedDescription(visualization.ElementLocal("Descriptions"))),
+                    (ArtifactPropertyKeys.IntroducedVersion, Text(visualization.ElementLocal("IntroducedVersion"))),
                     (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(file)),
                     (ArtifactPropertyKeys.DataDescriptionXml, NormalizeXml(visualization.ElementLocal("datadescription"))),
                     (ArtifactPropertyKeys.PresentationDescriptionXml, NormalizeXml(visualization.ElementLocal("presentationdescription"))),
@@ -275,7 +279,7 @@ internal sealed partial class XmlCanonicalSolutionParser
     {
         if (IsQuickFormControl(control))
         {
-            return "quick-form";
+            return "quickView";
         }
 
         if (IsSubgridControl(control))
@@ -283,7 +287,9 @@ internal sealed partial class XmlCanonicalSolutionParser
             return "subgrid";
         }
 
-        return "field";
+        return !string.IsNullOrWhiteSpace(ExtractFormFieldLogicalName(control))
+            ? "field"
+            : "unsupported";
     }
 
     private static object BuildFormDefinition(System.Xml.Linq.XElement form, string? displayName, string? description, string formType)
@@ -302,13 +308,11 @@ internal sealed partial class XmlCanonicalSolutionParser
                     {
                         name = section.AttributeValue("name") ?? $"section_{sectionIndex + 1}",
                         label = LocalizedDescription(section.ElementLocal("labels")) ?? section.AttributeValue("name") ?? $"Section {sectionIndex + 1}",
-                        fields = section
+                        controls = section
                             .Descendants()
-                            .Where(element => element.Name.LocalName.Equals("control", StringComparison.OrdinalIgnoreCase))
-                            .Select(ExtractFormFieldLogicalName)
-                            .Where(value => !string.IsNullOrWhiteSpace(value))
-                            .Select(value => value!)
-                            .Distinct(StringComparer.OrdinalIgnoreCase)
+                            .Where(element => element.Name.LocalName.Equals("cell", StringComparison.OrdinalIgnoreCase))
+                            .Select(cell => BuildFormControlDefinition(cell))
+                            .Where(control => control is not null)
                             .ToArray()
                     })
                     .ToArray()
@@ -337,4 +341,97 @@ internal sealed partial class XmlCanonicalSolutionParser
 
     private static string? ExtractFormFieldLogicalName(System.Xml.Linq.XElement control) =>
         NormalizeLogicalName(control.AttributeValue("datafieldname"));
+
+    private static object? BuildFormControlDefinition(System.Xml.Linq.XElement cell)
+    {
+        var control = cell.Elements().FirstOrDefault(element => element.Name.LocalName.Equals("control", StringComparison.OrdinalIgnoreCase));
+        if (control is null)
+        {
+            return null;
+        }
+
+        var role = DescribeControlRole(control);
+        var label = LocalizedDescription(cell.ElementLocal("labels"));
+        var parameters = ReadControlParameters(control);
+        var dataFieldName = ExtractFormFieldLogicalName(control);
+
+        return role switch
+        {
+            "field" => new
+            {
+                kind = "field",
+                field = dataFieldName,
+                label
+            },
+            "quickView" => BuildQuickViewControlDefinition(dataFieldName, label, parameters),
+            "subgrid" => new
+            {
+                kind = "subgrid",
+                label,
+                relationshipName = Text(parameters.ElementLocal("RelationshipName")),
+                targetTable = NormalizeLogicalName(Text(parameters.ElementLocal("TargetEntityType"))),
+                defaultViewId = NormalizeGuid(Text(parameters.ElementLocal("ViewId"))),
+                isUserView = ParseOptionalBool(Text(parameters.ElementLocal("IsUserView"))),
+                autoExpand = Text(parameters.ElementLocal("AutoExpand")),
+                enableQuickFind = ParseOptionalBool(Text(parameters.ElementLocal("EnableQuickFind"))),
+                enableViewPicker = ParseOptionalBool(Text(parameters.ElementLocal("EnableViewPicker"))),
+                enableJumpBar = ParseOptionalBool(Text(parameters.ElementLocal("EnableJumpBar"))),
+                enableChartPicker = ParseOptionalBool(Text(parameters.ElementLocal("EnableChartPicker"))),
+                recordsPerPage = ParseOptionalInt(Text(parameters.ElementLocal("RecordsPerPage")))
+            },
+            _ => new
+            {
+                kind = "unsupported",
+                label
+            }
+        };
+    }
+
+    private static object BuildQuickViewControlDefinition(string? dataFieldName, string? label, System.Xml.Linq.XElement parameters)
+    {
+        var (entityName, quickFormId) = ParseQuickFormReference(Text(parameters.ElementLocal("QuickForms")));
+        return new
+        {
+            kind = "quickView",
+            field = dataFieldName,
+            label,
+            quickFormEntity = entityName,
+            quickFormId = quickFormId,
+            controlMode = Text(parameters.ElementLocal("ControlMode"))
+        };
+    }
+
+    private static System.Xml.Linq.XElement ReadControlParameters(System.Xml.Linq.XElement control) =>
+        control.ElementLocal("parameters") ?? new System.Xml.Linq.XElement("parameters");
+
+    private static (string? EntityName, string? QuickFormId) ParseQuickFormReference(string? quickFormsXml)
+    {
+        if (string.IsNullOrWhiteSpace(quickFormsXml))
+        {
+            return (null, null);
+        }
+
+        try
+        {
+            var root = System.Xml.Linq.XElement.Parse(quickFormsXml);
+            var quickForm = root.Descendants().FirstOrDefault(element => element.Name.LocalName.Equals("QuickFormId", StringComparison.OrdinalIgnoreCase));
+            return (
+                NormalizeLogicalName(quickForm?.AttributeValue("entityname")),
+                NormalizeGuid(quickForm?.Value));
+        }
+        catch
+        {
+            return (null, null);
+        }
+    }
+
+    private static int? ParseOptionalInt(string? value) =>
+        int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed)
+            ? parsed
+            : null;
+
+    private static bool? ParseOptionalBool(string? value) =>
+        string.IsNullOrWhiteSpace(value)
+            ? null
+            : NormalizeBoolean(value).Equals("true", StringComparison.OrdinalIgnoreCase);
 }

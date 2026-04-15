@@ -159,8 +159,7 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
             ],
             [ComponentFamily.AppModule] =
             [
-                ArtifactPropertyKeys.ComponentTypesJson,
-                ArtifactPropertyKeys.AppSettingCount
+                ArtifactPropertyKeys.ComponentTypesJson
             ],
             [ComponentFamily.AppSetting] =
             [
@@ -667,6 +666,7 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
     private static bool ShouldIgnoreArtifact(FamilyArtifact artifact) =>
         artifact.Family switch
         {
+            ComponentFamily.AppSetting => true,
             ComponentFamily.Column => ShouldIgnoreColumn(artifact),
             ComponentFamily.Form => ShouldIgnoreForm(artifact),
             ComponentFamily.LegacyAsset => true,

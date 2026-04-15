@@ -1,0 +1,27 @@
+<AppModule>
+<UniqueName>cdxrf_rebuild_shell</UniqueName>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<WebResourceId>953b9fac-1e5e-e611-80d6-00155ded156f</WebResourceId>
+<OptimizedFor />
+<statecode>0</statecode>
+<statuscode>1</statuscode>
+<FormFactor>1</FormFactor>
+<ClientType>4</ClientType>
+<NavigationType>0</NavigationType>
+<AppModuleComponents>
+<AppModuleComponent type="62" schemaName="cdxrf_rebuild_shell" />
+</AppModuleComponents>
+<AppModuleRoleMaps />
+<LocalizedNames>
+<LocalizedName description="Rebuild Fidelity Shell" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Entity-only shell for reverse-generation proof." languagecode="1033" />
+</Descriptions>
+<appsettings>
+<appsetting settingdefinitionid.uniquename="AppChannel">
+<iscustomizable>1</iscustomizable>
+<value>1</value>
+</appsetting>
+</appsettings>
+</AppModule>

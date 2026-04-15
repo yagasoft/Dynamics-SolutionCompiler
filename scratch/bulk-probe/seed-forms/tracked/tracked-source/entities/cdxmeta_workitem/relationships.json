@@ -1,0 +1,10 @@
+[
+  {
+    "LogicalName": "cdxmeta_workitem_checkpoint",
+    "relationshipType": "OneToMany",
+    "referencedEntity": "cdxmeta_workitem",
+    "referencingEntity": "cdxmeta_checkpoint",
+    "referencingAttribute": "cdxmeta_workitemid",
+    "description": "Parent work item for the checkpoint."
+  }
+]

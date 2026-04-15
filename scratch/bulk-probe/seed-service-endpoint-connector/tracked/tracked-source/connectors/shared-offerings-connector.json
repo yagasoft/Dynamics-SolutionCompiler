@@ -1,0 +1,17 @@
+{
+  "LogicalName": "shared-offerings-connector",
+  "DisplayName": "Codex Shared Connector",
+  "metadataSourcePath": "Connectors/shared-offerings-connector/Connector.xml",
+  "assetSourcePaths": [],
+  "name": "codex_shared_connector",
+  "description": "Neutral shared connector for compiler proof.",
+  "connectorInternalId": "shared-offerings-connector",
+  "connectorType": "1",
+  "capabilities": [
+    "actions",
+    "cloud"
+  ],
+  "introducedVersion": "1.0",
+  "isCustomizable": true,
+  "comparisonSignature": "bd31910de9f51620162042aa89a3b1d893b6f5677f9e5d6ec01c8ebf72e2de4d"
+}

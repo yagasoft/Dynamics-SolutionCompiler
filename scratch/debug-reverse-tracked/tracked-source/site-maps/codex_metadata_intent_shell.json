@@ -1,0 +1,50 @@
+{
+  "Family": 14,
+  "LogicalName": "codex_metadata_intent_shell",
+  "DisplayName": "Codex Metadata Intent Shell",
+  "metadataSourcePath": null,
+  "assetSourcePaths": [],
+  "properties": {
+    "areaCount": "1",
+    "comparisonSignature": "86157464b58dd483bc1d7b7241f35ef05c7d007404f58f666b91829430f85d7c",
+    "groupCount": "1",
+    "siteMapDefinitionJson": {
+      "areas": [
+        {
+          "id": "area_codex_metadata",
+          "title": "Codex Metadata",
+          "groups": [
+            {
+              "id": "group_work",
+              "title": "Work",
+              "subAreas": [
+                {
+                  "id": "subarea_workitems",
+                  "title": "Work Items",
+                  "entity": "cdxmeta_workitem",
+                  "url": null,
+                  "webResource": null
+                },
+                {
+                  "id": "subarea_categories",
+                  "title": "Categories",
+                  "entity": "cdxmeta_category",
+                  "url": null,
+                  "webResource": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "subAreaCount": "2",
+    "summaryJson": {
+      "areaCount": 1,
+      "groupCount": 1,
+      "subAreaCount": 2,
+      "webResourceSubAreaCount": 0
+    },
+    "webResourceSubAreaCount": "0"
+  }
+}

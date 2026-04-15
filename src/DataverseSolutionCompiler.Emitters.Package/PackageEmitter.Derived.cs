@@ -15,6 +15,9 @@ public sealed partial class PackageEmitter
     };
 
     private static readonly XNamespace XsiNamespace = "http://www.w3.org/2001/XMLSchema-instance";
+    private const string DefaultAppModuleIconWebResourceId = "953b9fac-1e5e-e611-80d6-00155ded156f";
+    private const string QuickViewControlClassId = "{5C5600E0-1D6E-4205-A272-BE80DA87FD42}";
+    private const string SubgridControlClassId = "{E7A81278-8635-4d9e-8D4D-59480B391C5B}";
 
     private static void WriteDerivedPackageInputTree(
         CanonicalSolution model,
@@ -26,6 +29,7 @@ public sealed partial class PackageEmitter
         WriteDerivedEntityFiles(model, packageRoot, emittedFiles);
         WriteDerivedRelationshipFiles(model, packageRoot, emittedFiles);
         WriteDerivedGlobalOptionSets(model, packageRoot, emittedFiles);
+        WriteDerivedVisualizations(model, packageRoot, emittedFiles);
         WriteDerivedAppModules(model, packageRoot, emittedFiles);
         WriteDerivedEnvironmentVariables(model, packageRoot, emittedFiles);
 
@@ -82,7 +86,11 @@ public sealed partial class PackageEmitter
                 new XElement("EntityRelationships"),
                 new XElement("OrganizationSettings"),
                 new XElement("optionsets"),
+                new XElement("SavedQueryVisualizations"),
+                new XElement("WebResources"),
                 new XElement("CustomControls"),
+                new XElement("AppModuleSiteMaps"),
+                new XElement("AppModules"),
                 new XElement("EntityDataProviders"),
                 new XElement("Languages", new XElement("Language", "1033"))),
             emittedFiles,
@@ -131,13 +139,6 @@ public sealed partial class PackageEmitter
                 new XAttribute("behavior", "0"));
         }
 
-        foreach (var environmentVariable in model.Artifacts.Where(artifact => artifact.Family == ComponentFamily.EnvironmentVariableDefinition).OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase))
-        {
-            yield return new XElement("RootComponent",
-                new XAttribute("type", "380"),
-                new XAttribute("schemaName", environmentVariable.LogicalName),
-                new XAttribute("behavior", "0"));
-        }
     }
 
     private static void WriteDerivedEntityFiles(CanonicalSolution model, string packageRoot, List<EmittedArtifact> emittedFiles)
@@ -151,6 +152,7 @@ public sealed partial class PackageEmitter
         {
             var entityLogicalName = GetProperty(table, ArtifactPropertyKeys.EntityLogicalName) ?? table.LogicalName;
             var entitySchemaName = GetProperty(table, ArtifactPropertyKeys.SchemaName) ?? table.LogicalName;
+            var primaryImageAttribute = GetProperty(table, ArtifactPropertyKeys.PrimaryImageAttribute);
             var entityDirectory = $"Entities/{entitySchemaName}";
             var columns = allColumns
                 .Where(column => string.Equals(GetProperty(column, ArtifactPropertyKeys.EntityLogicalName), entityLogicalName, StringComparison.OrdinalIgnoreCase))
@@ -178,6 +180,7 @@ public sealed partial class PackageEmitter
                                 new XAttribute("languagecode", "1033"))),
                         CreateDescriptions(GetProperty(table, ArtifactPropertyKeys.Description)),
                         new XElement("EntitySetName", GetProperty(table, ArtifactPropertyKeys.EntitySetName) ?? $"{entityLogicalName}s"),
+                        string.IsNullOrWhiteSpace(primaryImageAttribute) ? null : new XElement("PrimaryImageAttribute", primaryImageAttribute),
                         new XElement("IsDuplicateCheckSupported", "0"),
                         new XElement("IsBusinessProcessEnabled", "0"),
                         new XElement("IsRequiredOffline", "0"),
@@ -327,6 +330,12 @@ public sealed partial class PackageEmitter
                 new XElement("Format", "textarea"),
                 new XElement("MaxLength", "2000"));
         }
+        else if (string.Equals(attributeType, "image", StringComparison.OrdinalIgnoreCase))
+        {
+            element.Add(
+                new XElement("CanStoreFullImage", string.Equals(GetProperty(column, ArtifactPropertyKeys.CanStoreFullImage), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+                new XElement("IsPrimaryImage", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsPrimaryImage), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"));
+        }
 
         if (localOptionSets.TryGetValue(column.LogicalName, out var localOptionSet))
         {
@@ -454,7 +463,8 @@ public sealed partial class PackageEmitter
                 CreateLocalizedNames(form.DisplayName ?? form.LogicalName),
                 CreateDescriptions(GetProperty(form, ArtifactPropertyKeys.Description))));
 
-        WriteXml(packageRoot, $"{entityDirectory}/FormXml/main/{{{formId}}}.xml", root, emittedFiles, $"Synthesized main form for {form.DisplayName ?? form.LogicalName}.");
+        var formDirectory = GetFormDirectoryName(GetProperty(form, ArtifactPropertyKeys.FormType));
+        WriteXml(packageRoot, $"{entityDirectory}/FormXml/{formDirectory}/{{{formId}}}.xml", root, emittedFiles, $"Synthesized {formDirectory} form for {form.DisplayName ?? form.LogicalName}.");
     }
 
     private static XElement BuildTabElement(
@@ -488,24 +498,116 @@ public sealed partial class PackageEmitter
             new XAttribute("showbar", "false"),
             new XAttribute("columns", "1"),
             new XElement("labels", new XElement("label", new XAttribute("description", section.Label ?? section.Name ?? $"Section {sectionIndex + 1}"), new XAttribute("languagecode", "1033"))),
-            new XElement("rows", (section.Fields ?? []).Select((field, fieldIndex) => BuildFieldRowElement(formId, columnLookup, field, tabIndex, sectionIndex, fieldIndex))));
+            new XElement("rows", EnumerateGeneratedFormControls(section).Select((control, controlIndex) => BuildControlRowElement(formId, columnLookup, control, tabIndex, sectionIndex, controlIndex))));
 
-    private static XElement BuildFieldRowElement(
+    private static XElement BuildControlRowElement(
         string formId,
         IReadOnlyDictionary<string, string> columnLookup,
-        string field,
+        GeneratedFormControl control,
         int tabIndex,
         int sectionIndex,
-        int fieldIndex) =>
+        int controlIndex) =>
         new("row",
             new XElement("cell",
-                new XAttribute("id", StableXmlGuid(formId, "cell", tabIndex, sectionIndex, fieldIndex)),
+                new XAttribute("id", StableXmlGuid(formId, "cell", tabIndex, sectionIndex, controlIndex)),
                 new XAttribute("showlabel", "true"),
-                new XElement("labels", new XElement("label", new XAttribute("description", ResolveFieldLabel(columnLookup, field)), new XAttribute("languagecode", "1033"))),
-                new XElement("control",
-                    new XAttribute("id", field),
-                    new XAttribute("datafieldname", field),
-                    new XAttribute("classid", "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}"))));
+                new XElement("labels", new XElement("label", new XAttribute("description", ResolveGeneratedControlLabel(columnLookup, control)), new XAttribute("languagecode", "1033"))),
+                BuildGeneratedControlElement(control)));
+
+    private static XElement BuildGeneratedControlElement(GeneratedFormControl control)
+    {
+        var kind = NormalizeGeneratedFormControlKind(control.Kind);
+        return kind switch
+        {
+            "quickView" => new XElement("control",
+                new XAttribute("id", control.Field ?? "quickview"),
+                new XAttribute("datafieldname", control.Field ?? string.Empty),
+                new XAttribute("classid", QuickViewControlClassId),
+                new XElement("parameters",
+                    string.IsNullOrWhiteSpace(control.QuickFormEntity) || string.IsNullOrWhiteSpace(control.QuickFormId)
+                        ? null
+                        : new XElement("QuickForms", $"<QuickFormIds><QuickFormId entityname=\"{control.QuickFormEntity}\">{control.QuickFormId}</QuickFormId></QuickFormIds>"),
+                    string.IsNullOrWhiteSpace(control.ControlMode) ? null : new XElement("ControlMode", control.ControlMode))),
+            "subgrid" => new XElement("control",
+                new XAttribute("id", control.RelationshipName ?? control.TargetTable ?? "subgrid"),
+                new XAttribute("classid", SubgridControlClassId),
+                new XElement("parameters",
+                    string.IsNullOrWhiteSpace(control.DefaultViewId) ? null : new XElement("ViewId", $"{{{NormalizeGuid(control.DefaultViewId) ?? control.DefaultViewId}}}"),
+                    control.IsUserView.HasValue ? new XElement("IsUserView", control.IsUserView.Value ? "true" : "false") : null,
+                    string.IsNullOrWhiteSpace(control.RelationshipName) ? null : new XElement("RelationshipName", control.RelationshipName),
+                    string.IsNullOrWhiteSpace(control.TargetTable) ? null : new XElement("TargetEntityType", control.TargetTable),
+                    string.IsNullOrWhiteSpace(control.AutoExpand) ? null : new XElement("AutoExpand", control.AutoExpand),
+                    control.EnableQuickFind.HasValue ? new XElement("EnableQuickFind", control.EnableQuickFind.Value ? "true" : "false") : null,
+                    control.EnableViewPicker.HasValue ? new XElement("EnableViewPicker", control.EnableViewPicker.Value ? "true" : "false") : null,
+                    control.EnableJumpBar.HasValue ? new XElement("EnableJumpBar", control.EnableJumpBar.Value ? "true" : "false") : null,
+                    control.EnableChartPicker.HasValue ? new XElement("EnableChartPicker", control.EnableChartPicker.Value ? "true" : "false") : null,
+                    control.RecordsPerPage.HasValue ? new XElement("RecordsPerPage", control.RecordsPerPage.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)) : null)),
+            _ => new XElement("control",
+                new XAttribute("id", control.Field ?? "field"),
+                new XAttribute("datafieldname", control.Field ?? string.Empty),
+                new XAttribute("classid", "{4273EDBD-AC1D-40d3-9FB2-095C621B552D}"))
+        };
+    }
+
+    private static IEnumerable<GeneratedFormControl> EnumerateGeneratedFormControls(GeneratedFormSection section)
+    {
+        if (section.Controls is { Count: > 0 })
+        {
+            foreach (var control in section.Controls)
+            {
+                if (control is not null)
+                {
+                    yield return control;
+                }
+            }
+
+            yield break;
+        }
+
+        foreach (var field in section.Fields ?? [])
+        {
+            if (string.IsNullOrWhiteSpace(field))
+            {
+                continue;
+            }
+
+            yield return new GeneratedFormControl
+            {
+                Kind = "field",
+                Field = field
+            };
+        }
+    }
+
+    private static string ResolveGeneratedControlLabel(IReadOnlyDictionary<string, string> columnLookup, GeneratedFormControl control)
+    {
+        if (!string.IsNullOrWhiteSpace(control.Label))
+        {
+            return control.Label;
+        }
+
+        return NormalizeGeneratedFormControlKind(control.Kind) switch
+        {
+            "subgrid" => control.TargetTable ?? control.RelationshipName ?? "Subgrid",
+            _ => ResolveFieldLabel(columnLookup, control.Field ?? "field")
+        };
+    }
+
+    private static string NormalizeGeneratedFormControlKind(string? value) =>
+        value?.Trim() switch
+        {
+            var text when text is not null && text.Equals("quickView", StringComparison.OrdinalIgnoreCase) => "quickView",
+            var text when text is not null && text.Equals("subgrid", StringComparison.OrdinalIgnoreCase) => "subgrid",
+            _ => "field"
+        };
+
+    private static string GetFormDirectoryName(string? formType) =>
+        formType?.Trim().ToLowerInvariant() switch
+        {
+            "quick" => "quick",
+            "card" => "card",
+            _ => "main"
+        };
 
     private static void WriteDerivedViewFile(
         string packageRoot,
@@ -623,14 +725,63 @@ public sealed partial class PackageEmitter
         }
     }
 
+    private static void WriteDerivedVisualizations(CanonicalSolution model, string packageRoot, List<EmittedArtifact> emittedFiles)
+    {
+        var tablesByLogicalName = model.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.Table)
+            .ToDictionary(
+                artifact => GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName) ?? artifact.LogicalName,
+                artifact => GetProperty(artifact, ArtifactPropertyKeys.SchemaName) ?? artifact.LogicalName,
+                StringComparer.OrdinalIgnoreCase);
+
+        foreach (var visualization in model.Artifacts
+                     .Where(artifact => artifact.Family == ComponentFamily.Visualization)
+                     .OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase))
+        {
+            var targetEntity = GetProperty(visualization, ArtifactPropertyKeys.TargetEntity)
+                ?? GetProperty(visualization, ArtifactPropertyKeys.EntityLogicalName)
+                ?? visualization.LogicalName.Split('|').FirstOrDefault()
+                ?? "visualization";
+            var entitySchemaName = tablesByLogicalName.TryGetValue(targetEntity, out var schemaName)
+                ? schemaName
+                : targetEntity;
+            var visualizationId = NormalizeGuid(GetProperty(visualization, ArtifactPropertyKeys.VisualizationId)) ?? Guid.NewGuid().ToString("D");
+
+            var root = new XElement("visualization",
+                new XAttribute("unmodified", "1"),
+                new XAttribute(XNamespace.Xmlns + "xsi", XsiNamespace),
+                new XElement("savedqueryvisualizationid", $"{{{visualizationId}}}"),
+                ParseXmlFragment(GetProperty(visualization, ArtifactPropertyKeys.DataDescriptionXml), "datadescription"),
+                ParseXmlFragment(GetProperty(visualization, ArtifactPropertyKeys.PresentationDescriptionXml), "presentationdescription"),
+                new XElement("isdefault", "0"),
+                CreateLocalizedNames(visualization.DisplayName ?? visualization.LogicalName),
+                CreateDescriptions(GetProperty(visualization, ArtifactPropertyKeys.Description)),
+                new XElement("IntroducedVersion", GetProperty(visualization, ArtifactPropertyKeys.IntroducedVersion) ?? "1.0.0.0"));
+
+            WriteXml(
+                packageRoot,
+                $"Entities/{entitySchemaName}/Visualizations/{{{visualizationId}}}.xml",
+                root,
+                emittedFiles,
+                $"Synthesized visualization for {visualization.DisplayName ?? visualization.LogicalName}.");
+        }
+    }
+
     private static void WriteDerivedAppModules(CanonicalSolution model, string packageRoot, List<EmittedArtifact> emittedFiles)
     {
         foreach (var appModule in model.Artifacts.Where(artifact => artifact.Family == ComponentFamily.AppModule).OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase))
         {
             var componentTypes = JsonSerializer.Deserialize<List<string>>(GetProperty(appModule, ArtifactPropertyKeys.ComponentTypesJson) ?? "[]", DerivedJsonOptions) ?? [];
+            var appSettings = model.Artifacts
+                .Where(artifact => artifact.Family == ComponentFamily.AppSetting
+                    && string.Equals(GetProperty(artifact, ArtifactPropertyKeys.ParentAppModuleUniqueName), appModule.LogicalName, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(artifact => GetProperty(artifact, ArtifactPropertyKeys.SettingDefinitionUniqueName) ?? artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
             var root = new XElement("AppModule",
                 new XElement("UniqueName", appModule.LogicalName),
                 new XElement("IntroducedVersion", "1.0.0.0"),
+                new XElement("WebResourceId", DefaultAppModuleIconWebResourceId),
+                new XElement("OptimizedFor"),
                 new XElement("statecode", "0"),
                 new XElement("statuscode", "1"),
                 new XElement("FormFactor", "1"),
@@ -641,7 +792,11 @@ public sealed partial class PackageEmitter
                 new XElement("AppModuleRoleMaps"),
                 CreateLocalizedNames(appModule.DisplayName ?? appModule.LogicalName),
                 CreateDescriptions(GetProperty(appModule, ArtifactPropertyKeys.Description)),
-                new XElement("appsettings"));
+                new XElement("appsettings",
+                    appSettings.Select(appSetting => new XElement("appsetting",
+                        new XAttribute("settingdefinitionid.uniquename", GetProperty(appSetting, ArtifactPropertyKeys.SettingDefinitionUniqueName) ?? appSetting.LogicalName),
+                        new XElement("iscustomizable", "1"),
+                        new XElement("value", GetProperty(appSetting, ArtifactPropertyKeys.Value) ?? string.Empty)))));
 
             WriteXml(
                 packageRoot,
@@ -699,10 +854,29 @@ public sealed partial class PackageEmitter
         new("SubArea",
             new XAttribute("Id", subArea.Id ?? $"subarea_{subAreaIndex + 1}"),
             new XAttribute("ResourceId", "SitemapDesigner.NewSubArea"),
-            new XAttribute("Entity", subArea.Entity ?? string.Empty),
+            string.IsNullOrWhiteSpace(subArea.Entity) ? null : new XAttribute("Entity", subArea.Entity),
+            string.IsNullOrWhiteSpace(subArea.Url) ? null : new XAttribute("Url", subArea.Url),
+            string.IsNullOrWhiteSpace(subArea.WebResource) ? null : new XAttribute("Url", $"$webresource:{subArea.WebResource}"),
             new XAttribute("Client", "Web"),
             new XAttribute("PassParams", "true"),
             new XElement("Titles", new XElement("Title", new XAttribute("LCID", "1033"), new XAttribute("Title", subArea.Title ?? $"SubArea {subAreaIndex + 1}"))));
+
+    private static XElement ParseXmlFragment(string? xml, string fallbackElementName)
+    {
+        if (string.IsNullOrWhiteSpace(xml))
+        {
+            return new XElement(fallbackElementName);
+        }
+
+        try
+        {
+            return XElement.Parse(xml, LoadOptions.PreserveWhitespace);
+        }
+        catch
+        {
+            return new XElement(fallbackElementName);
+        }
+    }
 
     private static void WriteDerivedEnvironmentVariables(CanonicalSolution model, string packageRoot, List<EmittedArtifact> emittedFiles)
     {
@@ -753,6 +927,9 @@ public sealed partial class PackageEmitter
             }
         }
     }
+
+    private static string? NormalizeGuid(string? value) =>
+        Guid.TryParse(value, out var guid) ? guid.ToString("D") : null;
 
     private static void WriteXml(string packageRoot, string relativePath, XElement root, List<EmittedArtifact> emittedFiles, string description)
     {
@@ -832,6 +1009,7 @@ public sealed partial class PackageEmitter
             "memo" => "ntext",
             "boolean" => "bit",
             "picklist" => "picklist",
+            "image" => "image",
             "primarykey" => "primarykey",
             var other => other
         };
@@ -902,6 +1080,60 @@ internal sealed record GeneratedFormSection
 
     [JsonPropertyName("fields")]
     public IReadOnlyList<string>? Fields { get; init; }
+
+    [JsonPropertyName("controls")]
+    public IReadOnlyList<GeneratedFormControl>? Controls { get; init; }
+}
+
+internal sealed record GeneratedFormControl
+{
+    [JsonPropertyName("kind")]
+    public string? Kind { get; init; }
+
+    [JsonPropertyName("field")]
+    public string? Field { get; init; }
+
+    [JsonPropertyName("label")]
+    public string? Label { get; init; }
+
+    [JsonPropertyName("quickFormEntity")]
+    public string? QuickFormEntity { get; init; }
+
+    [JsonPropertyName("quickFormId")]
+    public string? QuickFormId { get; init; }
+
+    [JsonPropertyName("controlMode")]
+    public string? ControlMode { get; init; }
+
+    [JsonPropertyName("relationshipName")]
+    public string? RelationshipName { get; init; }
+
+    [JsonPropertyName("targetTable")]
+    public string? TargetTable { get; init; }
+
+    [JsonPropertyName("defaultViewId")]
+    public string? DefaultViewId { get; init; }
+
+    [JsonPropertyName("isUserView")]
+    public bool? IsUserView { get; init; }
+
+    [JsonPropertyName("autoExpand")]
+    public string? AutoExpand { get; init; }
+
+    [JsonPropertyName("enableQuickFind")]
+    public bool? EnableQuickFind { get; init; }
+
+    [JsonPropertyName("enableViewPicker")]
+    public bool? EnableViewPicker { get; init; }
+
+    [JsonPropertyName("enableJumpBar")]
+    public bool? EnableJumpBar { get; init; }
+
+    [JsonPropertyName("enableChartPicker")]
+    public bool? EnableChartPicker { get; init; }
+
+    [JsonPropertyName("recordsPerPage")]
+    public int? RecordsPerPage { get; init; }
 }
 
 internal sealed record GeneratedViewFilter
@@ -965,4 +1197,10 @@ internal sealed record GeneratedSiteMapSubArea
 
     [JsonPropertyName("entity")]
     public string? Entity { get; init; }
+
+    [JsonPropertyName("url")]
+    public string? Url { get; init; }
+
+    [JsonPropertyName("webResource")]
+    public string? WebResource { get; init; }
 }

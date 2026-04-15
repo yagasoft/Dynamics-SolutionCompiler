@@ -108,6 +108,8 @@ internal sealed partial class XmlCanonicalSolutionParser
                         (ArtifactPropertyKeys.IsPrimaryName, primaryNameAttribute is not null && attributeLogicalName!.Equals(primaryNameAttribute, StringComparison.OrdinalIgnoreCase) ? "true" : "false"),
                         (ArtifactPropertyKeys.IsLogical, NormalizeBoolean(Text(attribute.ElementLocal("IsLogical")))),
                         (ArtifactPropertyKeys.IsCustomizable, NormalizeBoolean(Text(attribute.ElementLocal("IsCustomizable")))),
+                        (ArtifactPropertyKeys.CanStoreFullImage, NormalizeBoolean(Text(attribute.ElementLocal("CanStoreFullImage")))),
+                        (ArtifactPropertyKeys.IsPrimaryImage, NormalizeBoolean(Text(attribute.ElementLocal("IsPrimaryImage")))),
                         (ArtifactPropertyKeys.OptionSetName, optionSetName),
                         (ArtifactPropertyKeys.OptionSetType, optionSetType),
                         (ArtifactPropertyKeys.IsGlobal, isGlobalOptionSet)));

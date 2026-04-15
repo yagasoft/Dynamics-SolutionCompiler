@@ -1,0 +1,12 @@
+{
+  "LogicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367|name|name|0",
+  "DisplayName": "name -\u003E name",
+  "metadataSourcePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+  "assetSourcePaths": [],
+  "parentDuplicateRuleLogicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367",
+  "baseAttributeName": "name",
+  "matchingAttributeName": "name",
+  "operatorCode": "0",
+  "ignoreBlankValues": true,
+  "comparisonSignature": "735d31c56e6eba5aea06a6b2721497dbf53d0f244fb9416c34e6d40eae1ad41b"
+}

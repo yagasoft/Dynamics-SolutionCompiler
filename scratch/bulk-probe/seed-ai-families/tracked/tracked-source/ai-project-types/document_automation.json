@@ -1,0 +1,8 @@
+{
+  "LogicalName": "document_automation",
+  "DisplayName": "Document Automation",
+  "metadataSourcePath": "AIProjectTypes/document_automation/AIProjectType.xml",
+  "assetSourcePaths": [],
+  "description": "Core AI project type for document workflows.",
+  "comparisonSignature": "d18d75e10d0b5b8b5e6afed8ccfd6a20c163b1e52c0b8867a49607f1076bea2d"
+}

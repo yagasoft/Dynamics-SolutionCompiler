@@ -1,0 +1,53 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_workitem|Work Item Advanced Find View",
+  "DisplayName": "Work Item Advanced Find View",
+  "metadataSourcePath": "Entities/cdxmeta_WorkItem/SavedQueries/{a806b807-120e-4225-be4d-780c04932180}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "false",
+    "comparisonSignature": "c7ae571caa29fbd5b0b31c9e8678afba5f64d7797a3a01deab98978151305b3d",
+    "entityLogicalName": "cdxmeta_workitem",
+    "fetchAttributesJson": [
+      "cdxmeta_workitemid",
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "filtersJson": [],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_workitemname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "1",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_workitem",
+      "layoutColumns": [
+        "cdxmeta_workitemname",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_workitemid",
+        "cdxmeta_workitemname",
+        "createdon"
+      ],
+      "filters": [],
+      "orders": [
+        {
+          "attribute": "cdxmeta_workitemname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_workitem",
+    "viewId": "a806b807-120e-4225-be4d-780c04932180"
+  }
+}

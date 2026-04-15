@@ -1,0 +1,13 @@
+{
+  "LogicalName": "codex metadata routing rule|route all",
+  "DisplayName": "Codex Metadata Routing Rule Item",
+  "metadataSourcePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml",
+  "assetSourcePaths": [],
+  "parentRoutingRuleLogicalName": "codex metadata routing rule",
+  "description": "Route all",
+  "conditionXml": "\u003Cconditions /\u003E",
+  "workflowId": null,
+  "routedQueueId": null,
+  "assignObjectId": null,
+  "comparisonSignature": "24eb0c12cb11b3d1f2759e4d0a6a5780116aeb0b2c33fb940471219b502c46a0"
+}

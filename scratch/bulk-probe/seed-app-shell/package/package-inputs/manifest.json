@@ -1,0 +1,37 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedAppShell",
+    "DisplayName": "Codex Metadata Seed App Shell",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "AppModuleSiteMaps",
+    "AppModules",
+    "Other",
+    "WebResources",
+    "environmentvariabledefinitions"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/AppModuleSiteMaps/codex_metadata_shell_dd96cf20/AppModuleSiteMap.xml",
+    "package-inputs/AppModules/codex_metadata_shell_dd96cf20/AppModule.xml",
+    "package-inputs/AppModules/codex_metadata_shell_dd96cf20/AppModule.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/WebResources/cdxmeta_/shell/icon.svg.data.xml",
+    "package-inputs/WebResources/cdxmeta_/shell/landing.html.data.xml",
+    "package-inputs/environmentvariabledefinitions/cdxmeta_AppShellMode/environmentvariabledefinition.xml",
+    "package-inputs/environmentvariabledefinitions/cdxmeta_AppShellMode/environmentvariablevalues.json",
+    "package-inputs/manifest.json"
+  ]
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "logicalName": "cdxmeta_details",
+    "DisplayName": "Details",
+    "schemaName": "cdxmeta_details",
+    "description": "Long-form notes.",
+    "attributeType": "ntext",
+    "isSecured": true,
+    "isCustomField": true,
+    "isCustomizable": true,
+    "isPrimaryKey": false,
+    "isPrimaryName": false,
+    "isLogical": false,
+    "canStoreFullImage": false,
+    "isPrimaryImage": false,
+    "optionSetName": null,
+    "optionSetType": null,
+    "isGlobal": false,
+    "optionSet": null
+  }
+]

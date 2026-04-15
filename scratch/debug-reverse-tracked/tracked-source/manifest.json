@@ -1,0 +1,34 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataIntentV1",
+    "DisplayName": "Codex Metadata Intent V1",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/app-modules/codex_metadata_intent_shell.json",
+    "tracked-source/entities/cdxmeta_category/attributes.json",
+    "tracked-source/entities/cdxmeta_category/entity.json",
+    "tracked-source/entities/cdxmeta_category/forms/category-main.json",
+    "tracked-source/entities/cdxmeta_category/relationships.json",
+    "tracked-source/entities/cdxmeta_category/views/all-categories.json",
+    "tracked-source/entities/cdxmeta_workitem/attributes.json",
+    "tracked-source/entities/cdxmeta_workitem/entity.json",
+    "tracked-source/entities/cdxmeta_workitem/forms/work-item-main.json",
+    "tracked-source/entities/cdxmeta_workitem/keys.json",
+    "tracked-source/entities/cdxmeta_workitem/relationships.json",
+    "tracked-source/entities/cdxmeta_workitem/views/active-work-items.json",
+    "tracked-source/environment-variables/cdxmeta_AppShellMode.definition.json",
+    "tracked-source/environment-variables/cdxmeta_AppShellMode.value.json",
+    "tracked-source/global-option-sets/cdxmeta_priorityband.json",
+    "tracked-source/manifest.json",
+    "tracked-source/site-maps/codex_metadata_intent_shell.json",
+    "tracked-source/solution/manifest.json"
+  ]
+}

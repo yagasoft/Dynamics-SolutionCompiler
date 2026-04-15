@@ -1,0 +1,25 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedEnvironment",
+    "DisplayName": "Codex Metadata Seed Environment",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/canvas-apps/cat_overview_3dbf5.json",
+    "tracked-source/canvas-apps/cat_overview_3dbf5_BackgroundImageUri",
+    "tracked-source/canvas-apps/cat_overview_3dbf5_DocumentUri.msapp",
+    "tracked-source/manifest.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/CanvasApps/cat_overview_3dbf5.meta.xml",
+    "tracked-source/source-backed/CanvasApps/cat_overview_3dbf5_BackgroundImageUri",
+    "tracked-source/source-backed/CanvasApps/cat_overview_3dbf5_DocumentUri.msapp",
+    "tracked-source/source-backed/Other/Solution.xml"
+  ]
+}

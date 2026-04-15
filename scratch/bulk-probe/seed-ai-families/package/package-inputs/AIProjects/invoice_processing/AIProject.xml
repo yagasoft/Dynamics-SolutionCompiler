@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AIProject>
+  <LogicalName>invoice_processing</LogicalName>
+  <Name>Invoice Processing</Name>
+  <Description>Invoice extraction and normalization pipeline.</Description>
+  <ProjectTypeLogicalName>document_automation</ProjectTypeLogicalName>
+  <TargetEntity>invoice</TargetEntity>
+</AIProject>

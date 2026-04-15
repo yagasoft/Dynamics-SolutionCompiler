@@ -97,6 +97,7 @@ internal sealed partial class XmlCanonicalSolutionParser
             publisherDisplayName,
             solutionPath,
             CreateProperties(
+                (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(solutionPath)),
                 (ArtifactPropertyKeys.PublisherPrefix, publisherPrefix),
                 (ArtifactPropertyKeys.PublisherDisplayName, publisherDisplayName),
                 (ArtifactPropertyKeys.Description, LocalizedDescription(publisherElement?.ElementLocal("Descriptions")))));
@@ -107,6 +108,7 @@ internal sealed partial class XmlCanonicalSolutionParser
             displayName,
             solutionPath,
             CreateProperties(
+                (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(solutionPath)),
                 (ArtifactPropertyKeys.Managed, managed ? "true" : "false"),
                 (ArtifactPropertyKeys.PublisherUniqueName, publisherUniqueName),
                 (ArtifactPropertyKeys.PublisherPrefix, publisherPrefix),

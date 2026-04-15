@@ -1,0 +1,26 @@
+{
+  "LogicalName": "cdxmeta_priorityband",
+  "DisplayName": "Priority Band",
+  "optionSetType": "picklist",
+  "isGlobal": true,
+  "optionCount": 3,
+  "options": [
+    {
+      "value": "727270010",
+      "label": "Low",
+      "isHidden": "false"
+    },
+    {
+      "value": "727270011",
+      "label": "Medium",
+      "isHidden": "false"
+    },
+    {
+      "value": "727270012",
+      "label": "High",
+      "isHidden": "false"
+    }
+  ],
+  "description": "Reusable global priority choice for generated work items.",
+  "comparisonSignature": "d304c493c373e947613ca9325cac3bbecd656def308b694ee8b0304cc5a1e2c6"
+}

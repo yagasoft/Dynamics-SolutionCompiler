@@ -1,0 +1,27 @@
+<AppModuleSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SiteMapUniqueName>codex_metadata_shell_dd96cf20</SiteMapUniqueName>
+<EnableCollapsibleGroups>False</EnableCollapsibleGroups>
+<ShowHome>True</ShowHome>
+<ShowPinned>True</ShowPinned>
+<ShowRecents>True</ShowRecents>
+<SiteMap IntroducedVersion="7.0.0.0">
+<Area Id="area_codex_metadata_shell" ShowGroups="true" ResourceId="SitemapDesigner.NewArea" IntroducedVersion="7.0.0.0">
+<Titles>
+<Title LCID="1033" Title="Codex Metadata" />
+</Titles>
+<Group Id="group_codex_metadata_shell" ResourceId="SitemapDesigner.NewGroup" IntroducedVersion="7.0.0.0">
+<Titles>
+<Title LCID="1033" Title="Shell" />
+</Titles>
+<SubArea Id="subarea_codex_metadata_shell" ResourceId="SitemapDesigner.NewSubArea" Url="$webresource:cdxmeta_/shell/landing.html" Client="Web" PassParams="true">
+<Titles>
+<Title LCID="1033" Title="Metadata Shell" />
+</Titles>
+</SubArea>
+</Group>
+</Area>
+</SiteMap>
+<LocalizedNames>
+<LocalizedName description="Codex Metadata Shell" languagecode="1033" />
+</LocalizedNames>
+</AppModuleSiteMap>

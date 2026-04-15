@@ -1,0 +1,40 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "PluginAssembly",
+    "PluginStep",
+    "PluginStepImage",
+    "PluginType",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "PluginAssembly",
+      "artifact": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "packageRelativePath": "Other/Customizations.xml"
+    },
+    {
+      "family": "PluginStep",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step",
+      "packageRelativePath": "Other/Customizations.xml"
+    },
+    {
+      "family": "PluginStepImage",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step|Account PreImage|preimage|0",
+      "packageRelativePath": "Other/Customizations.xml"
+    },
+    {
+      "family": "PluginType",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace",
+      "packageRelativePath": "Other/Customizations.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedPluginRegistration",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

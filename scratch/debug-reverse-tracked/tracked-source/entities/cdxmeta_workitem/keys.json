@@ -1,0 +1,12 @@
+[
+  {
+    "logicalName": "cdxmeta_workitem_externalcode",
+    "DisplayName": "cdxmeta_WorkItem_ExternalCode",
+    "schemaName": "cdxmeta_WorkItem_ExternalCode",
+    "description": "Alternate key over the generated external-code field.",
+    "keyAttributes": [
+      "cdxmeta_externalcode"
+    ],
+    "indexStatus": null
+  }
+]

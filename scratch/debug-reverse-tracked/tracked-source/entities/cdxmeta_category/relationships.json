@@ -1,0 +1,10 @@
+[
+  {
+    "LogicalName": "cdxmeta_category_workitem",
+    "relationshipType": "OneToMany",
+    "referencedEntity": "cdxmeta_category",
+    "referencingEntity": "cdxmeta_workitem",
+    "referencingAttribute": "cdxmeta_categoryid",
+    "description": "Lookup back to the generated category table."
+  }
+]

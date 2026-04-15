@@ -1,0 +1,12 @@
+{
+  "Family": 17,
+  "LogicalName": "cdxmeta_AppShellMode",
+  "DisplayName": "App Shell Mode",
+  "metadataSourcePath": "environmentvariabledefinitions/cdxmeta_AppShellMode/environmentvariabledefinition.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "attributeType": "100000000",
+    "defaultValue": "standard",
+    "secretStore": "0"
+  }
+}

@@ -1,0 +1,66 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{9e8e552a-fded-e199-1d21-15bacb577774}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="summary" id="{2c1541ec-ea4e-720b-e95d-a801e1b800f8}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="overview" id="{c2bb0931-6a21-d651-1ce8-e68667322f62}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Overview" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{b615988b-b069-f48a-046b-ee691494225e}" showlabel="true">
+<labels>
+<label description="Task" languagecode="1033" />
+</labels>
+<control id="cdxrf_taskname" datafieldname="cdxrf_taskname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{b2010b6b-d4e6-42fa-1d99-99927a427c69}" showlabel="true">
+<labels>
+<label description="Note" languagecode="1033" />
+</labels>
+<control id="cdxrf_note" datafieldname="cdxrf_note" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+<header id="{84da558a-6a67-88a6-eb3d-d6dea757d028}" columns="111" celllabelposition="Top" labelwidth="115">
+<rows>
+<row>
+<cell id="{f2362516-be93-2c96-7afe-cf9029b97f2d}" showlabel="true">
+<labels>
+<label description="Task" languagecode="1033" />
+</labels>
+<control id="header_cdxrf_taskname" datafieldname="cdxrf_taskname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</header>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Task Main" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="" languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

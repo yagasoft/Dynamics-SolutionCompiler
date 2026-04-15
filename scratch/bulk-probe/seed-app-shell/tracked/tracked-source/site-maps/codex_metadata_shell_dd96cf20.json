@@ -1,0 +1,42 @@
+{
+  "Family": 14,
+  "LogicalName": "codex_metadata_shell_dd96cf20",
+  "DisplayName": "Codex Metadata Shell",
+  "metadataSourcePath": "AppModuleSiteMaps/codex_metadata_shell_dd96cf20/AppModuleSiteMap.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "areaCount": "1",
+    "comparisonSignature": "fc240f5d3aa9e848874f07d80f3cf94d512d3b49d91649628d866f468da6bcfb",
+    "groupCount": "1",
+    "siteMapDefinitionJson": {
+      "areas": [
+        {
+          "id": "area_codex_metadata_shell",
+          "title": "Codex Metadata",
+          "groups": [
+            {
+              "id": "group_codex_metadata_shell",
+              "title": "Shell",
+              "subAreas": [
+                {
+                  "id": "subarea_codex_metadata_shell",
+                  "title": "Metadata Shell",
+                  "entity": null,
+                  "url": "$webresource:cdxmeta_/shell/landing.html"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "subAreaCount": "1",
+    "summaryJson": {
+      "areaCount": 1,
+      "groupCount": 1,
+      "subAreaCount": 1,
+      "webResourceSubAreaCount": 1
+    },
+    "webResourceSubAreaCount": "1"
+  }
+}

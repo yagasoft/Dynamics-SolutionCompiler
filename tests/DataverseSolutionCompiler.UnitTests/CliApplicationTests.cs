@@ -366,10 +366,11 @@ public sealed class CliApplicationTests
             File.Exists(reportPath).Should().BeTrue();
             var report = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(reportPath))!.AsObject();
             report["inputKind"]!.GetValue<string>().Should().Be("tracked-source");
-            report["isPartial"]!.GetValue<bool>().Should().BeTrue();
-            report["unsupportedFamiliesOmitted"]!.ToJsonString().Should().Contain("DuplicateRule");
-            report["unsupportedFamiliesOmitted"]!.AsArray()
-                .Any(entry => string.Equals(entry?["category"]?.GetValue<string>(), "unsupportedFamily", StringComparison.Ordinal))
+            report["isPartial"]!.GetValue<bool>().Should().BeFalse();
+            report["supportedFamiliesEmitted"]!.ToJsonString().Should().Contain("DuplicateRule");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("DuplicateRule");
+            report["sourceBackedArtifactsIncluded"]!.AsArray()
+                .Any(entry => string.Equals(entry?["family"]?.GetValue<string>(), "DuplicateRule", StringComparison.Ordinal))
                 .Should()
                 .BeTrue();
         }

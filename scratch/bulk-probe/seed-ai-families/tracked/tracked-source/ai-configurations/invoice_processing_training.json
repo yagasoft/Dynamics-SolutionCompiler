@@ -1,0 +1,10 @@
+{
+  "LogicalName": "invoice_processing_training",
+  "DisplayName": "Invoice Processing Training",
+  "metadataSourcePath": "AIConfigurations/invoice_processing_training/AIConfiguration.xml",
+  "assetSourcePaths": [],
+  "parentAiProjectLogicalName": "invoice_processing",
+  "configurationKind": "training",
+  "value": "{\u0022provider\u0022:\u0022azure-openai\u0022,\u0022prompt\u0022:\u0022invoice-train-v1\u0022}",
+  "comparisonSignature": "3172535ac634c77a764435bb6d1399175f411c666d195382e841742b6725c992"
+}

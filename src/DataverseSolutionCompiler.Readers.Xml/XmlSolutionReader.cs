@@ -11,16 +11,45 @@ public sealed class XmlSolutionReader : ISolutionReader
         ArgumentNullException.ThrowIfNull(request);
         ArgumentException.ThrowIfNullOrWhiteSpace(request.SourcePath);
 
-        if (request.SourceKind == ReadSourceKind.PackedZip || Path.GetExtension(request.SourcePath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+        var normalizedSourcePath = NormalizeSourcePath(request.SourcePath);
+
+        if (request.SourceKind == ReadSourceKind.PackedZip || Path.GetExtension(normalizedSourcePath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
         {
-            return new ZipSolutionReader().Read(request with { SourceKind = ReadSourceKind.PackedZip });
+            return new ZipSolutionReader().Read(request with { SourceKind = ReadSourceKind.PackedZip, SourcePath = normalizedSourcePath });
         }
 
-        if (!Directory.Exists(request.SourcePath))
+        if (!Directory.Exists(normalizedSourcePath))
         {
-            throw new DirectoryNotFoundException($"XML solution folder not found: {request.SourcePath}");
+            throw new DirectoryNotFoundException($"XML solution folder not found: {normalizedSourcePath}");
         }
 
-        return XmlCanonicalSolutionParser.Parse(request.SourcePath);
+        return XmlCanonicalSolutionParser.Parse(normalizedSourcePath);
+    }
+
+    private static string NormalizeSourcePath(string sourcePath)
+    {
+        if (File.Exists(sourcePath))
+        {
+            return sourcePath;
+        }
+
+        if (!Directory.Exists(sourcePath))
+        {
+            return sourcePath;
+        }
+
+        if (File.Exists(Path.Combine(sourcePath, "Other", "Solution.xml")))
+        {
+            return sourcePath;
+        }
+
+        var unpackedCandidate = Path.Combine(sourcePath, "unpacked");
+        if (Directory.Exists(unpackedCandidate)
+            && File.Exists(Path.Combine(unpackedCandidate, "Other", "Solution.xml")))
+        {
+            return unpackedCandidate;
+        }
+
+        return sourcePath;
     }
 }

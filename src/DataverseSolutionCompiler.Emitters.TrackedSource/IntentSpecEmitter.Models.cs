@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace DataverseSolutionCompiler.Emitters.TrackedSource;
@@ -24,6 +25,9 @@ internal sealed record IntentSpecDocument
 
     [JsonPropertyName("tables")]
     public IReadOnlyList<IntentTableSpec>? Tables { get; init; }
+
+    [JsonPropertyName("sourceBackedArtifacts")]
+    public IReadOnlyList<IntentSourceBackedArtifactSpec>? SourceBackedArtifacts { get; init; }
 }
 
 internal sealed record IntentSolutionSpec
@@ -117,6 +121,9 @@ internal sealed record IntentAppModuleSpec
 
     [JsonPropertyName("siteMap")]
     public IntentSiteMapSpec? SiteMap { get; init; }
+
+    [JsonPropertyName("appSettings")]
+    public IReadOnlyList<IntentAppSettingSpec>? AppSettings { get; init; }
 }
 
 internal sealed record IntentSiteMapSpec
@@ -159,6 +166,12 @@ internal sealed record IntentSiteMapSubAreaSpec
 
     [JsonPropertyName("entity")]
     public string? Entity { get; init; }
+
+    [JsonPropertyName("url")]
+    public string? Url { get; init; }
+
+    [JsonPropertyName("webResource")]
+    public string? WebResource { get; init; }
 }
 
 internal sealed record IntentTableSpec
@@ -181,6 +194,12 @@ internal sealed record IntentTableSpec
     [JsonPropertyName("ownershipTypeMask")]
     public string? OwnershipTypeMask { get; init; }
 
+    [JsonPropertyName("primaryImageAttribute")]
+    public string? PrimaryImageAttribute { get; init; }
+
+    [JsonPropertyName("isCustomizable")]
+    public bool? IsCustomizable { get; init; }
+
     [JsonPropertyName("columns")]
     public IReadOnlyList<IntentTableColumnSpec>? Columns { get; init; }
 
@@ -192,6 +211,9 @@ internal sealed record IntentTableSpec
 
     [JsonPropertyName("views")]
     public IReadOnlyList<IntentViewSpec>? Views { get; init; }
+
+    [JsonPropertyName("visualizations")]
+    public IReadOnlyList<IntentVisualizationSpec>? Visualizations { get; init; }
 }
 
 internal sealed record IntentTableColumnSpec
@@ -214,6 +236,9 @@ internal sealed record IntentTableColumnSpec
     [JsonPropertyName("isSecured")]
     public bool IsSecured { get; init; }
 
+    [JsonPropertyName("isCustomizable")]
+    public bool? IsCustomizable { get; init; }
+
     [JsonPropertyName("targetTable")]
     public string? TargetTable { get; init; }
 
@@ -225,6 +250,45 @@ internal sealed record IntentTableColumnSpec
 
     [JsonPropertyName("options")]
     public IReadOnlyList<IntentOptionItemSpec>? Options { get; init; }
+
+    [JsonPropertyName("canStoreFullImage")]
+    public bool? CanStoreFullImage { get; init; }
+
+    [JsonPropertyName("isPrimaryImage")]
+    public bool? IsPrimaryImage { get; init; }
+}
+
+internal sealed record IntentAppSettingSpec
+{
+    [JsonPropertyName("definitionUniqueName")]
+    public string? DefinitionUniqueName { get; init; }
+
+    [JsonPropertyName("value")]
+    public string? Value { get; init; }
+}
+
+internal sealed record IntentSourceBackedArtifactSpec
+{
+    [JsonPropertyName("family")]
+    public string? Family { get; init; }
+
+    [JsonPropertyName("logicalName")]
+    public string? LogicalName { get; init; }
+
+    [JsonPropertyName("displayName")]
+    public string? DisplayName { get; init; }
+
+    [JsonPropertyName("metadataSourcePath")]
+    public string? MetadataSourcePath { get; init; }
+
+    [JsonPropertyName("assetSourcePaths")]
+    public IReadOnlyList<string>? AssetSourcePaths { get; init; }
+
+    [JsonPropertyName("packageRelativePath")]
+    public string? PackageRelativePath { get; init; }
+
+    [JsonPropertyName("stableProperties")]
+    public IReadOnlyDictionary<string, JsonElement>? StableProperties { get; init; }
 }
 
 internal sealed record IntentTableKeySpec
@@ -294,6 +358,60 @@ internal sealed record IntentFormSectionSpec
 
     [JsonPropertyName("fields")]
     public IReadOnlyList<string>? Fields { get; init; }
+
+    [JsonPropertyName("controls")]
+    public IReadOnlyList<IntentFormControlSpec>? Controls { get; init; }
+}
+
+internal sealed record IntentFormControlSpec
+{
+    [JsonPropertyName("kind")]
+    public string? Kind { get; init; }
+
+    [JsonPropertyName("field")]
+    public string? Field { get; init; }
+
+    [JsonPropertyName("label")]
+    public string? Label { get; init; }
+
+    [JsonPropertyName("quickFormEntity")]
+    public string? QuickFormEntity { get; init; }
+
+    [JsonPropertyName("quickFormId")]
+    public string? QuickFormId { get; init; }
+
+    [JsonPropertyName("controlMode")]
+    public string? ControlMode { get; init; }
+
+    [JsonPropertyName("relationshipName")]
+    public string? RelationshipName { get; init; }
+
+    [JsonPropertyName("targetTable")]
+    public string? TargetTable { get; init; }
+
+    [JsonPropertyName("defaultViewId")]
+    public string? DefaultViewId { get; init; }
+
+    [JsonPropertyName("isUserView")]
+    public bool? IsUserView { get; init; }
+
+    [JsonPropertyName("autoExpand")]
+    public string? AutoExpand { get; init; }
+
+    [JsonPropertyName("enableQuickFind")]
+    public bool? EnableQuickFind { get; init; }
+
+    [JsonPropertyName("enableViewPicker")]
+    public bool? EnableViewPicker { get; init; }
+
+    [JsonPropertyName("enableJumpBar")]
+    public bool? EnableJumpBar { get; init; }
+
+    [JsonPropertyName("enableChartPicker")]
+    public bool? EnableChartPicker { get; init; }
+
+    [JsonPropertyName("recordsPerPage")]
+    public int? RecordsPerPage { get; init; }
 }
 
 internal sealed record IntentViewSpec
@@ -341,6 +459,36 @@ internal sealed record IntentViewOrderSpec
     public bool Descending { get; init; }
 }
 
+internal sealed record IntentVisualizationSpec
+{
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    [JsonPropertyName("name")]
+    public string? Name { get; init; }
+
+    [JsonPropertyName("description")]
+    public string? Description { get; init; }
+
+    [JsonPropertyName("chartTypes")]
+    public IReadOnlyList<string>? ChartTypes { get; init; }
+
+    [JsonPropertyName("groupByColumns")]
+    public IReadOnlyList<string>? GroupByColumns { get; init; }
+
+    [JsonPropertyName("measureAliases")]
+    public IReadOnlyList<string>? MeasureAliases { get; init; }
+
+    [JsonPropertyName("titleNames")]
+    public IReadOnlyList<string>? TitleNames { get; init; }
+
+    [JsonPropertyName("dataDescriptionXml")]
+    public string? DataDescriptionXml { get; init; }
+
+    [JsonPropertyName("presentationDescriptionXml")]
+    public string? PresentationDescriptionXml { get; init; }
+}
+
 internal sealed record ReverseGenerationReport
 {
     [JsonPropertyName("inputKind")]
@@ -357,6 +505,9 @@ internal sealed record ReverseGenerationReport
 
     [JsonPropertyName("preservedIdsIncluded")]
     public IReadOnlyList<PreservedIdEntry>? PreservedIdsIncluded { get; init; }
+
+    [JsonPropertyName("sourceBackedArtifactsIncluded")]
+    public IReadOnlyList<SourceBackedArtifactEntry>? SourceBackedArtifactsIncluded { get; init; }
 }
 
 internal static class ReverseGenerationReportCategories
@@ -365,6 +516,7 @@ internal static class ReverseGenerationReportCategories
     public const string UnsupportedShape = "unsupportedShape";
     public const string PlatformGeneratedArtifact = "platformGeneratedArtifact";
     public const string MissingSourceFidelity = "missingSourceFidelity";
+    public const string SourceBackedArtifact = "sourceBackedArtifact";
 }
 
 internal sealed record IntentReportEntry(
@@ -377,6 +529,11 @@ internal sealed record PreservedIdEntry(
     [property: JsonPropertyName("family")] string Family,
     [property: JsonPropertyName("artifact")] string Artifact,
     [property: JsonPropertyName("id")] string Id);
+
+internal sealed record SourceBackedArtifactEntry(
+    [property: JsonPropertyName("family")] string Family,
+    [property: JsonPropertyName("artifact")] string Artifact,
+    [property: JsonPropertyName("packageRelativePath")] string PackageRelativePath);
 
 internal sealed record OptionEntry
 {
@@ -448,6 +605,60 @@ internal sealed record IntentFormSectionDefinition
 
     [JsonPropertyName("fields")]
     public IReadOnlyList<string> Fields { get; init; } = [];
+
+    [JsonPropertyName("controls")]
+    public IReadOnlyList<IntentFormControlDefinition> Controls { get; init; } = [];
+}
+
+internal sealed record IntentFormControlDefinition
+{
+    [JsonPropertyName("kind")]
+    public string? Kind { get; init; }
+
+    [JsonPropertyName("field")]
+    public string? Field { get; init; }
+
+    [JsonPropertyName("label")]
+    public string? Label { get; init; }
+
+    [JsonPropertyName("quickFormEntity")]
+    public string? QuickFormEntity { get; init; }
+
+    [JsonPropertyName("quickFormId")]
+    public string? QuickFormId { get; init; }
+
+    [JsonPropertyName("controlMode")]
+    public string? ControlMode { get; init; }
+
+    [JsonPropertyName("relationshipName")]
+    public string? RelationshipName { get; init; }
+
+    [JsonPropertyName("targetTable")]
+    public string? TargetTable { get; init; }
+
+    [JsonPropertyName("defaultViewId")]
+    public string? DefaultViewId { get; init; }
+
+    [JsonPropertyName("isUserView")]
+    public bool? IsUserView { get; init; }
+
+    [JsonPropertyName("autoExpand")]
+    public string? AutoExpand { get; init; }
+
+    [JsonPropertyName("enableQuickFind")]
+    public bool? EnableQuickFind { get; init; }
+
+    [JsonPropertyName("enableViewPicker")]
+    public bool? EnableViewPicker { get; init; }
+
+    [JsonPropertyName("enableJumpBar")]
+    public bool? EnableJumpBar { get; init; }
+
+    [JsonPropertyName("enableChartPicker")]
+    public bool? EnableChartPicker { get; init; }
+
+    [JsonPropertyName("recordsPerPage")]
+    public int? RecordsPerPage { get; init; }
 }
 
 internal sealed record SiteMapDefinition
@@ -493,4 +704,7 @@ internal sealed record SiteMapSubAreaDefinition
 
     [JsonPropertyName("url")]
     public string? Url { get; init; }
+
+    [JsonPropertyName("webResource")]
+    public string? WebResource { get; init; }
 }

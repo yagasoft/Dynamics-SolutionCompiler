@@ -85,6 +85,7 @@ internal sealed partial class XmlCanonicalSolutionParser
                     settingDefinitionUniqueName,
                     appModulePath,
                     CreateProperties(
+                        (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(appModulePath)),
                         (ArtifactPropertyKeys.ParentAppModuleUniqueName, uniqueName),
                         (ArtifactPropertyKeys.SettingDefinitionUniqueName, settingDefinitionUniqueName),
                         (ArtifactPropertyKeys.Value, Text(appSetting.ElementLocal("value")))));
@@ -349,21 +350,21 @@ internal sealed partial class XmlCanonicalSolutionParser
             .Select((area, areaIndex) => new
             {
                 id = area.AttributeValue("Id") ?? area.AttributeValue("id") ?? $"area_{areaIndex + 1}",
-                title = area.AttributeValue("Title") ?? area.AttributeValue("title") ?? $"Area {areaIndex + 1}",
+                title = ReadSiteMapTitle(area) ?? area.AttributeValue("Title") ?? area.AttributeValue("title") ?? $"Area {areaIndex + 1}",
                 groups = area
                     .Elements()
                     .Where(element => element.Name.LocalName.Equals("Group", StringComparison.OrdinalIgnoreCase))
                     .Select((group, groupIndex) => new
                     {
                         id = group.AttributeValue("Id") ?? group.AttributeValue("id") ?? $"group_{groupIndex + 1}",
-                        title = group.AttributeValue("Title") ?? group.AttributeValue("title") ?? $"Group {groupIndex + 1}",
+                        title = ReadSiteMapTitle(group) ?? group.AttributeValue("Title") ?? group.AttributeValue("title") ?? $"Group {groupIndex + 1}",
                         subAreas = group
                             .Elements()
                             .Where(element => element.Name.LocalName.Equals("SubArea", StringComparison.OrdinalIgnoreCase))
                             .Select((subArea, subAreaIndex) => new
                             {
                                 id = subArea.AttributeValue("Id") ?? subArea.AttributeValue("id") ?? $"subarea_{subAreaIndex + 1}",
-                                title = subArea.AttributeValue("Title") ?? subArea.AttributeValue("title") ?? $"Sub Area {subAreaIndex + 1}",
+                                title = ReadSiteMapTitle(subArea) ?? subArea.AttributeValue("Title") ?? subArea.AttributeValue("title") ?? $"Sub Area {subAreaIndex + 1}",
                                 entity = NormalizeLogicalName(subArea.AttributeValue("Entity") ?? subArea.AttributeValue("entity")),
                                 url = subArea.AttributeValue("Url") ?? subArea.AttributeValue("url")
                             })
@@ -379,4 +380,18 @@ internal sealed partial class XmlCanonicalSolutionParser
             areas
         };
     }
+
+    private static string? ReadSiteMapTitle(System.Xml.Linq.XElement element) =>
+        element
+            .Elements()
+            .FirstOrDefault(child => child.Name.LocalName.Equals("Titles", StringComparison.OrdinalIgnoreCase))?
+            .Elements()
+            .FirstOrDefault(child => child.Name.LocalName.Equals("Title", StringComparison.OrdinalIgnoreCase))?
+            .AttributeValue("Title")
+        ?? element
+            .Elements()
+            .FirstOrDefault(child => child.Name.LocalName.Equals("Titles", StringComparison.OrdinalIgnoreCase))?
+            .Elements()
+            .FirstOrDefault(child => child.Name.LocalName.Equals("Title", StringComparison.OrdinalIgnoreCase))?
+            .AttributeValue("title");
 }

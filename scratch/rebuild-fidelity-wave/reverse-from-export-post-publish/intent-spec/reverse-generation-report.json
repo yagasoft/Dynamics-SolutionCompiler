@@ -1,0 +1,40 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "AppModule",
+    "Column",
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue",
+    "Form",
+    "SiteMap",
+    "Table",
+    "View"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "AppSetting",
+      "artifact": "cdxrf_rebuild_shell|AppChannel",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [
+    {
+      "family": "Form",
+      "artifact": "cdxrf_task|main|9e8e552a-fded-e199-1d21-15bacb577774",
+      "id": "9e8e552a-fded-e199-1d21-15bacb577774"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxrf_task|Backlog Review",
+      "id": "f28112bd-78ac-885c-2583-cdef79a479a0"
+    }
+  ]
+}

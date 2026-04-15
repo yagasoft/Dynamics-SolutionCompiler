@@ -333,9 +333,9 @@ internal sealed partial class DataverseWebApiLiveReader
         value?.Trim() switch
         {
             "2" => "main",
-            "6" => "card",
+            "6" => "quick",
             "7" => "quick",
-            "11" => "main",
+            "11" => "card",
             "12" => "dashboard",
             { Length: > 0 } text => text.ToLowerInvariant(),
             _ => "main"
@@ -452,7 +452,7 @@ internal sealed partial class DataverseWebApiLiveReader
     {
         if (IsQuickFormControl(control))
         {
-            return "quick-form";
+            return "quickView";
         }
 
         if (IsSubgridControl(control))
@@ -460,7 +460,9 @@ internal sealed partial class DataverseWebApiLiveReader
             return "subgrid";
         }
 
-        return "field";
+        return !string.IsNullOrWhiteSpace(control.AttributeValue("datafieldname"))
+            ? "field"
+            : "unsupported";
     }
 }
 

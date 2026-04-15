@@ -1,0 +1,69 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_workitem|Active Work Items",
+  "DisplayName": "Active Work Items",
+  "metadataSourcePath": null,
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "bc65fc68d1fadc84b06c5e734da75f0517d9c6c5e004c2cb0892381be2d6e790",
+    "entityLogicalName": "cdxmeta_workitem",
+    "fetchAttributesJson": [
+      "cdxmeta_workitemid",
+      "cdxmeta_workitemname",
+      "cdxmeta_summary",
+      "cdxmeta_priority",
+      "cdxmeta_stage"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "cdxmeta_stage",
+        "operator": "eq",
+        "value": "727270101"
+      }
+    ],
+    "layoutColumnsJson": [
+      "cdxmeta_workitemname",
+      "cdxmeta_summary",
+      "cdxmeta_priority",
+      "cdxmeta_stage"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_workitemname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "0",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_workitem",
+      "layoutColumns": [
+        "cdxmeta_workitemname",
+        "cdxmeta_summary",
+        "cdxmeta_priority",
+        "cdxmeta_stage"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_workitemid",
+        "cdxmeta_workitemname",
+        "cdxmeta_summary",
+        "cdxmeta_priority",
+        "cdxmeta_stage"
+      ],
+      "filters": [
+        {
+          "attribute": "cdxmeta_stage",
+          "operator": "eq",
+          "value": "727270101"
+        }
+      ],
+      "orders": [
+        {
+          "attribute": "cdxmeta_workitemname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_workitem",
+    "viewId": "84481ada-7ed6-8656-00ed-ab065cc039bc"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_checkpoint|Checkpoint Advanced Find View",
+  "DisplayName": "Checkpoint Advanced Find View",
+  "metadataSourcePath": "Entities/cdxmeta_Checkpoint/SavedQueries/{08bea66b-4fd7-4d7b-929c-b4fe2758d3cf}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "false",
+    "comparisonSignature": "c6bd80b97267d1ba2208e007e3733bab7000ffe004daf4b588ab8514f36af43c",
+    "entityLogicalName": "cdxmeta_checkpoint",
+    "fetchAttributesJson": [
+      "cdxmeta_checkpointid",
+      "cdxmeta_checkpointname",
+      "createdon"
+    ],
+    "filtersJson": [],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [
+      "cdxmeta_checkpointname",
+      "createdon"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_checkpointname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "1",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_checkpoint",
+      "layoutColumns": [
+        "cdxmeta_checkpointname",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_checkpointid",
+        "cdxmeta_checkpointname",
+        "createdon"
+      ],
+      "filters": [],
+      "orders": [
+        {
+          "attribute": "cdxmeta_checkpointname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_checkpoint",
+    "viewId": "08bea66b-4fd7-4d7b-929c-b4fe2758d3cf"
+  }
+}

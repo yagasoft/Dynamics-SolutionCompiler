@@ -1,0 +1,11 @@
+{
+  "Family": 18,
+  "LogicalName": "cdxmeta_AdvancedUiMode",
+  "DisplayName": "cdxmeta_AdvancedUiMode",
+  "metadataSourcePath": "environmentvariabledefinitions/cdxmeta_AdvancedUiMode/environmentvariablevalues.json",
+  "assetSourcePaths": [],
+  "properties": {
+    "definitionSchemaName": "cdxmeta_AdvancedUiMode",
+    "value": "seed"
+  }
+}

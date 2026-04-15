@@ -1,0 +1,68 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_category|quick|5978624f-3b37-f111-88b3-0022489b9600",
+  "DisplayName": "Category Snapshot",
+  "metadataSourcePath": "Entities/cdxmeta_Category/FormXml/quick/{5978624f-3b37-f111-88b3-0022489b9600}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "95322efe55ef027fb43e4dd4b88bb50a2bd9e3ec60d8ebf3c1afcaea58c3a120",
+    "controlCount": "2",
+    "controlDescriptionCount": "2",
+    "description": "Compact quick view form for the metadata synthesis seed.",
+    "entityLogicalName": "cdxmeta_category",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Category Snapshot",
+      "description": "Compact quick view form for the metadata synthesis seed.",
+      "type": "quick",
+      "tabs": [
+        {
+          "name": "general",
+          "label": "general",
+          "sections": [
+            {
+              "name": "snapshot",
+              "label": "snapshot",
+              "fields": [
+                "cdxmeta_categoryname",
+                "cdxmeta_description"
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": []
+    },
+    "formId": "5978624f-3b37-f111-88b3-0022489b9600",
+    "formType": "quick",
+    "formTypeCode": "0",
+    "headerControlCount": "0",
+    "quickFormCount": "0",
+    "sectionCount": "1",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "quick",
+      "formId": "5978624f-3b37-f111-88b3-0022489b9600",
+      "tabCount": 1,
+      "sectionCount": 1,
+      "controlCount": 2,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 0,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_categoryname",
+          "dataFieldName": "cdxmeta_categoryname",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_description",
+          "dataFieldName": "cdxmeta_description",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

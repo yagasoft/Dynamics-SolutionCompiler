@@ -1,0 +1,49 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_category|All Categories",
+  "DisplayName": "All Categories",
+  "metadataSourcePath": null,
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "dcb3aa692e3c94176b7f0d7cbc45ba7a27e20ce9fe40088f30696ee94c053f82",
+    "entityLogicalName": "cdxmeta_category",
+    "fetchAttributesJson": [
+      "cdxmeta_categoryid",
+      "cdxmeta_categoryname",
+      "cdxmeta_summary"
+    ],
+    "filtersJson": [],
+    "layoutColumnsJson": [
+      "cdxmeta_categoryname",
+      "cdxmeta_summary"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_categoryname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "0",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_category",
+      "layoutColumns": [
+        "cdxmeta_categoryname",
+        "cdxmeta_summary"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_categoryid",
+        "cdxmeta_categoryname",
+        "cdxmeta_summary"
+      ],
+      "filters": [],
+      "orders": [
+        {
+          "attribute": "cdxmeta_categoryname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_category",
+    "viewId": "2c0eb3b9-f51c-767f-43d0-1fe1af0a5782"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "LogicalName": "invoice_processing",
+  "DisplayName": "Invoice Processing",
+  "metadataSourcePath": "AIProjects/invoice_processing/AIProject.xml",
+  "assetSourcePaths": [],
+  "description": "Invoice extraction and normalization pipeline.",
+  "parentAiProjectTypeLogicalName": "document_automation",
+  "targetEntity": "invoice",
+  "comparisonSignature": "f4307aed6cdc0bcfff983a08bd3ae6117e4a57f5b9225df16350d45bb0b55130"
+}

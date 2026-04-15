@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_category",
+  "DisplayName": "Category",
+  "schemaName": "cdxmeta_Category",
+  "description": "Generated category table for lookup and view coverage.",
+  "entitySetName": "cdxmeta_categories",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_categoryid",
+  "primaryNameAttribute": "cdxmeta_categoryname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

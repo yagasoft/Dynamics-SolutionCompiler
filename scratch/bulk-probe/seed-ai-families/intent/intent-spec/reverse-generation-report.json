@@ -1,0 +1,34 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "AiConfiguration",
+    "AiProject",
+    "AiProjectType",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "AiConfiguration",
+      "artifact": "invoice_processing_training",
+      "packageRelativePath": "AIConfigurations/invoice_processing_training/AIConfiguration.xml"
+    },
+    {
+      "family": "AiProject",
+      "artifact": "invoice_processing",
+      "packageRelativePath": "AIProjects/invoice_processing/AIProject.xml"
+    },
+    {
+      "family": "AiProjectType",
+      "artifact": "document_automation",
+      "packageRelativePath": "AIProjectTypes/document_automation/AIProjectType.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedAiFamilies",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

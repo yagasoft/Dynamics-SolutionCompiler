@@ -51,6 +51,7 @@ public sealed partial class PackageEmitter : ISolutionEmitter
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
+        PropertyNameCaseInsensitive = true,
         WriteIndented = true
     };
 
@@ -71,6 +72,52 @@ public sealed partial class PackageEmitter : ISolutionEmitter
         Directory.CreateDirectory(packageRoot);
 
         var emittedFiles = new List<EmittedArtifact>();
+        var sourceBackedArtifacts = model.Artifacts.Where(IsSourceBackedIntentArtifact).ToArray();
+        if (sourceBackedArtifacts.Length > 0)
+        {
+            var structuredArtifacts = model.Artifacts.Where(artifact => !IsSourceBackedIntentArtifact(artifact)).ToArray();
+            var structuredModel = new CanonicalSolution(
+                model.Identity,
+                model.Publisher,
+                structuredArtifacts,
+                model.Dependencies,
+                model.EnvironmentBindings,
+                model.Diagnostics);
+
+            WriteDerivedPackageInputTree(structuredModel, packageRoot, emittedFiles, diagnostics);
+            WriteHybridSourceBackedFiles(packageRoot, sourceBackedArtifacts, emittedFiles);
+
+            var copiedDirectories = emittedFiles
+                .Select(file => file.RelativePath["package-inputs/".Length..].Split('/', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault())
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Select(value => value!)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+            WritePackageManifest(
+                model,
+                packageRoot,
+                emittedFiles,
+                diagnostics,
+                copiedDirectories,
+                unsupportedDirectories: [],
+                sourceLayout: "intent-spec-hybrid",
+                deploymentSettingsWritten: false);
+
+            diagnostics.Add(new CompilerDiagnostic(
+                "package-emitter-materialized",
+                DiagnosticSeverity.Info,
+                "Package emitter synthesized the structured subset and overlaid staged source-backed artifacts for hybrid rebuild intent.",
+                packageRoot));
+
+            return new EmittedArtifacts(
+                true,
+                request.OutputRoot,
+                emittedFiles.OrderBy(file => file.RelativePath, StringComparer.Ordinal).ToArray(),
+                diagnostics);
+        }
+
         if (model.Artifacts.Any(artifact => artifact.Evidence == EvidenceKind.Derived)
             && model.Artifacts.All(artifact => artifact.Evidence != EvidenceKind.Source))
         {
@@ -314,6 +361,66 @@ public sealed partial class PackageEmitter : ISolutionEmitter
         return TextFileExtensions.Contains(Path.GetExtension(sourceFile));
     }
 
+    private static bool IsSourceBackedIntentArtifact(FamilyArtifact artifact) =>
+        artifact.Properties is not null
+        && artifact.Properties.ContainsKey(ArtifactPropertyKeys.PackageRelativePath)
+        && !string.IsNullOrWhiteSpace(artifact.SourcePath);
+
+    private static void WriteHybridSourceBackedFiles(string packageRoot, IEnumerable<FamilyArtifact> artifacts, List<EmittedArtifact> emittedFiles)
+    {
+        var copiedPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var artifact in artifacts.OrderBy(artifact => artifact.Family).ThenBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase))
+        {
+            var metadataTarget = GetProperty(artifact, ArtifactPropertyKeys.PackageRelativePath);
+            if (!string.IsNullOrWhiteSpace(metadataTarget) && File.Exists(artifact.SourcePath) && copiedPaths.Add(metadataTarget))
+            {
+                CopyFileToPackage(packageRoot, artifact.SourcePath, metadataTarget, emittedFiles, artifact.LogicalName);
+            }
+
+            foreach (var asset in ReadSourceBackedAssetMap(artifact))
+            {
+                if (File.Exists(asset.SourcePath) && copiedPaths.Add(asset.PackageRelativePath))
+                {
+                    CopyFileToPackage(packageRoot, asset.SourcePath, asset.PackageRelativePath, emittedFiles, artifact.LogicalName);
+                }
+            }
+        }
+    }
+
+    private static void CopyFileToPackage(string packageRoot, string sourcePath, string packageRelativePath, List<EmittedArtifact> emittedFiles, string logicalName)
+    {
+        var destinationPath = GetContainedPath(packageRoot, packageRelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+
+        if (ShouldNormalizeAsText(sourcePath))
+        {
+            var normalizedText = File.ReadAllText(sourcePath)
+                .Replace("\r\n", "\n", StringComparison.Ordinal)
+                .Replace("\r", "\n", StringComparison.Ordinal);
+            File.WriteAllText(destinationPath, normalizedText, Utf8NoBom);
+        }
+        else
+        {
+            File.Copy(sourcePath, destinationPath, overwrite: true);
+        }
+
+        emittedFiles.Add(new EmittedArtifact(
+            $"package-inputs/{packageRelativePath.Replace('\\', '/')}",
+            EmittedArtifactRole.PackageInput,
+            $"Package input copied from staged source-backed artifact evidence for {logicalName}."));
+    }
+
+    private static IReadOnlyList<SourceBackedAssetMapEntry> ReadSourceBackedAssetMap(FamilyArtifact artifact)
+    {
+        var json = GetProperty(artifact, ArtifactPropertyKeys.AssetSourceMapJson);
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return [];
+        }
+
+        return JsonSerializer.Deserialize<List<SourceBackedAssetMapEntry>>(json, JsonOptions) ?? [];
+    }
+
     private static string ResolveSourceRoot(CanonicalSolution model)
     {
         var solutionShellPath = model.Artifacts
@@ -396,4 +503,6 @@ public sealed partial class PackageEmitter : ISolutionEmitter
 
         return candidatePath;
     }
+
+    private sealed record SourceBackedAssetMapEntry(string SourcePath, string PackageRelativePath);
 }

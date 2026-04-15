@@ -1,0 +1,88 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "Column",
+    "ConnectionRole",
+    "FieldPermission",
+    "FieldSecurityProfile",
+    "Role",
+    "RolePrivilege",
+    "SolutionShell",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "ConnectionRole",
+      "artifact": "codex metadata seed connection role",
+      "packageRelativePath": "Other/ConnectionRoles.xml"
+    },
+    {
+      "family": "FieldPermission",
+      "artifact": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml"
+    },
+    {
+      "family": "FieldSecurityProfile",
+      "artifact": "codex metadata seed field security",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml"
+    },
+    {
+      "family": "Role",
+      "artifact": "codex metadata seed role",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvCreateSharePointData|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadPluginAssembly|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadPluginType|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSdkMessageProcessingStepImage|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSdkMessageProcessingStep|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSdkMessage|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSharePointData|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSharePointDocument|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvWriteSharePointData|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedProcessSecurity",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

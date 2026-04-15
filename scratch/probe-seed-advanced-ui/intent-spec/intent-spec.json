@@ -1,0 +1,40 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedAdvancedUI",
+    "displayName": "Codex Metadata Seed Advanced UI",
+    "description": "Curated Codex skill seed solution: Codex Metadata Seed Advanced UI",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [
+    {
+      "schemaName": "cdxmeta_AdvancedUiMode",
+      "displayName": "Advanced UI Scaffold Mode",
+      "type": "100000000",
+      "defaultValue": "scaffold",
+      "currentValue": "seed",
+      "secretStore": "0",
+      "valueSchema": "string"
+    }
+  ],
+  "appModules": [],
+  "tables": [
+    {
+      "logicalName": "account",
+      "schemaName": "Account",
+      "displayName": "Account",
+      "columns": [],
+      "keys": [],
+      "forms": [],
+      "views": []
+    }
+  ]
+}

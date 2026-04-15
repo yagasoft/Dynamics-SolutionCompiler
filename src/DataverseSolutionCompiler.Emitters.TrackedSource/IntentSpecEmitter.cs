@@ -27,9 +27,11 @@ public sealed partial class IntentSpecEmitter : ISolutionEmitter
         ComponentFamily.Relationship,
         ComponentFamily.OptionSet,
         ComponentFamily.Key,
+        ComponentFamily.ImageConfiguration,
         ComponentFamily.Form,
         ComponentFamily.View,
         ComponentFamily.AppModule,
+        ComponentFamily.AppSetting,
         ComponentFamily.SiteMap,
         ComponentFamily.EnvironmentVariableDefinition,
         ComponentFamily.EnvironmentVariableValue
@@ -48,8 +50,20 @@ public sealed partial class IntentSpecEmitter : ISolutionEmitter
         var unsupportedEntries = new List<IntentReportEntry>();
         var emittedFamilies = new HashSet<string>(StringComparer.Ordinal);
         var preservedIds = new List<PreservedIdEntry>();
+        var sourceBackedArtifactsIncluded = new List<SourceBackedArtifactEntry>();
+        var emittedFiles = new List<EmittedArtifact>();
+        var sourceBackedArtifacts = BuildSourceBackedArtifactSpecs(
+            model.Artifacts,
+            intentRoot,
+            unsupportedEntries,
+            sourceBackedArtifactsIncluded,
+            emittedFamilies,
+            emittedFiles);
+        var sourceBackedArtifactKeys = sourceBackedArtifactsIncluded
+            .Select(entry => $"{entry.Family}|{entry.Artifact}")
+            .ToHashSet(StringComparer.Ordinal);
 
-        unsupportedEntries.AddRange(BuildUnsupportedArtifactEntries(model.Artifacts));
+        unsupportedEntries.AddRange(BuildUnsupportedArtifactEntries(model.Artifacts, sourceBackedArtifactKeys));
         unsupportedEntries.AddRange(BuildUnsupportedDiagnosticEntries(model.Diagnostics));
 
         var solutionArtifact = model.Artifacts.FirstOrDefault(artifact => artifact.Family == ComponentFamily.SolutionShell);
@@ -120,7 +134,8 @@ public sealed partial class IntentSpecEmitter : ISolutionEmitter
             GlobalOptionSets = globalOptionSets,
             EnvironmentVariables = environmentVariables,
             AppModules = appModuleSpecs,
-            Tables = tableSpecs
+            Tables = tableSpecs,
+            SourceBackedArtifacts = sourceBackedArtifacts
         };
 
         var report = new ReverseGenerationReport
@@ -135,10 +150,13 @@ public sealed partial class IntentSpecEmitter : ISolutionEmitter
             PreservedIdsIncluded = preservedIds
                 .OrderBy(entry => entry.Family, StringComparer.Ordinal)
                 .ThenBy(entry => entry.Artifact, StringComparer.OrdinalIgnoreCase)
+                .ToArray(),
+            SourceBackedArtifactsIncluded = sourceBackedArtifactsIncluded
+                .OrderBy(entry => entry.Family, StringComparer.Ordinal)
+                .ThenBy(entry => entry.Artifact, StringComparer.OrdinalIgnoreCase)
                 .ToArray()
         };
 
-        var emittedFiles = new List<EmittedArtifact>();
         WriteJson(intentRoot, "intent-spec.json", document, emittedFiles, "Reverse-generated compiler-native intent spec.");
         WriteJson(intentRoot, "reverse-generation-report.json", report, emittedFiles, "Reverse-generation coverage and omission report.");
 

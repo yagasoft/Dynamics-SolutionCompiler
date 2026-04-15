@@ -1,0 +1,36 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedForms",
+    "DisplayName": "Codex Metadata Seed Forms",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "Entities",
+    "Other"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Entities/cdxmeta_Category/Entity.xml",
+    "package-inputs/Entities/cdxmeta_Category/FormXml/quick/{5978624f-3b37-f111-88b3-0022489b9600}.xml",
+    "package-inputs/Entities/cdxmeta_Checkpoint/Entity.xml",
+    "package-inputs/Entities/cdxmeta_Checkpoint/FormXml/quick/{4e60526b-43c9-4eff-980e-12fb152572de}.xml",
+    "package-inputs/Entities/cdxmeta_WorkItem/Entity.xml",
+    "package-inputs/Entities/cdxmeta_WorkItem/FormXml/main/{c67be8a4-c475-4041-90e6-78e3ed79b018}.xml",
+    "package-inputs/Entities/cdxmeta_WorkItem/FormXml/quick/{38cc575f-ed67-4a02-8f01-2631e59b33d5}.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Relationships/cdxmeta_category.xml",
+    "package-inputs/Other/Relationships/cdxmeta_workitem.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/manifest.json"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "solution": {
+    "UniqueName": "RebuildFidelityWave",
+    "DisplayName": "Rebuild Fidelity Wave",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "RebuildFidelity",
+    "Prefix": "cdxrf",
+    "CustomizationPrefix": "cdxrf",
+    "DisplayName": "Rebuild Fidelity"
+  },
+  "sourceLayout": "intent-spec-derived",
+  "copiedDirectories": [
+    "AppModuleSiteMaps",
+    "AppModules",
+    "Entities",
+    "OptionSets",
+    "Other",
+    "environmentvariabledefinitions"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/AppModuleSiteMaps/cdxrf_rebuild_shell/AppModuleSiteMap.xml",
+    "package-inputs/AppModules/cdxrf_rebuild_shell/AppModule.xml",
+    "package-inputs/Entities/cdxrf_Task/Entity.xml",
+    "package-inputs/Entities/cdxrf_Task/FormXml/main/{9e8e552a-fded-e199-1d21-15bacb577774}.xml",
+    "package-inputs/Entities/cdxrf_Task/SavedQueries/{f28112bd-78ac-885c-2583-cdef79a479a0}.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/environmentvariabledefinitions/cdxrf_ShellMode/environmentvariabledefinition.xml",
+    "package-inputs/environmentvariabledefinitions/cdxrf_ShellMode/environmentvariablevalues.json",
+    "package-inputs/manifest.json"
+  ]
+}

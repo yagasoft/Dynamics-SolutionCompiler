@@ -1,0 +1,15 @@
+{
+  "LogicalName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "DisplayName": "Codex.Metadata.Plugins",
+  "metadataSourcePath": "Other/Customizations.xml",
+  "assetSourcePaths": [
+    "PluginAssemblies/CodexMetadataPlugins-2F08B2D4-7F38-4B6F-84C8-5AB6FA4B6D10/Codex.Metadata.Plugins.dll"
+  ],
+  "assemblyFileName": "Codex.Metadata.Plugins.dll",
+  "isolationMode": "2",
+  "sourceType": "0",
+  "introducedVersion": "1.0",
+  "byteLength": 98,
+  "contentHash": "62fa8c8cd08590bea3a11832d2fd5f5411854b755aa7fbb10bce9c767afb7dc6",
+  "comparisonSignature": "04b99e3d5e278d358f2441928c05d2300a72e5da58de4084bb4aa027ecb3dc3a"
+}

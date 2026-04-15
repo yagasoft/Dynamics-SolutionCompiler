@@ -1,0 +1,125 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "RebuildFidelityWave",
+    "displayName": "Rebuild Fidelity Wave",
+    "description": "Compact export-backed rebuild fidelity probe.",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "RebuildFidelity",
+    "prefix": "cdxrf",
+    "displayName": "Rebuild Fidelity",
+    "description": "Scratch publisher for rebuild-fidelity verification."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [
+    {
+      "schemaName": "cdxrf_ShellMode",
+      "displayName": "Shell Mode",
+      "type": "100000000",
+      "defaultValue": "standard",
+      "currentValue": "guided",
+      "secretStore": "0"
+    }
+  ],
+  "appModules": [
+    {
+      "uniqueName": "cdxrf_rebuild_shell",
+      "displayName": "Rebuild Fidelity Shell",
+      "description": "Entity-only shell for reverse-generation proof.",
+      "siteMap": {
+        "areas": [
+          {
+            "id": "area_rebuild",
+            "title": "Rebuild",
+            "groups": [
+              {
+                "id": "group_work",
+                "title": "Work",
+                "subAreas": [
+                  {
+                    "id": "subarea_tasks",
+                    "title": "Tasks",
+                    "entity": "cdxrf_task"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "tables": [
+    {
+      "logicalName": "cdxrf_task",
+      "schemaName": "cdxrf_Task",
+      "displayName": "Task",
+      "description": "Scratch task table for rebuild-fidelity verification.",
+      "entitySetName": "cdxrf_tasks",
+      "ownershipTypeMask": "UserOwned",
+      "columns": [
+        {
+          "logicalName": "cdxrf_note",
+          "schemaName": "cdxrf_note",
+          "displayName": "Note",
+          "description": "Extra text column for rebuild-fidelity verification.",
+          "type": "string",
+          "isSecured": false
+        }
+      ],
+      "keys": [],
+      "forms": [
+        {
+          "id": "9e8e552a-fded-e199-1d21-15bacb577774",
+          "name": "Task Main",
+          "type": "main",
+          "tabs": [
+            {
+              "name": "summary",
+              "label": "Summary",
+              "sections": [
+                {
+                  "name": "overview",
+                  "label": "Overview",
+                  "fields": [
+                    "cdxrf_taskname",
+                    "cdxrf_note"
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": [
+            "cdxrf_taskname"
+          ]
+        }
+      ],
+      "views": [
+        {
+          "id": "f28112bd-78ac-885c-2583-cdef79a479a0",
+          "name": "Backlog Review",
+          "type": "savedquery",
+          "layoutColumns": [
+            "cdxrf_taskname",
+            "cdxrf_note"
+          ],
+          "fetchAttributes": [
+            "cdxrf_taskid",
+            "cdxrf_taskname",
+            "cdxrf_note"
+          ],
+          "filters": [],
+          "orders": [
+            {
+              "attribute": "cdxrf_taskname",
+              "descending": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

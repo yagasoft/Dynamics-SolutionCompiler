@@ -1,0 +1,31 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedProcessPolicy",
+    "DisplayName": "Codex Metadata Seed Process Policy",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/duplicate-rule-conditions/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367-name-name-0.json",
+    "tracked-source/duplicate-rules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367.json",
+    "tracked-source/entities/account/attributes.json",
+    "tracked-source/entities/account/entity.json",
+    "tracked-source/entities/account/relationships.json",
+    "tracked-source/manifest.json",
+    "tracked-source/mobile-offline-profile-items/codex metadata mobile offline profile-account.json",
+    "tracked-source/mobile-offline-profiles/codex metadata mobile offline profile.json",
+    "tracked-source/routing-rule-items/codex metadata routing rule-route all.json",
+    "tracked-source/routing-rules/codex metadata routing rule.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+    "tracked-source/source-backed/Other/Solution.xml",
+    "tracked-source/source-backed/RoutingRules/Codex Metadata Routing Rule.meta.xml",
+    "tracked-source/source-backed/duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml"
+  ]
+}

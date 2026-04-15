@@ -1,0 +1,28 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "Connector",
+    "ServiceEndpoint",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "Connector",
+      "artifact": "shared-offerings-connector",
+      "packageRelativePath": "Connectors/shared-offerings-connector/Connector.xml"
+    },
+    {
+      "family": "ServiceEndpoint",
+      "artifact": "codex_webhook_endpoint",
+      "packageRelativePath": "ServiceEndpoints/codex_webhook_endpoint/ServiceEndpoint.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedServiceEndpointConnector",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

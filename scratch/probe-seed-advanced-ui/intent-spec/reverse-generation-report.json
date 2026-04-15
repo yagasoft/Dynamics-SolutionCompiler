@@ -1,0 +1,54 @@
+{
+  "inputKind": "unpacked-xml-folder",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "AppModule",
+      "artifact": "codex_metadata_advanced_ui_924e69cb",
+      "reason": "App modules require an entity-only site map to reverse-generate intent-spec JSON.",
+      "category": "unsupportedShape"
+    },
+    {
+      "family": "AppSetting",
+      "artifact": "codex_metadata_advanced_ui_924e69cb|AppChannel",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "SiteMap",
+      "artifact": "codex_metadata_advanced_ui_924e69cb",
+      "reason": "Only entity-only site map subareas can be reverse-generated into intent-spec JSON.",
+      "category": "unsupportedShape"
+    },
+    {
+      "family": "Visualization",
+      "artifact": "account|Accounts by Industry",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/icon.svg",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/landing.html",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": []
+}

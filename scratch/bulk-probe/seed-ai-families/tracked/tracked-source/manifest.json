@@ -1,0 +1,25 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedAiFamilies",
+    "DisplayName": "Codex Metadata Seed AI Families",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/ai-configurations/invoice_processing_training.json",
+    "tracked-source/ai-project-types/document_automation.json",
+    "tracked-source/ai-projects/invoice_processing.json",
+    "tracked-source/manifest.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/AIConfigurations/invoice_processing_training/AIConfiguration.xml",
+    "tracked-source/source-backed/AIProjectTypes/document_automation/AIProjectType.xml",
+    "tracked-source/source-backed/AIProjects/invoice_processing/AIProject.xml",
+    "tracked-source/source-backed/Other/Solution.xml"
+  ]
+}

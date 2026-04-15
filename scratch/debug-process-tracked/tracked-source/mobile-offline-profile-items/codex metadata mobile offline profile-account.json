@@ -1,0 +1,14 @@
+{
+  "LogicalName": "codex metadata mobile offline profile|account",
+  "DisplayName": "Codex Metadata Mobile Offline Profile Item",
+  "metadataSourcePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+  "assetSourcePaths": [],
+  "parentMobileOfflineProfileLogicalName": "codex metadata mobile offline profile",
+  "entityLogicalName": "account",
+  "recordDistributionCriteria": "0",
+  "recordsOwnedByMe": false,
+  "recordsOwnedByMyTeam": false,
+  "recordsOwnedByMyBusinessUnit": false,
+  "profileItemEntityFilter": null,
+  "comparisonSignature": "65848d9cc92ac924c2a03a239e82d248cdabb93acf6858fccf2514e2344bb851"
+}

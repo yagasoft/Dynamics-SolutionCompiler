@@ -1,0 +1,29 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedAppShell",
+    "displayName": "Codex Metadata Seed App Shell",
+    "description": "Curated Codex skill seed solution for app shell and configuration analysis.",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [
+    {
+      "schemaName": "cdxmeta_AppShellMode",
+      "displayName": "App Shell Mode",
+      "type": "100000000",
+      "defaultValue": "standard",
+      "currentValue": "guided",
+      "secretStore": "0"
+    }
+  ],
+  "appModules": [],
+  "tables": []
+}

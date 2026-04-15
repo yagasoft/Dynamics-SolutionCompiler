@@ -1,0 +1,12 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "Column",
+    "ImageConfiguration",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": []
+}

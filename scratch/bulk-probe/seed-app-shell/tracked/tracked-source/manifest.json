@@ -1,0 +1,36 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedAppShell",
+    "DisplayName": "Codex Metadata Seed App Shell",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/app-modules/codex_metadata_shell_dd96cf20.json",
+    "tracked-source/app-settings/codex_metadata_shell_dd96cf20--AppChannel.json",
+    "tracked-source/environment-variables/cdxmeta_AppShellMode.definition.json",
+    "tracked-source/environment-variables/cdxmeta_AppShellMode.value.json",
+    "tracked-source/manifest.json",
+    "tracked-source/site-maps/codex_metadata_shell_dd96cf20.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/AppModuleSiteMaps/codex_metadata_shell_dd96cf20/AppModuleSiteMap.xml",
+    "tracked-source/source-backed/AppModules/codex_metadata_shell_dd96cf20/AppModule.xml",
+    "tracked-source/source-backed/Other/Solution.xml",
+    "tracked-source/source-backed/WebResources/cdxmeta_/shell/icon.svg",
+    "tracked-source/source-backed/WebResources/cdxmeta_/shell/icon.svg.data.xml",
+    "tracked-source/source-backed/WebResources/cdxmeta_/shell/landing.html",
+    "tracked-source/source-backed/WebResources/cdxmeta_/shell/landing.html.data.xml",
+    "tracked-source/source-backed/environmentvariabledefinitions/cdxmeta_AppShellMode/environmentvariabledefinition.xml",
+    "tracked-source/source-backed/environmentvariabledefinitions/cdxmeta_AppShellMode/environmentvariablevalues.json",
+    "tracked-source/web-resources/cdxmeta-shell-icon-svg.json",
+    "tracked-source/web-resources/cdxmeta-shell-icon-svg.svg",
+    "tracked-source/web-resources/cdxmeta-shell-landing-html.html",
+    "tracked-source/web-resources/cdxmeta-shell-landing-html.json"
+  ]
+}

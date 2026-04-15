@@ -1,0 +1,9 @@
+{
+  "LogicalName": "codex metadata seed field security",
+  "DisplayName": "Codex Metadata Seed Field Security",
+  "metadataSourcePath": "Other/FieldSecurityProfiles.xml",
+  "assetSourcePaths": [],
+  "description": null,
+  "permissionCount": 1,
+  "comparisonSignature": "0b1ddd4af9397c82e52870baf6ec18d0a156d572aeaa9317bad44b58b292854a"
+}

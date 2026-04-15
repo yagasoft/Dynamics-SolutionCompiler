@@ -1,0 +1,38 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedProcessSecurity",
+    "DisplayName": "Codex Metadata Seed Process Security",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/connection-roles/codex metadata seed connection role.json",
+    "tracked-source/entities/cdxmeta_workitem/attributes.json",
+    "tracked-source/entities/cdxmeta_workitem/entity.json",
+    "tracked-source/entities/cdxmeta_workitem/relationships.json",
+    "tracked-source/field-permissions/codex metadata seed field security-cdxmeta_workitem-cdxmeta_details.json",
+    "tracked-source/field-security-profiles/codex metadata seed field security.json",
+    "tracked-source/manifest.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvCreateSharePointData-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvReadPluginAssembly-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvReadPluginType-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvReadSdkMessage-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvReadSdkMessageProcessingStep-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvReadSdkMessageProcessingStepImage-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvReadSharePointData-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvReadSharePointDocument-Global.json",
+    "tracked-source/role-privileges/codex metadata seed role-prvWriteSharePointData-Global.json",
+    "tracked-source/roles/codex metadata seed role.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/Other/ConnectionRoles.xml",
+    "tracked-source/source-backed/Other/FieldSecurityProfiles.xml",
+    "tracked-source/source-backed/Other/Solution.xml",
+    "tracked-source/source-backed/Roles/Codex Metadata Seed Role.xml"
+  ]
+}

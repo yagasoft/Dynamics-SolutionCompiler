@@ -1,0 +1,19 @@
+{
+  "LogicalName": "codex_webhook_endpoint",
+  "DisplayName": "codex_webhook_endpoint",
+  "metadataSourcePath": "ServiceEndpoints/codex_webhook_endpoint/ServiceEndpoint.xml",
+  "assetSourcePaths": [],
+  "name": "codex_webhook_endpoint",
+  "description": "Neutral webhook endpoint for compiler proof.",
+  "contract": "8",
+  "connectionMode": "1",
+  "authType": "4",
+  "namespaceAddress": "https://hooks.contoso.example",
+  "endpointPath": "/dataverse/codex",
+  "url": "https://hooks.contoso.example/dataverse/codex",
+  "messageFormat": "2",
+  "messageCharset": "65001",
+  "introducedVersion": "1.0",
+  "isCustomizable": true,
+  "comparisonSignature": "f45f8540edb22622d0a81308e53f806e3ea48478ae18bae22a804f9d6680355a"
+}

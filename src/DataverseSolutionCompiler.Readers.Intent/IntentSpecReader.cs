@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 using DataverseSolutionCompiler.Domain.Abstractions;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Model;
@@ -12,6 +13,24 @@ namespace DataverseSolutionCompiler.Readers.Intent;
 
 public sealed class IntentSpecReader : ISolutionReader
 {
+    private static readonly HashSet<string> KnownPlatformFormFieldNames = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "createdby",
+        "createdon",
+        "modifiedby",
+        "modifiedon",
+        "ownerid",
+        "owningbusinessunit",
+        "owningteam",
+        "owninguser",
+        "processid",
+        "stageid",
+        "statecode",
+        "statuscode",
+        "transactioncurrencyid",
+        "versionnumber"
+    };
+
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true
@@ -112,6 +131,11 @@ public sealed class IntentSpecReader : ISolutionReader
             artifacts.AddRange(CreateAppModuleArtifacts(appModule!, tablesByLogicalName, request.SourcePath));
         }
 
+        foreach (var sourceBackedArtifact in document.SourceBackedArtifacts ?? [])
+        {
+            artifacts.Add(CreateSourceBackedArtifact(sourceBackedArtifact!, request.SourcePath));
+        }
+
         diagnostics.Add(new CompilerDiagnostic(
             "intent-spec-read",
             DiagnosticSeverity.Info,
@@ -200,6 +224,7 @@ public sealed class IntentSpecReader : ISolutionReader
             ValidateOptionItems(optionSet.Options, $"{path}.options", sourcePath, diagnostics, requireTwoBooleanOptions: false);
         }
 
+        var knownTables = new HashSet<string>(document.Tables?.Select(table => NormalizeLogicalName(table!.LogicalName) ?? string.Empty) ?? [], StringComparer.OrdinalIgnoreCase);
         var tableNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var (table, tableIndex) in Enumerate(document.Tables))
         {
@@ -240,6 +265,14 @@ public sealed class IntentSpecReader : ISolutionReader
                     case "memo":
                     case "datetime":
                     case "decimal":
+                    case "image":
+                        if (column.Options is { Count: > 0 } || !string.IsNullOrWhiteSpace(column.GlobalOptionSet) || !string.IsNullOrWhiteSpace(column.TargetTable))
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                columnPath,
+                                "Image columns cannot declare options, globalOptionSet, or targetTable."));
+                        }
                         break;
                     case "choice":
                         if (string.IsNullOrWhiteSpace(column.GlobalOptionSet) == (column.Options is not { Count: > 0 }))
@@ -274,12 +307,37 @@ public sealed class IntentSpecReader : ISolutionReader
                         diagnostics.Add(CreateError(
                             sourcePath,
                             $"{columnPath}.type",
-                            $"Unsupported column type '{column.Type}'. Supported JSON v1 types are string, memo, datetime, decimal, choice, boolean, and lookup."));
+                            $"Unsupported column type '{column.Type}'. Supported JSON v1 types are string, memo, datetime, decimal, image, choice, boolean, and lookup."));
                         break;
+                }
+
+                if ((column.CanStoreFullImage.HasValue || column.IsPrimaryImage.HasValue)
+                    && !string.Equals(column.Type, "image", StringComparison.OrdinalIgnoreCase))
+                {
+                    diagnostics.Add(CreateError(
+                        sourcePath,
+                        columnPath,
+                        "canStoreFullImage and isPrimaryImage are supported only on image columns."));
                 }
             }
 
-            var allowedFieldNames = columnNames;
+            if (!string.IsNullOrWhiteSpace(table.PrimaryImageAttribute))
+            {
+                var primaryImageAttribute = NormalizeLogicalName(table.PrimaryImageAttribute);
+                var matchingImageColumn = (table.Columns ?? [])
+                    .FirstOrDefault(column =>
+                        string.Equals(NormalizeLogicalName(column?.LogicalName), primaryImageAttribute, StringComparison.OrdinalIgnoreCase)
+                        && string.Equals(column?.Type, "image", StringComparison.OrdinalIgnoreCase));
+                if (matchingImageColumn is null)
+                {
+                    diagnostics.Add(CreateError(
+                        sourcePath,
+                        $"{tablePath}.primaryImageAttribute",
+                        $"primaryImageAttribute '{table.PrimaryImageAttribute}' must reference an image column on table '{table.LogicalName}'."));
+                }
+            }
+
+            var allowedFormFieldNames = CreateAllowedFormFieldNames(columnNames);
             var keyNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var (key, keyIndex) in Enumerate(table.Keys))
             {
@@ -320,7 +378,7 @@ public sealed class IntentSpecReader : ISolutionReader
                             $"Duplicate key attribute '{attributeName}' in key '{key.LogicalName}'."));
                     }
 
-                    if (!allowedFieldNames.Contains(normalizedAttribute))
+                    if (!columnNames.Contains(normalizedAttribute))
                     {
                         diagnostics.Add(CreateError(
                             sourcePath,
@@ -348,9 +406,10 @@ public sealed class IntentSpecReader : ISolutionReader
                     diagnostics.Add(CreateError(sourcePath, $"{formPath}.id", "Form ids must be valid GUID values when supplied."));
                 }
 
-                if (!string.Equals(form.Type, "main", StringComparison.OrdinalIgnoreCase))
+                var normalizedFormType = NormalizeFormType(form.Type);
+                if (normalizedFormType is null)
                 {
-                    diagnostics.Add(CreateError(sourcePath, $"{formPath}.type", "JSON v1 supports main forms only."));
+                    diagnostics.Add(CreateError(sourcePath, $"{formPath}.type", "JSON v1 supports main, quick, and card forms only."));
                 }
 
                 foreach (var (tab, tabIndex) in Enumerate(form.Tabs))
@@ -368,7 +427,7 @@ public sealed class IntentSpecReader : ISolutionReader
                         RequireValue(section.Label, $"{sectionPath}.label", sourcePath, diagnostics);
                         foreach (var (field, fieldIndex) in Enumerate(section.Fields))
                         {
-                            if (!allowedFieldNames.Contains(field))
+                            if (!IsSupportedFormFieldReference(field, allowedFormFieldNames))
                             {
                                 diagnostics.Add(CreateError(
                                     sourcePath,
@@ -376,12 +435,64 @@ public sealed class IntentSpecReader : ISolutionReader
                                     $"Form '{form.Name}' references unknown field '{field}' on table '{table.LogicalName}'."));
                             }
                         }
+
+                        foreach (var (control, controlIndex) in Enumerate(section.Controls))
+                        {
+                            var controlPath = $"{sectionPath}.controls[{controlIndex}]";
+                            ValidateUnexpectedProperties(control.ExtensionData, controlPath, sourcePath, diagnostics);
+                            RequireValue(control.Kind, $"{controlPath}.kind", sourcePath, diagnostics);
+
+                            switch (NormalizeFormControlKind(control.Kind))
+                            {
+                                case "field":
+                                    ValidateFormFieldReference(control.Field, allowedFormFieldNames, sourcePath, $"{controlPath}.field", diagnostics, form.Name!, table.LogicalName!);
+                                    break;
+                                case "quickView":
+                                    ValidateFormFieldReference(control.Field, allowedFormFieldNames, sourcePath, $"{controlPath}.field", diagnostics, form.Name!, table.LogicalName!);
+                                    RequireValue(control.QuickFormEntity, $"{controlPath}.quickFormEntity", sourcePath, diagnostics);
+                                    RequireValue(control.QuickFormId, $"{controlPath}.quickFormId", sourcePath, diagnostics);
+                                    if (!string.IsNullOrWhiteSpace(control.QuickFormId) && !Guid.TryParse(control.QuickFormId, out _))
+                                    {
+                                        diagnostics.Add(CreateError(sourcePath, $"{controlPath}.quickFormId", "Quick-view controls require a valid quickFormId GUID."));
+                                    }
+
+                                    break;
+                                case "subgrid":
+                                    RequireValue(control.RelationshipName, $"{controlPath}.relationshipName", sourcePath, diagnostics);
+                                    RequireValue(control.TargetTable, $"{controlPath}.targetTable", sourcePath, diagnostics);
+                                    if (!string.IsNullOrWhiteSpace(control.TargetTable)
+                                        && !knownTables.Contains(NormalizeLogicalName(control.TargetTable) ?? string.Empty))
+                                    {
+                                        diagnostics.Add(CreateError(
+                                            sourcePath,
+                                            $"{controlPath}.targetTable",
+                                            $"Subgrid control on form '{form.Name}' references unknown target table '{control.TargetTable}'."));
+                                    }
+
+                                    if (!string.IsNullOrWhiteSpace(control.DefaultViewId) && !Guid.TryParse(control.DefaultViewId, out _))
+                                    {
+                                        diagnostics.Add(CreateError(sourcePath, $"{controlPath}.defaultViewId", "Subgrid defaultViewId values must be valid GUIDs when supplied."));
+                                    }
+
+                                    if (control.RecordsPerPage is <= 0)
+                                    {
+                                        diagnostics.Add(CreateError(sourcePath, $"{controlPath}.recordsPerPage", "Subgrid recordsPerPage must be a positive integer when supplied."));
+                                    }
+
+                                    break;
+                                case null:
+                                    break;
+                                default:
+                                    diagnostics.Add(CreateError(sourcePath, $"{controlPath}.kind", $"Unsupported form control kind '{control.Kind}'. Supported kinds are field, quickView, and subgrid."));
+                                    break;
+                            }
+                        }
                     }
                 }
 
                 foreach (var (field, fieldIndex) in Enumerate(form.HeaderFields))
                 {
-                    if (!allowedFieldNames.Contains(field))
+                    if (!IsSupportedFormFieldReference(field, allowedFormFieldNames))
                     {
                         diagnostics.Add(CreateError(
                             sourcePath,
@@ -427,9 +538,29 @@ public sealed class IntentSpecReader : ISolutionReader
                     RequireValue(order.Attribute, $"{orderPath}.attribute", sourcePath, diagnostics);
                 }
             }
+
+            foreach (var (visualization, visualizationIndex) in Enumerate(table.Visualizations))
+            {
+                var visualizationPath = $"{tablePath}.visualizations[{visualizationIndex}]";
+                ValidateUnexpectedProperties(visualization.ExtensionData, visualizationPath, sourcePath, diagnostics);
+                RequireValue(visualization.Name, $"{visualizationPath}.name", sourcePath, diagnostics);
+                RequireValue(visualization.DataDescriptionXml, $"{visualizationPath}.dataDescriptionXml", sourcePath, diagnostics);
+                RequireValue(visualization.PresentationDescriptionXml, $"{visualizationPath}.presentationDescriptionXml", sourcePath, diagnostics);
+                if (!string.IsNullOrWhiteSpace(visualization.Id) && !Guid.TryParse(visualization.Id, out _))
+                {
+                    diagnostics.Add(CreateError(sourcePath, $"{visualizationPath}.id", "Visualization ids must be valid GUID values when supplied."));
+                }
+
+                if (visualization.ChartTypes is null || visualization.ChartTypes.Count == 0)
+                {
+                    diagnostics.Add(CreateError(sourcePath, $"{visualizationPath}.chartTypes", "Each visualization requires at least one chartTypes entry."));
+                }
+
+                ValidateXmlFragment(visualization.DataDescriptionXml, $"{visualizationPath}.dataDescriptionXml", sourcePath, diagnostics);
+                ValidateXmlFragment(visualization.PresentationDescriptionXml, $"{visualizationPath}.presentationDescriptionXml", sourcePath, diagnostics);
+            }
         }
 
-        var knownTables = new HashSet<string>(document.Tables?.Select(table => NormalizeLogicalName(table!.LogicalName) ?? string.Empty) ?? [], StringComparer.OrdinalIgnoreCase);
         foreach (var (appModule, appModuleIndex) in Enumerate(document.AppModules))
         {
             var appModulePath = $"$.appModules[{appModuleIndex}]";
@@ -440,6 +571,13 @@ public sealed class IntentSpecReader : ISolutionReader
             {
                 diagnostics.Add(CreateError(sourcePath, $"{appModulePath}.siteMap", "JSON v1 app modules require a siteMap section."));
                 continue;
+            }
+
+            foreach (var (appSetting, appSettingIndex) in Enumerate(appModule.AppSettings))
+            {
+                var appSettingPath = $"{appModulePath}.appSettings[{appSettingIndex}]";
+                ValidateUnexpectedProperties(appSetting.ExtensionData, appSettingPath, sourcePath, diagnostics);
+                RequireValue(appSetting.DefinitionUniqueName, $"{appSettingPath}.definitionUniqueName", sourcePath, diagnostics);
             }
 
             ValidateUnexpectedProperties(appModule.SiteMap.ExtensionData, $"{appModulePath}.siteMap", sourcePath, diagnostics);
@@ -463,7 +601,21 @@ public sealed class IntentSpecReader : ISolutionReader
                         ValidateUnexpectedProperties(subArea.ExtensionData, subAreaPath, sourcePath, diagnostics);
                         RequireValue(subArea.Id, $"{subAreaPath}.id", sourcePath, diagnostics);
                         RequireValue(subArea.Title, $"{subAreaPath}.title", sourcePath, diagnostics);
-                        RequireValue(subArea.Entity, $"{subAreaPath}.entity", sourcePath, diagnostics);
+                        var populatedTargets = new[]
+                        {
+                            !string.IsNullOrWhiteSpace(subArea.Entity),
+                            !string.IsNullOrWhiteSpace(subArea.Url),
+                            !string.IsNullOrWhiteSpace(subArea.WebResource)
+                        }.Count(value => value);
+                        if (populatedTargets != 1)
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                subAreaPath,
+                                "Each site map sub-area must declare exactly one of entity, url, or webResource."));
+                            continue;
+                        }
+
                         var normalizedEntity = NormalizeLogicalName(subArea.Entity);
                         if (!string.IsNullOrWhiteSpace(normalizedEntity)
                             && !knownTables.Contains(normalizedEntity))
@@ -474,6 +626,36 @@ public sealed class IntentSpecReader : ISolutionReader
                                 $"Site map sub-area '{subArea.Id}' references unknown table '{subArea.Entity}'."));
                         }
                     }
+                }
+            }
+        }
+
+        foreach (var (sourceBackedArtifact, sourceBackedArtifactIndex) in Enumerate(document.SourceBackedArtifacts))
+        {
+            var artifactPath = $"$.sourceBackedArtifacts[{sourceBackedArtifactIndex}]";
+            ValidateUnexpectedProperties(sourceBackedArtifact.ExtensionData, artifactPath, sourcePath, diagnostics);
+            RequireValue(sourceBackedArtifact.Family, $"{artifactPath}.family", sourcePath, diagnostics);
+            RequireValue(sourceBackedArtifact.LogicalName, $"{artifactPath}.logicalName", sourcePath, diagnostics);
+            RequireValue(sourceBackedArtifact.MetadataSourcePath, $"{artifactPath}.metadataSourcePath", sourcePath, diagnostics);
+            RequireValue(sourceBackedArtifact.PackageRelativePath, $"{artifactPath}.packageRelativePath", sourcePath, diagnostics);
+
+            if (!string.IsNullOrWhiteSpace(sourceBackedArtifact.Family)
+                && !Enum.TryParse<ComponentFamily>(sourceBackedArtifact.Family, ignoreCase: true, out _))
+            {
+                diagnostics.Add(CreateError(
+                    sourcePath,
+                    $"{artifactPath}.family",
+                    $"Unknown component family '{sourceBackedArtifact.Family}'."));
+            }
+
+            foreach (var (assetSourcePath, assetIndex) in Enumerate(sourceBackedArtifact.AssetSourcePaths))
+            {
+                if (Path.IsPathRooted(assetSourcePath))
+                {
+                    diagnostics.Add(CreateError(
+                        sourcePath,
+                        $"{artifactPath}.assetSourcePaths[{assetIndex}]",
+                        "assetSourcePaths entries must be relative intent-spec paths so package-relative destinations remain deterministic."));
                 }
             }
         }
@@ -510,7 +692,8 @@ public sealed class IntentSpecReader : ISolutionReader
             : table.EntitySetName;
         var authoredColumns = table.Columns ?? [];
         var forms = table.Forms ?? [];
-        var views = table.Views ?? [];
+            var views = table.Views ?? [];
+            var visualizations = table.Visualizations ?? [];
 
         var artifacts = new List<FamilyArtifact>
         {
@@ -526,10 +709,11 @@ public sealed class IntentSpecReader : ISolutionReader
                     (ArtifactPropertyKeys.Description, table.Description),
                     (ArtifactPropertyKeys.EntitySetName, entitySetName),
                     (ArtifactPropertyKeys.OwnershipTypeMask, table.OwnershipTypeMask ?? "UserOwned"),
-                    (ArtifactPropertyKeys.IsCustomizable, "true"),
+                    (ArtifactPropertyKeys.IsCustomizable, (table.IsCustomizable ?? true) ? "true" : "false"),
                     (ArtifactPropertyKeys.PrimaryIdAttribute, primaryIdLogicalName),
                     (ArtifactPropertyKeys.PrimaryNameAttribute, primaryNameLogicalName),
-                    (ArtifactPropertyKeys.ShellOnly, (!authoredColumns.Any() && !forms.Any() && !views.Any()) ? "true" : "false")))
+                    (ArtifactPropertyKeys.PrimaryImageAttribute, NormalizeLogicalName(table.PrimaryImageAttribute)),
+                    (ArtifactPropertyKeys.ShellOnly, (!authoredColumns.Any() && !forms.Any() && !views.Any() && !visualizations.Any()) ? "true" : "false")))
         };
 
         artifacts.Add(CreateColumnArtifact(
@@ -540,12 +724,15 @@ public sealed class IntentSpecReader : ISolutionReader
             table.Description,
             "primarykey",
             isSecured: false,
+            isCustomizable: false,
             isCustomField: false,
             isPrimaryKey: true,
             isPrimaryName: false,
             optionSetName: null,
             optionSetType: null,
             isGlobalOptionSet: null,
+            canStoreFullImage: null,
+            isPrimaryImage: null,
             sourcePath));
 
         artifacts.Add(CreateColumnArtifact(
@@ -556,12 +743,15 @@ public sealed class IntentSpecReader : ISolutionReader
             table.Description,
             "string",
             isSecured: false,
+            isCustomizable: true,
             isCustomField: true,
             isPrimaryKey: false,
             isPrimaryName: true,
             optionSetName: null,
             optionSetType: null,
             isGlobalOptionSet: null,
+            canStoreFullImage: null,
+            isPrimaryImage: null,
             sourcePath));
 
         foreach (var column in authoredColumns)
@@ -590,12 +780,15 @@ public sealed class IntentSpecReader : ISolutionReader
                 column.Description,
                 normalizedColumnType,
                 column.IsSecured,
+                column.IsCustomizable ?? true,
                 isCustomField: true,
                 isPrimaryKey: false,
                 isPrimaryName: false,
                 optionSetName: normalizedGlobalOptionSet ?? localOptionArtifact?.LogicalName,
                 optionSetType: localOptionArtifact is null ? (normalizedGlobalOptionSet is null ? null : "picklist") : GetProperty(localOptionArtifact, ArtifactPropertyKeys.OptionSetType),
                 isGlobalOptionSet: normalizedGlobalOptionSet is not null ? "true" : (localOptionArtifact is null ? null : "false"),
+                canStoreFullImage: normalizedColumnType == "image" ? (column.CanStoreFullImage ?? false) : null,
+                isPrimaryImage: normalizedColumnType == "image" ? (column.IsPrimaryImage ?? string.Equals(NormalizeLogicalName(table.PrimaryImageAttribute), normalizedColumnLogicalName, StringComparison.OrdinalIgnoreCase)) : null,
                 sourcePath));
 
             if (localOptionArtifact is not null)
@@ -634,9 +827,19 @@ public sealed class IntentSpecReader : ISolutionReader
             artifacts.Add(CreateViewArtifact(tableLogicalName, primaryIdLogicalName, view!, sourcePath));
         }
 
+        foreach (var visualization in visualizations.Where(visualization => visualization is not null))
+        {
+            artifacts.Add(CreateVisualizationArtifact(tableLogicalName, visualization!, sourcePath));
+        }
+
         foreach (var key in table.Keys ?? [])
         {
             artifacts.Add(CreateKeyArtifact(tableLogicalName, key!, sourcePath));
+        }
+
+        foreach (var imageConfiguration in CreateImageConfigurationArtifacts(table, tableLogicalName, sourcePath))
+        {
+            artifacts.Add(imageConfiguration);
         }
 
         return artifacts;
@@ -778,12 +981,15 @@ public sealed class IntentSpecReader : ISolutionReader
         string? description,
         string attributeType,
         bool isSecured,
+        bool isCustomizable,
         bool isCustomField,
         bool isPrimaryKey,
         bool isPrimaryName,
         string? optionSetName,
         string? optionSetType,
         string? isGlobalOptionSet,
+        bool? canStoreFullImage,
+        bool? isPrimaryImage,
         string sourcePath) =>
         new(
             ComponentFamily.Column,
@@ -798,13 +1004,15 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.AttributeType, attributeType),
                 (ArtifactPropertyKeys.IsSecured, isSecured ? "true" : "false"),
                 (ArtifactPropertyKeys.IsCustomField, isCustomField ? "true" : "false"),
-                (ArtifactPropertyKeys.IsCustomizable, "true"),
+                (ArtifactPropertyKeys.IsCustomizable, isCustomizable ? "true" : "false"),
                 (ArtifactPropertyKeys.IsPrimaryKey, isPrimaryKey ? "true" : "false"),
                 (ArtifactPropertyKeys.IsPrimaryName, isPrimaryName ? "true" : "false"),
                 (ArtifactPropertyKeys.IsLogical, "false"),
                 (ArtifactPropertyKeys.OptionSetName, optionSetName),
                 (ArtifactPropertyKeys.OptionSetType, optionSetType),
-                (ArtifactPropertyKeys.IsGlobal, isGlobalOptionSet)));
+                (ArtifactPropertyKeys.IsGlobal, isGlobalOptionSet),
+                (ArtifactPropertyKeys.CanStoreFullImage, canStoreFullImage.HasValue ? (canStoreFullImage.Value ? "true" : "false") : null),
+                (ArtifactPropertyKeys.IsPrimaryImage, isPrimaryImage.HasValue ? (isPrimaryImage.Value ? "true" : "false") : null)));
 
     private static FamilyArtifact CreateKeyArtifact(
         string entityLogicalName,
@@ -834,34 +1042,101 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.KeyAttributesJson, SerializeJson(normalizedKeyAttributes))));
     }
 
+    private static IEnumerable<FamilyArtifact> CreateImageConfigurationArtifacts(
+        TableSpec table,
+        string entityLogicalName,
+        string sourcePath)
+    {
+        var primaryImageAttribute = NormalizeLogicalName(table.PrimaryImageAttribute);
+        if (string.IsNullOrWhiteSpace(primaryImageAttribute))
+        {
+            yield break;
+        }
+
+        var imageColumns = (table.Columns ?? [])
+            .Where(column => string.Equals(column?.Type, "image", StringComparison.OrdinalIgnoreCase))
+            .Select(column => new
+            {
+                LogicalName = NormalizeLogicalName(column!.LogicalName),
+                CanStoreFullImage = column!.CanStoreFullImage ?? false,
+                IsPrimaryImage = column.IsPrimaryImage ?? string.Equals(NormalizeLogicalName(column.LogicalName), primaryImageAttribute, StringComparison.OrdinalIgnoreCase)
+            })
+            .Where(column => !string.IsNullOrWhiteSpace(column.LogicalName))
+            .ToArray();
+        if (imageColumns.Length == 0)
+        {
+            yield break;
+        }
+
+        var primaryColumn = imageColumns.FirstOrDefault(column => string.Equals(column.LogicalName, primaryImageAttribute, StringComparison.OrdinalIgnoreCase))
+            ?? imageColumns[0];
+
+        yield return new FamilyArtifact(
+            ComponentFamily.ImageConfiguration,
+            $"{entityLogicalName}|entity-image",
+            primaryImageAttribute,
+            sourcePath,
+            EvidenceKind.Derived,
+            CreateProperties(
+                (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
+                (ArtifactPropertyKeys.ImageConfigurationScope, "entity"),
+                (ArtifactPropertyKeys.PrimaryImageAttribute, primaryImageAttribute),
+                (ArtifactPropertyKeys.ImageAttributeLogicalName, primaryImageAttribute),
+                (ArtifactPropertyKeys.CanStoreFullImage, primaryColumn.CanStoreFullImage ? "true" : "false"),
+                (ArtifactPropertyKeys.IsPrimaryImage, "true")));
+
+        foreach (var imageColumn in imageColumns)
+        {
+            yield return new FamilyArtifact(
+                ComponentFamily.ImageConfiguration,
+                $"{entityLogicalName}|{imageColumn.LogicalName}|attribute-image",
+                imageColumn.LogicalName,
+                sourcePath,
+                EvidenceKind.Derived,
+                CreateProperties(
+                    (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
+                    (ArtifactPropertyKeys.ImageConfigurationScope, "attribute"),
+                    (ArtifactPropertyKeys.PrimaryImageAttribute, primaryImageAttribute),
+                    (ArtifactPropertyKeys.ImageAttributeLogicalName, imageColumn.LogicalName),
+                    (ArtifactPropertyKeys.CanStoreFullImage, imageColumn.CanStoreFullImage ? "true" : "false"),
+                    (ArtifactPropertyKeys.IsPrimaryImage, imageColumn.IsPrimaryImage ? "true" : "false")));
+        }
+    }
+
     private static FamilyArtifact CreateFormArtifact(string entityLogicalName, FormSpec form, string sourcePath)
     {
         var formId = NormalizeGuid(form.Id) ?? CreateDeterministicGuid(entityLogicalName, "form", form.Name!);
         var controlDescriptions = BuildFormControlDescriptions(form);
+        var formType = NormalizeFormType(form.Type) ?? "main";
         var summary = new
         {
-            formType = "main",
+            formType,
             formId,
             tabCount = form.Tabs?.Count ?? 0,
             sectionCount = form.Tabs?.Sum(tab => tab?.Sections?.Count ?? 0) ?? 0,
             controlCount = controlDescriptions.Length,
-            quickFormCount = 0,
-            subgridCount = 0,
+            quickFormCount = controlDescriptions.Count(control => string.Equals(control.Role, "quickView", StringComparison.OrdinalIgnoreCase)),
+            subgridCount = controlDescriptions.Count(control => string.Equals(control.Role, "subgrid", StringComparison.OrdinalIgnoreCase)),
             headerControlCount = form.HeaderFields?.Count ?? 0,
             footerControlCount = 0,
-            controlDescriptions
+            controlDescriptions = controlDescriptions.Select(control => new
+            {
+                id = control.Id,
+                dataFieldName = control.DataFieldName,
+                role = control.Role
+            }).ToArray()
         };
         var summaryJson = SerializeJson(summary);
 
         return new FamilyArtifact(
             ComponentFamily.Form,
-            $"{entityLogicalName}|main|{formId}",
+            $"{entityLogicalName}|{formType}|{formId}",
             form.Name,
             sourcePath,
             EvidenceKind.Derived,
             CreateProperties(
                 (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
-                (ArtifactPropertyKeys.FormType, "main"),
+                (ArtifactPropertyKeys.FormType, formType),
                 (ArtifactPropertyKeys.FormTypeCode, "1"),
                 (ArtifactPropertyKeys.FormId, formId),
                 (ArtifactPropertyKeys.Description, form.Description),
@@ -869,8 +1144,8 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.TabCount, summary.tabCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SectionCount, summary.sectionCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.ControlCount, summary.controlCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                (ArtifactPropertyKeys.QuickFormCount, "0"),
-                (ArtifactPropertyKeys.SubgridCount, "0"),
+                (ArtifactPropertyKeys.QuickFormCount, summary.quickFormCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                (ArtifactPropertyKeys.SubgridCount, summary.subgridCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.HeaderControlCount, summary.headerControlCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.FooterControlCount, "0"),
                 (ArtifactPropertyKeys.ControlDescriptionCount, controlDescriptions.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)),
@@ -878,33 +1153,63 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
 
-    private static object[] BuildFormControlDescriptions(FormSpec form)
+    private static FormControlDescriptionEntry[] BuildFormControlDescriptions(FormSpec form)
     {
         var bodyControls = form.Tabs?
             .SelectMany(tab => tab?.Sections ?? [])
-            .SelectMany(section => section?.Fields ?? [])
-            .Select(field => new
-            {
-                id = NormalizeLogicalName(field) ?? string.Empty,
-                dataFieldName = NormalizeLogicalName(field) ?? string.Empty,
-                role = "field"
-            })
+            .SelectMany(section => EnumerateFormControls(section))
             ?? [];
         var headerControls = form.HeaderFields?
-            .Select(field => new
-            {
-                id = $"header_{NormalizeLogicalName(field)}",
-                dataFieldName = NormalizeLogicalName(field) ?? string.Empty,
-                role = "field"
-            })
+            .Select(field => new FormControlDescriptionEntry(
+                $"header_{NormalizeLogicalName(field)}",
+                NormalizeLogicalName(field) ?? string.Empty,
+                "field"))
             ?? [];
 
         return bodyControls
             .Concat(headerControls)
-            .OrderBy(control => control.id, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(control => control.dataFieldName, StringComparer.OrdinalIgnoreCase)
-            .Cast<object>()
+            .OrderBy(control => control.Id, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(control => control.DataFieldName, StringComparer.OrdinalIgnoreCase)
             .ToArray();
+    }
+
+    private static IEnumerable<FormControlDescriptionEntry> EnumerateFormControls(FormSectionSpec? section)
+    {
+        if (section is null)
+        {
+            yield break;
+        }
+
+        foreach (var field in section.Fields ?? [])
+        {
+            var normalizedField = NormalizeLogicalName(field);
+            if (string.IsNullOrWhiteSpace(normalizedField))
+            {
+                continue;
+            }
+
+            yield return new FormControlDescriptionEntry(normalizedField, normalizedField, "field");
+        }
+
+        foreach (var control in section.Controls ?? [])
+        {
+            var kind = NormalizeFormControlKind(control?.Kind);
+            if (kind is null)
+            {
+                continue;
+            }
+
+            var dataFieldName = NormalizeLogicalName(control?.Field) ?? string.Empty;
+            var id = kind switch
+            {
+                "field" => dataFieldName,
+                "quickView" => string.IsNullOrWhiteSpace(dataFieldName) ? "quickview" : $"quickview_{dataFieldName}",
+                "subgrid" => NormalizeLogicalName(control?.RelationshipName) ?? NormalizeLogicalName(control?.TargetTable) ?? "subgrid",
+                _ => string.Empty
+            };
+
+            yield return new FormControlDescriptionEntry(id, dataFieldName, kind);
+        }
     }
 
     private static FamilyArtifact CreateViewArtifact(
@@ -966,6 +1271,69 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
 
+    private static FamilyArtifact CreateVisualizationArtifact(
+        string entityLogicalName,
+        VisualizationSpec visualization,
+        string sourcePath)
+    {
+        var chartTypes = (visualization.ChartTypes ?? [])
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var groupByColumns = (visualization.GroupByColumns ?? [])
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => NormalizeLogicalName(value) ?? value!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var measureAliases = (visualization.MeasureAliases ?? [])
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var titleNames = (visualization.TitleNames ?? [])
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var visualizationId = NormalizeGuid(visualization.Id) ?? CreateDeterministicGuid(entityLogicalName, "visualization", visualization.Name!);
+        var dataDescriptionXml = NormalizeXmlString(visualization.DataDescriptionXml);
+        var presentationDescriptionXml = NormalizeXmlString(visualization.PresentationDescriptionXml);
+        var summaryJson = SerializeJson(new
+        {
+            targetEntity = entityLogicalName,
+            chartTypes,
+            groupByColumns,
+            measureAliases,
+            titleNames
+        });
+
+        return new FamilyArtifact(
+            ComponentFamily.Visualization,
+            $"{entityLogicalName}|{visualization.Name}",
+            visualization.Name,
+            sourcePath,
+            EvidenceKind.Derived,
+            CreateProperties(
+                (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
+                (ArtifactPropertyKeys.TargetEntity, entityLogicalName),
+                (ArtifactPropertyKeys.VisualizationId, visualizationId),
+                (ArtifactPropertyKeys.Description, visualization.Description),
+                (ArtifactPropertyKeys.IntroducedVersion, "1.0.0.0"),
+                (ArtifactPropertyKeys.DataDescriptionXml, dataDescriptionXml),
+                (ArtifactPropertyKeys.PresentationDescriptionXml, presentationDescriptionXml),
+                (ArtifactPropertyKeys.ChartTypesJson, SerializeJson(chartTypes)),
+                (ArtifactPropertyKeys.GroupByColumnsJson, SerializeJson(groupByColumns)),
+                (ArtifactPropertyKeys.MeasureAliasesJson, SerializeJson(measureAliases)),
+                (ArtifactPropertyKeys.TitleNamesJson, SerializeJson(titleNames)),
+                (ArtifactPropertyKeys.SummaryJson, summaryJson),
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+    }
+
     private static IEnumerable<FamilyArtifact> CreateAppModuleArtifacts(
         AppModuleSpec appModule,
         IReadOnlyDictionary<string, TableSpec> tablesByLogicalName,
@@ -975,12 +1343,16 @@ public sealed class IntentSpecReader : ISolutionReader
 
         var uniqueName = NormalizeLogicalName(appModule.UniqueName)!;
         var componentTypesJson = SerializeJson(new[] { "62" });
+        var appSettings = (appModule.AppSettings ?? [])
+            .Where(setting => !string.IsNullOrWhiteSpace(setting?.DefinitionUniqueName))
+            .Select(setting => setting!)
+            .ToArray();
         var appModuleSummaryJson = SerializeJson(new
         {
             componentTypes = JsonNode.Parse(componentTypesJson),
             roleIds = JsonNode.Parse("[]"),
             roleMapCount = 0,
-            appSettingCount = 0
+            appSettingCount = appSettings.Length
         });
 
         yield return new FamilyArtifact(
@@ -994,21 +1366,40 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.ComponentTypesJson, componentTypesJson),
                 (ArtifactPropertyKeys.RoleIdsJson, "[]"),
                 (ArtifactPropertyKeys.RoleMapCount, "0"),
-                (ArtifactPropertyKeys.AppSettingCount, "0"),
+                (ArtifactPropertyKeys.AppSettingCount, appSettings.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SummaryJson, appModuleSummaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(appModuleSummaryJson))));
+
+        foreach (var appSetting in appSettings)
+        {
+            yield return new FamilyArtifact(
+                ComponentFamily.AppSetting,
+                $"{uniqueName}|{appSetting.DefinitionUniqueName}",
+                appSetting.DefinitionUniqueName,
+                sourcePath,
+                EvidenceKind.Derived,
+                CreateProperties(
+                    (ArtifactPropertyKeys.ParentAppModuleUniqueName, uniqueName),
+                    (ArtifactPropertyKeys.SettingDefinitionUniqueName, appSetting.DefinitionUniqueName),
+                    (ArtifactPropertyKeys.Value, appSetting.Value)));
+        }
 
         var areaCount = appModule.SiteMap!.Areas?.Count ?? 0;
         var groupCount = appModule.SiteMap.Areas?.Sum(area => area?.Groups?.Count ?? 0) ?? 0;
         var subAreaCount = appModule.SiteMap.Areas?
             .SelectMany(area => area?.Groups ?? [])
             .Sum(group => group?.SubAreas?.Count ?? 0) ?? 0;
+        var webResourceSubAreaCount = appModule.SiteMap.Areas?
+            .SelectMany(area => area?.Groups ?? [])
+            .SelectMany(group => group?.SubAreas ?? [])
+            .Count(subArea => !string.IsNullOrWhiteSpace(subArea?.WebResource))
+            ?? 0;
         var siteMapSummaryJson = SerializeJson(new
         {
             areaCount,
             groupCount,
             subAreaCount,
-            webResourceSubAreaCount = 0
+            webResourceSubAreaCount
         });
 
         yield return new FamilyArtifact(
@@ -1022,7 +1413,7 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.AreaCount, areaCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.GroupCount, groupCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SubAreaCount, subAreaCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                (ArtifactPropertyKeys.WebResourceSubAreaCount, "0"),
+                (ArtifactPropertyKeys.WebResourceSubAreaCount, webResourceSubAreaCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SummaryJson, siteMapSummaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(siteMapSummaryJson))));
     }
@@ -1057,6 +1448,81 @@ public sealed class IntentSpecReader : ISolutionReader
         }
     }
 
+    private static FamilyArtifact CreateSourceBackedArtifact(SourceBackedArtifactSpec sourceBackedArtifact, string intentPath)
+    {
+        if (!Enum.TryParse<ComponentFamily>(sourceBackedArtifact.Family, ignoreCase: true, out var family))
+        {
+            throw new InvalidOperationException($"Unknown source-backed family '{sourceBackedArtifact.Family}'.");
+        }
+
+        var metadataFullPath = ResolveIntentSourcePath(intentPath, sourceBackedArtifact.MetadataSourcePath!);
+        var properties = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [ArtifactPropertyKeys.MetadataSourcePath] = sourceBackedArtifact.MetadataSourcePath!,
+            [ArtifactPropertyKeys.PackageRelativePath] = sourceBackedArtifact.PackageRelativePath!
+        };
+
+        if (sourceBackedArtifact.AssetSourcePaths is { Count: > 0 })
+        {
+            var assetMap = sourceBackedArtifact.AssetSourcePaths
+                .Where(path => !string.IsNullOrWhiteSpace(path))
+                .Select(path => new
+                {
+                    sourcePath = ResolveIntentSourcePath(intentPath, path!),
+                    packageRelativePath = DeriveSourceBackedPackageRelativePath(path!)
+                })
+                .ToArray();
+            if (assetMap.Length > 0)
+            {
+                properties[ArtifactPropertyKeys.AssetSourceMapJson] = SerializeJson(assetMap);
+            }
+        }
+
+        foreach (var property in ConvertStableProperties(sourceBackedArtifact.StableProperties))
+        {
+            properties[property.Key] = property.Value;
+        }
+
+        return new FamilyArtifact(
+            family,
+            sourceBackedArtifact.LogicalName!,
+            sourceBackedArtifact.DisplayName ?? sourceBackedArtifact.LogicalName!,
+            metadataFullPath,
+            EvidenceKind.Source,
+            properties);
+    }
+
+    private static IEnumerable<KeyValuePair<string, string>> ConvertStableProperties(IReadOnlyDictionary<string, JsonElement>? stableProperties)
+    {
+        if (stableProperties is null)
+        {
+            yield break;
+        }
+
+        foreach (var property in stableProperties.OrderBy(pair => pair.Key, StringComparer.Ordinal))
+        {
+            yield return new KeyValuePair<string, string>(
+                property.Key,
+                property.Value.ValueKind is JsonValueKind.Object or JsonValueKind.Array
+                    ? property.Value.GetRawText()
+                    : property.Value.ToString());
+        }
+    }
+
+    private static string ResolveIntentSourcePath(string intentPath, string relativeOrAbsolutePath) =>
+        Path.IsPathRooted(relativeOrAbsolutePath)
+            ? Path.GetFullPath(relativeOrAbsolutePath)
+            : Path.GetFullPath(Path.Combine(Path.GetDirectoryName(intentPath) ?? string.Empty, relativeOrAbsolutePath.Replace('/', Path.DirectorySeparatorChar)));
+
+    private static string DeriveSourceBackedPackageRelativePath(string assetSourcePath)
+    {
+        var normalized = assetSourcePath.Replace('\\', '/').TrimStart('/');
+        const string prefix = "source-backed/";
+        return normalized.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+            ? normalized[prefix.Length..]
+            : Path.GetFileName(normalized);
+    }
+
     private static IReadOnlyDictionary<string, string>? CreateProperties(params (string Key, string? Value)[] properties)
     {
         var dictionary = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -1085,8 +1551,28 @@ public sealed class IntentSpecReader : ISolutionReader
             "memo" => "memo",
             "datetime" => "datetime",
             "decimal" => "decimal",
+            "image" => "image",
             "lookup" => "lookup",
             var other => other
+        };
+
+    private static string? NormalizeFormType(string? value) =>
+        value?.Trim().ToLowerInvariant() switch
+        {
+            "main" => "main",
+            "quick" => "quick",
+            "card" => "card",
+            _ => null
+        };
+
+    private static string? NormalizeFormControlKind(string? value) =>
+        value?.Trim() switch
+        {
+            { Length: 0 } => null,
+            var text when text.Equals("field", StringComparison.OrdinalIgnoreCase) => "field",
+            var text when text.Equals("quickView", StringComparison.OrdinalIgnoreCase) || text.Equals("quick-view", StringComparison.OrdinalIgnoreCase) => "quickView",
+            var text when text.Equals("subgrid", StringComparison.OrdinalIgnoreCase) => "subgrid",
+            _ => null
         };
 
     private static string? NormalizeEnvironmentVariableType(string value) =>
@@ -1223,6 +1709,79 @@ public sealed class IntentSpecReader : ISolutionReader
             $"{path}: {message}",
             sourcePath);
 
+    private static void ValidateXmlFragment(string? value, string path, string sourcePath, ICollection<CompilerDiagnostic> diagnostics)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return;
+        }
+
+        try
+        {
+            _ = XElement.Parse(value, LoadOptions.PreserveWhitespace);
+        }
+        catch (Exception exception)
+        {
+            diagnostics.Add(CreateError(sourcePath, path, $"Expected well-formed XML content, but parsing failed: {exception.Message}"));
+        }
+    }
+
+    private static void ValidateFormFieldReference(
+        string? field,
+        IReadOnlySet<string> allowedFieldNames,
+        string sourcePath,
+        string path,
+        ICollection<CompilerDiagnostic> diagnostics,
+        string formName,
+        string tableLogicalName)
+    {
+        if (string.IsNullOrWhiteSpace(field))
+        {
+            diagnostics.Add(CreateError(sourcePath, path, "A non-empty field logical name is required."));
+            return;
+        }
+
+        if (!IsSupportedFormFieldReference(field, allowedFieldNames))
+        {
+            diagnostics.Add(CreateError(
+                sourcePath,
+                path,
+                $"Form '{formName}' references unknown field '{field}' on table '{tableLogicalName}'."));
+        }
+    }
+
+    private static HashSet<string> CreateAllowedFormFieldNames(IEnumerable<string> authoredFieldNames)
+    {
+        var allowedFieldNames = new HashSet<string>(authoredFieldNames, StringComparer.OrdinalIgnoreCase);
+        foreach (var fieldName in KnownPlatformFormFieldNames)
+        {
+            allowedFieldNames.Add(fieldName);
+        }
+
+        return allowedFieldNames;
+    }
+
+    private static bool IsSupportedFormFieldReference(string? field, IReadOnlySet<string> allowedFieldNames) =>
+        !string.IsNullOrWhiteSpace(field)
+        && allowedFieldNames.Contains(field);
+
+    private static string? NormalizeXmlString(string? xml)
+    {
+        if (string.IsNullOrWhiteSpace(xml))
+        {
+            return null;
+        }
+
+        try
+        {
+            return XElement.Parse(xml, LoadOptions.PreserveWhitespace).ToString(SaveOptions.DisableFormatting);
+        }
+        catch
+        {
+            return xml;
+        }
+    }
+
     private static CanonicalSolution CreateFailureSolution(
         string inputPath,
         IReadOnlyList<CompilerDiagnostic> diagnostics)
@@ -1293,6 +1852,9 @@ internal sealed record IntentSpecDocument
 
     [JsonPropertyName("tables")]
     public IReadOnlyList<TableSpec>? Tables { get; init; }
+
+    [JsonPropertyName("sourceBackedArtifacts")]
+    public IReadOnlyList<SourceBackedArtifactSpec>? SourceBackedArtifacts { get; init; }
 
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
@@ -1402,6 +1964,9 @@ internal sealed record AppModuleSpec
     [JsonPropertyName("siteMap")]
     public SiteMapSpec? SiteMap { get; init; }
 
+    [JsonPropertyName("appSettings")]
+    public IReadOnlyList<AppSettingSpec>? AppSettings { get; init; }
+
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
 }
@@ -1456,6 +2021,12 @@ internal sealed record SiteMapSubAreaSpec
     [JsonPropertyName("entity")]
     public string? Entity { get; init; }
 
+    [JsonPropertyName("url")]
+    public string? Url { get; init; }
+
+    [JsonPropertyName("webResource")]
+    public string? WebResource { get; init; }
+
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
 }
@@ -1480,6 +2051,12 @@ internal sealed record TableSpec
     [JsonPropertyName("ownershipTypeMask")]
     public string? OwnershipTypeMask { get; init; }
 
+    [JsonPropertyName("primaryImageAttribute")]
+    public string? PrimaryImageAttribute { get; init; }
+
+    [JsonPropertyName("isCustomizable")]
+    public bool? IsCustomizable { get; init; }
+
     [JsonPropertyName("columns")]
     public IReadOnlyList<TableColumnSpec>? Columns { get; init; }
 
@@ -1491,6 +2068,9 @@ internal sealed record TableSpec
 
     [JsonPropertyName("views")]
     public IReadOnlyList<ViewSpec>? Views { get; init; }
+
+    [JsonPropertyName("visualizations")]
+    public IReadOnlyList<VisualizationSpec>? Visualizations { get; init; }
 
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
@@ -1516,6 +2096,9 @@ internal sealed record TableColumnSpec
     [JsonPropertyName("isSecured")]
     public bool IsSecured { get; init; }
 
+    [JsonPropertyName("isCustomizable")]
+    public bool? IsCustomizable { get; init; }
+
     [JsonPropertyName("targetTable")]
     public string? TargetTable { get; init; }
 
@@ -1527,6 +2110,24 @@ internal sealed record TableColumnSpec
 
     [JsonPropertyName("options")]
     public IReadOnlyList<OptionItemSpec>? Options { get; init; }
+
+    [JsonPropertyName("canStoreFullImage")]
+    public bool? CanStoreFullImage { get; init; }
+
+    [JsonPropertyName("isPrimaryImage")]
+    public bool? IsPrimaryImage { get; init; }
+
+    [JsonExtensionData]
+    public Dictionary<string, JsonElement>? ExtensionData { get; init; }
+}
+
+internal sealed record AppSettingSpec
+{
+    [JsonPropertyName("definitionUniqueName")]
+    public string? DefinitionUniqueName { get; init; }
+
+    [JsonPropertyName("value")]
+    public string? Value { get; init; }
 
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
@@ -1612,6 +2213,63 @@ internal sealed record FormSectionSpec
     [JsonPropertyName("fields")]
     public IReadOnlyList<string>? Fields { get; init; }
 
+    [JsonPropertyName("controls")]
+    public IReadOnlyList<FormControlSpec>? Controls { get; init; }
+
+    [JsonExtensionData]
+    public Dictionary<string, JsonElement>? ExtensionData { get; init; }
+}
+
+internal sealed record FormControlSpec
+{
+    [JsonPropertyName("kind")]
+    public string? Kind { get; init; }
+
+    [JsonPropertyName("field")]
+    public string? Field { get; init; }
+
+    [JsonPropertyName("label")]
+    public string? Label { get; init; }
+
+    [JsonPropertyName("quickFormEntity")]
+    public string? QuickFormEntity { get; init; }
+
+    [JsonPropertyName("quickFormId")]
+    public string? QuickFormId { get; init; }
+
+    [JsonPropertyName("controlMode")]
+    public string? ControlMode { get; init; }
+
+    [JsonPropertyName("relationshipName")]
+    public string? RelationshipName { get; init; }
+
+    [JsonPropertyName("targetTable")]
+    public string? TargetTable { get; init; }
+
+    [JsonPropertyName("defaultViewId")]
+    public string? DefaultViewId { get; init; }
+
+    [JsonPropertyName("isUserView")]
+    public bool? IsUserView { get; init; }
+
+    [JsonPropertyName("autoExpand")]
+    public string? AutoExpand { get; init; }
+
+    [JsonPropertyName("enableQuickFind")]
+    public bool? EnableQuickFind { get; init; }
+
+    [JsonPropertyName("enableViewPicker")]
+    public bool? EnableViewPicker { get; init; }
+
+    [JsonPropertyName("enableJumpBar")]
+    public bool? EnableJumpBar { get; init; }
+
+    [JsonPropertyName("enableChartPicker")]
+    public bool? EnableChartPicker { get; init; }
+
+    [JsonPropertyName("recordsPerPage")]
+    public int? RecordsPerPage { get; init; }
+
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
 }
@@ -1669,3 +2327,65 @@ internal sealed record ViewOrderSpec
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }
 }
+
+internal sealed record VisualizationSpec
+{
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    [JsonPropertyName("name")]
+    public string? Name { get; init; }
+
+    [JsonPropertyName("description")]
+    public string? Description { get; init; }
+
+    [JsonPropertyName("chartTypes")]
+    public IReadOnlyList<string>? ChartTypes { get; init; }
+
+    [JsonPropertyName("groupByColumns")]
+    public IReadOnlyList<string>? GroupByColumns { get; init; }
+
+    [JsonPropertyName("measureAliases")]
+    public IReadOnlyList<string>? MeasureAliases { get; init; }
+
+    [JsonPropertyName("titleNames")]
+    public IReadOnlyList<string>? TitleNames { get; init; }
+
+    [JsonPropertyName("dataDescriptionXml")]
+    public string? DataDescriptionXml { get; init; }
+
+    [JsonPropertyName("presentationDescriptionXml")]
+    public string? PresentationDescriptionXml { get; init; }
+
+    [JsonExtensionData]
+    public Dictionary<string, JsonElement>? ExtensionData { get; init; }
+}
+
+internal sealed record SourceBackedArtifactSpec
+{
+    [JsonPropertyName("family")]
+    public string? Family { get; init; }
+
+    [JsonPropertyName("logicalName")]
+    public string? LogicalName { get; init; }
+
+    [JsonPropertyName("displayName")]
+    public string? DisplayName { get; init; }
+
+    [JsonPropertyName("metadataSourcePath")]
+    public string? MetadataSourcePath { get; init; }
+
+    [JsonPropertyName("assetSourcePaths")]
+    public IReadOnlyList<string>? AssetSourcePaths { get; init; }
+
+    [JsonPropertyName("packageRelativePath")]
+    public string? PackageRelativePath { get; init; }
+
+    [JsonPropertyName("stableProperties")]
+    public Dictionary<string, JsonElement>? StableProperties { get; init; }
+
+    [JsonExtensionData]
+    public Dictionary<string, JsonElement>? ExtensionData { get; init; }
+}
+
+internal sealed record FormControlDescriptionEntry(string Id, string DataFieldName, string Role);

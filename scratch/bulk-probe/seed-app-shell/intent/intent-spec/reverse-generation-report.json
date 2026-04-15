@@ -1,0 +1,37 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "AppModule",
+    "AppSetting",
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue",
+    "SiteMap",
+    "SolutionShell",
+    "WebResource"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "AppModule",
+      "artifact": "codex_metadata_shell_dd96cf20",
+      "packageRelativePath": "AppModules/codex_metadata_shell_dd96cf20/AppModule.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedAppShell",
+      "packageRelativePath": "Other/Solution.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/shell/icon.svg",
+      "packageRelativePath": "WebResources/cdxmeta_/shell/icon.svg.data.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/shell/landing.html",
+      "packageRelativePath": "WebResources/cdxmeta_/shell/landing.html.data.xml"
+    }
+  ]
+}

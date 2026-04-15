@@ -1,0 +1,67 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_checkpoint|quick|4e60526b-43c9-4eff-980e-12fb152572de",
+  "DisplayName": "Information",
+  "metadataSourcePath": "Entities/cdxmeta_Checkpoint/FormXml/quick/{4e60526b-43c9-4eff-980e-12fb152572de}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "ed396e75540d768bff37dafb3ede906d52e3bf0ba0bbc80dcadfcfe2977f6823",
+    "controlCount": "2",
+    "controlDescriptionCount": "2",
+    "entityLogicalName": "cdxmeta_checkpoint",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Information",
+      "description": null,
+      "type": "quick",
+      "tabs": [
+        {
+          "name": "tab_1",
+          "label": "Tab 1",
+          "sections": [
+            {
+              "name": "section_1",
+              "label": "GENERAL",
+              "fields": [
+                "cdxmeta_checkpointname",
+                "ownerid"
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": []
+    },
+    "formId": "4e60526b-43c9-4eff-980e-12fb152572de",
+    "formType": "quick",
+    "formTypeCode": "1",
+    "headerControlCount": "0",
+    "quickFormCount": "0",
+    "sectionCount": "1",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "quick",
+      "formId": "4e60526b-43c9-4eff-980e-12fb152572de",
+      "tabCount": 1,
+      "sectionCount": 1,
+      "controlCount": 2,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 0,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_checkpointname",
+          "dataFieldName": "cdxmeta_checkpointname",
+          "role": "field"
+        },
+        {
+          "id": "ownerid",
+          "dataFieldName": "ownerid",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

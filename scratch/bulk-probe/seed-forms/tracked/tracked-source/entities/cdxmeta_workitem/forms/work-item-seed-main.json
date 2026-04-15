@@ -1,0 +1,181 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_workitem|main|c67be8a4-c475-4041-90e6-78e3ed79b018",
+  "DisplayName": "Work Item Seed Main",
+  "metadataSourcePath": "Entities/cdxmeta_WorkItem/FormXml/main/{c67be8a4-c475-4041-90e6-78e3ed79b018}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "fd23fa6f640096a4e33ffa2b44a94c7315806f0ee79f7951b13b4deb9614df2f",
+    "controlCount": "14",
+    "controlDescriptionCount": "14",
+    "description": "Rich main form for the Dataverse metadata synthesis seed.",
+    "entityLogicalName": "cdxmeta_workitem",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Work Item Seed Main",
+      "description": "Rich main form for the Dataverse metadata synthesis seed.",
+      "type": "main",
+      "tabs": [
+        {
+          "name": "summary",
+          "label": "Summary",
+          "sections": [
+            {
+              "name": "overview",
+              "label": "Overview",
+              "fields": [
+                "cdxmeta_workitemname",
+                "cdxmeta_summary",
+                "cdxmeta_categoryid"
+              ]
+            },
+            {
+              "name": "details",
+              "label": "Details",
+              "fields": [
+                "cdxmeta_details"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "planning",
+          "label": "Planning",
+          "sections": [
+            {
+              "name": "schedule",
+              "label": "Schedule",
+              "fields": [
+                "cdxmeta_duedate",
+                "cdxmeta_efforthours",
+                "cdxmeta_priority"
+              ]
+            },
+            {
+              "name": "status",
+              "label": "Status",
+              "fields": [
+                "cdxmeta_stage",
+                "cdxmeta_isblocked"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "related",
+          "label": "Related",
+          "sections": [
+            {
+              "name": "category_snapshot",
+              "label": "Category Snapshot",
+              "fields": [
+                "cdxmeta_categoryid"
+              ]
+            },
+            {
+              "name": "checkpoints",
+              "label": "Checkpoints",
+              "fields": []
+            }
+          ]
+        }
+      ],
+      "headerFields": [
+        "cdxmeta_stage",
+        "cdxmeta_duedate",
+        "cdxmeta_categoryid"
+      ]
+    },
+    "formId": "c67be8a4-c475-4041-90e6-78e3ed79b018",
+    "formType": "main",
+    "formTypeCode": "1",
+    "headerControlCount": "3",
+    "quickFormCount": "1",
+    "sectionCount": "6",
+    "subgridCount": "1",
+    "summaryJson": {
+      "formType": "main",
+      "formId": "c67be8a4-c475-4041-90e6-78e3ed79b018",
+      "tabCount": 3,
+      "sectionCount": 6,
+      "controlCount": 14,
+      "quickFormCount": 1,
+      "subgridCount": 1,
+      "headerControlCount": 3,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_categoryid",
+          "dataFieldName": "cdxmeta_categoryid",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_category_snapshot",
+          "dataFieldName": "cdxmeta_categoryid",
+          "role": "quick-form"
+        },
+        {
+          "id": "cdxmeta_checkpoints",
+          "dataFieldName": "",
+          "role": "subgrid"
+        },
+        {
+          "id": "cdxmeta_details",
+          "dataFieldName": "cdxmeta_details",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_duedate",
+          "dataFieldName": "cdxmeta_duedate",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_efforthours",
+          "dataFieldName": "cdxmeta_efforthours",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_isblocked",
+          "dataFieldName": "cdxmeta_isblocked",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_priority",
+          "dataFieldName": "cdxmeta_priority",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_stage",
+          "dataFieldName": "cdxmeta_stage",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_summary",
+          "dataFieldName": "cdxmeta_summary",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_workitemname",
+          "dataFieldName": "cdxmeta_workitemname",
+          "role": "field"
+        },
+        {
+          "id": "header_cdxmeta_categoryid",
+          "dataFieldName": "cdxmeta_categoryid",
+          "role": "field"
+        },
+        {
+          "id": "header_cdxmeta_duedate",
+          "dataFieldName": "cdxmeta_duedate",
+          "role": "field"
+        },
+        {
+          "id": "header_cdxmeta_stage",
+          "dataFieldName": "cdxmeta_stage",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "3"
+  }
+}

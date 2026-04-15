@@ -1,0 +1,22 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "EntityAnalyticsConfiguration",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "EntityAnalyticsConfiguration",
+      "artifact": "contact",
+      "packageRelativePath": "entityanalyticsconfigs/contact/entityanalyticsconfig.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedEntityAnalytics",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

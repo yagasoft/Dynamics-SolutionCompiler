@@ -1,0 +1,34 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedProcessPolicy",
+    "DisplayName": "Codex Metadata Seed Process Policy",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "Entities",
+    "MobileOfflineProfiles",
+    "Other",
+    "RoutingRules",
+    "duplicaterules"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Entities/Account/Entity.xml",
+    "package-inputs/MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/RoutingRules/Codex Metadata Routing Rule.meta.xml",
+    "package-inputs/duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+    "package-inputs/manifest.json"
+  ]
+}

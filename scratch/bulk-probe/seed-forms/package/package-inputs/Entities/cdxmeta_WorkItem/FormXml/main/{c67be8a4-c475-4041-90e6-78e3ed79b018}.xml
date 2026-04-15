@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{c67be8a4-c475-4041-90e6-78e3ed79b018}</formid>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form headerdensity="HighWithControls">
+      <tabs>
+        <tab name="summary" id="{11111111-1111-1111-1111-111111111111}" IsUserDefined="1" expanded="true" showlabel="true">
+          <labels>
+            <label description="Summary" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section name="overview" id="{11111111-1111-1111-1111-111111111112}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+                  <labels>
+                    <label description="Overview" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111113}" showlabel="true">
+                        <labels>
+                          <label description="Work Item" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_workitemname" datafieldname="cdxmeta_workitemname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111114}" showlabel="true">
+                        <labels>
+                          <label description="Summary" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_summary" datafieldname="cdxmeta_summary" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111115}" showlabel="true">
+                        <labels>
+                          <label description="Category" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_categoryid" datafieldname="cdxmeta_categoryid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="details" id="{11111111-1111-1111-1111-111111111116}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+                  <labels>
+                    <label description="Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111117}" showlabel="true" rowspan="4">
+                        <labels>
+                          <label description="Notes" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_details" datafieldname="cdxmeta_details" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="planning" id="{11111111-1111-1111-1111-111111111118}" IsUserDefined="1" expanded="true" showlabel="true">
+          <labels>
+            <label description="Planning" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section name="schedule" id="{11111111-1111-1111-1111-111111111119}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+                  <labels>
+                    <label description="Schedule" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111120}" showlabel="true">
+                        <labels>
+                          <label description="Due date" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_duedate" datafieldname="cdxmeta_duedate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111121}" showlabel="true">
+                        <labels>
+                          <label description="Effort hours" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_efforthours" datafieldname="cdxmeta_efforthours" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111122}" showlabel="true">
+                        <labels>
+                          <label description="Priority" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_priority" datafieldname="cdxmeta_priority" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="status" id="{11111111-1111-1111-1111-111111111123}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+                  <labels>
+                    <label description="Status" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111124}" showlabel="true">
+                        <labels>
+                          <label description="Stage" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111125}" showlabel="true">
+                        <labels>
+                          <label description="Blocked" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_isblocked" datafieldname="cdxmeta_isblocked" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="related" id="{11111111-1111-1111-1111-111111111126}" IsUserDefined="1" expanded="true" showlabel="true">
+          <labels>
+            <label description="Related" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section name="category_snapshot" id="{11111111-1111-1111-1111-111111111127}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+                  <labels>
+                    <label description="Category Snapshot" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111128}" showlabel="false">
+                        <labels>
+                          <label description="Category Snapshot" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_category_snapshot" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="cdxmeta_categoryid">
+                          <parameters>
+                            <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="cdxmeta_category"&gt;5978624f-3b37-f111-88b3-0022489b9600&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+                            <ControlMode>Edit</ControlMode>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="checkpoints" id="{11111111-1111-1111-1111-111111111129}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+                  <labels>
+                    <label description="Checkpoints" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{11111111-1111-1111-1111-111111111130}" showlabel="false" rowspan="8">
+                        <labels>
+                          <label description="Checkpoints" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_checkpoints" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                          <parameters>
+                            <ViewId>{500a740d-e399-42c5-9f3a-0f9c203ef9cd}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>cdxmeta_workitem_checkpoint</RelationshipName>
+                            <TargetEntityType>cdxmeta_checkpoint</TargetEntityType>
+                            <AutoExpand>Auto</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <ViewIds>{500a740d-e399-42c5-9f3a-0f9c203ef9cd}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>Grid</ChartGridMode>
+                            <EnableChartPicker>false</EnableChartPicker>
+                            <RecordsPerPage>5</RecordsPerPage>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{11111111-1111-1111-1111-111111111131}" columns="111" celllabelposition="Top" labelwidth="115">
+        <rows>
+          <row>
+            <cell id="{11111111-1111-1111-1111-111111111132}" showlabel="true">
+              <labels>
+                <label description="Stage" languagecode="1033" />
+              </labels>
+              <control id="header_cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" />
+            </cell>
+            <cell id="{11111111-1111-1111-1111-111111111133}" showlabel="true">
+              <labels>
+                <label description="Due date" languagecode="1033" />
+              </labels>
+              <control id="header_cdxmeta_duedate" datafieldname="cdxmeta_duedate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" />
+            </cell>
+            <cell id="{11111111-1111-1111-1111-111111111134}" showlabel="true">
+              <labels>
+                <label description="Category" languagecode="1033" />
+              </labels>
+              <control id="header_cdxmeta_categoryid" datafieldname="cdxmeta_categoryid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Work Item Seed Main" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Rich main form for the Dataverse metadata synthesis seed." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

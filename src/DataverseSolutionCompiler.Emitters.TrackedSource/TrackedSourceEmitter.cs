@@ -47,6 +47,7 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         WriteAiFamilies(model, trackedSourceRoot, emittedFiles);
         WriteEntityAnalyticsConfigurations(model, trackedSourceRoot, emittedFiles);
         WriteCanvasApps(model, trackedSourceRoot, emittedFiles);
+        WriteSourceBackedEvidence(model, trackedSourceRoot, emittedFiles);
 
         var inventory = emittedFiles.Select(file => file.RelativePath)
             .Append("tracked-source/manifest.json")
@@ -102,12 +103,18 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 model.Identity.DisplayName,
                 model.Identity.Version,
                 layeringIntent = model.Identity.LayeringIntent.ToString(),
+                metadataSourcePath = model.Artifacts.FirstOrDefault(artifact => artifact.Family == ComponentFamily.SolutionShell) is { } solutionShell
+                    ? GetProperty(solutionShell, ArtifactPropertyKeys.MetadataSourcePath)
+                    : null,
                 publisher = new
                 {
                     model.Publisher.UniqueName,
                     model.Publisher.Prefix,
                     model.Publisher.CustomizationPrefix,
-                    model.Publisher.DisplayName
+                    model.Publisher.DisplayName,
+                    metadataSourcePath = model.Artifacts.FirstOrDefault(artifact => artifact.Family == ComponentFamily.Publisher) is { } publisherArtifact
+                        ? GetProperty(publisherArtifact, ArtifactPropertyKeys.MetadataSourcePath)
+                        : null
                 }
             },
             emittedFiles,
@@ -163,6 +170,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                         isPrimaryKey = GetBoolProperty(artifact, ArtifactPropertyKeys.IsPrimaryKey),
                         isPrimaryName = GetBoolProperty(artifact, ArtifactPropertyKeys.IsPrimaryName),
                         isLogical = GetBoolProperty(artifact, ArtifactPropertyKeys.IsLogical),
+                        canStoreFullImage = GetBoolProperty(artifact, ArtifactPropertyKeys.CanStoreFullImage),
+                        isPrimaryImage = GetBoolProperty(artifact, ArtifactPropertyKeys.IsPrimaryImage),
                         optionSetName = GetProperty(artifact, ArtifactPropertyKeys.OptionSetName),
                         optionSetType = GetProperty(artifact, ArtifactPropertyKeys.OptionSetType),
                         isGlobal = GetBoolProperty(artifact, ArtifactPropertyKeys.IsGlobal),
@@ -259,7 +268,7 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
             foreach (var form in model.Artifacts.Where(artifact => artifact.Family == ComponentFamily.Form
                 && string.Equals(GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName), entityLogicalName, StringComparison.OrdinalIgnoreCase)))
             {
-                var slug = Slugify(form.DisplayName ?? form.LogicalName);
+                var slug = BuildTrackedFormSlug(form);
                 WriteJson(
                     trackedSourceRoot,
                     $"{entityDirectory}/forms/{slug}.json",
@@ -428,6 +437,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     name = GetProperty(artifact, ArtifactPropertyKeys.Name),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     contract = GetProperty(artifact, ArtifactPropertyKeys.Contract),
@@ -455,6 +466,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     name = GetProperty(artifact, ArtifactPropertyKeys.Name),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     connectorInternalId = GetProperty(artifact, ArtifactPropertyKeys.ConnectorInternalId),
@@ -480,6 +493,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     assemblyFileName = GetProperty(artifact, ArtifactPropertyKeys.AssemblyFileName),
                     isolationMode = GetProperty(artifact, ArtifactPropertyKeys.IsolationMode),
                     sourceType = GetProperty(artifact, ArtifactPropertyKeys.SourceType),
@@ -501,6 +516,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     assemblyFullName = GetProperty(artifact, ArtifactPropertyKeys.AssemblyFullName),
                     assemblyQualifiedName = GetProperty(artifact, ArtifactPropertyKeys.AssemblyQualifiedName),
                     friendlyName = GetProperty(artifact, ArtifactPropertyKeys.FriendlyName),
@@ -521,6 +538,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     stage = GetProperty(artifact, ArtifactPropertyKeys.Stage),
                     mode = GetProperty(artifact, ArtifactPropertyKeys.Mode),
                     rank = GetProperty(artifact, ArtifactPropertyKeys.Rank),
@@ -545,6 +564,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentPluginStepLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentPluginStepLogicalName),
                     entityAlias = GetProperty(artifact, ArtifactPropertyKeys.EntityAlias),
                     imageType = GetProperty(artifact, ArtifactPropertyKeys.ImageType),
@@ -569,6 +590,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     baseEntityName = GetProperty(artifact, ArtifactPropertyKeys.BaseEntityName),
                     matchingEntityName = GetProperty(artifact, ArtifactPropertyKeys.MatchingEntityName),
@@ -590,6 +613,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentDuplicateRuleLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentDuplicateRuleLogicalName),
                     baseAttributeName = GetProperty(artifact, ArtifactPropertyKeys.BaseAttributeName),
                     matchingAttributeName = GetProperty(artifact, ArtifactPropertyKeys.MatchingAttributeName),
@@ -610,6 +635,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     workflowId = GetProperty(artifact, ArtifactPropertyKeys.WorkflowId),
                     itemCount = GetIntProperty(artifact, ArtifactPropertyKeys.ItemCount),
@@ -628,6 +655,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentRoutingRuleLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentRoutingRuleLogicalName),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     conditionXml = GetProperty(artifact, ArtifactPropertyKeys.ConditionXml),
@@ -649,6 +678,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     isValidated = GetBoolProperty(artifact, ArtifactPropertyKeys.IsValidated),
                     itemCount = GetIntProperty(artifact, ArtifactPropertyKeys.ItemCount),
@@ -667,6 +698,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentMobileOfflineProfileLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentMobileOfflineProfileLogicalName),
                     entityLogicalName = GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName),
                     recordDistributionCriteria = GetProperty(artifact, ArtifactPropertyKeys.RecordDistributionCriteria),
@@ -757,6 +790,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     isCustomizable = GetBoolProperty(artifact, ArtifactPropertyKeys.IsCustomizable),
                     privilegeCount = GetIntProperty(artifact, ArtifactPropertyKeys.PrivilegeCount),
                     privilegeSummary = ParseJsonNode(GetProperty(artifact, ArtifactPropertyKeys.CapabilitiesJson)),
@@ -775,6 +810,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentRoleLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentRoleLogicalName),
                     privilegeName = GetProperty(artifact, ArtifactPropertyKeys.PrivilegeName),
                     accessLevel = GetProperty(artifact, ArtifactPropertyKeys.AccessLevel),
@@ -795,6 +832,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     permissionCount = GetIntProperty(artifact, ArtifactPropertyKeys.ItemCount),
                     comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature)
@@ -812,6 +851,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentFieldSecurityProfileLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentFieldSecurityProfileLogicalName),
                     entityLogicalName = GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName),
                     attributeLogicalName = GetProperty(artifact, ArtifactPropertyKeys.AttributeLogicalName),
@@ -834,6 +875,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     category = GetProperty(artifact, ArtifactPropertyKeys.Category),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     isCustomizable = GetBoolProperty(artifact, ArtifactPropertyKeys.IsCustomizable),
@@ -857,6 +900,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature)
                 },
@@ -873,6 +918,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
                     parentAiProjectTypeLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentAiProjectTypeLogicalName),
                     targetEntity = GetProperty(artifact, ArtifactPropertyKeys.TargetEntity),
@@ -891,6 +938,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentAiProjectLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentAiProjectLogicalName),
                     configurationKind = GetProperty(artifact, ArtifactPropertyKeys.ConfigurationKind),
                     value = GetProperty(artifact, ArtifactPropertyKeys.Value),
@@ -912,6 +961,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 {
                     artifact.LogicalName,
                     artifact.DisplayName,
+                    metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+                    assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     parentEntityLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ParentEntityLogicalName),
                     entityDataSource = GetProperty(artifact, ArtifactPropertyKeys.EntityDataSource),
                     isEnabledForAdls = GetProperty(artifact, ArtifactPropertyKeys.IsEnabledForAdls),
@@ -951,12 +1002,72 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         CopyBinary(trackedSourceRoot, sourcePath, relativePath, emittedFiles, $"Tracked package evidence payload for {artifact.LogicalName}.");
     }
 
+    private static void WriteSourceBackedEvidence(CanonicalSolution model, string trackedSourceRoot, List<EmittedArtifact> emittedFiles)
+    {
+        var copiedRelativePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var artifact in model.Artifacts.OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase))
+        {
+            var metadataRelativePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath);
+            var metadataSourcePath = ResolveArtifactSourcePath(artifact, ArtifactPropertyKeys.MetadataSourcePath);
+            if (!string.IsNullOrWhiteSpace(metadataRelativePath) && !string.IsNullOrWhiteSpace(metadataSourcePath) && File.Exists(metadataSourcePath))
+            {
+                CopySourceBackedFile(
+                    trackedSourceRoot,
+                    metadataSourcePath,
+                    $"source-backed/{NormalizeTrackedSourceRelativePath(metadataRelativePath)}",
+                    copiedRelativePaths,
+                    emittedFiles,
+                    $"Tracked raw metadata evidence for {artifact.LogicalName}.");
+            }
+
+            foreach (var assetRelativePath in GetSourceBackedAssetRelativePaths(artifact))
+            {
+                var propertyKey = FindSourcePathPropertyKey(artifact, assetRelativePath);
+                if (propertyKey is null)
+                {
+                    continue;
+                }
+
+                var assetSourcePath = ResolveArtifactSourcePath(artifact, propertyKey);
+                if (string.IsNullOrWhiteSpace(assetSourcePath) || !File.Exists(assetSourcePath))
+                {
+                    continue;
+                }
+
+                CopySourceBackedFile(
+                    trackedSourceRoot,
+                    assetSourcePath,
+                    $"source-backed/{NormalizeTrackedSourceRelativePath(assetRelativePath)}",
+                    copiedRelativePaths,
+                    emittedFiles,
+                    $"Tracked raw asset evidence for {artifact.LogicalName}.");
+            }
+        }
+    }
+
+    private static void CopySourceBackedFile(
+        string trackedSourceRoot,
+        string sourcePath,
+        string relativePath,
+        ISet<string> copiedRelativePaths,
+        List<EmittedArtifact> emittedFiles,
+        string description)
+    {
+        if (!copiedRelativePaths.Add(relativePath))
+        {
+            return;
+        }
+
+        CopyBinary(trackedSourceRoot, sourcePath, relativePath, emittedFiles, description);
+    }
+
     private static object BuildSummaryArtifactJson(FamilyArtifact artifact) => new
     {
         artifact.Family,
         artifact.LogicalName,
         artifact.DisplayName,
         metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
+        assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
         properties = artifact.Properties?
             .Where(pair => !pair.Key.EndsWith("SourcePath", StringComparison.Ordinal))
             .OrderBy(pair => pair.Key, StringComparer.Ordinal)
@@ -979,6 +1090,29 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
 
     private static int? GetIntProperty(FamilyArtifact artifact, string key) =>
         int.TryParse(GetProperty(artifact, key), out var value) ? value : null;
+
+    private static IReadOnlyList<string> GetSourceBackedAssetRelativePaths(FamilyArtifact artifact) =>
+        artifact.Properties is null
+            ? []
+            : artifact.Properties
+                .Where(pair =>
+                    pair.Key.EndsWith("SourcePath", StringComparison.Ordinal)
+                    && !string.Equals(pair.Key, ArtifactPropertyKeys.MetadataSourcePath, StringComparison.Ordinal)
+                    && !string.IsNullOrWhiteSpace(pair.Value)
+                    && !Path.IsPathRooted(pair.Value))
+                .Select(pair => NormalizeTrackedSourceRelativePath(pair.Value))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+    private static string? FindSourcePathPropertyKey(FamilyArtifact artifact, string relativePath) =>
+        artifact.Properties?
+            .Where(pair =>
+                pair.Key.EndsWith("SourcePath", StringComparison.Ordinal)
+                && !string.Equals(pair.Key, ArtifactPropertyKeys.MetadataSourcePath, StringComparison.Ordinal)
+                && string.Equals(NormalizeTrackedSourceRelativePath(pair.Value), relativePath, StringComparison.OrdinalIgnoreCase))
+            .Select(pair => pair.Key)
+            .FirstOrDefault();
 
     private static string ResolveArtifactSourcePath(FamilyArtifact artifact, string propertyKey)
     {
@@ -1045,6 +1179,14 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         return slug.Trim('-');
     }
 
+    private static string BuildTrackedFormSlug(FamilyArtifact form)
+    {
+        var baseName = Slugify(form.DisplayName ?? form.LogicalName);
+        var formType = Slugify(GetProperty(form, ArtifactPropertyKeys.FormType) ?? "form");
+        var formId = Slugify(GetProperty(form, ArtifactPropertyKeys.FormId) ?? form.LogicalName.Split('|').LastOrDefault() ?? "artifact");
+        return $"{baseName}--{formType}--{formId}";
+    }
+
     private static void WriteJson(string trackedSourceRoot, string relativePath, object document, List<EmittedArtifact> emittedFiles, string description)
     {
         var fullPath = GetContainedPath(trackedSourceRoot, relativePath);
@@ -1073,5 +1215,13 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         }
 
         return candidatePath;
+    }
+
+    private static string NormalizeTrackedSourceRelativePath(string value)
+    {
+        var normalized = value.Replace('\\', '/').TrimStart('/');
+        return normalized.StartsWith("tracked-source/", StringComparison.OrdinalIgnoreCase)
+            ? normalized["tracked-source/".Length..]
+            : normalized;
     }
 }

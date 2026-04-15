@@ -1,0 +1,16 @@
+<environmentvariabledefinition schemaname="cdxrf_ShellMode">
+<defaultvalue>standard</defaultvalue>
+<description default="">
+<label description="" languagecode="1033" />
+</description>
+<displayname default="Shell Mode">
+<label description="Shell Mode" languagecode="1033" />
+</displayname>
+<introducedversion>1.0.0.0</introducedversion>
+<iscustomizable>1</iscustomizable>
+<isrequired>0</isrequired>
+<secretstore>0</secretstore>
+<valueschema>
+</valueschema>
+<type>100000000</type>
+</environmentvariabledefinition>

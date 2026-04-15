@@ -52,6 +52,7 @@ public sealed class TrackedSourceReader : ISolutionReader
                 solutionManifestPath,
                 EvidenceKind.Source,
                 CreateProperties(
+                    (ArtifactPropertyKeys.MetadataSourcePath, GetRequiredString(solutionManifest, "metadataSourcePath")),
                     (ArtifactPropertyKeys.Version, identity.Version),
                     (ArtifactPropertyKeys.Managed, identity.LayeringIntent == LayeringIntent.ManagedRelease ? "true" : "false"),
                     (ArtifactPropertyKeys.PublisherUniqueName, publisher.UniqueName),
@@ -64,6 +65,7 @@ public sealed class TrackedSourceReader : ISolutionReader
                 solutionManifestPath,
                 EvidenceKind.Source,
                 CreateProperties(
+                    (ArtifactPropertyKeys.MetadataSourcePath, GetRequiredString(publisherObject, "metadataSourcePath")),
                     (ArtifactPropertyKeys.PublisherPrefix, publisher.Prefix),
                     (ArtifactPropertyKeys.PublisherDisplayName, publisher.DisplayName)))
         };
@@ -152,6 +154,18 @@ public sealed class TrackedSourceReader : ISolutionReader
             return false;
         }
 
+        if (string.Equals(segments[0], "source-backed", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (segments.Length == 2
+            && SourceBackedSummaryFamilies.ContainsKey(segments[0])
+            && !relativePath.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
         if (segments.Length == 2 && string.Equals(segments[0], "entities", StringComparison.OrdinalIgnoreCase))
         {
             return false;
@@ -194,6 +208,18 @@ public sealed class TrackedSourceReader : ISolutionReader
             && string.Equals(segments[2], "keys.json", StringComparison.OrdinalIgnoreCase))
         {
             foreach (var artifact in ParseKeyArtifacts(segments[1], fullPath))
+            {
+                artifacts.Add(artifact);
+            }
+
+            return true;
+        }
+
+        if (segments.Length == 3
+            && string.Equals(segments[0], "entities", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(segments[2], "image-configurations.json", StringComparison.OrdinalIgnoreCase))
+        {
+            foreach (var artifact in ParseImageConfigurationArtifacts(segments[1], fullPath))
             {
                 artifacts.Add(artifact);
             }
@@ -251,6 +277,13 @@ public sealed class TrackedSourceReader : ISolutionReader
             return true;
         }
 
+        if (segments.Length == 2
+            && SourceBackedSummaryFamilies.TryGetValue(segments[0], out var expectedFamily))
+        {
+            artifacts.Add(ParseSummaryArtifact(fullPath, expectedFamily));
+            return true;
+        }
+
         return false;
     }
 
@@ -302,6 +335,8 @@ public sealed class TrackedSourceReader : ISolutionReader
                     (ArtifactPropertyKeys.IsPrimaryKey, GetRequiredBooleanString(node, "isPrimaryKey")),
                     (ArtifactPropertyKeys.IsPrimaryName, GetRequiredBooleanString(node, "isPrimaryName")),
                     (ArtifactPropertyKeys.IsLogical, GetRequiredBooleanString(node, "isLogical")),
+                    (ArtifactPropertyKeys.CanStoreFullImage, GetRequiredBooleanString(node, "canStoreFullImage")),
+                    (ArtifactPropertyKeys.IsPrimaryImage, GetRequiredBooleanString(node, "isPrimaryImage")),
                     (ArtifactPropertyKeys.OptionSetName, GetRequiredString(node, "optionSetName")),
                     (ArtifactPropertyKeys.OptionSetType, GetRequiredString(node, "optionSetType")),
                     (ArtifactPropertyKeys.IsGlobal, GetRequiredBooleanString(node, "isGlobal"))));
@@ -397,6 +432,32 @@ public sealed class TrackedSourceReader : ISolutionReader
         }
     }
 
+    private static IEnumerable<FamilyArtifact> ParseImageConfigurationArtifacts(string entityLogicalName, string path)
+    {
+        foreach (var node in ReadArray(path).OfType<JsonObject>())
+        {
+            var logicalName = NormalizeLogicalName(GetRequiredString(node, "LogicalName") ?? GetRequiredString(node, "logicalName"));
+            if (string.IsNullOrWhiteSpace(logicalName))
+            {
+                continue;
+            }
+
+            yield return new FamilyArtifact(
+                ComponentFamily.ImageConfiguration,
+                logicalName,
+                GetRequiredString(node, "DisplayName") ?? GetRequiredString(node, "displayName"),
+                path,
+                EvidenceKind.Source,
+                CreateProperties(
+                    (ArtifactPropertyKeys.EntityLogicalName, NormalizeLogicalName(entityLogicalName)),
+                    (ArtifactPropertyKeys.ImageConfigurationScope, GetRequiredString(node, "scope")),
+                    (ArtifactPropertyKeys.PrimaryImageAttribute, GetRequiredString(node, "primaryImageAttribute")),
+                    (ArtifactPropertyKeys.ImageAttributeLogicalName, GetRequiredString(node, "imageAttributeLogicalName")),
+                    (ArtifactPropertyKeys.CanStoreFullImage, GetRequiredBooleanString(node, "canStoreFullImage")),
+                    (ArtifactPropertyKeys.IsPrimaryImage, GetRequiredBooleanString(node, "isPrimaryImage"))));
+        }
+    }
+
     private static FamilyArtifact ParseGlobalOptionSetArtifact(string path)
     {
         var node = ReadObject(path);
@@ -443,6 +504,15 @@ public sealed class TrackedSourceReader : ISolutionReader
             }
         }
 
+        if (GetValue(node, "assetSourcePaths") is JsonNode assetSourcePaths)
+        {
+            var value = SerializeNode(assetSourcePaths);
+            if (!string.IsNullOrWhiteSpace(value) && !string.Equals(value, "null", StringComparison.OrdinalIgnoreCase))
+            {
+                properties[ArtifactPropertyKeys.AssetSourceMapJson] = value;
+            }
+        }
+
         if (GetObject(node, "properties") is not { } propertiesNode)
         {
             return properties.Count == 0 ? null : properties;
@@ -486,12 +556,25 @@ public sealed class TrackedSourceReader : ISolutionReader
     private static readonly IReadOnlyDictionary<string, ComponentFamily> UnsupportedPathPrefixes =
         new Dictionary<string, ComponentFamily>(StringComparer.OrdinalIgnoreCase)
         {
+            ["import-maps"] = ComponentFamily.ImportMap,
+            ["data-source-mappings"] = ComponentFamily.DataSourceMapping,
+            ["similarity-rules"] = ComponentFamily.SimilarityRule,
+            ["slas"] = ComponentFamily.Sla,
+            ["sla-items"] = ComponentFamily.SlaItem,
+            ["reports"] = ComponentFamily.Report,
+            ["templates"] = ComponentFamily.Template,
+            ["display-strings"] = ComponentFamily.DisplayString,
+            ["attachments"] = ComponentFamily.Attachment,
+            ["legacy-assets"] = ComponentFamily.LegacyAsset
+        };
+
+    private static readonly IReadOnlyDictionary<string, ComponentFamily> SourceBackedSummaryFamilies =
+        new Dictionary<string, ComponentFamily>(StringComparer.OrdinalIgnoreCase)
+        {
             ["saved-query-visualizations"] = ComponentFamily.Visualization,
             ["app-settings"] = ComponentFamily.AppSetting,
             ["web-resources"] = ComponentFamily.WebResource,
             ["canvas-apps"] = ComponentFamily.CanvasApp,
-            ["import-maps"] = ComponentFamily.ImportMap,
-            ["data-source-mappings"] = ComponentFamily.DataSourceMapping,
             ["entity-analytics-configurations"] = ComponentFamily.EntityAnalyticsConfiguration,
             ["ai-project-types"] = ComponentFamily.AiProjectType,
             ["ai-projects"] = ComponentFamily.AiProject,
@@ -512,15 +595,7 @@ public sealed class TrackedSourceReader : ISolutionReader
             ["role-privileges"] = ComponentFamily.RolePrivilege,
             ["field-security-profiles"] = ComponentFamily.FieldSecurityProfile,
             ["field-permissions"] = ComponentFamily.FieldPermission,
-            ["connection-roles"] = ComponentFamily.ConnectionRole,
-            ["similarity-rules"] = ComponentFamily.SimilarityRule,
-            ["slas"] = ComponentFamily.Sla,
-            ["sla-items"] = ComponentFamily.SlaItem,
-            ["reports"] = ComponentFamily.Report,
-            ["templates"] = ComponentFamily.Template,
-            ["display-strings"] = ComponentFamily.DisplayString,
-            ["attachments"] = ComponentFamily.Attachment,
-            ["legacy-assets"] = ComponentFamily.LegacyAsset
+            ["connection-roles"] = ComponentFamily.ConnectionRole
         };
 
     private static string NormalizeTrackedSourceRelativePath(string value)

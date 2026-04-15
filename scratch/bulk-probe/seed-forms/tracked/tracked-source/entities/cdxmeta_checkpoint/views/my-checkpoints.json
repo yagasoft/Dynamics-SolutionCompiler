@@ -1,0 +1,55 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_checkpoint|My Checkpoints",
+  "DisplayName": "My Checkpoints",
+  "metadataSourcePath": "Entities/cdxmeta_Checkpoint/SavedQueries/{9cd24523-3b37-f111-88b3-0022489b9600}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "true",
+    "comparisonSignature": "e696c9056c22f7efaa808824b6e7b33e255664e7cbc894a52e11de4a254bf162",
+    "entityLogicalName": "cdxmeta_checkpoint",
+    "fetchAttributesJson": [
+      "cdxmeta_checkpointid"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "ownerid",
+        "operator": "eq-userid",
+        "value": ""
+      },
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [],
+    "ordersJson": [],
+    "queryType": "8192",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_checkpoint",
+      "layoutColumns": [],
+      "fetchAttributes": [
+        "cdxmeta_checkpointid"
+      ],
+      "filters": [
+        {
+          "attribute": "ownerid",
+          "operator": "eq-userid",
+          "value": ""
+        },
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": []
+    },
+    "targetEntity": "cdxmeta_checkpoint",
+    "viewId": "9cd24523-3b37-f111-88b3-0022489b9600"
+  }
+}

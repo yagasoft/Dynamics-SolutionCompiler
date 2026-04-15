@@ -1,0 +1,12 @@
+{
+  "LogicalName": "codex metadata seed role|prvReadSharePointDocument|Global",
+  "DisplayName": "prvReadSharePointDocument",
+  "metadataSourcePath": "Roles/Codex Metadata Seed Role.xml",
+  "assetSourcePaths": [],
+  "parentRoleLogicalName": "codex metadata seed role",
+  "privilegeName": "prvReadSharePointDocument",
+  "accessLevel": "Global",
+  "objectTypeCode": null,
+  "comparisonSignature": "6ae9c44db91f92b101f88c9ddb3eb51bb314a56bc6dbce0d26f7f8f8bb5309e5",
+  "evidence": "BestEffort"
+}

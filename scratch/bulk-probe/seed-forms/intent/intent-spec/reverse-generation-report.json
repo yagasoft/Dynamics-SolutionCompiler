@@ -1,0 +1,125 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "Column",
+    "Form",
+    "Relationship",
+    "SolutionShell",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Active Checkpoints",
+      "reason": "View \u0027Active Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Checkpoint Advanced Find View",
+      "reason": "View \u0027Checkpoint Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Checkpoint Associated View",
+      "reason": "View \u0027Checkpoint Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Checkpoint Lookup View",
+      "reason": "View \u0027Checkpoint Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Inactive Checkpoints",
+      "reason": "View \u0027Inactive Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|My Checkpoints",
+      "reason": "View \u0027My Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Quick Find Active Checkpoints",
+      "reason": "View \u0027Quick Find Active Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Active Work Items",
+      "reason": "View \u0027Active Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Inactive Work Items",
+      "reason": "View \u0027Inactive Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|My Work Items",
+      "reason": "View \u0027My Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Quick Find Active Work Items",
+      "reason": "View \u0027Quick Find Active Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Work Item Advanced Find View",
+      "reason": "View \u0027Work Item Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Work Item Associated View",
+      "reason": "View \u0027Work Item Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Work Item Lookup View",
+      "reason": "View \u0027Work Item Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_category|quick|5978624f-3b37-f111-88b3-0022489b9600",
+      "packageRelativePath": "Entities/cdxmeta_Category/FormXml/quick/{5978624f-3b37-f111-88b3-0022489b9600}.xml"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_checkpoint|quick|4e60526b-43c9-4eff-980e-12fb152572de",
+      "packageRelativePath": "Entities/cdxmeta_Checkpoint/FormXml/quick/{4e60526b-43c9-4eff-980e-12fb152572de}.xml"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_workitem|main|c67be8a4-c475-4041-90e6-78e3ed79b018",
+      "packageRelativePath": "Entities/cdxmeta_WorkItem/FormXml/main/{c67be8a4-c475-4041-90e6-78e3ed79b018}.xml"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_workitem|quick|38cc575f-ed67-4a02-8f01-2631e59b33d5",
+      "packageRelativePath": "Entities/cdxmeta_WorkItem/FormXml/quick/{38cc575f-ed67-4a02-8f01-2631e59b33d5}.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedForms",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "AppModule",
+    "AppSetting",
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue",
+    "SiteMap",
+    "SolutionShell",
+    "Table",
+    "Visualization",
+    "WebResource"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "AppModule",
+      "artifact": "codex_metadata_advanced_ui_924e69cb",
+      "packageRelativePath": "AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedAdvancedUI",
+      "packageRelativePath": "Other/Solution.xml"
+    },
+    {
+      "family": "Visualization",
+      "artifact": "account|Accounts by Industry",
+      "packageRelativePath": "Entities/Account/Visualizations/{74A622C0-5193-DE11-97D4-00155DA3B01E}.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/icon.svg",
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/icon.svg.data.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/landing.html",
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/landing.html.data.xml"
+    }
+  ]
+}

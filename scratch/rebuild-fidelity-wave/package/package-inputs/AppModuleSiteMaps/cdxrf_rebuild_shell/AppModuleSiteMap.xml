@@ -1,0 +1,27 @@
+<AppModuleSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SiteMapUniqueName>cdxrf_rebuild_shell</SiteMapUniqueName>
+<EnableCollapsibleGroups>False</EnableCollapsibleGroups>
+<ShowHome>True</ShowHome>
+<ShowPinned>True</ShowPinned>
+<ShowRecents>True</ShowRecents>
+<SiteMap IntroducedVersion="7.0.0.0">
+<Area Id="area_rebuild" ShowGroups="true" ResourceId="SitemapDesigner.NewArea" IntroducedVersion="7.0.0.0">
+<Titles>
+<Title LCID="1033" Title="Rebuild" />
+</Titles>
+<Group Id="group_work" ResourceId="SitemapDesigner.NewGroup" IntroducedVersion="7.0.0.0">
+<Titles>
+<Title LCID="1033" Title="Work" />
+</Titles>
+<SubArea Id="subarea_tasks" ResourceId="SitemapDesigner.NewSubArea" Entity="cdxrf_task" Client="Web" PassParams="true">
+<Titles>
+<Title LCID="1033" Title="Tasks" />
+</Titles>
+</SubArea>
+</Group>
+</Area>
+</SiteMap>
+<LocalizedNames>
+<LocalizedName description="Rebuild Fidelity Shell" languagecode="1033" />
+</LocalizedNames>
+</AppModuleSiteMap>

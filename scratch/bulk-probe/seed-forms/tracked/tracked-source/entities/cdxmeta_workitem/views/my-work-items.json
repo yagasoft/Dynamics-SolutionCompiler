@@ -1,0 +1,55 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_workitem|My Work Items",
+  "DisplayName": "My Work Items",
+  "metadataSourcePath": "Entities/cdxmeta_WorkItem/SavedQueries/{2bae28ff-3a37-f111-88b3-0022489b9600}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "true",
+    "comparisonSignature": "9d1d85e17e5d72f64a33a72bd0977996f8bb804c63d88a0c300bcf71ec6a4f1c",
+    "entityLogicalName": "cdxmeta_workitem",
+    "fetchAttributesJson": [
+      "cdxmeta_workitemid"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "ownerid",
+        "operator": "eq-userid",
+        "value": ""
+      },
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [],
+    "ordersJson": [],
+    "queryType": "8192",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_workitem",
+      "layoutColumns": [],
+      "fetchAttributes": [
+        "cdxmeta_workitemid"
+      ],
+      "filters": [
+        {
+          "attribute": "ownerid",
+          "operator": "eq-userid",
+          "value": ""
+        },
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": []
+    },
+    "targetEntity": "cdxmeta_workitem",
+    "viewId": "2bae28ff-3a37-f111-88b3-0022489b9600"
+  }
+}

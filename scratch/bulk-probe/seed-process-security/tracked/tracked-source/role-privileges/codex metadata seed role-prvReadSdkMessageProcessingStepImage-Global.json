@@ -1,0 +1,12 @@
+{
+  "LogicalName": "codex metadata seed role|prvReadSdkMessageProcessingStepImage|Global",
+  "DisplayName": "prvReadSdkMessageProcessingStepImage",
+  "metadataSourcePath": "Roles/Codex Metadata Seed Role.xml",
+  "assetSourcePaths": [],
+  "parentRoleLogicalName": "codex metadata seed role",
+  "privilegeName": "prvReadSdkMessageProcessingStepImage",
+  "accessLevel": "Global",
+  "objectTypeCode": null,
+  "comparisonSignature": "43a91e7503baa899283286bbce3ac269bdfceb9cf192b410897b3e5e5d4e88a3",
+  "evidence": "BestEffort"
+}

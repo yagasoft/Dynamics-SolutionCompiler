@@ -1,0 +1,47 @@
+{
+  "inputKind": "unpacked-xml-folder",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "AppModule",
+      "artifact": "codex_metadata_shell_dd96cf20",
+      "reason": "App modules require an entity-only site map to reverse-generate intent-spec JSON.",
+      "category": "unsupportedShape"
+    },
+    {
+      "family": "AppSetting",
+      "artifact": "codex_metadata_shell_dd96cf20|AppChannel",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "SiteMap",
+      "artifact": "codex_metadata_shell_dd96cf20",
+      "reason": "Only entity-only site map subareas can be reverse-generated into intent-spec JSON.",
+      "category": "unsupportedShape"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/shell/icon.svg",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/shell/landing.html",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": []
+}

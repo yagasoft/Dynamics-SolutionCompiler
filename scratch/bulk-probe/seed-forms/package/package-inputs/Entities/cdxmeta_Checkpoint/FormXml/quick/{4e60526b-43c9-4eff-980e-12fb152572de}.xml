@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{4e60526b-43c9-4eff-980e-12fb152572de}</formid>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{7a5c58e5-7f1e-4909-807d-7275b4d49653}" IsUserDefined="1">
+          <labels>
+            <label description="" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{8cf241bc-62c1-4b5a-86c2-911c1572bd9a}">
+                  <labels>
+                    <label description="GENERAL" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{e7884d27-189f-4142-8314-b62ea4a109b9}">
+                        <labels>
+                          <label description="Checkpoint Name" languagecode="1033" />
+                        </labels>
+                        <control id="cdxmeta_checkpointname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cdxmeta_checkpointname" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{3e10f4dc-89db-45ea-99dd-9674f8f99cc3}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

@@ -1,0 +1,14 @@
+{
+  "UniqueName": "CodexMetadataSeedAppShell",
+  "DisplayName": "Codex Metadata Seed App Shell",
+  "Version": "1.0.0.0",
+  "layeringIntent": "UnmanagedDevelopment",
+  "metadataSourcePath": "Other/Solution.xml",
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata",
+    "metadataSourcePath": "Other/Solution.xml"
+  }
+}

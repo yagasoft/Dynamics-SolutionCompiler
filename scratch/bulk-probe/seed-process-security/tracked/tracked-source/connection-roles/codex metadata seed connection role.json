@@ -1,0 +1,14 @@
+{
+  "LogicalName": "codex metadata seed connection role",
+  "DisplayName": "Codex Metadata Seed Connection Role",
+  "metadataSourcePath": "Other/ConnectionRoles.xml",
+  "assetSourcePaths": [],
+  "category": "1",
+  "description": "Neutral connection role placeholder for Dataverse metadata synthesis.",
+  "isCustomizable": true,
+  "introducedVersion": "1.0.0.0",
+  "objectTypeMappings": [
+    "All"
+  ],
+  "comparisonSignature": "0e6c5995b277de1f0a2af584701977affe4bae8fc5adebe47b2032afa6804d53"
+}

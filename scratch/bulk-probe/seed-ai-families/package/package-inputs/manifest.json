@@ -1,0 +1,32 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedAiFamilies",
+    "DisplayName": "Codex Metadata Seed AI Families",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "AIConfigurations",
+    "AIProjectTypes",
+    "AIProjects",
+    "Other"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/AIConfigurations/invoice_processing_training/AIConfiguration.xml",
+    "package-inputs/AIProjectTypes/document_automation/AIProjectType.xml",
+    "package-inputs/AIProjects/invoice_processing/AIProject.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/manifest.json"
+  ]
+}

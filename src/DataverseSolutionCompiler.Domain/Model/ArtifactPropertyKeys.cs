@@ -65,6 +65,7 @@ public static class ArtifactPropertyKeys
     public const string ReadbackScope = "readbackScope";
 
     public const string ViewId = "viewId";
+    public const string VisualizationId = "visualizationId";
     public const string QueryType = "queryType";
     public const string TargetEntity = "targetEntity";
     public const string LayoutColumnsJson = "layoutColumnsJson";
@@ -98,7 +99,9 @@ public static class ArtifactPropertyKeys
     public const string WebResourceTypeLabel = "webResourceTypeLabel";
     public const string ByteLength = "byteLength";
     public const string MetadataSourcePath = "metadataSourcePath";
+    public const string PackageRelativePath = "packageRelativePath";
     public const string AssetSourcePath = "assetSourcePath";
+    public const string AssetSourceMapJson = "assetSourceMapJson";
     public const string ContentHash = "contentHash";
 
     public const string DefaultValue = "defaultValue";

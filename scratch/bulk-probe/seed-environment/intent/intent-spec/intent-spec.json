@@ -1,0 +1,268 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedEnvironment",
+    "displayName": "Codex Metadata Seed Environment",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata"
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedEnvironment",
+      "displayName": "Codex Metadata Seed Environment",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata",
+        "version": "1.0.0.0"
+      }
+    },
+    {
+      "family": "CanvasApp",
+      "logicalName": "cat_overview_3dbf5",
+      "displayName": "Overview",
+      "metadataSourcePath": "source-backed/CanvasApps/cat_overview_3dbf5.meta.xml",
+      "assetSourcePaths": [
+        "source-backed/CanvasApps/cat_overview_3dbf5_BackgroundImageUri",
+        "source-backed/CanvasApps/cat_overview_3dbf5_DocumentUri.msapp"
+      ],
+      "packageRelativePath": "CanvasApps/cat_overview_3dbf5.meta.xml",
+      "stableProperties": {
+        "appVersion": "2023-09-06T20:22:07Z",
+        "authorizationReferencesJson": [],
+        "backgroundColor": "RGBA(0,176,240,1)",
+        "backgroundImageUri": "/CanvasApps/cat_overview_3dbf5_BackgroundImageUri",
+        "canConsumeAppPass": "true",
+        "canvasAppType": "2",
+        "cdsDependenciesJson": {
+          "cdsdependencies": [
+            {
+              "componenttype": 1,
+              "logicalname": "entity"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "solution"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "customapi"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "customapirequestparameter"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "publisher"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "customapiresponseproperty"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "sdkmessageprocessingstep"
+            },
+            {
+              "componenttype": 61,
+              "componenttypeplatformname": "WebResource",
+              "logicalname": "cat_DVPageLoc"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVCommandBar"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVAutoWidthLabel"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.NavigationComponentPCF"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.NavigationComponentPCF"
+            }
+          ]
+        },
+        "connectionReferencesJson": {},
+        "createdByClientVersion": "3.23081.15.0",
+        "databaseReferencesJson": {
+          "default.cds": {
+            "components": [
+              {
+                "componentName": "WebResource",
+                "identifier": "cat_DVPageLoc",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVCommandBar",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVAutoWidthLabel",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.NavigationComponentPCF",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.NavigationComponentPCF",
+                "identifierType": "LogicalName"
+              }
+            ],
+            "dataSources": {
+              "Custom API Request Parameters": {
+                "entitySetName": "customapirequestparameters",
+                "logicalName": "customapirequestparameter"
+              },
+              "Custom API Response Properties": {
+                "entitySetName": "customapiresponseproperties",
+                "logicalName": "customapiresponseproperty"
+              },
+              "Custom APIs": {
+                "entitySetName": "customapis",
+                "logicalName": "customapi"
+              },
+              "Entities": {
+                "entitySetName": "entities",
+                "logicalName": "entity"
+              },
+              "Publishers": {
+                "entitySetName": "publishers",
+                "logicalName": "publisher"
+              },
+              "Sdk Message Processing Steps": {
+                "entitySetName": "sdkmessageprocessingsteps",
+                "logicalName": "sdkmessageprocessingstep"
+              },
+              "Solutions": {
+                "entitySetName": "solutions",
+                "logicalName": "solution"
+              },
+              "environment_39a902ba": {
+                "entitySetName": "Environment",
+                "logicalName": "environment_39a902ba"
+              }
+            },
+            "databaseDetails": {
+              "environmentName": "default.cds",
+              "overrideValues": {
+                "status": "NotSpecified"
+              },
+              "referenceType": "Environmental"
+            }
+          }
+        },
+        "documentUri": "/CanvasApps/cat_overview_3dbf5_DocumentUri.msapp",
+        "introducedVersion": "1.0",
+        "isCustomizable": "false",
+        "isManaged": "false",
+        "minClientVersion": "3.23081.15.0",
+        "status": "Ready",
+        "tagsJson": {
+          "hasComponent": "false",
+          "hasUnlockedComponent": "false",
+          "isUnifiedRootApp": "false",
+          "minimumRequiredApiVersion": "2.2.0",
+          "primaryDeviceHeight": "768",
+          "primaryDeviceWidth": "1366",
+          "primaryFormFactor": "Tablet",
+          "publisherVersion": "3.23081.15",
+          "showStatusBar": "false",
+          "sienaVersion": "20230823T035157Z-3.23081.15.0",
+          "supportsLandscape": "true",
+          "supportsPortrait": "true"
+        }
+      }
+    }
+  ]
+}

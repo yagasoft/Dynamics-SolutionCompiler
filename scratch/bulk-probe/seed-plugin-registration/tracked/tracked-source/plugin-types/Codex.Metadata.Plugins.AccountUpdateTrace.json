@@ -1,0 +1,12 @@
+{
+  "LogicalName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+  "DisplayName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+  "metadataSourcePath": "Other/Customizations.xml",
+  "assetSourcePaths": [],
+  "assemblyFullName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "assemblyQualifiedName": "Codex.Metadata.Plugins.AccountUpdateTrace, Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "friendlyName": "Account Update Trace",
+  "workflowActivityGroupName": "Codex.Metadata.Plugins (1.0.0.0)",
+  "description": "Neutral plugin type for account update tracing.",
+  "comparisonSignature": "dfa078403ca6c7e95a4ad46a4343dbd2727829c2a25f441c0565ad61a51c945c"
+}

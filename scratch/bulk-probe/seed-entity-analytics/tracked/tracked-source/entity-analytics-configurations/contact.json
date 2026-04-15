@@ -1,0 +1,11 @@
+{
+  "LogicalName": "contact",
+  "DisplayName": "contact",
+  "metadataSourcePath": "entityanalyticsconfigs/contact/entityanalyticsconfig.xml",
+  "assetSourcePaths": [],
+  "parentEntityLogicalName": "contact",
+  "entityDataSource": "dataverse",
+  "isEnabledForAdls": "true",
+  "isEnabledForTimeSeries": "false",
+  "comparisonSignature": "1d0aad126473ff0f3ac1dd6f13da735fba341f9ed750ee26e4ca9e5923fcab44"
+}

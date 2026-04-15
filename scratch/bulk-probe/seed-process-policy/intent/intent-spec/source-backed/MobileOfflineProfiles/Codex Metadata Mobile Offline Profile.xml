@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MobileOfflineProfile MobileOfflineProfileId="9f0a7210-6937-f111-88b3-0022489b9600" Name="Codex Metadata Mobile Offline Profile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <MobileOfflineProfileItems>
+    <MobileOfflineProfileItem MobileOfflineProfileItemId="8bb0691a-6937-f111-88b3-0022489b9600" Name="Codex Metadata Mobile Offline Profile Item">
+      <MobileOfflineProfileItemAssociations />
+      <MobileOfflineProfileItemId>{8BB0691A-6937-F111-88B3-0022489B9600}</MobileOfflineProfileItemId>
+      <RegardingObjectId>{9F0A7210-6937-F111-88B3-0022489B9600}</RegardingObjectId>
+      <Name>Codex Metadata Mobile Offline Profile Item</Name>
+      <RecordDistributionCriteria>0</RecordDistributionCriteria>
+      <RecordsOwnedByMe>0</RecordsOwnedByMe>
+      <RecordsOwnedByMyTeam>0</RecordsOwnedByMyTeam>
+      <RecordsOwnedByMyBusinessUnit>0</RecordsOwnedByMyBusinessUnit>
+      <ProfileItemEntityFilter></ProfileItemEntityFilter>
+      <EntitySchemaName>Account</EntitySchemaName>
+    </MobileOfflineProfileItem>
+  </MobileOfflineProfileItems>
+  <MobileOfflineProfileId>{9f0a7210-6937-f111-88b3-0022489b9600}</MobileOfflineProfileId>
+  <Name>Codex Metadata Mobile Offline Profile</Name>
+  <Description>Neutral mobile offline profile for Dataverse metadata synthesis.</Description>
+</MobileOfflineProfile>

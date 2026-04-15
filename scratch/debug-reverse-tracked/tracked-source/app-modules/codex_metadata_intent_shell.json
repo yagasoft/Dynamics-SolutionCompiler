@@ -1,0 +1,25 @@
+{
+  "Family": 13,
+  "LogicalName": "codex_metadata_intent_shell",
+  "DisplayName": "Codex Metadata Intent Shell",
+  "metadataSourcePath": null,
+  "assetSourcePaths": [],
+  "properties": {
+    "appSettingCount": "0",
+    "comparisonSignature": "9613979b6fd4e9394fb24d4ca422aba717eebf1807d2e2bfb0fd43d9cf7c0704",
+    "componentTypesJson": [
+      "62"
+    ],
+    "description": "Generated model-driven app shell for the JSON intent slice.",
+    "roleIdsJson": [],
+    "roleMapCount": "0",
+    "summaryJson": {
+      "componentTypes": [
+        "62"
+      ],
+      "roleIds": [],
+      "roleMapCount": 0,
+      "appSettingCount": 0
+    }
+  }
+}

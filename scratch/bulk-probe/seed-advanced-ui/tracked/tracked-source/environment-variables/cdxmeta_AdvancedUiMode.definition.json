@@ -1,0 +1,13 @@
+{
+  "Family": 17,
+  "LogicalName": "cdxmeta_AdvancedUiMode",
+  "DisplayName": "Advanced UI Scaffold Mode",
+  "metadataSourcePath": "environmentvariabledefinitions/cdxmeta_AdvancedUiMode/environmentvariabledefinition.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "attributeType": "100000000",
+    "defaultValue": "scaffold",
+    "secretStore": "0",
+    "valueSchema": "string"
+  }
+}

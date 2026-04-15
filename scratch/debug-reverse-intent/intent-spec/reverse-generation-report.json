@@ -1,0 +1,41 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "AppModule",
+    "Column",
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue",
+    "Form",
+    "Key",
+    "OptionSet",
+    "Relationship",
+    "SiteMap",
+    "Table",
+    "View"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_category|main|337195dc-083e-e910-621f-792253f213d9",
+      "id": "337195dc-083e-e910-621f-792253f213d9"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_workitem|main|1197fc73-1104-9ac8-059a-4fb7002b214d",
+      "id": "1197fc73-1104-9ac8-059a-4fb7002b214d"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|All Categories",
+      "id": "2c0eb3b9-f51c-767f-43d0-1fe1af0a5782"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Active Work Items",
+      "id": "84481ada-7ed6-8656-00ed-ab065cc039bc"
+    }
+  ],
+  "sourceBackedArtifactsIncluded": []
+}

@@ -1,0 +1,12 @@
+{
+  "logicalName": "account",
+  "DisplayName": "Account",
+  "schemaName": "Account",
+  "description": null,
+  "entitySetName": null,
+  "ownershipTypeMask": null,
+  "primaryIdAttribute": null,
+  "primaryNameAttribute": null,
+  "isCustomizable": false,
+  "shellOnly": true
+}

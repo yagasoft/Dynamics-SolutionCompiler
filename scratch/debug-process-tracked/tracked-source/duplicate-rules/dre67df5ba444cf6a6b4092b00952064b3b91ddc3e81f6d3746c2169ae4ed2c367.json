@@ -1,0 +1,13 @@
+{
+  "LogicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367",
+  "DisplayName": "Codex Metadata Account Name Duplicate Rule",
+  "metadataSourcePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+  "assetSourcePaths": [],
+  "description": "Neutral duplicate rule for Dataverse metadata synthesis.",
+  "baseEntityName": "account",
+  "matchingEntityName": "account",
+  "isCaseSensitive": false,
+  "excludeInactiveRecords": true,
+  "conditionCount": 1,
+  "comparisonSignature": "195cfc6f869fbfecf6e02d3efe4db35954e7b85dc2111bdfa2ecf6de1db51dbb"
+}

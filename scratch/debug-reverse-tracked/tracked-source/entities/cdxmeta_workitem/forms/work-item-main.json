@@ -1,0 +1,99 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_workitem|main|1197fc73-1104-9ac8-059a-4fb7002b214d",
+  "DisplayName": "Work Item Main",
+  "metadataSourcePath": null,
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "fa937cb1240efa2dac8c484db50175cdc3db92ac068a6c065ad9286d702c652a",
+    "controlCount": "7",
+    "controlDescriptionCount": "7",
+    "entityLogicalName": "cdxmeta_workitem",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "id": null,
+      "name": "Work Item Main",
+      "description": null,
+      "type": "main",
+      "tabs": [
+        {
+          "name": "summary",
+          "label": "Summary",
+          "sections": [
+            {
+              "name": "overview",
+              "label": "Overview",
+              "fields": [
+                "cdxmeta_workitemname",
+                "cdxmeta_summary",
+                "cdxmeta_categoryid",
+                "cdxmeta_priority",
+                "cdxmeta_stage"
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": [
+        "cdxmeta_priority",
+        "cdxmeta_stage"
+      ]
+    },
+    "formId": "1197fc73-1104-9ac8-059a-4fb7002b214d",
+    "formType": "main",
+    "formTypeCode": "1",
+    "headerControlCount": "2",
+    "quickFormCount": "0",
+    "sectionCount": "1",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "main",
+      "formId": "1197fc73-1104-9ac8-059a-4fb7002b214d",
+      "tabCount": 1,
+      "sectionCount": 1,
+      "controlCount": 7,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 2,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_categoryid",
+          "dataFieldName": "cdxmeta_categoryid",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_priority",
+          "dataFieldName": "cdxmeta_priority",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_stage",
+          "dataFieldName": "cdxmeta_stage",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_summary",
+          "dataFieldName": "cdxmeta_summary",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_workitemname",
+          "dataFieldName": "cdxmeta_workitemname",
+          "role": "field"
+        },
+        {
+          "id": "header_cdxmeta_priority",
+          "dataFieldName": "cdxmeta_priority",
+          "role": "field"
+        },
+        {
+          "id": "header_cdxmeta_stage",
+          "dataFieldName": "cdxmeta_stage",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

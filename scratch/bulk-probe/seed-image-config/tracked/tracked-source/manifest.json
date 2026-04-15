@@ -1,0 +1,23 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedImageConfig",
+    "DisplayName": "Codex Metadata Seed Image Config",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/entities/cdxmeta_photoasset/attributes.json",
+    "tracked-source/entities/cdxmeta_photoasset/entity.json",
+    "tracked-source/entities/cdxmeta_photoasset/image-configurations.json",
+    "tracked-source/entities/cdxmeta_photoasset/relationships.json",
+    "tracked-source/manifest.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/Other/Solution.xml"
+  ]
+}

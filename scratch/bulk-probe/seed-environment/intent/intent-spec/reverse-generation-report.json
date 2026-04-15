@@ -1,0 +1,22 @@
+{
+  "inputKind": "tracked-source",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "CanvasApp",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "CanvasApp",
+      "artifact": "cat_overview_3dbf5",
+      "packageRelativePath": "CanvasApps/cat_overview_3dbf5.meta.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedEnvironment",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

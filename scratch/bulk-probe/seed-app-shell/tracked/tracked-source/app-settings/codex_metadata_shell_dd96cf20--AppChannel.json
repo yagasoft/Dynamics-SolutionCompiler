@@ -1,0 +1,12 @@
+{
+  "Family": 19,
+  "LogicalName": "codex_metadata_shell_dd96cf20|AppChannel",
+  "DisplayName": "AppChannel",
+  "metadataSourcePath": "AppModules/codex_metadata_shell_dd96cf20/AppModule.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "parentAppModuleUniqueName": "codex_metadata_shell_dd96cf20",
+    "settingDefinitionUniqueName": "AppChannel",
+    "value": "1"
+  }
+}

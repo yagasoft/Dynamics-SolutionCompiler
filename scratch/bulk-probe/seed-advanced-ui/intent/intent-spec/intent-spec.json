@@ -1,0 +1,166 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedAdvancedUI",
+    "displayName": "Codex Metadata Seed Advanced UI",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata"
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [
+    {
+      "schemaName": "cdxmeta_AdvancedUiMode",
+      "displayName": "Advanced UI Scaffold Mode",
+      "type": "100000000",
+      "defaultValue": "scaffold",
+      "currentValue": "seed",
+      "secretStore": "0",
+      "valueSchema": "string"
+    }
+  ],
+  "appModules": [
+    {
+      "uniqueName": "codex_metadata_advanced_ui_924e69cb",
+      "displayName": "Codex Metadata Advanced UI",
+      "description": "Neutral app-shell scaffold for advanced UI component synthesis.",
+      "siteMap": {
+        "areas": [
+          {
+            "id": "cdxmeta_area",
+            "title": "Codex Metadata Advanced UI",
+            "groups": [
+              {
+                "id": "cdxmeta_group",
+                "title": "Advanced UI Seed",
+                "subAreas": [
+                  {
+                    "id": "cdxmeta_shell",
+                    "title": "Advanced UI Shell",
+                    "webResource": "cdxmeta_/advancedui/landing.html"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "appSettings": [
+        {
+          "definitionUniqueName": "AppChannel",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "logicalName": "account",
+      "schemaName": "Account",
+      "displayName": "Account",
+      "isCustomizable": false,
+      "columns": [],
+      "keys": [],
+      "forms": [],
+      "views": []
+    }
+  ],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedAdvancedUI",
+      "displayName": "Codex Metadata Seed Advanced UI",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata",
+        "version": "1.0.0.0"
+      }
+    },
+    {
+      "family": "Visualization",
+      "logicalName": "account|Accounts by Industry",
+      "displayName": "Accounts by Industry",
+      "metadataSourcePath": "source-backed/Entities/Account/Visualizations/{74A622C0-5193-DE11-97D4-00155DA3B01E}.xml",
+      "packageRelativePath": "Entities/Account/Visualizations/{74A622C0-5193-DE11-97D4-00155DA3B01E}.xml",
+      "stableProperties": {
+        "chartTypesJson": [
+          "Bar"
+        ],
+        "dataDescriptionXml": "\u003Cdatadescription\u003E\u003Cdatadefinition\u003E\u003Cfetchcollection\u003E\u003Cfetch mapping=\u0022logical\u0022 aggregate=\u0022true\u0022\u003E\u003Centity name=\u0022account\u0022\u003E\u003Cattribute groupby=\u0022true\u0022 alias=\u0022groupby_column\u0022 name=\u0022industrycode\u0022 /\u003E\u003Cattribute alias=\u0022aggregate_column\u0022 name=\u0022name\u0022 aggregate=\u0022count\u0022 /\u003E\u003C/entity\u003E\u003C/fetch\u003E\u003C/fetchcollection\u003E\u003Ccategorycollection\u003E\u003Ccategory\u003E\u003Cmeasurecollection\u003E\u003Cmeasure alias=\u0022aggregate_column\u0022 /\u003E\u003C/measurecollection\u003E\u003C/category\u003E\u003C/categorycollection\u003E\u003C/datadefinition\u003E\u003C/datadescription\u003E",
+        "entityLogicalName": "account",
+        "groupByColumnsJson": [
+          "industrycode"
+        ],
+        "measureAliasesJson": [
+          "aggregate_column"
+        ],
+        "presentationDescriptionXml": "\u003Cpresentationdescription\u003E\u003CChart\u003E\u003CSeries\u003E\u003CSeries ChartType=\u0022Bar\u0022 IsValueShownAsLabel=\u0022True\u0022 Color=\u002291, 151, 213\u0022 BackSecondaryColor=\u0022112, 142, 50\u0022 Font=\u0022{0}, 9.5px\u0022 LabelForeColor=\u002259, 59, 59\u0022 CustomProperties=\u0022PointWidth=0.75, MaxPixelPointWidth=40\u0022\u003E\u003CSmartLabelStyle Enabled=\u0022True\u0022 /\u003E\u003C/Series\u003E\u003C/Series\u003E\u003CChartAreas\u003E\u003CChartArea BorderColor=\u0022White\u0022 BorderDashStyle=\u0022Solid\u0022\u003E\u003CAxisY LabelAutoFitMinFontSize=\u00228\u0022 TitleForeColor=\u002259, 59, 59\u0022 TitleFont=\u0022{0}, 10.5px\u0022 LineColor=\u0022165, 172, 181\u0022 IsReversed=\u0022False\u0022\u003E\u003CMajorGrid LineColor=\u0022239, 242, 246\u0022 /\u003E\u003CLabelStyle Font=\u0022{0}, 10.5px\u0022 ForeColor=\u002259, 59, 59\u0022 /\u003E\u003C/AxisY\u003E\u003CAxisX LabelAutoFitMinFontSize=\u00228\u0022 TitleForeColor=\u002259, 59, 59\u0022 TitleFont=\u0022{0}, 10.5px\u0022 LineColor=\u0022165, 172, 181\u0022 IsReversed=\u0022False\u0022\u003E\u003CMajorGrid Enabled=\u0022False\u0022 /\u003E\u003CMajorTickMark Enabled=\u0022False\u0022 /\u003E\u003CLabelStyle Font=\u0022{0}, 10.5px\u0022 ForeColor=\u002259, 59, 59\u0022 /\u003E\u003C/AxisX\u003E\u003C/ChartArea\u003E\u003C/ChartAreas\u003E\u003CTitles\u003E\u003CTitle Name=\u0022Chart Title\u0022 DockingOffset=\u0022-3\u0022 Font=\u0022{0}, 13px\u0022 ForeColor=\u002259, 59, 59\u0022 Alignment=\u0022TopLeft\u0022\u003E\u003C/Title\u003E\u003C/Titles\u003E\u003C/Chart\u003E\u003C/presentationdescription\u003E",
+        "targetEntity": "account",
+        "titleNamesJson": [
+          "Chart Title"
+        ]
+      }
+    },
+    {
+      "family": "AppModule",
+      "logicalName": "codex_metadata_advanced_ui_924e69cb",
+      "displayName": "Codex Metadata Advanced UI",
+      "metadataSourcePath": "source-backed/AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+      "packageRelativePath": "AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+      "stableProperties": {
+        "appSettingCount": "1",
+        "componentTypesJson": [
+          "62"
+        ],
+        "description": "Neutral app-shell scaffold for advanced UI component synthesis.",
+        "roleIdsJson": [
+          "119f245c-3cc8-4b62-b31c-d1a046ced15d",
+          "627090ff-40a3-4053-8790-584edc5be201"
+        ],
+        "roleMapCount": "2"
+      }
+    },
+    {
+      "family": "WebResource",
+      "logicalName": "cdxmeta_/advancedui/icon.svg",
+      "displayName": "Advanced UI Icon",
+      "metadataSourcePath": "source-backed/WebResources/cdxmeta_/advancedui/icon.svg.data.xml",
+      "assetSourcePaths": [
+        "source-backed/WebResources/cdxmeta_/advancedui/icon.svg"
+      ],
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/icon.svg.data.xml",
+      "stableProperties": {
+        "byteLength": "362",
+        "contentHash": "f3a8c8498372e2081eb9367c3c999af8934be94fa5731dc29e33e42d0223960e",
+        "description": "Neutral app shell icon for the Codex advanced UI scaffold.",
+        "webResourceType": "11",
+        "webResourceTypeLabel": "svg"
+      }
+    },
+    {
+      "family": "WebResource",
+      "logicalName": "cdxmeta_/advancedui/landing.html",
+      "displayName": "Advanced UI Landing",
+      "metadataSourcePath": "source-backed/WebResources/cdxmeta_/advancedui/landing.html.data.xml",
+      "assetSourcePaths": [
+        "source-backed/WebResources/cdxmeta_/advancedui/landing.html"
+      ],
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/landing.html.data.xml",
+      "stableProperties": {
+        "byteLength": "1389",
+        "contentHash": "769c1328ba2445211a1e99b9eca7a19657fcb0c093a32c4e05d378b56f7e7007",
+        "description": "Neutral landing page for the Codex advanced UI scaffold.",
+        "webResourceType": "1",
+        "webResourceTypeLabel": "html"
+      }
+    }
+  ]
+}

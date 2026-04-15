@@ -1,0 +1,11 @@
+{
+  "Family": 18,
+  "LogicalName": "cdxmeta_AppShellMode",
+  "DisplayName": "cdxmeta_AppShellMode",
+  "metadataSourcePath": null,
+  "assetSourcePaths": [],
+  "properties": {
+    "definitionSchemaName": "cdxmeta_AppShellMode",
+    "value": "guided"
+  }
+}

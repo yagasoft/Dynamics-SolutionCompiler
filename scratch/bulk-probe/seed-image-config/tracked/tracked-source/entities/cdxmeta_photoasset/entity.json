@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_photoasset",
+  "DisplayName": "Photo Asset",
+  "schemaName": "cdxmeta_PhotoAsset",
+  "description": "Compact photo-asset seed for image configuration and stable managed-flag proof.",
+  "entitySetName": "cdxmeta_photoassets",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_photoassetid",
+  "primaryNameAttribute": "cdxmeta_photoassetname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

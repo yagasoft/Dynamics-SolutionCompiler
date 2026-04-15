@@ -1,0 +1,16 @@
+{
+  "Family": 15,
+  "LogicalName": "cdxmeta_/shell/landing.html",
+  "DisplayName": "Codex Metadata Shell Landing HTML",
+  "metadataSourcePath": "WebResources/cdxmeta_/shell/landing.html.data.xml",
+  "assetSourcePaths": [
+    "WebResources/cdxmeta_/shell/landing.html"
+  ],
+  "properties": {
+    "byteLength": "203",
+    "contentHash": "544625246404e77b7fa2b554f4de52638172ee074494d5adb38b27fe2259f42a",
+    "description": "Neutral HTML landing page for the app-shell seed.",
+    "webResourceType": "1",
+    "webResourceTypeLabel": "html"
+  }
+}

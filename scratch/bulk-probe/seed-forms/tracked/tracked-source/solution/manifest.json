@@ -1,0 +1,14 @@
+{
+  "UniqueName": "CodexMetadataSeedForms",
+  "DisplayName": "Codex Metadata Seed Forms",
+  "Version": "1.0.0.0",
+  "layeringIntent": "UnmanagedDevelopment",
+  "metadataSourcePath": "Other/Solution.xml",
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata",
+    "metadataSourcePath": "Other/Solution.xml"
+  }
+}
