@@ -122,14 +122,7 @@ internal sealed partial class XmlCanonicalSolutionParser
             managed ? LayeringIntent.ManagedRelease : LayeringIntent.UnmanagedDevelopment);
     }
 
-    private void ParseLegacyArtifacts()
-    {
-        var customizationsPath = Path.Combine(_root, "Other", "Customizations.xml");
-        if (File.Exists(customizationsPath))
-        {
-            AddArtifact(ComponentFamily.LegacyAsset, "customizations", "Customizations.xml", customizationsPath);
-        }
-    }
+    private void ParseLegacyArtifacts() => ParseReportingAndLegacySourceArtifacts();
 
     private void AddArtifact(
         ComponentFamily family,

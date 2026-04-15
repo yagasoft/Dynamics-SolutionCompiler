@@ -1,0 +1,55 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{337dbfeb-0f67-4f81-b71e-3bd05a4b597a}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form>
+<tabs>
+<tab name="general" verticallayout="true" id="{b201ce66-cf67-c835-49eb-8fc54a021cc7}" IsUserDefined="0">
+<labels>
+<label description="" languagecode="1033" />
+</labels>
+<columns>
+<column width="25%">
+<sections>
+<section name="ColorStrip" showlabel="false" showbar="false" columns="1" IsUserDefined="0" id="{e9507d46-31cd-a47b-4d66-5368f1d7660d}">
+<labels>
+<label description="ColorStrip" languagecode="1033" />
+</labels>
+</section>
+</sections>
+</column>
+<column width="75%">
+<sections>
+<section name="CardHeader" showlabel="false" showbar="false" columns="111" IsUserDefined="0" id="{9c22e567-ef3c-0918-71ac-a55638c433d1}">
+<labels>
+<label description="Header" languagecode="1033" />
+</labels>
+</section>
+<section name="CardDetails" showlabel="false" showbar="false" columns="1" IsUserDefined="0" id="{c4f8550a-a125-d576-cfbe-ed6d2750dd65}">
+<labels>
+<label description="Details" languagecode="1033" />
+</labels>
+</section>
+<section name="CardFooter" showlabel="false" showbar="false" columns="1111" IsUserDefined="0" id="{ad019752-8a10-6a8d-28a7-be1fa3850cac}">
+<labels>
+<label description="Footer" languagecode="1033" />
+</labels>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Information" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="A card form for this entity." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

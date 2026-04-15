@@ -1,0 +1,19 @@
+{
+  "inputKind": "unpacked-xml-folder",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "Column",
+    "ImageConfiguration",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": []
+}

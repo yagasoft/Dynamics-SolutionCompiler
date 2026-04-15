@@ -1,0 +1,27 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedEntityAnalytics",
+    "DisplayName": "Codex Metadata Seed Entity Analytics",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "unpacked-xml",
+  "copiedDirectories": [
+    "Other",
+    "entityanalyticsconfigs"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/entityanalyticsconfigs/contact/entityanalyticsconfig.xml",
+    "package-inputs/manifest.json"
+  ]
+}

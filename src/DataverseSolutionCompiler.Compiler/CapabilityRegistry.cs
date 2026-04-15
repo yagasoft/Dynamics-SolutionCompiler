@@ -72,9 +72,9 @@ public sealed class CapabilityRegistry : ICapabilityRegistry
                 CapabilityKind.ReportingAndLegacy,
                 "reporting-legacy",
                 "Templates, reports, and legacy packaging assets.",
-                CapabilityReadiness.Planned,
-                new[] { "reports", "templates", "web wizards" },
-                new[] { "Reporting and legacy assets remain roadmap-owned in bootstrap." })
+                CapabilityReadiness.PartiallyProven,
+                new[] { "reports", "templates", "display strings", "attachments", "web wizards" },
+                new[] { "Reporting and legacy assets now have source-first parsing, tracked-source emission, source-backed reverse intent, and package preservation; live parity remains an explicit best-effort boundary." })
         };
 
         _descriptorsByName = _descriptors.Values.ToDictionary(

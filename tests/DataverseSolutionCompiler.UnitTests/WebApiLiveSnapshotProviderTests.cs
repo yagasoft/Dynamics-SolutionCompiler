@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.Core;
 using Azure.Identity;
@@ -153,8 +154,8 @@ public sealed class WebApiLiveSnapshotProviderTests
         snapshot.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.AiProjectType && artifact.LogicalName == "document_automation");
         snapshot.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.AiProject && artifact.LogicalName == "invoice_processing");
         snapshot.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.AiConfiguration && artifact.LogicalName == "invoice_processing_training");
-        harness.Requests.Should().Contain(request => request.Contains("/msdyn_aiprojecttypes", StringComparison.OrdinalIgnoreCase));
-        harness.Requests.Should().Contain(request => request.Contains("/msdyn_aiprojects", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/msdyn_aitemplates", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/msdyn_aimodels", StringComparison.OrdinalIgnoreCase));
         harness.Requests.Should().Contain(request => request.Contains("/msdyn_aiconfigurations", StringComparison.OrdinalIgnoreCase));
     }
 
@@ -171,7 +172,7 @@ public sealed class WebApiLiveSnapshotProviderTests
 
         snapshot.Artifacts.Should().ContainSingle(artifact =>
             artifact.Family == ComponentFamily.PluginAssembly
-            && artifact.LogicalName == "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+            && artifact.LogicalName == "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098");
         snapshot.Artifacts.Should().ContainSingle(artifact =>
             artifact.Family == ComponentFamily.PluginType
             && artifact.LogicalName == "Codex.Metadata.Plugins.AccountUpdateTrace");
@@ -331,6 +332,93 @@ public sealed class WebApiLiveSnapshotProviderTests
 
         snapshot.Artifacts.Should().BeEmpty();
         snapshot.Diagnostics.Should().ContainSingle(diagnostic => diagnostic.Code == "live-readback-auth-failure");
+    }
+
+    [Fact]
+    public async Task ReadAsync_retries_solution_projection_without_publisher_columns_when_the_org_rejects_them()
+    {
+        var requests = new List<string>();
+        using var client = new HttpClient(new StaticResponseHandler(request =>
+        {
+            var relative = request.RequestUri?.PathAndQuery.TrimStart('/') ?? string.Empty;
+            requests.Add(relative);
+
+            if (relative.Contains("solutions?$select=solutionid,friendlyname,uniquename,version,ismanaged,publisheruniquename,publishercustomizationprefix,publisherfriendlyname", StringComparison.OrdinalIgnoreCase))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(
+                        """
+                        {
+                          "error": {
+                            "code": "0x80060888",
+                            "message": "Could not find a property named 'publisheruniquename' on type 'Microsoft.Dynamics.CRM.solution'."
+                          }
+                        }
+                        """)
+                    {
+                        Headers =
+                        {
+                            ContentType = new MediaTypeHeaderValue("application/json")
+                        }
+                    }
+                };
+            }
+
+            if (relative.Contains("solutions?$select=solutionid,friendlyname,uniquename,version,ismanaged", StringComparison.OrdinalIgnoreCase))
+            {
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(
+                        """
+                        {
+                          "value": [
+                            {
+                              "solutionid": "49916849-57f1-ee11-9048-000d3ab5d944",
+                              "friendlyname": "Codex Metadata Seed Image Config",
+                              "uniquename": "CodexMetadataSeedImageConfig",
+                              "version": "1.0.0.0",
+                              "ismanaged": false
+                            }
+                          ]
+                        }
+                        """)
+                    {
+                        Headers =
+                        {
+                            ContentType = new MediaTypeHeaderValue("application/json")
+                        }
+                    }
+                };
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{\"value\":[]}")
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
+                }
+            };
+        }));
+        var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            "CodexMetadataSeedImageConfig",
+            [ComponentFamily.SolutionShell]);
+
+        var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.SolutionShell
+            && artifact.LogicalName == "CodexMetadataSeedImageConfig");
+        requests.Should().Contain(query => query.Contains("publisheruniquename", StringComparison.OrdinalIgnoreCase));
+        requests.Should().Contain(query =>
+            query.Contains("solutions?$select=solutionid,friendlyname,uniquename,version,ismanaged", StringComparison.OrdinalIgnoreCase)
+            && !query.Contains("publisheruniquename", StringComparison.OrdinalIgnoreCase));
+        snapshot.Diagnostics.Should().NotContain(diagnostic => diagnostic.Code == "live-readback-http-failure");
     }
 
     [Fact]
@@ -701,12 +789,12 @@ internal sealed class LiveFixtureHarness
             return Envelope(GetArtifactArray("entity-analytics-configurations.json", "entity_analytics_configurations"));
         }
 
-        if (path.EndsWith("/msdyn_aiprojecttypes", StringComparison.OrdinalIgnoreCase))
+        if (path.EndsWith("/msdyn_aitemplates", StringComparison.OrdinalIgnoreCase))
         {
             return Envelope(GetArtifactArray("ai-project-types.json", "ai_project_types"));
         }
 
-        if (path.EndsWith("/msdyn_aiprojects", StringComparison.OrdinalIgnoreCase))
+        if (path.EndsWith("/msdyn_aimodels", StringComparison.OrdinalIgnoreCase))
         {
             return Envelope(GetArtifactArray("ai-projects.json", "ai_projects"));
         }
@@ -1003,25 +1091,25 @@ internal sealed class LiveFixtureHarness
             }
         }
 
-        foreach (var aiProjectType in FilterRowsBySourceScope(GetArtifactArray("ai-project-types.json", "ai_project_types"), ComponentFamily.AiProjectType, row => row["msdyn_aiprojecttypeid"]?.GetValue<string>(), row => row["msdyn_uniquename"]?.GetValue<string>()))
+        foreach (var aiProjectType in FilterRowsBySourceScope(GetArtifactArray("ai-project-types.json", "ai_project_types"), ComponentFamily.AiProjectType, row => row["msdyn_aitemplateid"]?.GetValue<string>(), row => row["msdyn_uniquename"]?.GetValue<string>()))
         {
             rows.Add(new JsonObject
             {
                 ["componenttype"] = 400,
-                ["objectid"] = aiProjectType["msdyn_aiprojecttypeid"]!.GetValue<string>()
+                ["objectid"] = aiProjectType["msdyn_aitemplateid"]!.GetValue<string>()
             });
         }
 
-        foreach (var aiProject in FilterRowsBySourceScope(GetArtifactArray("ai-projects.json", "ai_projects"), ComponentFamily.AiProject, row => row["msdyn_aiprojectid"]?.GetValue<string>(), row => row["msdyn_uniquename"]?.GetValue<string>()))
+        foreach (var aiProject in FilterRowsBySourceScope(GetArtifactArray("ai-projects.json", "ai_projects"), ComponentFamily.AiProject, row => row["msdyn_aimodelid"]?.GetValue<string>(), row => GetAiProjectLogicalName(row)))
         {
             rows.Add(new JsonObject
             {
                 ["componenttype"] = 401,
-                ["objectid"] = aiProject["msdyn_aiprojectid"]!.GetValue<string>()
+                ["objectid"] = aiProject["msdyn_aimodelid"]!.GetValue<string>()
             });
         }
 
-        foreach (var aiConfiguration in FilterRowsBySourceScope(GetArtifactArray("ai-configurations.json", "ai_configurations"), ComponentFamily.AiConfiguration, row => row["msdyn_aiconfigurationid"]?.GetValue<string>(), row => row["msdyn_uniquename"]?.GetValue<string>()))
+        foreach (var aiConfiguration in FilterRowsBySourceScope(GetArtifactArray("ai-configurations.json", "ai_configurations"), ComponentFamily.AiConfiguration, row => row["msdyn_aiconfigurationid"]?.GetValue<string>(), row => GetAiConfigurationLogicalName(row)))
         {
             rows.Add(new JsonObject
             {
@@ -1490,6 +1578,30 @@ internal sealed class LiveFixtureHarness
         var first = query.IndexOf('\'');
         var second = query.IndexOf('\'', first + 1);
         return first >= 0 && second > first ? query[(first + 1)..second] : null;
+    }
+
+    private static string? GetAiProjectLogicalName(JsonNode? row) =>
+        NormalizeLogicalName(GetJsonObjectString(row, "msdyn_modelcreationcontext", "logicalName"));
+
+    private static string? GetAiConfigurationLogicalName(JsonNode? row) =>
+        NormalizeLogicalName(GetJsonObjectString(row, "msdyn_resourceinfo", "logicalName"));
+
+    private static string? GetJsonObjectString(JsonNode? row, string propertyName, string nestedPropertyName)
+    {
+        var raw = row?[propertyName]?.GetValue<string>();
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonNode.Parse(raw)?[nestedPropertyName]?.GetValue<string>();
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     private static string? NormalizeLogicalName(string? value)

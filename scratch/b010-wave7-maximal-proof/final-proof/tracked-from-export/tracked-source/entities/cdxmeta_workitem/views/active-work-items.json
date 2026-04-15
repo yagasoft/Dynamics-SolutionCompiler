@@ -1,0 +1,65 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_workitem|Active Work Items",
+  "DisplayName": "Active Work Items",
+  "metadataSourcePath": "Entities/cdxmeta_WorkItem/SavedQueries/{50ec9e87-d0c3-4e0c-b2ca-fb84f7fb7eee}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "false",
+    "comparisonSignature": "bab70f2d441de8fd727fe264275446330ce855f1353cd353d01b45688e88201e",
+    "entityLogicalName": "cdxmeta_workitem",
+    "fetchAttributesJson": [
+      "cdxmeta_workitemid",
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [
+      "cdxmeta_workitemname",
+      "createdon"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_workitemname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "0",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_workitem",
+      "layoutColumns": [
+        "cdxmeta_workitemname",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_workitemid",
+        "cdxmeta_workitemname",
+        "createdon"
+      ],
+      "filters": [
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": [
+        {
+          "attribute": "cdxmeta_workitemname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_workitem",
+    "viewId": "50ec9e87-d0c3-4e0c-b2ca-fb84f7fb7eee"
+  }
+}

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Model;
@@ -252,13 +253,13 @@ internal sealed partial class DataverseWebApiLiveReader
             try
             {
                 var rows = await GetCollectionAsync(
-                    $"msdyn_aiprojecttypes?$select=msdyn_aiprojecttypeid,msdyn_uniquename,msdyn_name,description&$filter={BuildGuidFilter("msdyn_aiprojecttypeid", scope.AiProjectTypeIds)}",
+                    $"msdyn_aitemplates?$select=msdyn_aitemplateid,msdyn_uniquename,msdyn_resourceinfo,msdyn_templateversion,msdyn_istrainable&$filter={BuildGuidFilter("msdyn_aitemplateid", scope.AiProjectTypeIds)}",
                     cancellationToken).ConfigureAwait(false);
 
                 foreach (var row in rows.OfType<JsonObject>())
                 {
-                    var logicalName = NormalizeLogicalName(GetString(row, "msdyn_uniquename", "uniquename", "msdyn_name"));
-                    var id = GetGuid(row, "msdyn_aiprojecttypeid");
+                    var logicalName = NormalizeLogicalName(GetString(row, "msdyn_uniquename", "uniquename"));
+                    var id = GetGuid(row, "msdyn_aitemplateid");
                     if (id.HasValue && !string.IsNullOrWhiteSpace(logicalName))
                     {
                         aiProjectTypeLogicalNameById[id.Value] = logicalName!;
@@ -273,7 +274,7 @@ internal sealed partial class DataverseWebApiLiveReader
             }
             catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
             {
-                diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.AiProjectType, "msdyn_aiprojecttypes", exception));
+                diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.AiProjectType, "msdyn_aitemplates", exception));
             }
         }
 
@@ -283,13 +284,13 @@ internal sealed partial class DataverseWebApiLiveReader
             try
             {
                 var rows = await GetCollectionAsync(
-                    $"msdyn_aiprojects?$select=msdyn_aiprojectid,msdyn_uniquename,msdyn_name,description,msdyn_targetentity,msdyn_projecttypeuniquename,_msdyn_aiprojecttypeid_value&$filter={BuildGuidFilter("msdyn_aiprojectid", scope.AiProjectIds)}",
+                    $"msdyn_aimodels?$select=msdyn_aimodelid,msdyn_name,msdyn_modelcreationcontext,_msdyn_templateid_value&$filter={BuildGuidFilter("msdyn_aimodelid", scope.AiProjectIds)}",
                     cancellationToken).ConfigureAwait(false);
 
                 foreach (var row in rows.OfType<JsonObject>())
                 {
-                    var logicalName = NormalizeLogicalName(GetString(row, "msdyn_uniquename", "uniquename", "msdyn_name"));
-                    var id = GetGuid(row, "msdyn_aiprojectid");
+                    var logicalName = NormalizeLogicalName(GetAiProjectContextValue(row, "logicalName"));
+                    var id = GetGuid(row, "msdyn_aimodelid");
                     if (id.HasValue && !string.IsNullOrWhiteSpace(logicalName))
                     {
                         aiProjectLogicalNameById[id.Value] = logicalName!;
@@ -304,7 +305,7 @@ internal sealed partial class DataverseWebApiLiveReader
             }
             catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
             {
-                diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.AiProject, "msdyn_aiprojects", exception));
+                diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.AiProject, "msdyn_aimodels", exception));
             }
         }
 
@@ -313,7 +314,7 @@ internal sealed partial class DataverseWebApiLiveReader
             try
             {
                 var rows = await GetCollectionAsync(
-                    $"msdyn_aiconfigurations?$select=msdyn_aiconfigurationid,msdyn_uniquename,msdyn_name,msdyn_type,msdyn_runconfiguration,msdyn_customconfiguration,msdyn_projectuniquename,_msdyn_aiprojectid_value&$filter={BuildGuidFilter("msdyn_aiconfigurationid", scope.AiConfigurationIds)}",
+                    $"msdyn_aiconfigurations?$select=msdyn_aiconfigurationid,msdyn_name,msdyn_type,msdyn_runconfiguration,msdyn_customconfiguration,msdyn_resourceinfo,_msdyn_aimodelid_value&$filter={BuildGuidFilter("msdyn_aiconfigurationid", scope.AiConfigurationIds)}",
                     cancellationToken).ConfigureAwait(false);
 
                 foreach (var row in rows.OfType<JsonObject>())
@@ -802,13 +803,14 @@ internal sealed partial class DataverseWebApiLiveReader
 
     private static FamilyArtifact? CreateAiProjectTypeArtifact(JsonObject row)
     {
-        var logicalName = NormalizeLogicalName(GetString(row, "msdyn_uniquename", "uniquename", "msdyn_name"));
+        var logicalName = NormalizeLogicalName(GetString(row, "msdyn_uniquename", "uniquename"));
         if (string.IsNullOrWhiteSpace(logicalName))
         {
             return null;
         }
 
-        var description = GetString(row, "description");
+        var description = GetAiProjectTypeResourceInfoValue(row, "description");
+        var displayName = GetAiProjectTypeResourceInfoValue(row, "displayName") ?? logicalName;
         var summaryJson = SerializeJson(new
         {
             logicalName,
@@ -818,8 +820,8 @@ internal sealed partial class DataverseWebApiLiveReader
         return new FamilyArtifact(
             ComponentFamily.AiProjectType,
             logicalName,
-            GetString(row, "msdyn_name", "name") ?? logicalName,
-            $"msdyn_aiprojecttypes/{logicalName}",
+            displayName,
+            $"msdyn_aitemplates/{logicalName}",
             EvidenceKind.Readback,
             CreateProperties(
                 (ArtifactPropertyKeys.Description, description),
@@ -829,24 +831,22 @@ internal sealed partial class DataverseWebApiLiveReader
 
     private static FamilyArtifact? CreateAiProjectArtifact(JsonObject row, IReadOnlyDictionary<Guid, string> projectTypeLogicalNameById)
     {
-        var logicalName = NormalizeLogicalName(GetString(row, "msdyn_uniquename", "uniquename", "msdyn_name"));
+        var logicalName = NormalizeLogicalName(GetAiProjectContextValue(row, "logicalName"));
         if (string.IsNullOrWhiteSpace(logicalName))
         {
             return null;
         }
 
-        var parentProjectTypeLogicalName = NormalizeLogicalName(GetString(row, "msdyn_projecttypeuniquename"));
-        if (string.IsNullOrWhiteSpace(parentProjectTypeLogicalName))
+        string? parentProjectTypeLogicalName = null;
+        var projectTypeId = GetGuid(row, "_msdyn_templateid_value");
+        if (projectTypeId.HasValue && projectTypeLogicalNameById.TryGetValue(projectTypeId.Value, out var mappedLogicalName))
         {
-            var projectTypeId = GetGuid(row, "_msdyn_aiprojecttypeid_value");
-            if (projectTypeId.HasValue && projectTypeLogicalNameById.TryGetValue(projectTypeId.Value, out var mappedLogicalName))
-            {
-                parentProjectTypeLogicalName = mappedLogicalName;
-            }
+            parentProjectTypeLogicalName = mappedLogicalName;
         }
 
-        var targetEntity = NormalizeLogicalName(GetString(row, "msdyn_targetentity", "targetentity"));
-        var description = GetString(row, "description");
+        var targetEntity = NormalizeLogicalName(GetAiProjectContextValue(row, "targetEntity"));
+        var description = GetAiProjectContextValue(row, "description");
+        var displayName = GetString(row, "msdyn_name", "name") ?? logicalName;
         var summaryJson = SerializeJson(new
         {
             logicalName,
@@ -858,8 +858,8 @@ internal sealed partial class DataverseWebApiLiveReader
         return new FamilyArtifact(
             ComponentFamily.AiProject,
             logicalName,
-            GetString(row, "msdyn_name", "name") ?? logicalName,
-            $"msdyn_aiprojects/{logicalName}",
+            displayName,
+            $"msdyn_aimodels/{logicalName}",
             EvidenceKind.Readback,
             CreateProperties(
                 (ArtifactPropertyKeys.ParentAiProjectTypeLogicalName, parentProjectTypeLogicalName),
@@ -871,24 +871,25 @@ internal sealed partial class DataverseWebApiLiveReader
 
     private static FamilyArtifact? CreateAiConfigurationArtifact(JsonObject row, IReadOnlyDictionary<Guid, string> projectLogicalNameById)
     {
-        var logicalName = NormalizeLogicalName(GetString(row, "msdyn_uniquename", "uniquename", "msdyn_name"));
+        var logicalName = NormalizeLogicalName(GetAiConfigurationResourceInfoValue(row, "logicalName"))
+            ?? NormalizeLogicalName(GetString(row, "msdyn_name"));
         if (string.IsNullOrWhiteSpace(logicalName))
         {
             return null;
         }
 
-        var parentProjectLogicalName = NormalizeLogicalName(GetString(row, "msdyn_projectuniquename"));
+        var parentProjectLogicalName = NormalizeLogicalName(GetAiConfigurationResourceInfoValue(row, "parentProjectLogicalName"));
         if (string.IsNullOrWhiteSpace(parentProjectLogicalName))
         {
-            var projectId = GetGuid(row, "_msdyn_aiprojectid_value");
+            var projectId = GetGuid(row, "_msdyn_aimodelid_value");
             if (projectId.HasValue && projectLogicalNameById.TryGetValue(projectId.Value, out var mappedLogicalName))
             {
                 parentProjectLogicalName = mappedLogicalName;
             }
         }
 
-        var configurationKind = NormalizeLogicalName(GetString(row, "msdyn_configurationkind"))
-            ?? NormalizeLogicalName(GetString(row, "msdyn_type"));
+        var configurationKind = NormalizeAiConfigurationKind(GetString(row, "msdyn_configurationkind"))
+            ?? NormalizeAiConfigurationKind(GetString(row, "msdyn_type"));
         var value = GetString(row, "msdyn_configurationvalue", "msdyn_runconfiguration", "msdyn_customconfiguration");
         var summaryJson = SerializeJson(new
         {
@@ -912,6 +913,44 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
 
+    private static string? NormalizeAiConfigurationKind(string? value)
+    {
+        var normalized = NormalizeLogicalName(value);
+        return normalized switch
+        {
+            null => null,
+            "190690000" or "trainingconfiguration" or "training" => "training",
+            "190690001" or "runconfiguration" or "run" => "run",
+            _ => normalized
+        };
+    }
+
+    private static string? GetAiProjectTypeResourceInfoValue(JsonNode? row, string propertyName) =>
+        GetString(ParseJsonObjectSafe(GetString(row, "msdyn_resourceinfo")), propertyName);
+
+    private static string? GetAiProjectContextValue(JsonNode? row, string propertyName) =>
+        GetString(ParseJsonObjectSafe(GetString(row, "msdyn_modelcreationcontext")), propertyName);
+
+    private static string? GetAiConfigurationResourceInfoValue(JsonNode? row, string propertyName) =>
+        GetString(ParseJsonObjectSafe(GetString(row, "msdyn_resourceinfo")), propertyName);
+
+    private static JsonObject? ParseJsonObjectSafe(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonNode.Parse(value) as JsonObject;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
+
     private static FamilyArtifact? CreateEntityAnalyticsConfigurationArtifact(JsonObject row)
     {
         var parentEntityLogicalName = NormalizeLogicalName(GetString(row, "parententitylogicalname"));
@@ -920,10 +959,12 @@ internal sealed partial class DataverseWebApiLiveReader
             return null;
         }
 
+        var entityDataSource = NormalizeEntityAnalyticsDataSource(GetString(row, "entitydatasource"));
+
         var summaryJson = SerializeJson(new
         {
             parentEntityLogicalName,
-            entityDataSource = GetString(row, "entitydatasource"),
+            entityDataSource,
             isEnabledForAdls = NormalizeBoolean(GetString(row, "isenabledforadls")),
             isEnabledForTimeSeries = NormalizeBoolean(GetString(row, "isenabledfortimeseries"))
         });
@@ -936,11 +977,24 @@ internal sealed partial class DataverseWebApiLiveReader
             EvidenceKind.Readback,
             CreateProperties(
                 (ArtifactPropertyKeys.ParentEntityLogicalName, parentEntityLogicalName),
-                (ArtifactPropertyKeys.EntityDataSource, GetString(row, "entitydatasource")),
+                (ArtifactPropertyKeys.EntityDataSource, entityDataSource),
                 (ArtifactPropertyKeys.IsEnabledForAdls, NormalizeBoolean(GetString(row, "isenabledforadls"))),
                 (ArtifactPropertyKeys.IsEnabledForTimeSeries, NormalizeBoolean(GetString(row, "isenabledfortimeseries"))),
                 (ArtifactPropertyKeys.SummaryJson, summaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+    }
+
+    private static string? NormalizeEntityAnalyticsDataSource(string? value)
+    {
+        var normalized = NormalizeLogicalName(value);
+        return normalized switch
+        {
+            null => null,
+            "0" or "none" => "none",
+            "1" or "dataverse" => "dataverse",
+            "2" or "fnotables" => "fnotables",
+            _ => normalized
+        };
     }
 
     private static FamilyArtifact? CreateCanvasAppArtifact(JsonObject row)

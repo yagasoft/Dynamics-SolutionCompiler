@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_workitem",
+  "DisplayName": "Work Item",
+  "schemaName": "cdxmeta_WorkItem",
+  "description": "Compact work-item seed for alternate-key proof.",
+  "entitySetName": "cdxmeta_workitems",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_workitemid",
+  "primaryNameAttribute": "cdxmeta_workitemname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

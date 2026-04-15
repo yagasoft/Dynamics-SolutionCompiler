@@ -1,0 +1,26 @@
+{
+  "LogicalName": "cdxmeta_wave7prioritybandf",
+  "DisplayName": "cdxmeta_wave7prioritybandf",
+  "optionSetType": "picklist",
+  "isGlobal": true,
+  "optionCount": 3,
+  "options": [
+    {
+      "value": "727270010",
+      "label": "Low",
+      "isHidden": "false"
+    },
+    {
+      "value": "727270011",
+      "label": "Medium",
+      "isHidden": "false"
+    },
+    {
+      "value": "727270012",
+      "label": "High",
+      "isHidden": "false"
+    }
+  ],
+  "description": "Reusable global priority choice for the Wave 7 maximal supported proof.",
+  "comparisonSignature": "dc4673284db3eeed6cc4acc4944dd87e93b3bc94788a1b5aa599801c0f33044e"
+}

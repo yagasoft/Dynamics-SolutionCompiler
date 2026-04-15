@@ -1,0 +1,15 @@
+{
+  "LogicalName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+  "DisplayName": "Codex.Metadata.Plugins",
+  "metadataSourcePath": "PluginAssemblies/CodexMetadataPlugins-C6078609-E738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+  "assetSourcePaths": [
+    "PluginAssemblies/CodexMetadataPlugins-C6078609-E738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll"
+  ],
+  "assemblyFileName": "CodexMetadataPlugins.dll",
+  "isolationMode": "2",
+  "sourceType": "0",
+  "introducedVersion": "1.0",
+  "byteLength": 10752,
+  "contentHash": "17e7ede16f1f833922ded7773f94a9588864bd4a80400354cab561b38e455371",
+  "comparisonSignature": "6a8e6b239b307f28860907c2ea80c853a0704cd265772be0318d715b4c94830a"
+}

@@ -445,6 +445,7 @@ internal sealed partial class DataverseWebApiLiveReader
         }
 
         var isCustomizable = StringValue(GetProperty(row, "iscustomizable"));
+        var messageCharset = NormalizeServiceEndpointMessageCharset(GetString(row, "messagecharset"));
         var summaryJson = SerializeJson(new
         {
             name,
@@ -455,7 +456,7 @@ internal sealed partial class DataverseWebApiLiveReader
             endpointPath = GetString(row, "path"),
             url = GetString(row, "url"),
             messageFormat = GetString(row, "messageformat"),
-            messageCharset = GetString(row, "messagecharset"),
+            messageCharset,
             introducedVersion = GetString(row, "introducedversion"),
             isCustomizable = string.IsNullOrWhiteSpace(isCustomizable) ? null : NormalizeBoolean(isCustomizable)
         });
@@ -476,7 +477,7 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.EndpointPath, GetString(row, "path")),
                 (ArtifactPropertyKeys.Url, GetString(row, "url")),
                 (ArtifactPropertyKeys.MessageFormat, GetString(row, "messageformat")),
-                (ArtifactPropertyKeys.MessageCharset, GetString(row, "messagecharset")),
+                (ArtifactPropertyKeys.MessageCharset, messageCharset),
                 (ArtifactPropertyKeys.IntroducedVersion, GetString(row, "introducedversion")),
                 (ArtifactPropertyKeys.IsCustomizable, string.IsNullOrWhiteSpace(isCustomizable) ? null : NormalizeBoolean(isCustomizable)),
                 (ArtifactPropertyKeys.SummaryJson, summaryJson),
@@ -657,6 +658,19 @@ internal sealed partial class DataverseWebApiLiveReader
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
             .ToArray());
+    }
+
+    private static string? NormalizeServiceEndpointMessageCharset(string? value)
+    {
+        var normalized = NormalizeLogicalName(value);
+        return normalized switch
+        {
+            null => null,
+            "0" or "default" => "0",
+            "1" or "utf8" or "65001" => "65001",
+            "2" or "windows1252" or "1252" => "1252",
+            _ => normalized
+        };
     }
 
     private sealed record PluginStepContext(

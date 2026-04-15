@@ -1,0 +1,31 @@
+{
+  "Family": 13,
+  "LogicalName": "codex_metadata_advanced_ui_924e69cb",
+  "DisplayName": "Codex Metadata Advanced UI",
+  "metadataSourcePath": "AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "appSettingCount": "1",
+    "comparisonSignature": "cf2dd32ad3156cbbe95d299dda5eba3d1e93b72b998c028e156ae0c70bdaf6cb",
+    "componentTypesJson": [
+      "62"
+    ],
+    "description": "Neutral app-shell scaffold for advanced UI component synthesis.",
+    "roleIdsJson": [
+      "119f245c-3cc8-4b62-b31c-d1a046ced15d",
+      "627090ff-40a3-4053-8790-584edc5be201"
+    ],
+    "roleMapCount": "2",
+    "summaryJson": {
+      "componentTypes": [
+        "62"
+      ],
+      "roleIds": [
+        "119f245c-3cc8-4b62-b31c-d1a046ced15d",
+        "627090ff-40a3-4053-8790-584edc5be201"
+      ],
+      "roleMapCount": 2,
+      "appSettingCount": 1
+    }
+  }
+}

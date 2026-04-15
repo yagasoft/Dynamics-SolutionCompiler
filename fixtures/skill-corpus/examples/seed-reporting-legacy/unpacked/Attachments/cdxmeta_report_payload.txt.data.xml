@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Attachment>
+  <Name>cdxmeta_report_payload</Name>
+  <DisplayName>Report Payload</DisplayName>
+  <Description>Seed attachment metadata for reporting and legacy coverage.</Description>
+</Attachment>

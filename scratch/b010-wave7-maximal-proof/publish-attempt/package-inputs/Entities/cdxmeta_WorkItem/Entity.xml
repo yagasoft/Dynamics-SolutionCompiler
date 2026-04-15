@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Entity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name LocalizedName="Work Item" OriginalName="Work Item">cdxmeta_WorkItem</Name>
+  <EntityInfo>
+    <entity Name="cdxmeta_WorkItem">
+      <LocalizedNames>
+        <LocalizedName description="Work Item" languagecode="1033" />
+      </LocalizedNames>
+      <LocalizedCollectionNames>
+        <LocalizedCollectionName description="Work Items" languagecode="1033" />
+      </LocalizedCollectionNames>
+      <Descriptions>
+        <Description description="Compact work-item seed for alternate-key proof." languagecode="1033" />
+      </Descriptions>
+      <EntitySetName>cdxmeta_workitems</EntitySetName>
+      <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+      <attributes>
+        <attribute PhysicalName="cdxmeta_WorkItemId">
+          <Type>primarykey</Type>
+          <Name>cdxmeta_WorkItemId</Name>
+          <LogicalName>cdxmeta_workitemid</LogicalName>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>0</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <displaynames>
+            <displayname description="Work Item Id" languagecode="1033" />
+          </displaynames>
+        </attribute>
+        <attribute PhysicalName="cdxmeta_WorkItemName">
+          <Type>nvarchar</Type>
+          <Name>cdxmeta_WorkItemName</Name>
+          <LogicalName>cdxmeta_workitemname</LogicalName>
+          <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>1</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <displaynames>
+            <displayname description="Work Item" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Primary name column for the alternate-key seed." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="cdxmeta_ExternalCode">
+          <Type>nvarchar</Type>
+          <Name>cdxmeta_ExternalCode</Name>
+          <LogicalName>cdxmeta_externalcode</LogicalName>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>1</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <displaynames>
+            <displayname description="External Code" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Business identifier used by the neutral alternate key." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="cdxmeta_Summary">
+          <Type>nvarchar</Type>
+          <Name>cdxmeta_Summary</Name>
+          <LogicalName>cdxmeta_summary</LogicalName>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <IsCustomField>1</IsCustomField>
+          <IsSecured>0</IsSecured>
+          <displaynames>
+            <displayname description="Summary" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Companion text field kept so the seed still looks like a realistic authored table shell." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+      </attributes>
+      <keys>
+        <key Name="cdxmeta_WorkItem_ExternalCode">
+          <LogicalName>cdxmeta_workitem_externalcode</LogicalName>
+          <SchemaName>cdxmeta_WorkItem_ExternalCode</SchemaName>
+          <displaynames>
+            <displayname description="Work Item External Code" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Neutral alternate key over the authored external-code column." languagecode="1033" />
+          </Descriptions>
+          <KeyAttributes>
+            <KeyAttribute>cdxmeta_externalcode</KeyAttribute>
+          </KeyAttributes>
+          <EntityKeyIndexStatus>Active</EntityKeyIndexStatus>
+        </key>
+      </keys>
+    </entity>
+  </EntityInfo>
+</Entity>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FieldSecurityProfiles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <FieldSecurityProfile name="Codex Metadata Seed Field Security" fieldsecurityprofileid="{a0843e20-5d37-f111-88b3-0022489b9600}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>cdxmeta_workitem</EntityName>
+        <AttributeName>cdxmeta_details</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+        <CanReadUnmasked>0</CanReadUnmasked>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+</FieldSecurityProfiles>

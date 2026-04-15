@@ -1,0 +1,464 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "AppModule",
+    "AppSetting",
+    "CanvasApp",
+    "Column",
+    "ConnectionRole",
+    "DuplicateRule",
+    "DuplicateRuleCondition",
+    "EntityAnalyticsConfiguration",
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue",
+    "FieldPermission",
+    "FieldSecurityProfile",
+    "Form",
+    "ImageConfiguration",
+    "MobileOfflineProfile",
+    "MobileOfflineProfileItem",
+    "OptionSet",
+    "PluginAssembly",
+    "PluginStep",
+    "PluginStepImage",
+    "PluginType",
+    "Relationship",
+    "Role",
+    "RolePrivilege",
+    "RoutingRule",
+    "RoutingRuleItem",
+    "ServiceEndpoint",
+    "SiteMap",
+    "SolutionShell",
+    "Table",
+    "View",
+    "Visualization",
+    "WebResource"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|Active Categories",
+      "reason": "View \u0027Active Categories\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|Category Advanced Find View",
+      "reason": "View \u0027Category Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|Category Associated View",
+      "reason": "View \u0027Category Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|Category Lookup View",
+      "reason": "View \u0027Category Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|Inactive Categories",
+      "reason": "View \u0027Inactive Categories\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|My Categories",
+      "reason": "View \u0027My Categories\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_category|Quick Find Active Categories",
+      "reason": "View \u0027Quick Find Active Categories\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Active Checkpoints",
+      "reason": "View \u0027Active Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Checkpoint Advanced Find View",
+      "reason": "View \u0027Checkpoint Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Checkpoint Associated View",
+      "reason": "View \u0027Checkpoint Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Checkpoint Lookup View",
+      "reason": "View \u0027Checkpoint Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Inactive Checkpoints",
+      "reason": "View \u0027Inactive Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|My Checkpoints",
+      "reason": "View \u0027My Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_checkpoint|Quick Find Active Checkpoints",
+      "reason": "View \u0027Quick Find Active Checkpoints\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7photoasset|Active Photo Assets",
+      "reason": "View \u0027Active Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7photoasset|Inactive Photo Assets",
+      "reason": "View \u0027Inactive Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7photoasset|My Photo Assets",
+      "reason": "View \u0027My Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7photoasset|Photo Asset Advanced Find View",
+      "reason": "View \u0027Photo Asset Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7photoasset|Photo Asset Associated View",
+      "reason": "View \u0027Photo Asset Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7photoasset|Photo Asset Lookup View",
+      "reason": "View \u0027Photo Asset Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7photoasset|Quick Find Active Photo Assets",
+      "reason": "View \u0027Quick Find Active Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Active Work Items",
+      "reason": "View \u0027Active Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Inactive Work Items",
+      "reason": "View \u0027Inactive Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|My Work Items",
+      "reason": "View \u0027My Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Quick Find Active Work Items",
+      "reason": "View \u0027Quick Find Active Work Items\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Work Item Advanced Find View",
+      "reason": "View \u0027Work Item Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Work Item Associated View",
+      "reason": "View \u0027Work Item Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_workitem|Work Item Lookup View",
+      "reason": "View \u0027Work Item Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    }
+  ],
+  "preservedIdsIncluded": [
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_category|card|bdce255d-c30a-45cf-bb31-d1768434dd11",
+      "id": "bdce255d-c30a-45cf-bb31-d1768434dd11"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_category|main|6a3a3191-b5b2-43f9-831a-565ecfe782b0",
+      "id": "6a3a3191-b5b2-43f9-831a-565ecfe782b0"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_category|quick|5978624f-3b37-f111-88b3-0022489b9600",
+      "id": "5978624f-3b37-f111-88b3-0022489b9600"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_category|quick|c49182b0-92f0-46e8-8b4e-89d46fafa948",
+      "id": "c49182b0-92f0-46e8-8b4e-89d46fafa948"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_checkpoint|card|7c2d07e7-c51b-491b-861d-1fb283a2c78d",
+      "id": "7c2d07e7-c51b-491b-861d-1fb283a2c78d"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_checkpoint|main|46da5e3d-fbf9-4060-9f79-b9ac4a0b7b7d",
+      "id": "46da5e3d-fbf9-4060-9f79-b9ac4a0b7b7d"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_checkpoint|quick|4e60526b-43c9-4eff-980e-12fb152572de",
+      "id": "4e60526b-43c9-4eff-980e-12fb152572de"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_wave7category|quick|6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91",
+      "id": "6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_wave7workitem|card|125df510-a5c1-475d-a1b4-2de66cfd1cfe",
+      "id": "125df510-a5c1-475d-a1b4-2de66cfd1cfe"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_wave7workitem|main|0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4",
+      "id": "0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_wave7workitem|quick|f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17",
+      "id": "f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_workitem|card|337dbfeb-0f67-4f81-b71e-3bd05a4b597a",
+      "id": "337dbfeb-0f67-4f81-b71e-3bd05a4b597a"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_workitem|main|c67be8a4-c475-4041-90e6-78e3ed79b018",
+      "id": "c67be8a4-c475-4041-90e6-78e3ed79b018"
+    },
+    {
+      "family": "Form",
+      "artifact": "cdxmeta_workitem|quick|38cc575f-ed67-4a02-8f01-2631e59b33d5",
+      "id": "38cc575f-ed67-4a02-8f01-2631e59b33d5"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7category|All Categories",
+      "id": "6f7a00a4-440f-44b2-8f67-8e1e713f3eb8"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7checkpoint|All Checkpoints",
+      "id": "2c770a3f-0c8f-4a58-b4af-6f5878ef13b8"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_wave7workitem|All Work Items",
+      "id": "3e6d013f-87b4-48fb-a880-a30a6ba9877e"
+    },
+    {
+      "family": "Visualization",
+      "artifact": "account|Accounts by Industry",
+      "id": "74a622c0-5193-de11-97d4-00155da3b01e"
+    }
+  ],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "AppModule",
+      "artifact": "codex_metadata_advanced_ui_924e69cb",
+      "packageRelativePath": "AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml"
+    },
+    {
+      "family": "CanvasApp",
+      "artifact": "cat_overview_3dbf5",
+      "packageRelativePath": "CanvasApps/cat_overview_3dbf5.meta.xml"
+    },
+    {
+      "family": "ConnectionRole",
+      "artifact": "codex metadata seed connection role",
+      "packageRelativePath": "Other/ConnectionRoles.xml"
+    },
+    {
+      "family": "DuplicateRule",
+      "artifact": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml"
+    },
+    {
+      "family": "DuplicateRuleCondition",
+      "artifact": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367|name|name|0",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml"
+    },
+    {
+      "family": "EntityAnalyticsConfiguration",
+      "artifact": "contact",
+      "packageRelativePath": "Other/Customizations.xml"
+    },
+    {
+      "family": "FieldPermission",
+      "artifact": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml"
+    },
+    {
+      "family": "FieldSecurityProfile",
+      "artifact": "codex metadata seed field security",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml"
+    },
+    {
+      "family": "MobileOfflineProfile",
+      "artifact": "codex metadata mobile offline profile",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml"
+    },
+    {
+      "family": "MobileOfflineProfileItem",
+      "artifact": "codex metadata mobile offline profile|account",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml"
+    },
+    {
+      "family": "PluginAssembly",
+      "artifact": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-6E6A6BD4-EA38-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml"
+    },
+    {
+      "family": "PluginStep",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+      "packageRelativePath": "SdkMessageProcessingSteps/{3ce90700-eb38-f111-88b3-0022489b9600}.xml"
+    },
+    {
+      "family": "PluginStepImage",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step|Account PreImage|preimage|0",
+      "packageRelativePath": "SdkMessageProcessingSteps/{3ce90700-eb38-f111-88b3-0022489b9600}.xml"
+    },
+    {
+      "family": "PluginType",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace",
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-6E6A6BD4-EA38-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml"
+    },
+    {
+      "family": "Role",
+      "artifact": "codex metadata seed role",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvCreateSharePointData|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadPluginAssembly|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadPluginType|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSdkMessageProcessingStepImage|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSdkMessageProcessingStep|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSdkMessage|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSharePointData|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvReadSharePointDocument|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RolePrivilege",
+      "artifact": "codex metadata seed role|prvWriteSharePointData|Global",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml"
+    },
+    {
+      "family": "RoutingRule",
+      "artifact": "codex metadata routing rule",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml"
+    },
+    {
+      "family": "RoutingRuleItem",
+      "artifact": "codex metadata routing rule|route all",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml"
+    },
+    {
+      "family": "ServiceEndpoint",
+      "artifact": "codex_webhook_endpoint",
+      "packageRelativePath": "PluginAssemblies/ServiceEndpoints.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataWave7Maximal",
+      "packageRelativePath": "Other/Solution.xml"
+    },
+    {
+      "family": "Table",
+      "artifact": "account",
+      "packageRelativePath": "Entities/Account/Entity.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/icon.svg",
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/icon.svg.data.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/landing.html",
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/landing.html.data.xml"
+    }
+  ]
+}

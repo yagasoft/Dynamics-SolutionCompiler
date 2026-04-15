@@ -1,0 +1,15 @@
+<environmentvariabledefinition schemaname="cdxmeta_AdvancedUiMode">
+  <defaultvalue>scaffold</defaultvalue>
+  <description>
+    <label description="" languagecode="1033" />
+  </description>
+  <displayname default="Advanced UI Scaffold Mode">
+    <label description="Advanced UI Scaffold Mode" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+  <valueschema>string</valueschema>
+</environmentvariabledefinition>

@@ -1,0 +1,193 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_wave7workitem|main|0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4",
+  "DisplayName": "Work Item Main",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7WorkItem/FormXml/main/{0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "332802ccf111a0648be5e0af660cac24811b4232ba7e30847541ab45791f6c6b",
+    "controlCount": "12",
+    "controlDescriptionCount": "12",
+    "description": "Structured main form proving field, quick-view, and subgrid controls.",
+    "entityLogicalName": "cdxmeta_wave7workitem",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Work Item Main",
+      "description": "Structured main form proving field, quick-view, and subgrid controls.",
+      "type": "main",
+      "tabs": [
+        {
+          "name": "summary",
+          "label": "Summary",
+          "sections": [
+            {
+              "name": "overview",
+              "label": "Overview",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_wave7workitemname",
+                  "label": "Work Item"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_summary",
+                  "label": "Summary"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_wave7categoryid",
+                  "label": "Category"
+                }
+              ]
+            },
+            {
+              "name": "planning",
+              "label": "Planning",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_priority",
+                  "label": "Priority"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_stage",
+                  "label": "Stage"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_efforthours",
+                  "label": "Effort Hours"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_duedate",
+                  "label": "Due Date"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_isblocked",
+                  "label": "Blocked"
+                }
+              ]
+            },
+            {
+              "name": "related",
+              "label": "Related",
+              "controls": [
+                {
+                  "kind": "quickView",
+                  "field": "cdxmeta_wave7categoryid",
+                  "label": "Category",
+                  "quickFormEntity": "cdxmeta_wave7category",
+                  "quickFormId": "6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91",
+                  "controlMode": "Edit"
+                },
+                {
+                  "kind": "subgrid",
+                  "label": "Checkpoints",
+                  "relationshipName": "cdxmeta_wave7workitem_wave7checkpoint",
+                  "targetTable": "cdxmeta_wave7checkpoint",
+                  "defaultViewId": "2c770a3f-0c8f-4a58-b4af-6f5878ef13b8",
+                  "isUserView": null,
+                  "autoExpand": null,
+                  "enableQuickFind": null,
+                  "enableViewPicker": true,
+                  "enableJumpBar": null,
+                  "enableChartPicker": false,
+                  "recordsPerPage": 5
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": [
+        "cdxmeta_priority",
+        "cdxmeta_stage"
+      ]
+    },
+    "formId": "0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4",
+    "formType": "main",
+    "formTypeCode": "1",
+    "headerControlCount": "2",
+    "quickFormCount": "1",
+    "sectionCount": "3",
+    "subgridCount": "1",
+    "summaryJson": {
+      "formType": "main",
+      "formId": "0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4",
+      "tabCount": 1,
+      "sectionCount": 3,
+      "controlCount": 12,
+      "quickFormCount": 1,
+      "subgridCount": 1,
+      "headerControlCount": 2,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_duedate",
+          "dataFieldName": "cdxmeta_duedate",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_efforthours",
+          "dataFieldName": "cdxmeta_efforthours",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_isblocked",
+          "dataFieldName": "cdxmeta_isblocked",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_priority",
+          "dataFieldName": "cdxmeta_priority",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_stage",
+          "dataFieldName": "cdxmeta_stage",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_summary",
+          "dataFieldName": "cdxmeta_summary",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_wave7categoryid",
+          "dataFieldName": "cdxmeta_wave7categoryid",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_wave7categoryid",
+          "dataFieldName": "cdxmeta_wave7categoryid",
+          "role": "quickView"
+        },
+        {
+          "id": "cdxmeta_wave7workitemname",
+          "dataFieldName": "cdxmeta_wave7workitemname",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_wave7workitem_wave7checkpoint",
+          "dataFieldName": "",
+          "role": "subgrid"
+        },
+        {
+          "id": "header_cdxmeta_priority",
+          "dataFieldName": "cdxmeta_priority",
+          "role": "field"
+        },
+        {
+          "id": "header_cdxmeta_stage",
+          "dataFieldName": "cdxmeta_stage",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

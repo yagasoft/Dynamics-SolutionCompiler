@@ -1,0 +1,20 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedPluginRegistration",
+    "displayName": "Codex Metadata Seed Plugin Registration",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [],
+  "sourceBackedArtifacts": []
+}

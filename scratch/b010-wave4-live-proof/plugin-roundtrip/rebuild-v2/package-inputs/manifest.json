@@ -1,0 +1,26 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedPluginRegistration",
+    "DisplayName": "Codex Metadata Seed Plugin Registration",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "Other"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/manifest.json"
+  ]
+}

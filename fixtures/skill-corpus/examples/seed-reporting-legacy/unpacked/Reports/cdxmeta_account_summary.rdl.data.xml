@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReportMetadata>
+  <Name>cdxmeta_account_summary</Name>
+  <DisplayName>Account Summary</DisplayName>
+  <Description>Seed report metadata for source-first reporting and legacy coverage.</Description>
+</ReportMetadata>

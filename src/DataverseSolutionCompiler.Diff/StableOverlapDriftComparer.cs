@@ -679,6 +679,11 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
         artifact.Family == ComponentFamily.Publisher
         || artifact.Family == ComponentFamily.ImportMap
         || artifact.Family == ComponentFamily.DataSourceMapping
+        || artifact.Family == ComponentFamily.Report
+        || artifact.Family == ComponentFamily.Template
+        || artifact.Family == ComponentFamily.DisplayString
+        || artifact.Family == ComponentFamily.Attachment
+        || artifact.Family == ComponentFamily.LegacyAsset
         || artifact.Family == ComponentFamily.RolePrivilege
         || artifact.Family == ComponentFamily.SimilarityRule
         || artifact.Family == ComponentFamily.Sla

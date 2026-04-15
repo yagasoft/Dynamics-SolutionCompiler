@@ -1,0 +1,47 @@
+{
+  "LogicalName": "codex metadata seed role",
+  "DisplayName": "Codex Metadata Seed Role",
+  "metadataSourcePath": "Roles/Codex Metadata Seed Role.xml",
+  "assetSourcePaths": [],
+  "isCustomizable": true,
+  "privilegeCount": 9,
+  "privilegeSummary": [
+    {
+      "name": "prvCreateSharePointData",
+      "level": "Global"
+    },
+    {
+      "name": "prvReadPluginAssembly",
+      "level": "Global"
+    },
+    {
+      "name": "prvReadPluginType",
+      "level": "Global"
+    },
+    {
+      "name": "prvReadSdkMessage",
+      "level": "Global"
+    },
+    {
+      "name": "prvReadSdkMessageProcessingStep",
+      "level": "Global"
+    },
+    {
+      "name": "prvReadSdkMessageProcessingStepImage",
+      "level": "Global"
+    },
+    {
+      "name": "prvReadSharePointData",
+      "level": "Global"
+    },
+    {
+      "name": "prvReadSharePointDocument",
+      "level": "Global"
+    },
+    {
+      "name": "prvWriteSharePointData",
+      "level": "Global"
+    }
+  ],
+  "comparisonSignature": "8c4cb26bbe10ba5fd608d595e08a6e88335d5b4e994c66af11e83d4d0cf09f45"
+}

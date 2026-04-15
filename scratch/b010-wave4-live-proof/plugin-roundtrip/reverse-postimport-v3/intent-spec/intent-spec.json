@@ -1,0 +1,101 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedPluginRegistration",
+    "displayName": "Codex Metadata Seed Plugin Registration",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedPluginRegistration",
+      "displayName": "Codex Metadata Seed Plugin Registration",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata"
+      }
+    },
+    {
+      "family": "PluginAssembly",
+      "logicalName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+      "displayName": "Codex.Metadata.Plugins",
+      "metadataSourcePath": "source-backed/PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "assetSourcePaths": [
+        "source-backed/PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll"
+      ],
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "stableProperties": {
+        "assemblyFileName": "CodexMetadataPlugins.dll",
+        "assemblyFullName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+        "byteLength": "10752",
+        "contentHash": "17e7ede16f1f833922ded7773f94a9588864bd4a80400354cab561b38e455371",
+        "introducedVersion": "1.0",
+        "isolationMode": "2",
+        "sourceType": "0"
+      }
+    },
+    {
+      "family": "PluginType",
+      "logicalName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+      "displayName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+      "metadataSourcePath": "source-backed/PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "stableProperties": {
+        "assemblyFullName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+        "assemblyQualifiedName": "Codex.Metadata.Plugins.AccountUpdateTrace, Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+        "description": "Neutral plugin type for account update tracing.",
+        "friendlyName": "Account Update Trace",
+        "workflowActivityGroupName": "Codex.Metadata.Plugins (1.0.0.0)"
+      }
+    },
+    {
+      "family": "PluginStep",
+      "logicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+      "displayName": "Account Update Trace Step",
+      "metadataSourcePath": "source-backed/SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "packageRelativePath": "SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "stableProperties": {
+        "description": "Neutral synchronous update step for account.",
+        "filteringAttributes": "accountnumber,name",
+        "handlerPluginTypeName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+        "introducedVersion": "1.0",
+        "mode": "0",
+        "primaryEntity": "account",
+        "rank": "1",
+        "sdkMessageId": "20bebb1b-ea3e-db11-86a7-000a3a5473e8",
+        "stage": "20",
+        "supportedDeployment": "0"
+      }
+    },
+    {
+      "family": "PluginStepImage",
+      "logicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step|Account PreImage|preimage|0",
+      "displayName": "Account PreImage",
+      "metadataSourcePath": "source-backed/SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "packageRelativePath": "SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "stableProperties": {
+        "description": "Pre-image for account update tracing.",
+        "entityAlias": "preimage",
+        "imageType": "0",
+        "messagePropertyName": "Target",
+        "parentPluginStepLogicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+        "selectedAttributes": "accountnumber,name"
+      }
+    }
+  ]
+}

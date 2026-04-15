@@ -1,0 +1,16 @@
+{
+  "Family": 15,
+  "LogicalName": "cdxmeta_/advancedui/icon.svg",
+  "DisplayName": "Advanced UI Icon",
+  "metadataSourcePath": "WebResources/cdxmeta_/advancedui/icon.svg.data.xml",
+  "assetSourcePaths": [
+    "WebResources/cdxmeta_/advancedui/icon.svg"
+  ],
+  "properties": {
+    "byteLength": "362",
+    "contentHash": "f3a8c8498372e2081eb9367c3c999af8934be94fa5731dc29e33e42d0223960e",
+    "description": "Neutral app shell icon for the Codex advanced UI scaffold.",
+    "webResourceType": "11",
+    "webResourceTypeLabel": "svg"
+  }
+}

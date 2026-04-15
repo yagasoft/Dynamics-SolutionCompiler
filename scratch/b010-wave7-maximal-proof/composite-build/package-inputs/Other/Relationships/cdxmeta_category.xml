@@ -1,0 +1,15 @@
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<EntityRelationship Name="cdxmeta_category_workitem">
+<EntityRelationshipType>OneToMany</EntityRelationshipType>
+<IsCustomizable>1</IsCustomizable>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<ReferencingEntityName>cdxmeta_workitem</ReferencingEntityName>
+<ReferencedEntityName>cdxmeta_category</ReferencedEntityName>
+<ReferencingAttributeName>cdxmeta_categoryid</ReferencingAttributeName>
+<RelationshipDescription>
+<Descriptions>
+<Description description="Parent category for the work item." languagecode="1033" />
+</Descriptions>
+</RelationshipDescription>
+</EntityRelationship>
+</EntityRelationships>

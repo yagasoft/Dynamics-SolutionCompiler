@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AIConfiguration>
+  <LogicalName>invoice_processing_training</LogicalName>
+  <Name>Invoice Processing Training</Name>
+  <ProjectLogicalName>invoice_processing</ProjectLogicalName>
+  <ConfigurationKind>training</ConfigurationKind>
+  <Value>{"provider":"azure-openai","prompt":"invoice-train-v1"}</Value>
+</AIConfiguration>

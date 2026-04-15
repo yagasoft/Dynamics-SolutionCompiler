@@ -1,0 +1,65 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_wave7photoasset|Photo Asset Associated View",
+  "DisplayName": "Photo Asset Associated View",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7PhotoAsset/SavedQueries/{e223a7e9-c0f5-4b6c-b42c-fab51420da76}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "false",
+    "comparisonSignature": "e9b208ecbce5120a5fa8219a4397ce6bef6483791b4f7ef6112ab8100c5bc1b9",
+    "entityLogicalName": "cdxmeta_wave7photoasset",
+    "fetchAttributesJson": [
+      "cdxmeta_wave7photoassetid",
+      "cdxmeta_wave7photoassetname",
+      "createdon"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [
+      "cdxmeta_wave7photoassetname",
+      "createdon"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_wave7photoassetname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "2",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_wave7photoasset",
+      "layoutColumns": [
+        "cdxmeta_wave7photoassetname",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_wave7photoassetid",
+        "cdxmeta_wave7photoassetname",
+        "createdon"
+      ],
+      "filters": [
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": [
+        {
+          "attribute": "cdxmeta_wave7photoassetname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_wave7photoasset",
+    "viewId": "e223a7e9-c0f5-4b6c-b42c-fab51420da76"
+  }
+}

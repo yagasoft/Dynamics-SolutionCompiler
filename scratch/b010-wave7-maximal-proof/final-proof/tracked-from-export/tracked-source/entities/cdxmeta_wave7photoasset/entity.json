@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_wave7photoasset",
+  "DisplayName": "Photo Asset",
+  "schemaName": "cdxmeta_Wave7PhotoAsset",
+  "description": "Compact photo-asset seed for image configuration and stable managed-flag proof.",
+  "entitySetName": "cdxmeta_wave7photoassets",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_wave7photoassetid",
+  "primaryNameAttribute": "cdxmeta_wave7photoassetname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

@@ -83,9 +83,10 @@ public sealed partial class PackageEmitter
                 new XElement("FieldSecurityProfiles"),
                 new XElement("Templates"),
                 new XElement("EntityMaps"),
-                new XElement("EntityRelationships"),
+                BuildCustomizationsEntityRelationshipsElement(model),
                 new XElement("OrganizationSettings"),
                 new XElement("optionsets"),
+                BuildOptionalCustomizationsComponentShells(model),
                 new XElement("SavedQueryVisualizations"),
                 new XElement("WebResources"),
                 new XElement("CustomControls"),
@@ -96,6 +97,40 @@ public sealed partial class PackageEmitter
             emittedFiles,
             "Minimal customizations shell for derived compiler intent.");
     }
+
+    private static IEnumerable<XElement> BuildOptionalCustomizationsComponentShells(CanonicalSolution model)
+    {
+        if (HasFamily(model, ComponentFamily.CanvasApp))
+        {
+            yield return new XElement("CanvasApps");
+        }
+
+        if (HasFamily(model, ComponentFamily.ServiceEndpoint))
+        {
+            yield return new XElement("ServiceEndpoints");
+        }
+
+        if (HasFamily(model, ComponentFamily.Connector))
+        {
+            yield return new XElement("Connectors");
+        }
+
+        if (HasAnyFamily(model, ComponentFamily.RoutingRule, ComponentFamily.RoutingRuleItem))
+        {
+            yield return new XElement("RoutingRules");
+        }
+
+        if (HasAnyFamily(model, ComponentFamily.MobileOfflineProfile, ComponentFamily.MobileOfflineProfileItem))
+        {
+            yield return new XElement("MobileOfflineProfiles");
+        }
+    }
+
+    private static bool HasFamily(CanonicalSolution model, ComponentFamily family) =>
+        model.Artifacts.Any(artifact => artifact.Family == family);
+
+    private static bool HasAnyFamily(CanonicalSolution model, params ComponentFamily[] families) =>
+        model.Artifacts.Any(artifact => families.Contains(artifact.Family));
 
     private static IEnumerable<XElement> BuildRootComponents(CanonicalSolution model)
     {
@@ -276,6 +311,11 @@ public sealed partial class PackageEmitter
         var logicalName = column.LogicalName.Split('|').Last();
         var schemaName = GetProperty(column, ArtifactPropertyKeys.SchemaName) ?? logicalName;
         var attributeType = NormalizeGeneratedAttributeType(GetProperty(column, ArtifactPropertyKeys.AttributeType));
+        if (string.Equals(attributeType, "image", StringComparison.OrdinalIgnoreCase))
+        {
+            return BuildImageAttributeElement(column, logicalName, schemaName);
+        }
+
         var isPrimaryKey = string.Equals(GetProperty(column, ArtifactPropertyKeys.IsPrimaryKey), "true", StringComparison.OrdinalIgnoreCase)
             || string.Equals(attributeType, "primarykey", StringComparison.OrdinalIgnoreCase);
         var isPrimaryName = string.Equals(GetProperty(column, ArtifactPropertyKeys.IsPrimaryName), "true", StringComparison.OrdinalIgnoreCase);
@@ -330,13 +370,13 @@ public sealed partial class PackageEmitter
                 new XElement("Format", "textarea"),
                 new XElement("MaxLength", "2000"));
         }
-        else if (string.Equals(attributeType, "image", StringComparison.OrdinalIgnoreCase))
+        else if (string.Equals(attributeType, "int", StringComparison.OrdinalIgnoreCase))
         {
             element.Add(
-                new XElement("CanStoreFullImage", string.Equals(GetProperty(column, ArtifactPropertyKeys.CanStoreFullImage), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
-                new XElement("IsPrimaryImage", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsPrimaryImage), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"));
+                new XElement("Format", "none"),
+                new XElement("MinValue", "-2147483648"),
+                new XElement("MaxValue", "2147483647"));
         }
-
         if (localOptionSets.TryGetValue(column.LogicalName, out var localOptionSet))
         {
             element.Add(BuildLocalOptionSetElement(localOptionSet));
@@ -344,14 +384,29 @@ public sealed partial class PackageEmitter
         else if (string.Equals(GetProperty(column, ArtifactPropertyKeys.IsGlobal), "true", StringComparison.OrdinalIgnoreCase)
             && !string.IsNullOrWhiteSpace(GetProperty(column, ArtifactPropertyKeys.OptionSetName)))
         {
-            element.Add(new XElement("optionset",
-                new XAttribute("Name", GetProperty(column, ArtifactPropertyKeys.OptionSetName)!),
-                new XElement("OptionSetType", GetProperty(column, ArtifactPropertyKeys.OptionSetType) ?? "picklist"),
-                new XElement("IsGlobal", "1")));
+            element.Add(new XElement("OptionSetName", GetProperty(column, ArtifactPropertyKeys.OptionSetName)!));
         }
 
         return element;
     }
+
+    private static XElement BuildImageAttributeElement(FamilyArtifact column, string logicalName, string schemaName) =>
+        new("attribute",
+            new XAttribute("PhysicalName", schemaName),
+            new XElement("Type", "image"),
+            new XElement("Name", schemaName),
+            new XElement("LogicalName", logicalName),
+            new XElement("DisplayMask", BuildDisplayMask(column)),
+            new XElement("IsCustomField", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsCustomField), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+            new XElement("IsSecured", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsSecured), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+            new XElement("IsCustomizable", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsCustomizable), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+            new XElement("CanStoreFullImage", string.Equals(GetProperty(column, ArtifactPropertyKeys.CanStoreFullImage), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+            new XElement("IsPrimaryImage", string.Equals(GetProperty(column, ArtifactPropertyKeys.IsPrimaryImage), "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0"),
+            new XElement("displaynames",
+                new XElement("displayname",
+                    new XAttribute("description", column.DisplayName ?? schemaName),
+                    new XAttribute("languagecode", "1033"))),
+            CreateDescriptions(GetProperty(column, ArtifactPropertyKeys.Description)));
 
     private static XElement BuildEntityKeyElement(FamilyArtifact key)
     {
@@ -407,6 +462,9 @@ public sealed partial class PackageEmitter
         };
     }
 
+    private static string BuildEntityColumnKey(string entityLogicalName, string columnLogicalName) =>
+        $"{entityLogicalName}|{columnLogicalName}";
+
     private static void WriteDerivedFormFile(
         string packageRoot,
         string entityDirectory,
@@ -422,10 +480,14 @@ public sealed partial class PackageEmitter
             column => column.LogicalName.Split('|').Last(),
             column => column.DisplayName ?? column.LogicalName.Split('|').Last(),
             StringComparer.OrdinalIgnoreCase);
+        var formType = GetProperty(form, ArtifactPropertyKeys.FormType);
+        var isCardForm = string.Equals(formType, "card", StringComparison.OrdinalIgnoreCase);
 
-        var tabs = (definition.Tabs ?? [])
-            .Select((tab, tabIndex) => BuildTabElement(formId, columnLookup, tab, tabIndex))
-            .ToArray();
+        var tabs = isCardForm
+            ? [BuildCardTabElement(formId, columnLookup, definition)]
+            : (definition.Tabs ?? [])
+                .Select((tab, tabIndex) => BuildTabElement(formId, columnLookup, tab, tabIndex))
+                .ToArray();
 
         XElement? header = null;
         if (definition.HeaderFields is { Count: > 0 })
@@ -455,9 +517,9 @@ public sealed partial class PackageEmitter
                 new XElement("FormPresentation", GetProperty(form, ArtifactPropertyKeys.FormTypeCode) ?? "1"),
                 new XElement("FormActivationState", "1"),
                 new XElement("form",
-                    new XAttribute("headerdensity", "HighWithControls"),
+                    isCardForm ? null : new XAttribute("headerdensity", "HighWithControls"),
                     new XElement("tabs", tabs),
-                    header),
+                    isCardForm ? null : header),
                 new XElement("IsCustomizable", "1"),
                 new XElement("CanBeDeleted", "1"),
                 CreateLocalizedNames(form.DisplayName ?? form.LogicalName),
@@ -466,6 +528,80 @@ public sealed partial class PackageEmitter
         var formDirectory = GetFormDirectoryName(GetProperty(form, ArtifactPropertyKeys.FormType));
         WriteXml(packageRoot, $"{entityDirectory}/FormXml/{formDirectory}/{{{formId}}}.xml", root, emittedFiles, $"Synthesized {formDirectory} form for {form.DisplayName ?? form.LogicalName}.");
     }
+
+    private static XElement BuildCardTabElement(
+        string formId,
+        IReadOnlyDictionary<string, string> columnLookup,
+        GeneratedFormDefinition definition)
+    {
+        var controls = (definition.Tabs ?? [])
+            .SelectMany(tab => tab.Sections ?? [])
+            .SelectMany(EnumerateGeneratedFormControls)
+            .ToArray();
+
+        return new XElement("tab",
+            new XAttribute("name", "general"),
+            new XAttribute("verticallayout", "true"),
+            new XAttribute("id", StableXmlGuid(formId, "card-tab")),
+            new XAttribute("IsUserDefined", "0"),
+            new XElement("labels", new XElement("label", new XAttribute("description", string.Empty), new XAttribute("languagecode", "1033"))),
+            new XElement("columns",
+                new XElement("column",
+                    new XAttribute("width", "25%"),
+                    new XElement("sections", BuildCardColorStripSection(formId))),
+                new XElement("column",
+                    new XAttribute("width", "75%"),
+                    new XElement("sections",
+                        BuildCardHeaderSection(formId),
+                        BuildCardDetailsSection(formId, columnLookup, controls),
+                        BuildCardFooterSection(formId)))));
+    }
+
+    private static XElement BuildCardColorStripSection(string formId) =>
+        new("section",
+            new XAttribute("name", "ColorStrip"),
+            new XAttribute("showlabel", "false"),
+            new XAttribute("showbar", "false"),
+            new XAttribute("columns", "1"),
+            new XAttribute("IsUserDefined", "0"),
+            new XAttribute("id", StableXmlGuid(formId, "card-color-strip")),
+            new XElement("labels", new XElement("label", new XAttribute("description", "ColorStrip"), new XAttribute("languagecode", "1033"))));
+
+    private static XElement BuildCardHeaderSection(string formId) =>
+        new("section",
+            new XAttribute("name", "CardHeader"),
+            new XAttribute("showlabel", "false"),
+            new XAttribute("showbar", "false"),
+            new XAttribute("columns", "111"),
+            new XAttribute("IsUserDefined", "0"),
+            new XAttribute("id", StableXmlGuid(formId, "card-header")),
+            new XElement("labels", new XElement("label", new XAttribute("description", "Header"), new XAttribute("languagecode", "1033"))));
+
+    private static XElement BuildCardDetailsSection(
+        string formId,
+        IReadOnlyDictionary<string, string> columnLookup,
+        IReadOnlyList<GeneratedFormControl> controls) =>
+        new("section",
+            new XAttribute("name", "CardDetails"),
+            new XAttribute("showlabel", "false"),
+            new XAttribute("showbar", "false"),
+            new XAttribute("columns", "1"),
+            new XAttribute("IsUserDefined", "0"),
+            new XAttribute("id", StableXmlGuid(formId, "card-details")),
+            new XElement("labels", new XElement("label", new XAttribute("description", "Details"), new XAttribute("languagecode", "1033"))),
+            controls.Count == 0
+                ? null
+                : new XElement("rows", controls.Select((control, controlIndex) => BuildControlRowElement(formId, columnLookup, control, 0, 0, controlIndex))));
+
+    private static XElement BuildCardFooterSection(string formId) =>
+        new("section",
+            new XAttribute("name", "CardFooter"),
+            new XAttribute("showlabel", "false"),
+            new XAttribute("showbar", "false"),
+            new XAttribute("columns", "1111"),
+            new XAttribute("IsUserDefined", "0"),
+            new XAttribute("id", StableXmlGuid(formId, "card-footer")),
+            new XElement("labels", new XElement("label", new XAttribute("description", "Footer"), new XAttribute("languagecode", "1033"))));
 
     private static XElement BuildTabElement(
         string formId,
@@ -668,33 +804,124 @@ public sealed partial class PackageEmitter
 
     private static void WriteDerivedRelationshipFiles(CanonicalSolution model, string packageRoot, List<EmittedArtifact> emittedFiles)
     {
+        var tableSchemaByLogicalName = BuildTableSchemaLookup(model);
+        var columnsByEntityAndLogicalName = BuildColumnLookup(model);
         var relationshipGroups = model.Artifacts
             .Where(artifact => artifact.Family == ComponentFamily.Relationship)
             .GroupBy(artifact => GetProperty(artifact, ArtifactPropertyKeys.ReferencedEntity) ?? artifact.LogicalName, StringComparer.OrdinalIgnoreCase);
 
         foreach (var relationshipGroup in relationshipGroups.OrderBy(group => group.Key, StringComparer.OrdinalIgnoreCase))
         {
+            var referencedEntityLogicalName = relationshipGroup.Key;
+            var referencedEntitySchemaName = tableSchemaByLogicalName.TryGetValue(referencedEntityLogicalName, out var referencedSchemaName)
+                ? referencedSchemaName
+                : referencedEntityLogicalName;
             var root = new XElement("EntityRelationships",
                 new XAttribute(XNamespace.Xmlns + "xsi", XsiNamespace),
                 relationshipGroup
                     .OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
-                    .Select(artifact => new XElement("EntityRelationship",
-                        new XAttribute("Name", artifact.LogicalName),
-                        new XElement("EntityRelationshipType", GetProperty(artifact, ArtifactPropertyKeys.RelationshipType) ?? "OneToMany"),
-                        new XElement("IsCustomizable", "1"),
-                        new XElement("IntroducedVersion", "1.0.0.0"),
-                        new XElement("ReferencingEntityName", GetProperty(artifact, ArtifactPropertyKeys.ReferencingEntity) ?? string.Empty),
-                        new XElement("ReferencedEntityName", GetProperty(artifact, ArtifactPropertyKeys.ReferencedEntity) ?? string.Empty),
-                        new XElement("ReferencingAttributeName", GetProperty(artifact, ArtifactPropertyKeys.ReferencingAttribute) ?? string.Empty),
-                        new XElement("RelationshipDescription", CreateDescriptions(GetProperty(artifact, ArtifactPropertyKeys.Description))))));
+                    .Select(artifact => BuildEntityRelationshipElement(artifact, referencedEntitySchemaName, tableSchemaByLogicalName, columnsByEntityAndLogicalName)));
 
             WriteXml(
                 packageRoot,
-                $"Other/Relationships/{relationshipGroup.Key}.xml",
+                $"Other/Relationships/{referencedEntitySchemaName}.xml",
                 root,
                 emittedFiles,
-                $"Synthesized relationship shell for {relationshipGroup.Key}.");
+                $"Synthesized relationship shell for {referencedEntitySchemaName}.");
         }
+    }
+
+    private static XElement BuildCustomizationsEntityRelationshipsElement(CanonicalSolution model)
+    {
+        var tableSchemaByLogicalName = BuildTableSchemaLookup(model);
+        var columnsByEntityAndLogicalName = BuildColumnLookup(model);
+        var relationshipElements = model.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.Relationship)
+            .OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+            .Select(artifact =>
+            {
+                var referencedEntityLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ReferencedEntity) ?? artifact.LogicalName;
+                var referencedEntitySchemaName = tableSchemaByLogicalName.TryGetValue(referencedEntityLogicalName, out var referencedSchemaName)
+                    ? referencedSchemaName
+                    : referencedEntityLogicalName;
+                return BuildEntityRelationshipElement(artifact, referencedEntitySchemaName, tableSchemaByLogicalName, columnsByEntityAndLogicalName);
+            });
+
+        return new XElement("EntityRelationships", relationshipElements);
+    }
+
+    private static Dictionary<string, string> BuildTableSchemaLookup(CanonicalSolution model) =>
+        model.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.Table)
+            .ToDictionary(
+                artifact => GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName) ?? artifact.LogicalName,
+                artifact => GetProperty(artifact, ArtifactPropertyKeys.SchemaName) ?? artifact.LogicalName,
+                StringComparer.OrdinalIgnoreCase);
+
+    private static Dictionary<string, FamilyArtifact> BuildColumnLookup(CanonicalSolution model) =>
+        model.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.Column)
+            .GroupBy(
+                artifact => BuildEntityColumnKey(
+                    GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName) ?? string.Empty,
+                    GetProperty(artifact, ArtifactPropertyKeys.AttributeLogicalName) ?? artifact.LogicalName.Split('|').Last()),
+                StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(
+                group => group.Key,
+                group => group.First(),
+                StringComparer.OrdinalIgnoreCase);
+
+    private static XElement BuildEntityRelationshipElement(
+        FamilyArtifact artifact,
+        string referencedEntitySchemaName,
+        IReadOnlyDictionary<string, string> tableSchemaByLogicalName,
+        IReadOnlyDictionary<string, FamilyArtifact> columnsByEntityAndLogicalName)
+    {
+        var referencingEntityLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ReferencingEntity) ?? string.Empty;
+        var referencingEntitySchemaName = tableSchemaByLogicalName.TryGetValue(referencingEntityLogicalName, out var referencingSchemaName)
+            ? referencingSchemaName
+            : referencingEntityLogicalName;
+        var referencingAttributeLogicalName = GetProperty(artifact, ArtifactPropertyKeys.ReferencingAttribute) ?? string.Empty;
+        var referencingColumn = columnsByEntityAndLogicalName.TryGetValue(BuildEntityColumnKey(referencingEntityLogicalName, referencingAttributeLogicalName), out var column)
+            ? column
+            : null;
+        var referencingAttributeSchemaName = referencingColumn is null
+            ? referencingAttributeLogicalName
+            : GetProperty(referencingColumn, ArtifactPropertyKeys.SchemaName) ?? referencingAttributeLogicalName;
+        var lookupDisplayName = referencingColumn?.DisplayName ?? referencingAttributeSchemaName;
+
+        return new XElement("EntityRelationship",
+            new XAttribute("Name", artifact.LogicalName),
+            new XElement("EntityRelationshipType", GetProperty(artifact, ArtifactPropertyKeys.RelationshipType) ?? "OneToMany"),
+            new XElement("IsCustomizable", "1"),
+            new XElement("IntroducedVersion", "1.0.0.0"),
+            new XElement("IsHierarchical", "0"),
+            new XElement("ReferencingEntityName", referencingEntitySchemaName),
+            new XElement("ReferencedEntityName", referencedEntitySchemaName),
+            new XElement("CascadeAssign", "NoCascade"),
+            new XElement("CascadeDelete", "RemoveLink"),
+            new XElement("CascadeArchive", "RemoveLink"),
+            new XElement("CascadeReparent", "NoCascade"),
+            new XElement("CascadeShare", "NoCascade"),
+            new XElement("CascadeUnshare", "NoCascade"),
+            new XElement("CascadeRollupView", "NoCascade"),
+            new XElement("IsValidForAdvancedFind", "1"),
+            new XElement("ReferencingAttributeName", referencingAttributeSchemaName),
+            new XElement("RelationshipDescription", CreateDescriptions(GetProperty(artifact, ArtifactPropertyKeys.Description))),
+            new XElement("EntityRelationshipRoles",
+                new XElement("EntityRelationshipRole",
+                    new XElement("NavPaneDisplayOption", "UseCollectionName"),
+                    new XElement("NavPaneArea", "Details"),
+                    new XElement("NavPaneOrder", "10000"),
+                    new XElement("NavigationPropertyName", referencingAttributeSchemaName),
+                    new XElement("CustomLabels",
+                        new XElement("CustomLabel",
+                            new XAttribute("description", lookupDisplayName),
+                            new XAttribute("languagecode", "1033"))),
+                    new XElement("RelationshipRoleType", "1")),
+                new XElement("EntityRelationshipRole",
+                    new XElement("NavigationPropertyName", artifact.LogicalName),
+                    new XElement("RelationshipRoleType", "0"))));
     }
 
     private static void WriteDerivedGlobalOptionSets(CanonicalSolution model, string packageRoot, List<EmittedArtifact> emittedFiles)
@@ -1009,6 +1236,7 @@ public sealed partial class PackageEmitter
             "memo" => "ntext",
             "boolean" => "bit",
             "picklist" => "picklist",
+            "integer" => "int",
             "image" => "image",
             "primarykey" => "primarykey",
             var other => other

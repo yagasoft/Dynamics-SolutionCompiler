@@ -9,9 +9,20 @@ internal sealed partial class DataverseWebApiLiveReader
 {
     private async Task<SolutionRecord?> ReadSolutionAsync(string solutionUniqueName, CancellationToken cancellationToken)
     {
-        var rows = await GetCollectionAsync(
-            $"solutions?$select=solutionid,friendlyname,uniquename,version,ismanaged,publisheruniquename,publishercustomizationprefix,publisherfriendlyname&$filter=uniquename eq '{EscapeODataLiteral(solutionUniqueName)}'",
-            cancellationToken).ConfigureAwait(false);
+        var filter = $"uniquename eq '{EscapeODataLiteral(solutionUniqueName)}'";
+        JsonArray rows;
+        try
+        {
+            rows = await GetCollectionAsync(
+                $"solutions?$select=solutionid,friendlyname,uniquename,version,ismanaged,publisheruniquename,publishercustomizationprefix,publisherfriendlyname&$filter={filter}",
+                cancellationToken).ConfigureAwait(false);
+        }
+        catch (DataverseWebApiException exception) when (RequiresLegacySolutionProjectionFallback(exception))
+        {
+            rows = await GetCollectionAsync(
+                $"solutions?$select=solutionid,friendlyname,uniquename,version,ismanaged&$filter={filter}",
+                cancellationToken).ConfigureAwait(false);
+        }
 
         var row = rows.OfType<JsonObject>().FirstOrDefault();
         if (row is null)
@@ -30,13 +41,18 @@ internal sealed partial class DataverseWebApiLiveReader
             GetString(row, "publisherfriendlyname"));
     }
 
+    private static bool RequiresLegacySolutionProjectionFallback(DataverseWebApiException exception) =>
+        exception.StatusCode == System.Net.HttpStatusCode.BadRequest
+        && exception.Location.Contains("solutions?$select=", StringComparison.OrdinalIgnoreCase)
+        && exception.Message.Contains("publisheruniquename", StringComparison.OrdinalIgnoreCase);
+
     private async Task<SolutionComponentScope> ReadSolutionComponentScopeAsync(
         SolutionRecord solution,
         IReadOnlySet<ComponentFamily> requestedFamilies,
         CancellationToken cancellationToken)
     {
         var rows = await GetCollectionAsync(
-            $"solutioncomponents?$select=componenttype,objectid,logicalname,schemaname,uniquename,name&$filter=_solutionid_value eq {FormatGuid(solution.Id)}&$top={_options.PageSize.ToString(CultureInfo.InvariantCulture)}",
+            $"solutioncomponents?$select=componenttype,objectid&$filter=_solutionid_value eq {FormatGuid(solution.Id)}&$top={_options.PageSize.ToString(CultureInfo.InvariantCulture)}",
             cancellationToken).ConfigureAwait(false);
 
         var scope = new SolutionComponentScope();
@@ -377,13 +393,13 @@ internal sealed partial class DataverseWebApiLiveReader
 
     private async Task<JsonObject?> ReadEntityDefinitionAsync(string entityLogicalName, CancellationToken cancellationToken) =>
         await GetSingleObjectAsync(
-            $"EntityDefinitions(LogicalName='{EscapeODataLiteral(entityLogicalName)}')?$select=LogicalName,SchemaName,EntitySetName,PrimaryIdAttribute,PrimaryNameAttribute,PrimaryImageAttribute,ObjectTypeCode,DisplayName,OwnershipType,OwnershipTypeMask,IsCustomizable,Attributes,Relationships,OptionSets",
+            $"EntityDefinitions(LogicalName='{EscapeODataLiteral(entityLogicalName)}')?$select=LogicalName,SchemaName,EntitySetName,PrimaryIdAttribute,PrimaryNameAttribute,PrimaryImageAttribute,ObjectTypeCode,DisplayName,OwnershipType,IsCustomizable",
             cancellationToken).ConfigureAwait(false);
 
     private async Task<IReadOnlyList<JsonObject>> ReadEntityAttributesAsync(string entityLogicalName, JsonObject entity, CancellationToken cancellationToken)
     {
         var rows = await GetCollectionAsync(
-            $"EntityDefinitions(LogicalName='{EscapeODataLiteral(entityLogicalName)}')/Attributes?$select=LogicalName,SchemaName,AttributeType,AttributeTypeName,IsSecured,IsPrimaryName,DisplayName,OptionSet,IsLogical,IsCustomAttribute,IsCustomizable",
+            $"EntityDefinitions(LogicalName='{EscapeODataLiteral(entityLogicalName)}')/Attributes?$select=LogicalName,SchemaName,AttributeType,AttributeTypeName,IsSecured,IsPrimaryName,DisplayName,IsLogical,IsCustomAttribute,IsCustomizable",
             cancellationToken).ConfigureAwait(false);
 
         return rows.Count > 0 ? rows.OfType<JsonObject>().ToArray() : ReadObjects(entity, "Attributes").ToArray();

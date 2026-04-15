@@ -1,0 +1,37 @@
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<savedquery>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<isquickfindquery>0</isquickfindquery>
+<isprivate>0</isprivate>
+<isdefault>0</isdefault>
+<savedqueryid>{17c08f96-fb5f-42a2-a76c-f85c49fe1cd4}</savedqueryid>
+<layoutxml>
+<grid name="resultset" jump="cdxmeta_workitemname" select="1" icon="1" preview="1">
+<row name="result" id="cdxmeta_workitemid">
+<cell name="cdxmeta_workitemname" width="150" />
+<cell name="cdxmeta_summary" width="150" />
+<cell name="cdxmeta_priority" width="150" />
+<cell name="cdxmeta_stage" width="150" />
+</row>
+</grid>
+</layoutxml>
+<querytype>0</querytype>
+<fetchxml>
+<fetch version="1.0" mapping="logical">
+<entity name="cdxmeta_workitem">
+<attribute name="cdxmeta_workitemid" />
+<attribute name="cdxmeta_workitemname" />
+<attribute name="cdxmeta_summary" />
+<attribute name="cdxmeta_priority" />
+<attribute name="cdxmeta_stage" />
+<order attribute="cdxmeta_workitemname" descending="false" />
+</entity>
+</fetch>
+</fetchxml>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<LocalizedNames>
+<LocalizedName description="All Work Items" languagecode="1033" />
+</LocalizedNames>
+</savedquery>
+</savedqueries>

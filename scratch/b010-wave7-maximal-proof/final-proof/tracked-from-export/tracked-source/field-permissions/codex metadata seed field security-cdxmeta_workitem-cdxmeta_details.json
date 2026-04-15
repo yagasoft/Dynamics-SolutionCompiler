@@ -1,0 +1,14 @@
+{
+  "LogicalName": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+  "DisplayName": "cdxmeta_workitem.cdxmeta_details",
+  "metadataSourcePath": "Other/FieldSecurityProfiles.xml",
+  "assetSourcePaths": [],
+  "parentFieldSecurityProfileLogicalName": "codex metadata seed field security",
+  "entityLogicalName": "cdxmeta_workitem",
+  "attributeLogicalName": "cdxmeta_details",
+  "canRead": "4",
+  "canCreate": "4",
+  "canUpdate": "4",
+  "canReadUnmasked": "0",
+  "comparisonSignature": "7a3946c659fed66d1f519d7963734a0b9ff336d3bfe8c5c4de443846b36385b1"
+}

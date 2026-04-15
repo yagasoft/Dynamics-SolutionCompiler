@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConnectionRoles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ConnectionRoles>
+    <ConnectionRole>
+      <connectionroleid>{a3843e20-5d37-f111-88b3-0022489b9600}</connectionroleid>
+      <name>Codex Metadata Seed Connection Role</name>
+      <category>1</category>
+      <description>Neutral connection role placeholder for Dataverse metadata synthesis.</description>
+      <IsCustomizable>1</IsCustomizable>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <ConnectionRoleObjectTypeCodes>
+        <ConnectionRoleObjectTypeCode>
+          <connectionroleobjecttypecodeid>{a4843e20-5d37-f111-88b3-0022489b9600}</connectionroleobjecttypecodeid>
+          <associatedobjecttypecode>All</associatedobjecttypecode>
+        </ConnectionRoleObjectTypeCode>
+      </ConnectionRoleObjectTypeCodes>
+    </ConnectionRole>
+  </ConnectionRoles>
+</ConnectionRoles>

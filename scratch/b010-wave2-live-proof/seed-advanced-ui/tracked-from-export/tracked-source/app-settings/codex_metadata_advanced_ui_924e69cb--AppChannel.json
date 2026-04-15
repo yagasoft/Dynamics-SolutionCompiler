@@ -1,0 +1,12 @@
+{
+  "Family": 19,
+  "LogicalName": "codex_metadata_advanced_ui_924e69cb|AppChannel",
+  "DisplayName": "AppChannel",
+  "metadataSourcePath": "AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "parentAppModuleUniqueName": "codex_metadata_advanced_ui_924e69cb",
+    "settingDefinitionUniqueName": "AppChannel",
+    "value": "1"
+  }
+}

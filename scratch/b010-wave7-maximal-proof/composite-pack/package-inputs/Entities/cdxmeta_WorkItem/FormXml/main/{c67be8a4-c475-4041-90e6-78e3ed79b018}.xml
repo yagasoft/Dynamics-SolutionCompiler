@@ -1,0 +1,164 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{c67be8a4-c475-4041-90e6-78e3ed79b018}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="summary" id="{03e1d116-51cb-c1c4-d5ed-8bf3cd8724b2}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="overview" id="{dee5398f-689b-23a9-b367-ee6c0734fa4c}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Overview" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{f26f70c7-284c-93ba-f1c1-a09f2205a5f5}" showlabel="true">
+<labels>
+<label description="Work Item" languagecode="1033" />
+</labels>
+<control id="cdxmeta_workitemname" datafieldname="cdxmeta_workitemname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{b0952ca1-c89f-cfae-04fe-3728ac366c55}" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<control id="cdxmeta_summary" datafieldname="cdxmeta_summary" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{c21aaab9-a44c-9c97-5648-cc6700234ad9}" showlabel="true">
+<labels>
+<label description="Category" languagecode="1033" />
+</labels>
+<control id="cdxmeta_categoryid" datafieldname="cdxmeta_categoryid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+<section name="planning" id="{f02004c2-7e84-4b60-756e-2e303500b854}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Planning" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{f6d6e4c6-9888-7c9b-078f-ac6b720ad20f}" showlabel="true">
+<labels>
+<label description="Priority" languagecode="1033" />
+</labels>
+<control id="cdxmeta_priority" datafieldname="cdxmeta_priority" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{f59ac1a2-e6d3-96f6-5717-d4e7394503c6}" showlabel="true">
+<labels>
+<label description="Stage" languagecode="1033" />
+</labels>
+<control id="cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{fff4335e-2d22-5610-38ce-faf4416d510b}" showlabel="true">
+<labels>
+<label description="Effort Hours" languagecode="1033" />
+</labels>
+<control id="cdxmeta_efforthours" datafieldname="cdxmeta_efforthours" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{e5f480b4-a969-6598-9336-11d78a6ab001}" showlabel="true">
+<labels>
+<label description="Due Date" languagecode="1033" />
+</labels>
+<control id="cdxmeta_duedate" datafieldname="cdxmeta_duedate" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{dab77341-5bec-f940-40e7-dc569bf6d812}" showlabel="true">
+<labels>
+<label description="Blocked" languagecode="1033" />
+</labels>
+<control id="cdxmeta_isblocked" datafieldname="cdxmeta_isblocked" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+<section name="related" id="{faf67d41-054c-6197-c707-60dc89c941cb}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Related" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{cc069b53-1774-4906-ab39-440f28f1775f}" showlabel="true">
+<labels>
+<label description="Category" languagecode="1033" />
+</labels>
+<control id="cdxmeta_categoryid" datafieldname="cdxmeta_categoryid" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}">
+<parameters>
+<QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="cdxmeta_category"&gt;5978624f-3b37-f111-88b3-0022489b9600&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+<ControlMode>Edit</ControlMode>
+</parameters>
+</control>
+</cell>
+</row>
+<row>
+<cell id="{50e7363e-8fbb-640d-4427-9643db9bb904}" showlabel="true">
+<labels>
+<label description="Checkpoints" languagecode="1033" />
+</labels>
+<control id="cdxmeta_workitem_checkpoint" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+<parameters>
+<ViewId>{500a740d-e399-42c5-9f3a-0f9c203ef9cd}</ViewId>
+<RelationshipName>cdxmeta_workitem_checkpoint</RelationshipName>
+<TargetEntityType>cdxmeta_checkpoint</TargetEntityType>
+<EnableViewPicker>true</EnableViewPicker>
+<EnableChartPicker>false</EnableChartPicker>
+<RecordsPerPage>5</RecordsPerPage>
+</parameters>
+</control>
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+<header id="{99510bd1-1a0f-46bf-4729-639a8fb9ef43}" columns="111" celllabelposition="Top" labelwidth="115">
+<rows>
+<row>
+<cell id="{525532a9-34f6-ecf0-52de-5668f87c7734}" showlabel="true">
+<labels>
+<label description="Priority" languagecode="1033" />
+</labels>
+<control id="header_cdxmeta_priority" datafieldname="cdxmeta_priority" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+<cell id="{37c8833c-aad3-9a91-7916-fcbff590e623}" showlabel="true">
+<labels>
+<label description="Stage" languagecode="1033" />
+</labels>
+<control id="header_cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</header>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Work Item Main" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Structured main form proving field, quick-view, and subgrid controls." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

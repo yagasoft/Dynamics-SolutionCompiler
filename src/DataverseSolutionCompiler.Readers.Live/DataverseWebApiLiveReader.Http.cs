@@ -211,7 +211,7 @@ internal sealed partial class DataverseWebApiLiveReader
         value.Replace("'", "''", StringComparison.Ordinal);
 
     private static string FormatGuid(Guid guid) =>
-        $"guid'{guid:D}'";
+        guid.ToString("D");
 
     private static string BuildGuidFilter(string fieldName, IEnumerable<Guid> ids) =>
         string.Join(" or ", ids.Distinct().OrderBy(id => id).Select(id => $"{fieldName} eq {FormatGuid(id)}"));

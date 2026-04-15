@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AIProjectType>
+  <LogicalName>document_automation</LogicalName>
+  <Name>Document Automation</Name>
+  <Description>Core AI project type for document workflows.</Description>
+</AIProjectType>

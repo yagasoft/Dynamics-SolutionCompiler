@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.26033.170" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>CodexMetadataSeedEntityAnalytics</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Codex Metadata Seed Entity Analytics" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Curated Codex skill seed solution: Codex Metadata Seed Entity Analytics" languagecode="1033" />
+    </Descriptions>
+    <Version>1.0.0.0</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>CodexMetadata</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Codex Metadata" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="Neutral publisher for Codex Dataverse metadata synthesis seed solutions." languagecode="1033" />
+      </Descriptions>
+      <CustomizationPrefix>cdxmeta</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>72727</CustomizationOptionValuePrefix>
+    </Publisher>
+    <RootComponents>
+      
+    </RootComponents>
+  </SolutionManifest>
+</ImportExportXml>

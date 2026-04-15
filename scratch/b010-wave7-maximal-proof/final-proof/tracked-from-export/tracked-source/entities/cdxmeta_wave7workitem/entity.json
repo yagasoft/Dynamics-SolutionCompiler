@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_wave7workitem",
+  "DisplayName": "Work Item",
+  "schemaName": "cdxmeta_Wave7WorkItem",
+  "description": "Maximal-proof work item table that carries schema, form, view, and security evidence.",
+  "entitySetName": "cdxmeta_wave7workitems",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_wave7workitemid",
+  "primaryNameAttribute": "cdxmeta_wave7workitemname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

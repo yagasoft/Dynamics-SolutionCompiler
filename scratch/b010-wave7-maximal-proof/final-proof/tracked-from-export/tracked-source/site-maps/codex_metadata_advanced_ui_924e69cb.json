@@ -1,0 +1,42 @@
+{
+  "Family": 14,
+  "LogicalName": "codex_metadata_advanced_ui_924e69cb",
+  "DisplayName": "Codex Metadata Advanced UI",
+  "metadataSourcePath": "AppModuleSiteMaps/codex_metadata_advanced_ui_924e69cb/AppModuleSiteMap.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "areaCount": "1",
+    "comparisonSignature": "fc240f5d3aa9e848874f07d80f3cf94d512d3b49d91649628d866f468da6bcfb",
+    "groupCount": "1",
+    "siteMapDefinitionJson": {
+      "areas": [
+        {
+          "id": "cdxmeta_area",
+          "title": "Codex Metadata Advanced UI",
+          "groups": [
+            {
+              "id": "cdxmeta_group",
+              "title": "Advanced UI Seed",
+              "subAreas": [
+                {
+                  "id": "cdxmeta_shell",
+                  "title": "Advanced UI Shell",
+                  "entity": null,
+                  "url": "$webresource:cdxmeta_/advancedui/landing.html"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "subAreaCount": "1",
+    "summaryJson": {
+      "areaCount": 1,
+      "groupCount": 1,
+      "subAreaCount": 1,
+      "webResourceSubAreaCount": 1
+    },
+    "webResourceSubAreaCount": "1"
+  }
+}

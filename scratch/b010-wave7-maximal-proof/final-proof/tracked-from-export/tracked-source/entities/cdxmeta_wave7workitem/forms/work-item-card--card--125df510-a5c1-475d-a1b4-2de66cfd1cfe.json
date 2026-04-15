@@ -1,0 +1,101 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_wave7workitem|card|125df510-a5c1-475d-a1b4-2de66cfd1cfe",
+  "DisplayName": "Work Item Card",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7WorkItem/FormXml/card/{125df510-a5c1-475d-a1b4-2de66cfd1cfe}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "caccd820f7be8bb0862e8f2660cac903c0b736f501ebb890c201231da4a4af13",
+    "controlCount": "3",
+    "controlDescriptionCount": "3",
+    "description": "Card form for the maximal proof lane.",
+    "entityLogicalName": "cdxmeta_wave7workitem",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Work Item Card",
+      "description": "Card form for the maximal proof lane.",
+      "type": "card",
+      "tabs": [
+        {
+          "name": "general",
+          "label": "general",
+          "sections": [
+            {
+              "name": "ColorStrip",
+              "label": "ColorStrip",
+              "controls": []
+            },
+            {
+              "name": "CardHeader",
+              "label": "Header",
+              "controls": []
+            },
+            {
+              "name": "CardDetails",
+              "label": "Details",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_wave7workitemname",
+                  "label": "Work Item"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_summary",
+                  "label": "Summary"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_priority",
+                  "label": "Priority"
+                }
+              ]
+            },
+            {
+              "name": "CardFooter",
+              "label": "Footer",
+              "controls": []
+            }
+          ]
+        }
+      ],
+      "headerFields": []
+    },
+    "formId": "125df510-a5c1-475d-a1b4-2de66cfd1cfe",
+    "formType": "card",
+    "formTypeCode": "1",
+    "headerControlCount": "0",
+    "quickFormCount": "0",
+    "sectionCount": "4",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "card",
+      "formId": "125df510-a5c1-475d-a1b4-2de66cfd1cfe",
+      "tabCount": 1,
+      "sectionCount": 4,
+      "controlCount": 3,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 0,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_priority",
+          "dataFieldName": "cdxmeta_priority",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_summary",
+          "dataFieldName": "cdxmeta_summary",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_wave7workitemname",
+          "dataFieldName": "cdxmeta_wave7workitemname",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

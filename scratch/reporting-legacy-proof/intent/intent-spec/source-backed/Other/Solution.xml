@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.26033.170" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CodexFixture" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>CodexMetadataSeedReportingLegacy</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Codex Metadata Seed Reporting Legacy" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Compact source-first fixture for reports, templates, display strings, attachments, and web wizards." languagecode="1033" />
+    </Descriptions>
+    <Version>1.0.0.0</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>CodexMetadata</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Codex Metadata" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="Neutral publisher for Codex Dataverse metadata synthesis seed solutions." languagecode="1033" />
+      </Descriptions>
+      <CustomizationPrefix>cdxmeta</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>72727</CustomizationOptionValuePrefix>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="31" schemaName="cdxmeta_account_summary" behavior="0" />
+      <RootComponent type="36" schemaName="cdxmeta_welcome_email" behavior="0" />
+      <RootComponent type="22" schemaName="cdxmeta_reporting_labels" behavior="0" />
+      <RootComponent type="35" schemaName="cdxmeta_report_payload" behavior="0" />
+      <RootComponent type="210" schemaName="cdxmeta_onboarding_wizard" behavior="0" />
+    </RootComponents>
+    <MissingDependencies />
+  </SolutionManifest>
+</ImportExportXml>

@@ -1,0 +1,29 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedServiceEndpointConnector",
+    "DisplayName": "Codex Metadata Seed Service Endpoint Connector",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "unpacked-xml",
+  "copiedDirectories": [
+    "Connectors",
+    "Other",
+    "ServiceEndpoints"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Connectors/shared-offerings-connector/Connector.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/ServiceEndpoints/codex_webhook_endpoint/ServiceEndpoint.xml",
+    "package-inputs/manifest.json"
+  ]
+}

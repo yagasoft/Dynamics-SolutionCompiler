@@ -1,0 +1,62 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{337dbfeb-0f67-4f81-b71e-3bd05a4b597a}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="card" id="{41d5d112-29d6-0b85-48fd-87610e774016}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Card" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="details" id="{1c172128-077e-baac-f7a4-42a60262d190}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Details" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{2f62e744-5293-6278-5f85-77a37817209e}" showlabel="true">
+<labels>
+<label description="Work Item" languagecode="1033" />
+</labels>
+<control id="cdxmeta_workitemname" datafieldname="cdxmeta_workitemname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{3e81d1dd-e9a0-05f2-3d7b-62b07723a7cf}" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<control id="cdxmeta_summary" datafieldname="cdxmeta_summary" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{cffec3a3-fde6-874e-4b83-76a79dc33ba5}" showlabel="true">
+<labels>
+<label description="Priority" languagecode="1033" />
+</labels>
+<control id="cdxmeta_priority" datafieldname="cdxmeta_priority" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Work Item Card" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Card form for the maximal proof lane." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

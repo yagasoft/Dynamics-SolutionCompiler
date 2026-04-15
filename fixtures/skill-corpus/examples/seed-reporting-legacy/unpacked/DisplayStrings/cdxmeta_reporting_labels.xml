@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DisplayStringSet>
+  <Name>cdxmeta_reporting_labels</Name>
+  <DisplayName>Reporting Labels</DisplayName>
+  <Description>Seed display-string metadata for reporting and legacy coverage.</Description>
+</DisplayStringSet>

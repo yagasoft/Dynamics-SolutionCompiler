@@ -147,6 +147,34 @@ public sealed class TrackedSourceEmitterIntegrationTests
     }
 
     [Fact]
+    public void Emitter_materializes_reporting_legacy_tracked_source_files()
+    {
+        var model = ReadFixture("seed-reporting-legacy");
+        var emitter = new TrackedSourceEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-reporting-legacy-{Guid.NewGuid():N}");
+
+        try
+        {
+            emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.TrackedSource));
+
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "reports", "cdxmeta_account_summary.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "templates", "cdxmeta_welcome_email.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "display-strings", "cdxmeta_reporting_labels.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "attachments", "cdxmeta_report_payload.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "legacy-assets", "cdxmeta_onboarding_wizard.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "Reports", "cdxmeta_account_summary.rdl")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "Attachments", "cdxmeta_report_payload.txt")).Should().BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
     public void Emitter_materializes_image_configuration_tracked_source_files()
     {
         var model = ReadFixture("seed-image-config");

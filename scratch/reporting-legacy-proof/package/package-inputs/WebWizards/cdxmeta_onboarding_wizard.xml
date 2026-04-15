@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebWizard>
+  <WebWizardId>{0f3dcb7e-7f2f-4f84-a6eb-5f4e9f7c0f01}</WebWizardId>
+  <Name>cdxmeta_onboarding_wizard</Name>
+  <DisplayName>Onboarding Wizard</DisplayName>
+  <Description>Seed web-wizard metadata for reporting and legacy coverage.</Description>
+</WebWizard>

@@ -1375,7 +1375,8 @@ public sealed class CliApplicationTests
         });
         var packageExecutor = new RecordingPackageExecutor(new PackageResult(true, Path.Combine(outputRoot, "sample-unmanaged.zip"), []));
         var importExecutor = new RecordingImportExecutor(new ImportResult(true, Path.Combine(outputRoot, "sample-unmanaged.zip"), true, []));
-        var runtime = CreateRuntime(kernel, packageEmitter: packageEmitter, packageExecutor: packageExecutor, importExecutor: importExecutor);
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(true, ApplyMode.DevProof, [ComponentFamily.ImageConfiguration.ToString()], []));
+        var runtime = CreateRuntime(kernel, packageEmitter: packageEmitter, packageExecutor: packageExecutor, importExecutor: importExecutor, applyExecutor: applyExecutor);
 
         try
         {
@@ -1391,6 +1392,68 @@ public sealed class CliApplicationTests
             packageExecutor.Requests.Should().ContainSingle();
             importExecutor.Requests.Should().ContainSingle();
             importExecutor.Requests[0].PublishAfterImport.Should().BeTrue();
+            applyExecutor.Requests.Should().ContainSingle();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Publish_command_skips_import_for_apply_only_empty_package_and_runs_live_apply()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-publish-apply-only-{Guid.NewGuid():N}");
+        var kernel = new StubKernel(CreateCompilationResult());
+        var packageEmitter = new RecordingEmitter((model, request) =>
+        {
+            var packageInputsRoot = Path.Combine(request.OutputRoot, "package-inputs");
+            var otherRoot = Path.Combine(packageInputsRoot, "Other");
+            Directory.CreateDirectory(otherRoot);
+            File.WriteAllText(
+                Path.Combine(otherRoot, "Solution.xml"),
+                """
+                <ImportExportXml>
+                  <SolutionManifest>
+                    <RootComponents>
+                    </RootComponents>
+                  </SolutionManifest>
+                </ImportExportXml>
+                """);
+            File.WriteAllText(Path.Combine(otherRoot, "Customizations.xml"), "<ImportExportXml />");
+
+            return new EmittedArtifacts(
+                true,
+                request.OutputRoot,
+                [
+                    new EmittedArtifact("package-inputs/Other/Solution.xml", EmittedArtifactRole.PackageInput, "fixture"),
+                    new EmittedArtifact("package-inputs/Other/Customizations.xml", EmittedArtifactRole.PackageInput, "fixture")
+                ],
+                []);
+        });
+        var packageExecutor = new RecordingPackageExecutor(new PackageResult(true, Path.Combine(outputRoot, "sample-unmanaged.zip"), []));
+        var importExecutor = new RecordingImportExecutor(new ImportResult(true, Path.Combine(outputRoot, "sample-unmanaged.zip"), true, []));
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(true, ApplyMode.DevProof, [ComponentFamily.EntityAnalyticsConfiguration.ToString()], []));
+        var runtime = CreateRuntime(kernel, packageEmitter: packageEmitter, packageExecutor: packageExecutor, importExecutor: importExecutor, applyExecutor: applyExecutor);
+
+        try
+        {
+            var output = new StringWriter();
+            var error = new StringWriter();
+            var exitCode = CliApplication.Run(
+                ["publish", "C:\\source", "--output", outputRoot, "--environment", "https://example.crm.dynamics.com"],
+                output,
+                error,
+                runtime);
+
+            exitCode.Should().Be(0);
+            packageExecutor.Requests.Should().ContainSingle();
+            importExecutor.Requests.Should().BeEmpty();
+            applyExecutor.Requests.Should().ContainSingle();
+            output.ToString().Should().Contain("Published: False");
         }
         finally
         {
@@ -1448,7 +1511,8 @@ public sealed class CliApplicationTests
         IDriftComparer? driftComparer = null,
         ISolutionEmitter? packageEmitter = null,
         IPackageExecutor? packageExecutor = null,
-        IImportExecutor? importExecutor = null) =>
+        IImportExecutor? importExecutor = null,
+        IApplyExecutor? applyExecutor = null) =>
         new(
             kernel,
             new RecordingEmitter((model, request) => new EmittedArtifacts(true, request.OutputRoot, [], [])),
@@ -1457,7 +1521,7 @@ public sealed class CliApplicationTests
             driftComparer ?? new RecordingDriftComparer(new DriftReport(false, [], [])),
             packageExecutor ?? new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "sample.zip"), [])),
             importExecutor ?? new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "sample.zip"), true, [])),
-            new StubApplyExecutor(),
+            applyExecutor ?? new StubApplyExecutor(),
             new StubExplanationService());
 }
 
@@ -1530,6 +1594,17 @@ internal sealed class RecordingImportExecutor(ImportResult result) : IImportExec
     public List<ImportRequest> Requests { get; } = [];
 
     public ImportResult Import(ImportRequest request)
+    {
+        Requests.Add(request);
+        return result;
+    }
+}
+
+internal sealed class RecordingApplyExecutor(ApplyResult result) : IApplyExecutor
+{
+    public List<ApplyRequest> Requests { get; } = [];
+
+    public ApplyResult Apply(CanonicalSolution model, ApplyRequest request)
     {
         Requests.Add(request);
         return result;

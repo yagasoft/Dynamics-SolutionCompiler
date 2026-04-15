@@ -1,0 +1,42 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedAdvancedUI",
+    "DisplayName": "Codex Metadata Seed Advanced UI",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/app-modules/codex_metadata_advanced_ui_924e69cb.json",
+    "tracked-source/app-settings/codex_metadata_advanced_ui_924e69cb--AppChannel.json",
+    "tracked-source/entities/account/attributes.json",
+    "tracked-source/entities/account/entity.json",
+    "tracked-source/entities/account/relationships.json",
+    "tracked-source/environment-variables/cdxmeta_AdvancedUiMode.definition.json",
+    "tracked-source/environment-variables/cdxmeta_AdvancedUiMode.value.json",
+    "tracked-source/manifest.json",
+    "tracked-source/saved-query-visualizations/account-accounts-by-industry.json",
+    "tracked-source/site-maps/codex_metadata_advanced_ui_924e69cb.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/AppModuleSiteMaps/codex_metadata_advanced_ui_924e69cb/AppModuleSiteMap.xml",
+    "tracked-source/source-backed/AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+    "tracked-source/source-backed/Entities/Account/Entity.xml",
+    "tracked-source/source-backed/Entities/Account/Visualizations/{74A622C0-5193-DE11-97D4-00155DA3B01E}.xml",
+    "tracked-source/source-backed/Other/Solution.xml",
+    "tracked-source/source-backed/WebResources/cdxmeta_/advancedui/icon.svg",
+    "tracked-source/source-backed/WebResources/cdxmeta_/advancedui/icon.svg.data.xml",
+    "tracked-source/source-backed/WebResources/cdxmeta_/advancedui/landing.html",
+    "tracked-source/source-backed/WebResources/cdxmeta_/advancedui/landing.html.data.xml",
+    "tracked-source/source-backed/environmentvariabledefinitions/cdxmeta_AdvancedUiMode/environmentvariabledefinition.xml",
+    "tracked-source/source-backed/environmentvariabledefinitions/cdxmeta_AdvancedUiMode/environmentvariablevalues.json",
+    "tracked-source/web-resources/cdxmeta-advancedui-icon-svg.json",
+    "tracked-source/web-resources/cdxmeta-advancedui-icon-svg.svg",
+    "tracked-source/web-resources/cdxmeta-advancedui-landing-html.html",
+    "tracked-source/web-resources/cdxmeta-advancedui-landing-html.json"
+  ]
+}

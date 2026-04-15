@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.26033.170" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26033.170" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26033.00170">
+  <SolutionManifest>
+    <UniqueName>CodexMetadataWave7Maximal</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Codex Metadata Wave 7 Maximal" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Program-end maximal supported proof for the Dataverse Solution Compiler B-010 backlog." languagecode="1033" />
+    </Descriptions>
+    <Version>1.0.0.0</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>CodexMetadata</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Codex Metadata" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="Neutral publisher for Codex Dataverse metadata synthesis seed solutions." languagecode="1033" />
+      </Descriptions>
+      <EMailAddress xsi:nil="true"></EMailAddress>
+      <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
+      <CustomizationPrefix>cdxmeta</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>72727</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="account" behavior="1" />
+      <RootComponent type="1" schemaName="cdxmeta_wave7category" behavior="0" />
+      <RootComponent type="1" schemaName="cdxmeta_wave7checkpoint" behavior="0" />
+      <RootComponent type="1" schemaName="cdxmeta_wave7photoasset" behavior="0" />
+      <RootComponent type="1" schemaName="cdxmeta_wave7workitem" behavior="0" />
+      <RootComponent type="1" schemaName="cdxmeta_workitem" behavior="0" />
+      <RootComponent type="150" id="{4c205db4-6737-f111-88b3-0022489b9600}" behavior="0" />
+      <RootComponent type="161" id="{6897803f-e738-f111-88b3-0022489b9600}" behavior="0" />
+      <RootComponent type="20" id="{94843e20-5d37-f111-88b3-0022489b9600}" behavior="0" />
+      <RootComponent type="300" schemaName="cat_overview_3dbf5" behavior="0" />
+      <RootComponent type="430" schemaName="contact" behavior="0" />
+      <RootComponent type="61" schemaName="cdxmeta_/advancedui/icon.svg" behavior="0" />
+      <RootComponent type="61" schemaName="cdxmeta_/advancedui/landing.html" behavior="0" />
+      <RootComponent type="62" schemaName="codex_metadata_advanced_ui_924e69cb" behavior="0" />
+      <RootComponent type="63" id="{a99c1210-e938-f111-88b3-0022489b9600}" behavior="0" />
+      <RootComponent type="70" id="{a0843e20-5d37-f111-88b3-0022489b9600}" behavior="0" />
+      <RootComponent type="80" schemaName="codex_metadata_advanced_ui_924e69cb" behavior="0" />
+      <RootComponent type="9" schemaName="cdxmeta_wave7prioritybandf" behavior="0" />
+      <RootComponent type="91" id="{c6078609-e738-f111-88b3-0022489b9600}" schemaName="Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098" behavior="0" />
+      <RootComponent type="92" id="{ba123f38-e738-f111-88b3-0022489b9600}" behavior="0" />
+      <RootComponent type="95" id="{c3078609-e738-f111-88b3-0022489b9600}" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="account" displayName="Account" parentSchemaName="" solution="PowerPages_RuntimeCoreDependencies (1.0.2305.1)" />
+        <Dependent type="1" schemaName="account" displayName="Account" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cdxmeta_checkpoint" displayName="Checkpoint" solution="Active" />
+        <Dependent type="1" schemaName="cdxmeta_workitem" displayName="Work Item" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cdxmeta_checkpoint" displayName="Checkpoint" solution="Active" />
+        <Dependent type="60" displayName="Work Item Seed Main" parentDisplayName="Work Item" id="{c67be8a4-c475-4041-90e6-78e3ed79b018}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="cdxmeta_workitem_checkpoint" displayName="cdxmeta_workitem_checkpoint" parentSchemaName="cdxmeta_workitem" parentDisplayName="Work Item" solution="Active" />
+        <Dependent type="60" displayName="Work Item Seed Main" parentDisplayName="Work Item" id="{c67be8a4-c475-4041-90e6-78e3ed79b018}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cdxmeta_categoryname" displayName="Category Name" parentSchemaName="cdxmeta_category" parentDisplayName="Category" solution="Active" />
+        <Dependent type="10" schemaName="cdxmeta_category_workitem" displayName="cdxmeta_category_workitem" parentSchemaName="cdxmeta_category" parentDisplayName="Category" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Active Checkpoints" displayName="Active Checkpoints" parentSchemaName="cdxmeta_checkpoint" parentDisplayName="Checkpoint" solution="Active" id="{500a740d-e399-42c5-9f3a-0f9c203ef9cd}" />
+        <Dependent type="60" displayName="Work Item Seed Main" parentDisplayName="Work Item" id="{c67be8a4-c475-4041-90e6-78e3ed79b018}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="300" schemaName="cat_overview_3dbf5" displayName="Overview" solution="msdyn_DataverseAcceleratorApp (1.0.3.57)" />
+        <Dependent type="300" schemaName="cat_overview_3dbf5" displayName="Overview" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="60" displayName="Category Snapshot" parentDisplayName="Category" solution="Active" id="{5978624f-3b37-f111-88b3-0022489b9600}" />
+        <Dependent type="60" displayName="Work Item Seed Main" parentDisplayName="Work Item" id="{c67be8a4-c475-4041-90e6-78e3ed79b018}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/Images/AppModule_Default_Icon.png" displayName="msdyn_/Images/AppModule_Default_Icon.png" solution="AppModuleWebResources (2.5)" />
+        <Dependent type="80" schemaName="codex_metadata_advanced_ui_924e69cb" displayName="Codex Metadata Advanced UI" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="9" schemaName="cdxmeta_priorityband" displayName="Priority Band" solution="Active" />
+        <Dependent type="2" schemaName="cdxmeta_priorityband" displayName="Priority Band" parentSchemaName="cdxmeta_workitem" parentDisplayName="Work Item" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="SettingDefinition" displayName="AppChannel" solution="msdyn_AppFrameworkInfraExtensions (1.0.0.16)" id.uniquename="AppChannel">
+          <package appName="PowerAppsAppFramework Package" version="1.0.0.25">PowerAppsAppFramework_Anchor (1.0.0.25)</package>
+        </Required>
+        <Dependent type="AppSetting" displayName="parentappmoduleid.uniquename=codex_metadata_advanced_ui_924e69cb,settingdefinitionid.uniquename=AppChannel" id.parentappmoduleid.uniquename="codex_metadata_advanced_ui_924e69cb" id.settingdefinitionid.uniquename="AppChannel" />
+      </MissingDependency>
+    </MissingDependencies>
+  </SolutionManifest>
+</ImportExportXml>

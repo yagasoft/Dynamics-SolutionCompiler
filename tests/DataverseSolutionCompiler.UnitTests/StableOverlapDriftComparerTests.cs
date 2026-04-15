@@ -20,6 +20,7 @@ public sealed class StableOverlapDriftComparerTests
     [InlineData("seed-advanced-ui")]
     [InlineData("seed-environment")]
     [InlineData("seed-import-map")]
+    [InlineData("seed-reporting-legacy")]
     [InlineData("seed-entity-analytics")]
     [InlineData("seed-image-config")]
     [InlineData("seed-ai-families")]
@@ -164,6 +165,23 @@ public sealed class StableOverlapDriftComparerTests
             [],
             [],
             []);
+
+        var live = new LiveSnapshot(new EnvironmentProfile("dev"), source.Identity.UniqueName, [], []);
+
+        var report = new StableOverlapDriftComparer().Compare(source, live, new CompareRequest());
+
+        report.Findings.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void Compare_does_not_report_missing_live_for_source_first_reporting_legacy_families()
+    {
+        var source = ReadFixture("seed-reporting-legacy") with
+        {
+            Artifacts = ReadFixture("seed-reporting-legacy").Artifacts
+                .Where(artifact => artifact.Family is ComponentFamily.Report or ComponentFamily.Template or ComponentFamily.DisplayString or ComponentFamily.Attachment or ComponentFamily.LegacyAsset)
+                .ToArray()
+        };
 
         var live = new LiveSnapshot(new EnvironmentProfile("dev"), source.Identity.UniqueName, [], []);
 

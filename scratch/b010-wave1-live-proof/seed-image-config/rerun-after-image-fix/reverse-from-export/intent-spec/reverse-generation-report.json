@@ -1,0 +1,61 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "Column",
+    "ImageConfiguration",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_photoasset|Active Photo Assets",
+      "reason": "View \u0027Active Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_photoasset|Inactive Photo Assets",
+      "reason": "View \u0027Inactive Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it is marked CanBeDeleted = 0.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_photoasset|My Photo Assets",
+      "reason": "View \u0027My Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00278192\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_photoasset|Photo Asset Advanced Find View",
+      "reason": "View \u0027Photo Asset Advanced Find View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00271\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_photoasset|Photo Asset Associated View",
+      "reason": "View \u0027Photo Asset Associated View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00272\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_photoasset|Photo Asset Lookup View",
+      "reason": "View \u0027Photo Asset Lookup View\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u002764\u0027.",
+      "category": "platformGeneratedArtifact"
+    },
+    {
+      "family": "View",
+      "artifact": "cdxmeta_photoasset|Quick Find Active Photo Assets",
+      "reason": "View \u0027Quick Find Active Photo Assets\u0027 is platform-generated or non-authorable for reverse-generated intent-spec JSON because it reported queryType \u00274\u0027.",
+      "category": "platformGeneratedArtifact"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": []
+}

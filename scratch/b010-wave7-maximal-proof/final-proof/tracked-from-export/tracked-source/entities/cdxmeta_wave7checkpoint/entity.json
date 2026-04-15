@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_wave7checkpoint",
+  "DisplayName": "Checkpoint",
+  "schemaName": "cdxmeta_Wave7Checkpoint",
+  "description": "Child records used to demonstrate related-data form composition.",
+  "entitySetName": "cdxmeta_wave7checkpoints",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_wave7checkpointid",
+  "primaryNameAttribute": "cdxmeta_wave7checkpointname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

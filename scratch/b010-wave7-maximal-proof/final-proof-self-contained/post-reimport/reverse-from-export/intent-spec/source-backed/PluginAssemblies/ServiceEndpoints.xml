@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceEndpoints xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServiceEndpoint ServiceEndpointId="{00dda6ae-ed38-f111-88b3-0022489b9600}" Name="codex_webhook_endpoint">
+    <ConnectionMode>1</ConnectionMode>
+    <Contract>8</Contract>
+    <Description>Neutral webhook endpoint for compiler proof.</Description>
+    <Path></Path>
+    <SolutionNamespace></SolutionNamespace>
+    <UserClaim>1</UserClaim>
+    <IsCustomizable>1</IsCustomizable>
+    <AuthType>4</AuthType>
+    <MessageFormat>2</MessageFormat>
+    <NamespaceAddress>https://hooks.contoso.example</NamespaceAddress>
+    <NamespaceFormat>1</NamespaceFormat>
+    <Url>https://hooks.contoso.example/dataverse/codex</Url>
+    <UseKeyVaultConfiguration>0</UseKeyVaultConfiguration>
+  </ServiceEndpoint>
+</ServiceEndpoints>

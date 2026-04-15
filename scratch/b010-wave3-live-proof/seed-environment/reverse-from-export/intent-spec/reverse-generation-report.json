@@ -1,0 +1,29 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "CanvasApp",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "CanvasApp",
+      "artifact": "cat_overview_3dbf5",
+      "packageRelativePath": "CanvasApps/cat_overview_3dbf5.meta.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedEnvironment",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

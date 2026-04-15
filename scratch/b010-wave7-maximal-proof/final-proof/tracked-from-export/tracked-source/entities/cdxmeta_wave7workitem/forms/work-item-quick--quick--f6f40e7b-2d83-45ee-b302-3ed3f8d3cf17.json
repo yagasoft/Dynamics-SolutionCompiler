@@ -1,0 +1,86 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_wave7workitem|quick|f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17",
+  "DisplayName": "Work Item Quick",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7WorkItem/FormXml/quick/{f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "47629465bb3f040b17e7a88036432f041b3b03693e70f84cdcd3a9a1d524233d",
+    "controlCount": "3",
+    "controlDescriptionCount": "3",
+    "description": "Quick form for compact work item snapshots.",
+    "entityLogicalName": "cdxmeta_wave7workitem",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Work Item Quick",
+      "description": "Quick form for compact work item snapshots.",
+      "type": "quick",
+      "tabs": [
+        {
+          "name": "quick",
+          "label": "Quick",
+          "sections": [
+            {
+              "name": "snapshot",
+              "label": "Snapshot",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_wave7workitemname",
+                  "label": "Work Item"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_summary",
+                  "label": "Summary"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_stage",
+                  "label": "Stage"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": []
+    },
+    "formId": "f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17",
+    "formType": "quick",
+    "formTypeCode": "1",
+    "headerControlCount": "0",
+    "quickFormCount": "0",
+    "sectionCount": "1",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "quick",
+      "formId": "f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17",
+      "tabCount": 1,
+      "sectionCount": 1,
+      "controlCount": 3,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 0,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_stage",
+          "dataFieldName": "cdxmeta_stage",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_summary",
+          "dataFieldName": "cdxmeta_summary",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_wave7workitemname",
+          "dataFieldName": "cdxmeta_wave7workitemname",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

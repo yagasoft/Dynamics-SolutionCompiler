@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{2c770a3f-0c8f-4a58-b4af-6f5878ef13b8}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="cdxmeta_wave7checkpointname" select="1" icon="1" preview="1">
+        <row name="result" id="cdxmeta_wave7checkpointid">
+          <cell name="cdxmeta_wave7checkpointname" width="150" />
+          <cell name="cdxmeta_sequence" width="150" />
+          <cell name="cdxmeta_wave7workitemid" width="150" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="cdxmeta_wave7checkpoint">
+          <attribute name="cdxmeta_wave7checkpointid" />
+          <attribute name="cdxmeta_wave7checkpointname" />
+          <attribute name="cdxmeta_sequence" />
+          <attribute name="cdxmeta_wave7workitemid" />
+          <order attribute="cdxmeta_sequence" descending="false" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="All Checkpoints" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

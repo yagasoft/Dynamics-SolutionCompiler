@@ -1,0 +1,18 @@
+{
+  "LogicalName": "new_codex-20shared-20connector",
+  "DisplayName": "Codex Shared Connector",
+  "metadataSourcePath": "Connectors/new_codex-20shared-20connector.xml",
+  "assetSourcePaths": [
+    "Connectors/new_codex-20shared-20connector_connectionparameters.json",
+    "Connectors/new_codex-20shared-20connector_openapidefinition.json",
+    "Connectors/new_codex-20shared-20connector_policytemplateinstances.json"
+  ],
+  "name": "new_codex-20shared-20connector",
+  "description": null,
+  "connectorInternalId": null,
+  "connectorType": "1",
+  "capabilities": null,
+  "introducedVersion": null,
+  "isCustomizable": false,
+  "comparisonSignature": "156592d85411337b79b2e45fc88a0c9530f7a4556ce2008159687510985d0e51"
+}

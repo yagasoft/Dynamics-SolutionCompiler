@@ -259,6 +259,122 @@ public sealed class PacCliExecutorIntegrationTests
         }
     }
 
+    [Fact]
+    public void Pack_reports_explicit_root_component_boundary_for_reverse_generated_reporting_legacy_package_inputs_when_available()
+    {
+        if (!IsPacAvailable())
+        {
+            return;
+        }
+
+        var seedPath = Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            "seed-reporting-legacy",
+            "unpacked");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-pac-reporting-legacy-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-pac-reporting-legacy-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            var model = new CompilerKernel().Compile(new CompilationRequest(seedPath, Array.Empty<string>())).Solution;
+            var reverseEmit = new DataverseSolutionCompiler.Emitters.TrackedSource.IntentSpecEmitter().Emit(model, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(
+                Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"),
+                Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(reversed, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+
+            var result = new PacCliExecutor().Pack(new PackageRequest(
+                Path.Combine(packageOutputRoot, "package-inputs"),
+                packageOutputRoot,
+                PackageFlavor.Unmanaged));
+
+            result.Success.Should().BeFalse();
+            result.Diagnostics.Should().Contain(diagnostic =>
+                diagnostic.Code == "pac-pack-failed-stdout"
+                && diagnostic.Message.Contains("RootComponent validation failed", StringComparison.Ordinal));
+            result.Diagnostics.Should().Contain(diagnostic =>
+                diagnostic.Code == "pac-pack-failed-stdout"
+                && diagnostic.Message.Contains("Following root components are not defined in customizations", StringComparison.Ordinal));
+        }
+        finally
+        {
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("seed-environment", "CodexMetadataSeedEnvironment.zip")]
+    [InlineData("seed-process-policy", "CodexMetadataSeedProcessPolicy.zip")]
+    [InlineData("seed-process-security", "CodexMetadataSeedProcessSecurity.zip")]
+    public void Pack_invokes_real_pac_for_reverse_generated_intent_from_classic_export_zip_when_available(string seedName, string zipFileName)
+    {
+        if (!IsPacAvailable())
+        {
+            return;
+        }
+
+        var seedZipPath = Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            seedName,
+            "export",
+            zipFileName);
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-pac-zip-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-pac-zip-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            var model = new CompilerKernel().Compile(new CompilationRequest(seedZipPath, Array.Empty<string>())).Solution;
+            var reverseEmit = new DataverseSolutionCompiler.Emitters.TrackedSource.IntentSpecEmitter().Emit(model, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(
+                Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"),
+                Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(reversed, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+
+            var result = new PacCliExecutor().Pack(new PackageRequest(
+                Path.Combine(packageOutputRoot, "package-inputs"),
+                packageOutputRoot,
+                PackageFlavor.Unmanaged));
+
+            result.Success.Should().BeTrue();
+            result.PackagePath.Should().NotBeNullOrWhiteSpace();
+            File.Exists(result.PackagePath!).Should().BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
     private static bool IsPacAvailable()
     {
         try

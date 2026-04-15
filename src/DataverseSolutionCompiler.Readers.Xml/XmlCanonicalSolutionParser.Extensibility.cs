@@ -9,20 +9,32 @@ internal sealed partial class XmlCanonicalSolutionParser
     private void ParsePluginRegistrationFamilies()
     {
         var customizationsPath = Path.Combine(_root, "Other", "Customizations.xml");
-        if (!File.Exists(customizationsPath))
-        {
-            return;
-        }
-
-        var root = LoadRoot(customizationsPath);
+        var hasCustomizations = File.Exists(customizationsPath);
+        var root = hasCustomizations ? LoadRoot(customizationsPath) : null;
         var pluginTypeNamesById = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var pluginStepLogicalNamesById = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        var emittedPluginStepImageLogicalNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var assemblyElement in root.ElementLocal("SolutionPluginAssemblies")
-                     ?.Elements()
-                     .Where(element => element.Name.LocalName.Equals("PluginAssembly", StringComparison.OrdinalIgnoreCase))
-                     .OrderBy(element => Text(element.ElementLocal("FileName")) ?? element.AttributeValue("FullName"), StringComparer.OrdinalIgnoreCase)
-                     ?? Enumerable.Empty<XElement>())
+        var pluginAssemblySources = new List<(XElement Element, string MetadataPath)>();
+        if (root is not null)
+        {
+            pluginAssemblySources.AddRange(root.ElementLocal("SolutionPluginAssemblies")
+                ?.Elements()
+                .Where(element => element.Name.LocalName.Equals("PluginAssembly", StringComparison.OrdinalIgnoreCase))
+                .Select(element => (Element: element, MetadataPath: customizationsPath))
+                ?? Enumerable.Empty<(XElement Element, string MetadataPath)>());
+        }
+
+        var shardedAssemblyDirectory = Path.Combine(_root, "PluginAssemblies");
+        if (Directory.Exists(shardedAssemblyDirectory))
+        {
+            pluginAssemblySources.AddRange(Directory.GetFiles(shardedAssemblyDirectory, "*.data.xml", SearchOption.AllDirectories)
+                .Select(path => (Element: LoadRoot(path), MetadataPath: path))
+                .Where(source => source.Element.Name.LocalName.Equals("PluginAssembly", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        foreach (var (assemblyElement, assemblyMetadataPath) in pluginAssemblySources
+                     .OrderBy(source => Text(source.Element.ElementLocal("FileName")) ?? source.Element.AttributeValue("FullName"), StringComparer.OrdinalIgnoreCase))
         {
             var fullName = Text(assemblyElement.ElementLocal("FullName"))
                 ?? assemblyElement.AttributeValue("FullName");
@@ -49,9 +61,9 @@ internal sealed partial class XmlCanonicalSolutionParser
                 ComponentFamily.PluginAssembly,
                 fullName,
                 displayName,
-                customizationsPath,
+                assemblyMetadataPath,
                 CreateProperties(
-                    (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(customizationsPath)),
+                    (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(assemblyMetadataPath)),
                     (Key: ArtifactPropertyKeys.AssetSourcePath, Value: normalizedFileName),
                     (Key: ArtifactPropertyKeys.AssemblyFullName, Value: fullName),
                     (Key: ArtifactPropertyKeys.AssemblyFileName, Value: Path.GetFileName(normalizedFileName)),
@@ -100,9 +112,9 @@ internal sealed partial class XmlCanonicalSolutionParser
                     ComponentFamily.PluginType,
                     typeName,
                     typeName,
-                    customizationsPath,
+                    assemblyMetadataPath,
                     CreateProperties(
-                        (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(customizationsPath)),
+                        (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(assemblyMetadataPath)),
                         (Key: ArtifactPropertyKeys.AssemblyFullName, Value: fullName),
                         (Key: ArtifactPropertyKeys.AssemblyQualifiedName, Value: assemblyQualifiedName),
                         (Key: ArtifactPropertyKeys.FriendlyName, Value: Text(pluginTypeElement.ElementLocal("FriendlyName"))),
@@ -113,11 +125,26 @@ internal sealed partial class XmlCanonicalSolutionParser
             }
         }
 
-        foreach (var stepElement in root.ElementLocal("SdkMessageProcessingSteps")
-                     ?.Elements()
-                     .Where(element => element.Name.LocalName.Equals("SdkMessageProcessingStep", StringComparison.OrdinalIgnoreCase))
-                     .OrderBy(element => element.AttributeValue("Name") ?? Text(element.ElementLocal("Name")), StringComparer.OrdinalIgnoreCase)
-                     ?? Enumerable.Empty<XElement>())
+        var pluginStepSources = new List<(XElement Element, string MetadataPath)>();
+        if (root is not null)
+        {
+            pluginStepSources.AddRange(root.ElementLocal("SdkMessageProcessingSteps")
+                ?.Elements()
+                .Where(element => element.Name.LocalName.Equals("SdkMessageProcessingStep", StringComparison.OrdinalIgnoreCase))
+                .Select(element => (Element: element, MetadataPath: customizationsPath))
+                ?? Enumerable.Empty<(XElement Element, string MetadataPath)>());
+        }
+
+        var shardedStepDirectory = Path.Combine(_root, "SdkMessageProcessingSteps");
+        if (Directory.Exists(shardedStepDirectory))
+        {
+            pluginStepSources.AddRange(Directory.GetFiles(shardedStepDirectory, "*.xml", SearchOption.TopDirectoryOnly)
+                .Select(path => (Element: LoadRoot(path), MetadataPath: path))
+                .Where(source => source.Element.Name.LocalName.Equals("SdkMessageProcessingStep", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        foreach (var (stepElement, stepMetadataPath) in pluginStepSources
+                     .OrderBy(source => source.Element.AttributeValue("Name") ?? Text(source.Element.ElementLocal("Name")), StringComparer.OrdinalIgnoreCase))
         {
             var stepName = Text(stepElement.ElementLocal("Name"))
                 ?? stepElement.AttributeValue("Name");
@@ -132,11 +159,17 @@ internal sealed partial class XmlCanonicalSolutionParser
             var rank = Text(stepElement.ElementLocal("Rank"));
             var supportedDeployment = Text(stepElement.ElementLocal("SupportedDeployment"));
             var messageName = Text(stepElement.ElementLocal("MessageName"));
+            var sdkMessageId = NormalizeGuid(Text(stepElement.ElementLocal("SdkMessageId")));
             var primaryEntity = NormalizeLogicalName(Text(stepElement.ElementLocal("PrimaryEntity")));
             var handlerPluginTypeName = Text(stepElement.ElementLocal("EventHandlerPluginTypeName"));
             if (string.IsNullOrWhiteSpace(handlerPluginTypeName))
             {
-                var pluginTypeId = NormalizeGuid(Text(stepElement.ElementLocal("EventHandlerPluginTypeId")));
+                handlerPluginTypeName = NormalizePluginTypeLogicalName(Text(stepElement.ElementLocal("PluginTypeName")));
+            }
+
+            if (string.IsNullOrWhiteSpace(handlerPluginTypeName))
+            {
+                var pluginTypeId = NormalizeGuid(Text(stepElement.ElementLocal("EventHandlerPluginTypeId")) ?? Text(stepElement.ElementLocal("PluginTypeId")));
                 if (!string.IsNullOrWhiteSpace(pluginTypeId) && pluginTypeNamesById.TryGetValue(pluginTypeId, out var mappedTypeName))
                 {
                     handlerPluginTypeName = mappedTypeName;
@@ -158,6 +191,7 @@ internal sealed partial class XmlCanonicalSolutionParser
                 rank,
                 supportedDeployment,
                 messageName,
+                sdkMessageId,
                 primaryEntity,
                 handlerPluginTypeName,
                 filteringAttributes
@@ -167,36 +201,39 @@ internal sealed partial class XmlCanonicalSolutionParser
                 ComponentFamily.PluginStep,
                 logicalName,
                 stepName,
-                customizationsPath,
+                stepMetadataPath,
                 CreateProperties(
-                    (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(customizationsPath)),
+                    (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(stepMetadataPath)),
                     (Key: ArtifactPropertyKeys.Description, Value: Text(stepElement.ElementLocal("Description"))),
                     (Key: ArtifactPropertyKeys.Stage, Value: stage),
                     (Key: ArtifactPropertyKeys.Mode, Value: mode),
                     (Key: ArtifactPropertyKeys.Rank, Value: rank),
                     (Key: ArtifactPropertyKeys.SupportedDeployment, Value: supportedDeployment),
                     (Key: ArtifactPropertyKeys.MessageName, Value: messageName),
+                    (Key: ArtifactPropertyKeys.SdkMessageId, Value: sdkMessageId),
                     (Key: ArtifactPropertyKeys.PrimaryEntity, Value: primaryEntity),
                     (Key: ArtifactPropertyKeys.HandlerPluginTypeName, Value: handlerPluginTypeName),
                     (Key: ArtifactPropertyKeys.FilteringAttributes, Value: filteringAttributes),
                     (Key: ArtifactPropertyKeys.IntroducedVersion, Value: Text(stepElement.ElementLocal("IntroducedVersion"))),
                     (Key: ArtifactPropertyKeys.SummaryJson, Value: summaryJson),
                     (Key: ArtifactPropertyKeys.ComparisonSignature, Value: ComputeSignature(summaryJson))));
+
+            foreach (var imageElement in stepElement.ElementLocal("SdkMessageProcessingStepImages")
+                         ?.Elements()
+                         .Where(element => element.Name.LocalName.Equals("SdkMessageProcessingStepImage", StringComparison.OrdinalIgnoreCase))
+                         .OrderBy(element => element.AttributeValue("Name") ?? Text(element.ElementLocal("Name")), StringComparer.OrdinalIgnoreCase)
+                         ?? Enumerable.Empty<XElement>())
+            {
+                AddPluginStepImageArtifact(imageElement, logicalName, stepMetadataPath, emittedPluginStepImageLogicalNames);
+            }
         }
 
-        foreach (var imageElement in root.ElementLocal("SdkMessageProcessingStepImages")
+        foreach (var imageElement in root?.ElementLocal("SdkMessageProcessingStepImages")
                      ?.Elements()
                      .Where(element => element.Name.LocalName.Equals("SdkMessageProcessingStepImage", StringComparison.OrdinalIgnoreCase))
                      .OrderBy(element => element.AttributeValue("Name") ?? Text(element.ElementLocal("Name")), StringComparer.OrdinalIgnoreCase)
                      ?? Enumerable.Empty<XElement>())
         {
-            var imageName = Text(imageElement.ElementLocal("Name"))
-                ?? imageElement.AttributeValue("Name");
-            if (string.IsNullOrWhiteSpace(imageName))
-            {
-                continue;
-            }
-
             var parentStepLogicalName = string.Empty;
             var parentStepId = NormalizeGuid(Text(imageElement.ElementLocal("SdkMessageProcessingStepId")));
             if (!string.IsNullOrWhiteSpace(parentStepId)
@@ -204,38 +241,58 @@ internal sealed partial class XmlCanonicalSolutionParser
             {
                 parentStepLogicalName = mappedStepLogicalName;
             }
-
-            var entityAlias = NormalizeLogicalName(Text(imageElement.ElementLocal("EntityAlias")));
-            var imageType = Text(imageElement.ElementLocal("ImageType"));
-            var selectedAttributes = NormalizeAttributeList(Text(imageElement.ElementLocal("Attributes")));
-            var logicalName = BuildPluginStepImageLogicalName(parentStepLogicalName, imageName, entityAlias, imageType);
-            var summaryJson = SerializeJson(new
-            {
-                imageName,
-                parentStepLogicalName,
-                entityAlias,
-                imageType,
-                messagePropertyName = Text(imageElement.ElementLocal("MessagePropertyName")),
-                selectedAttributes
-            });
-
-            AddArtifact(
-                ComponentFamily.PluginStepImage,
-                logicalName,
-                imageName,
-                customizationsPath,
-                CreateProperties(
-                    (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(customizationsPath)),
-                    (Key: ArtifactPropertyKeys.Description, Value: Text(imageElement.ElementLocal("Description"))),
-                    (Key: ArtifactPropertyKeys.ParentPluginStepLogicalName, Value: parentStepLogicalName),
-                    (Key: ArtifactPropertyKeys.EntityAlias, Value: entityAlias),
-                    (Key: ArtifactPropertyKeys.ImageType, Value: imageType),
-                    (Key: ArtifactPropertyKeys.MessagePropertyName, Value: Text(imageElement.ElementLocal("MessagePropertyName"))),
-                    (Key: ArtifactPropertyKeys.SelectedAttributes, Value: selectedAttributes),
-                    (Key: ArtifactPropertyKeys.IntroducedVersion, Value: Text(imageElement.ElementLocal("IntroducedVersion"))),
-                    (Key: ArtifactPropertyKeys.SummaryJson, Value: summaryJson),
-                    (Key: ArtifactPropertyKeys.ComparisonSignature, Value: ComputeSignature(summaryJson))));
+            AddPluginStepImageArtifact(imageElement, parentStepLogicalName, customizationsPath, emittedPluginStepImageLogicalNames);
         }
+    }
+
+    private void AddPluginStepImageArtifact(
+        XElement imageElement,
+        string? parentStepLogicalName,
+        string metadataPath,
+        ISet<string> emittedLogicalNames)
+    {
+        var imageName = Text(imageElement.ElementLocal("Name"))
+            ?? imageElement.AttributeValue("Name");
+        if (string.IsNullOrWhiteSpace(imageName))
+        {
+            return;
+        }
+
+        var entityAlias = NormalizeLogicalName(Text(imageElement.ElementLocal("EntityAlias")));
+        var imageType = Text(imageElement.ElementLocal("ImageType"));
+        var selectedAttributes = NormalizeAttributeList(Text(imageElement.ElementLocal("Attributes")));
+        var logicalName = BuildPluginStepImageLogicalName(parentStepLogicalName, imageName, entityAlias, imageType);
+        if (!emittedLogicalNames.Add(logicalName))
+        {
+            return;
+        }
+
+        var summaryJson = SerializeJson(new
+        {
+            imageName,
+            parentStepLogicalName,
+            entityAlias,
+            imageType,
+            messagePropertyName = Text(imageElement.ElementLocal("MessagePropertyName")),
+            selectedAttributes
+        });
+
+        AddArtifact(
+            ComponentFamily.PluginStepImage,
+            logicalName,
+            imageName,
+            metadataPath,
+            CreateProperties(
+                (Key: ArtifactPropertyKeys.MetadataSourcePath, Value: RelativePath(metadataPath)),
+                (Key: ArtifactPropertyKeys.Description, Value: Text(imageElement.ElementLocal("Description"))),
+                (Key: ArtifactPropertyKeys.ParentPluginStepLogicalName, Value: parentStepLogicalName),
+                (Key: ArtifactPropertyKeys.EntityAlias, Value: entityAlias),
+                (Key: ArtifactPropertyKeys.ImageType, Value: imageType),
+                (Key: ArtifactPropertyKeys.MessagePropertyName, Value: Text(imageElement.ElementLocal("MessagePropertyName"))),
+                (Key: ArtifactPropertyKeys.SelectedAttributes, Value: selectedAttributes),
+                (Key: ArtifactPropertyKeys.IntroducedVersion, Value: Text(imageElement.ElementLocal("IntroducedVersion"))),
+                (Key: ArtifactPropertyKeys.SummaryJson, Value: summaryJson),
+                (Key: ArtifactPropertyKeys.ComparisonSignature, Value: ComputeSignature(summaryJson))));
     }
 
     private static string BuildPluginStepLogicalName(
@@ -269,6 +326,18 @@ internal sealed partial class XmlCanonicalSolutionParser
                 entityAlias ?? "alias",
                 imageType?.Trim() ?? "type"
             });
+
+    private static string? NormalizePluginTypeLogicalName(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var delimiter = value.IndexOf(',');
+        var typeName = delimiter >= 0 ? value[..delimiter] : value;
+        return string.IsNullOrWhiteSpace(typeName) ? null : typeName.Trim();
+    }
 
     private static string? NormalizeSourceRelativePath(string? value)
     {

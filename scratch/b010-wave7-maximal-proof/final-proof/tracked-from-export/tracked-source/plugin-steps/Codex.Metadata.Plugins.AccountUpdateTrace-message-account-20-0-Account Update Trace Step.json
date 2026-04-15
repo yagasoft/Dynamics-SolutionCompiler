@@ -1,0 +1,16 @@
+{
+  "LogicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+  "DisplayName": "Account Update Trace Step",
+  "metadataSourcePath": "SdkMessageProcessingSteps/{ba123f38-e738-f111-88b3-0022489b9600}.xml",
+  "assetSourcePaths": [],
+  "stage": "20",
+  "mode": "0",
+  "rank": "1",
+  "supportedDeployment": "0",
+  "messageName": null,
+  "primaryEntity": "account",
+  "handlerPluginTypeName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+  "filteringAttributes": "accountnumber,name",
+  "description": "Neutral synchronous update step for account.",
+  "comparisonSignature": "78a63ff449b150003d1c9e50bc45c973f664bd0b0d2a5006dcf544f1fa18e7d7"
+}

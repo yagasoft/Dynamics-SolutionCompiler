@@ -1,0 +1,47 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "PluginAssembly",
+    "PluginStep",
+    "PluginStepImage",
+    "PluginType",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "PluginAssembly",
+      "artifact": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml"
+    },
+    {
+      "family": "PluginStep",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+      "packageRelativePath": "SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml"
+    },
+    {
+      "family": "PluginStepImage",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step|Account PreImage|preimage|0",
+      "packageRelativePath": "SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml"
+    },
+    {
+      "family": "PluginType",
+      "artifact": "Codex.Metadata.Plugins.AccountUpdateTrace",
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedPluginRegistration",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

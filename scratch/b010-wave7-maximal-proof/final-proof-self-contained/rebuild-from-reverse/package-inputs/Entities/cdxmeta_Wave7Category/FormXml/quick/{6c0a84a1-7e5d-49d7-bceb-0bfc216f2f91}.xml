@@ -1,0 +1,37 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="general" id="{6b2f2279-7918-6add-6a14-f045920641fc}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="General" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="snapshot" id="{7378919e-faf3-f62c-c0cc-cb8f66ff5101}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Snapshot" languagecode="1033" />
+</labels>
+<rows />
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Category Snapshot" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Quick form used by the work item quick-view control." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

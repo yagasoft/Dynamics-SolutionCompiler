@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Connector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <connectorid>186ec4fa-be38-f111-88b3-0022489b9600</connectorid>
+  <description></description>
+  <displayname>Codex Shared Connector</displayname>
+  <iconbrandcolor>#007ee5</iconbrandcolor>
+  <name>new_codex-20shared-20connector</name>
+  <connectortype>1</connectortype>
+  <openapidefinition>/Connector/new_codex-20shared-20connector_openapidefinition.json</openapidefinition>
+  <connectionparameters>/Connector/new_codex-20shared-20connector_connectionparameters.json</connectionparameters>
+  <policytemplateinstances>/Connector/new_codex-20shared-20connector_policytemplateinstances.json</policytemplateinstances>
+</Connector>

@@ -1,0 +1,41 @@
+{
+  "inputKind": "unpacked-xml-folder",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "AiConfiguration",
+    "AiProject",
+    "AiProjectType",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "AiConfiguration",
+      "artifact": "invoice_processing_training",
+      "packageRelativePath": "AIConfigurations/invoice_processing_training/AIConfiguration.xml"
+    },
+    {
+      "family": "AiProject",
+      "artifact": "invoice_processing",
+      "packageRelativePath": "AIProjects/invoice_processing/AIProject.xml"
+    },
+    {
+      "family": "AiProjectType",
+      "artifact": "document_automation",
+      "packageRelativePath": "AIProjectTypes/document_automation/AIProjectType.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedAiFamilies",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

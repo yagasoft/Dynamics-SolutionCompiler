@@ -1,0 +1,32 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedProcessSecurity",
+    "DisplayName": "Codex Metadata Seed Process Security",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "Entities",
+    "Other",
+    "Roles"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Entities/cdxmeta_WorkItem/Entity.xml",
+    "package-inputs/Other/ConnectionRoles.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/FieldSecurityProfiles.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Roles/Codex Metadata Seed Role.xml",
+    "package-inputs/manifest.json"
+  ]
+}

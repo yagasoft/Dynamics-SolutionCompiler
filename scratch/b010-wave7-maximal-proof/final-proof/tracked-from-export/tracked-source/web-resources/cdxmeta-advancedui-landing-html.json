@@ -1,0 +1,16 @@
+{
+  "Family": 15,
+  "LogicalName": "cdxmeta_/advancedui/landing.html",
+  "DisplayName": "Advanced UI Landing",
+  "metadataSourcePath": "WebResources/cdxmeta_/advancedui/landing.html.data.xml",
+  "assetSourcePaths": [
+    "WebResources/cdxmeta_/advancedui/landing.html"
+  ],
+  "properties": {
+    "byteLength": "1389",
+    "contentHash": "769c1328ba2445211a1e99b9eca7a19657fcb0c093a32c4e05d378b56f7e7007",
+    "description": "Neutral landing page for the Codex advanced UI scaffold.",
+    "webResourceType": "1",
+    "webResourceTypeLabel": "html"
+  }
+}

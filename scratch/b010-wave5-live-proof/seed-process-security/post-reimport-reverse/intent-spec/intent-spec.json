@@ -1,0 +1,260 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedProcessSecurity",
+    "displayName": "Codex Metadata Seed Process Security",
+    "description": "Curated Codex skill seed solution: Codex Metadata Seed Process Security",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [
+    {
+      "logicalName": "cdxmeta_workitem",
+      "schemaName": "cdxmeta_WorkItem",
+      "displayName": "Work Item",
+      "description": "Seed table that mixes representative Dataverse metadata types.",
+      "entitySetName": "cdxmeta_workitems",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_details",
+          "schemaName": "cdxmeta_details",
+          "displayName": "Details",
+          "description": "Long-form notes.",
+          "type": "memo",
+          "isSecured": true,
+          "isCustomizable": true
+        }
+      ],
+      "keys": [],
+      "forms": [],
+      "views": [],
+      "visualizations": []
+    }
+  ],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedProcessSecurity",
+      "displayName": "Codex Metadata Seed Process Security",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "description": "Curated Codex skill seed solution: Codex Metadata Seed Process Security",
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata"
+      }
+    },
+    {
+      "family": "Role",
+      "logicalName": "codex metadata seed role",
+      "displayName": "Codex Metadata Seed Role",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "capabilitiesJson": [
+          {
+            "name": "prvCreateSharePointData",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadPluginAssembly",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadPluginType",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSdkMessage",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSdkMessageProcessingStep",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSdkMessageProcessingStepImage",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSharePointData",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSharePointDocument",
+            "level": "Global"
+          },
+          {
+            "name": "prvWriteSharePointData",
+            "level": "Global"
+          }
+        ],
+        "isCustomizable": "true",
+        "privilegeCount": "9"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvCreateSharePointData|Global",
+      "displayName": "prvCreateSharePointData",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvCreateSharePointData"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadPluginAssembly|Global",
+      "displayName": "prvReadPluginAssembly",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadPluginAssembly"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadPluginType|Global",
+      "displayName": "prvReadPluginType",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadPluginType"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSdkMessageProcessingStepImage|Global",
+      "displayName": "prvReadSdkMessageProcessingStepImage",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSdkMessageProcessingStepImage"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSdkMessageProcessingStep|Global",
+      "displayName": "prvReadSdkMessageProcessingStep",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSdkMessageProcessingStep"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSdkMessage|Global",
+      "displayName": "prvReadSdkMessage",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSdkMessage"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSharePointData|Global",
+      "displayName": "prvReadSharePointData",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSharePointData"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSharePointDocument|Global",
+      "displayName": "prvReadSharePointDocument",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSharePointDocument"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvWriteSharePointData|Global",
+      "displayName": "prvWriteSharePointData",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvWriteSharePointData"
+      }
+    },
+    {
+      "family": "FieldSecurityProfile",
+      "logicalName": "codex metadata seed field security",
+      "displayName": "Codex Metadata Seed Field Security",
+      "metadataSourcePath": "source-backed/Other/FieldSecurityProfiles.xml",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml",
+      "stableProperties": {
+        "itemCount": "1"
+      }
+    },
+    {
+      "family": "FieldPermission",
+      "logicalName": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+      "displayName": "cdxmeta_workitem.cdxmeta_details",
+      "metadataSourcePath": "source-backed/Other/FieldSecurityProfiles.xml",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml",
+      "stableProperties": {
+        "attributeLogicalName": "cdxmeta_details",
+        "canCreate": "4",
+        "canRead": "4",
+        "canReadUnmasked": "0",
+        "canUpdate": "4",
+        "entityLogicalName": "cdxmeta_workitem",
+        "parentFieldSecurityProfileLogicalName": "codex metadata seed field security"
+      }
+    },
+    {
+      "family": "ConnectionRole",
+      "logicalName": "codex metadata seed connection role",
+      "displayName": "Codex Metadata Seed Connection Role",
+      "metadataSourcePath": "source-backed/Other/ConnectionRoles.xml",
+      "packageRelativePath": "Other/ConnectionRoles.xml",
+      "stableProperties": {
+        "category": "1",
+        "description": "Neutral connection role placeholder for Dataverse metadata synthesis.",
+        "introducedVersion": "1.0.0.0",
+        "isCustomizable": "true",
+        "objectTypeMappingsJson": [
+          "All"
+        ]
+      }
+    }
+  ]
+}

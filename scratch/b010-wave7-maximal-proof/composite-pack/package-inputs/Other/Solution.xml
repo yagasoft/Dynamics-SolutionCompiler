@@ -1,0 +1,96 @@
+<ImportExportXml version="9.2.26033.170" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26033.170" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26033.00170">
+<SolutionManifest>
+<UniqueName>CodexMetadataWave7Maximal</UniqueName>
+<LocalizedNames>
+<LocalizedName description="Codex Metadata Wave 7 Maximal" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Program-end maximal supported proof for the Dataverse Solution Compiler B-010 backlog." languagecode="1033" />
+</Descriptions>
+<Version>1.0.0.0</Version>
+<Managed>0</Managed>
+<Publisher>
+<UniqueName>CodexMetadata</UniqueName>
+<LocalizedNames>
+<LocalizedName description="Codex Metadata" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Neutral publisher for Codex Dataverse metadata synthesis seed solutions." languagecode="1033" />
+</Descriptions>
+<EMailAddress xsi:nil="true" />
+<SupportingWebsiteUrl xsi:nil="true" />
+<CustomizationPrefix>cdxmeta</CustomizationPrefix>
+<CustomizationOptionValuePrefix>72727</CustomizationOptionValuePrefix>
+<Addresses>
+<Address>
+<AddressNumber>1</AddressNumber>
+<AddressTypeCode>1</AddressTypeCode>
+<City xsi:nil="true" />
+<County xsi:nil="true" />
+<Country xsi:nil="true" />
+<Fax xsi:nil="true" />
+<FreightTermsCode xsi:nil="true" />
+<ImportSequenceNumber xsi:nil="true" />
+<Latitude xsi:nil="true" />
+<Line1 xsi:nil="true" />
+<Line2 xsi:nil="true" />
+<Line3 xsi:nil="true" />
+<Longitude xsi:nil="true" />
+<Name xsi:nil="true" />
+<PostalCode xsi:nil="true" />
+<PostOfficeBox xsi:nil="true" />
+<PrimaryContactName xsi:nil="true" />
+<ShippingMethodCode>1</ShippingMethodCode>
+<StateOrProvince xsi:nil="true" />
+<Telephone1 xsi:nil="true" />
+<Telephone2 xsi:nil="true" />
+<Telephone3 xsi:nil="true" />
+<TimeZoneRuleVersionNumber xsi:nil="true" />
+<UPSZone xsi:nil="true" />
+<UTCOffset xsi:nil="true" />
+<UTCConversionTimeZoneCode xsi:nil="true" />
+</Address>
+<Address>
+<AddressNumber>2</AddressNumber>
+<AddressTypeCode>1</AddressTypeCode>
+<City xsi:nil="true" />
+<County xsi:nil="true" />
+<Country xsi:nil="true" />
+<Fax xsi:nil="true" />
+<FreightTermsCode xsi:nil="true" />
+<ImportSequenceNumber xsi:nil="true" />
+<Latitude xsi:nil="true" />
+<Line1 xsi:nil="true" />
+<Line2 xsi:nil="true" />
+<Line3 xsi:nil="true" />
+<Longitude xsi:nil="true" />
+<Name xsi:nil="true" />
+<PostalCode xsi:nil="true" />
+<PostOfficeBox xsi:nil="true" />
+<PrimaryContactName xsi:nil="true" />
+<ShippingMethodCode>1</ShippingMethodCode>
+<StateOrProvince xsi:nil="true" />
+<Telephone1 xsi:nil="true" />
+<Telephone2 xsi:nil="true" />
+<Telephone3 xsi:nil="true" />
+<TimeZoneRuleVersionNumber xsi:nil="true" />
+<UPSZone xsi:nil="true" />
+<UTCOffset xsi:nil="true" />
+<UTCConversionTimeZoneCode xsi:nil="true" />
+</Address>
+</Addresses>
+</Publisher>
+<RootComponents>
+<RootComponent type="1" schemaName="account" behavior="2" />
+<RootComponent type="1" schemaName="cdxmeta_category" behavior="0" />
+<RootComponent type="1" schemaName="cdxmeta_checkpoint" behavior="0" />
+<RootComponent type="1" schemaName="cdxmeta_photoasset" behavior="0" />
+<RootComponent type="1" schemaName="cdxmeta_workitem" behavior="0" />
+<RootComponent type="14" schemaName="cdxmeta_WorkItem_ExternalCode" behavior="0" />
+<RootComponent type="9" schemaName="cdxmeta_priorityband" behavior="0" />
+<RootComponent type="80" schemaName="codex_metadata_advanced_ui_924e69cb" behavior="0" />
+<RootComponent type="62" schemaName="codex_metadata_advanced_ui_924e69cb" behavior="0" />
+<RootComponent type="61" behavior="0" schemaName="cdxmeta_/advancedui/icon.svg" /><RootComponent type="61" behavior="0" schemaName="cdxmeta_/advancedui/landing.html" /><RootComponent type="300" behavior="0" schemaName="cat_overview_3dbf5" /><RootComponent type="95" behavior="0" id="905cdba1-be38-f111-88b3-0022489b9600" /><RootComponent type="372" behavior="0" schemaName="new_codex-20shared-20connector" id="186ec4fa-be38-f111-88b3-0022489b9600" /><RootComponent type="150" behavior="0" id="4c205db4-6737-f111-88b3-0022489b9600" /><RootComponent type="161" behavior="0" id="9f0a7210-6937-f111-88b3-0022489b9600" /><RootComponent type="20" behavior="0" id="94843e20-5d37-f111-88b3-0022489b9600" /><RootComponent type="70" behavior="0" id="a0843e20-5d37-f111-88b3-0022489b9600" /><RootComponent type="63" behavior="0" id="a3843e20-5d37-f111-88b3-0022489b9600" /></RootComponents>
+<MissingDependencies />
+</SolutionManifest>
+</ImportExportXml>

@@ -34,6 +34,11 @@ public sealed class XmlSolutionReaderTests
         globalChoice.Properties![ArtifactPropertyKeys.IsGlobal].Should().Be("true");
         globalChoice.Properties![ArtifactPropertyKeys.OptionCount].Should().Be("3");
 
+        var globalChoiceColumn = FindArtifact(solution, ComponentFamily.Column, "cdxmeta_workitem|cdxmeta_priorityband");
+        globalChoiceColumn.Properties![ArtifactPropertyKeys.AttributeType].Should().Be("picklist");
+        globalChoiceColumn.Properties![ArtifactPropertyKeys.IsGlobal].Should().Be("true");
+        globalChoiceColumn.Properties![ArtifactPropertyKeys.OptionSetName].Should().Be("cdxmeta_priorityband");
+
         var localChoice = FindArtifact(solution, ComponentFamily.OptionSet, "cdxmeta_workitem|cdxmeta_stage");
         localChoice.Properties![ArtifactPropertyKeys.IsGlobal].Should().Be("false");
         localChoice.Properties![ArtifactPropertyKeys.OptionSetType].Should().Be("picklist");
@@ -135,6 +140,36 @@ public sealed class XmlSolutionReaderTests
     }
 
     [Fact]
+    public void Reader_parses_seed_reporting_legacy_into_source_first_artifacts()
+    {
+        var solution = ReadFixture("seed-reporting-legacy");
+
+        solution.Identity.UniqueName.Should().Be("CodexMetadataSeedReportingLegacy");
+
+        var report = FindArtifact(solution, ComponentFamily.Report, "cdxmeta_account_summary");
+        report.DisplayName.Should().Be("Account Summary");
+        report.Properties![ArtifactPropertyKeys.MetadataSourcePath].Should().Be("Reports/cdxmeta_account_summary.rdl.data.xml");
+        report.Properties![ArtifactPropertyKeys.PackageRelativePath].Should().Be("Reports/cdxmeta_account_summary.rdl.data.xml");
+        report.Properties![ArtifactPropertyKeys.AssetSourcePath].Should().Be("Reports/cdxmeta_account_summary.rdl");
+
+        var template = FindArtifact(solution, ComponentFamily.Template, "cdxmeta_welcome_email");
+        template.DisplayName.Should().Be("Welcome Email");
+        template.Properties![ArtifactPropertyKeys.MetadataSourcePath].Should().Be("Templates/cdxmeta_welcome_email.xml");
+
+        var displayString = FindArtifact(solution, ComponentFamily.DisplayString, "cdxmeta_reporting_labels");
+        displayString.DisplayName.Should().Be("Reporting Labels");
+        displayString.Properties![ArtifactPropertyKeys.PackageRelativePath].Should().Be("DisplayStrings/cdxmeta_reporting_labels.xml");
+
+        var attachment = FindArtifact(solution, ComponentFamily.Attachment, "cdxmeta_report_payload");
+        attachment.DisplayName.Should().Be("Report Payload");
+        attachment.Properties![ArtifactPropertyKeys.AssetSourcePath].Should().Be("Attachments/cdxmeta_report_payload.txt");
+
+        var wizard = FindArtifact(solution, ComponentFamily.LegacyAsset, "cdxmeta_onboarding_wizard");
+        wizard.DisplayName.Should().Be("Onboarding Wizard");
+        wizard.Properties![ArtifactPropertyKeys.MetadataSourcePath].Should().Be("WebWizards/cdxmeta_onboarding_wizard.xml");
+    }
+
+    [Fact]
     public void Reader_parses_seed_entity_analytics_into_typed_environment_configuration_artifacts()
     {
         var solution = ReadFixture("seed-entity-analytics");
@@ -145,6 +180,59 @@ public sealed class XmlSolutionReaderTests
         analytics.Properties![ArtifactPropertyKeys.EntityDataSource].Should().Be("dataverse");
         analytics.Properties![ArtifactPropertyKeys.IsEnabledForAdls].Should().Be("true");
         analytics.Properties![ArtifactPropertyKeys.IsEnabledForTimeSeries].Should().Be("false");
+    }
+
+    [Fact]
+    public void Reader_parses_entity_analytics_from_customizations_export_shape()
+    {
+        var sourceRoot = FixtureRoot("seed-entity-analytics");
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-entity-analytics-customizations-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(sourceRoot, tempRoot);
+
+            var analyticsDirectory = Path.Combine(tempRoot, "entityanalyticsconfigs");
+            if (Directory.Exists(analyticsDirectory))
+            {
+                Directory.Delete(analyticsDirectory, recursive: true);
+            }
+
+            var otherRoot = Path.Combine(tempRoot, "Other");
+            Directory.CreateDirectory(otherRoot);
+            File.WriteAllText(
+                Path.Combine(otherRoot, "Customizations.xml"),
+                """
+                <?xml version="1.0" encoding="utf-8"?>
+                <ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                  <EntityAnalyticsConfigs>
+                    <EntityAnalyticsConfig>
+                      <parententitylogicalname>contact</parententitylogicalname>
+                      <isenabledforadls>1</isenabledforadls>
+                      <isenabledfortimeseries>0</isenabledfortimeseries>
+                      <entitydatasource></entitydatasource>
+                    </EntityAnalyticsConfig>
+                  </EntityAnalyticsConfigs>
+                </ImportExportXml>
+                """);
+
+            var reader = new XmlSolutionReader();
+            var solution = reader.Read(new ReadRequest(tempRoot));
+
+            var analytics = FindArtifact(solution, ComponentFamily.EntityAnalyticsConfiguration, "contact");
+            analytics.Properties![ArtifactPropertyKeys.ParentEntityLogicalName].Should().Be("contact");
+            analytics.Properties![ArtifactPropertyKeys.EntityDataSource].Should().Be("dataverse");
+            analytics.Properties![ArtifactPropertyKeys.IsEnabledForAdls].Should().Be("true");
+            analytics.Properties![ArtifactPropertyKeys.IsEnabledForTimeSeries].Should().Be("false");
+            analytics.SourcePath.Should().EndWith(Path.Combine("Other", "Customizations.xml"));
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
     }
 
     [Fact]
@@ -167,6 +255,66 @@ public sealed class XmlSolutionReaderTests
         attributeImage.Properties![ArtifactPropertyKeys.ImageAttributeLogicalName].Should().Be("cdxmeta_profileimage");
         attributeImage.Properties![ArtifactPropertyKeys.ImageConfigurationScope].Should().Be("attribute");
         attributeImage.Properties![ArtifactPropertyKeys.IsPrimaryImage].Should().Be("true");
+    }
+
+    [Fact]
+    public void Reader_parses_image_configuration_from_customizations_when_entity_xml_omits_it()
+    {
+        var sourceRoot = FixtureRoot("seed-image-config");
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-image-config-customizations-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(sourceRoot, tempRoot);
+
+            var entityPath = Path.Combine(tempRoot, "Entities", "cdxmeta_PhotoAsset", "Entity.xml");
+            var entityXml = File.ReadAllText(entityPath)
+                .Replace("<PrimaryImageAttribute>cdxmeta_profileimage</PrimaryImageAttribute>", string.Empty, StringComparison.Ordinal)
+                .Replace("<CanStoreFullImage>1</CanStoreFullImage>", string.Empty, StringComparison.Ordinal)
+                .Replace("<IsPrimaryImage>1</IsPrimaryImage>", string.Empty, StringComparison.Ordinal);
+            File.WriteAllText(entityPath, entityXml);
+
+            var customizationsPath = Path.Combine(tempRoot, "Other", "Customizations.xml");
+            File.WriteAllText(
+                customizationsPath,
+                """
+                <?xml version="1.0" encoding="utf-8"?>
+                <ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                  <Entities />
+                  <EntityImageConfigs>
+                    <EntityImageConfig>
+                      <parententitylogicalname>cdxmeta_photoasset</parententitylogicalname>
+                      <primaryimageattribute>cdxmeta_profileimage</primaryimageattribute>
+                    </EntityImageConfig>
+                  </EntityImageConfigs>
+                  <AttributeImageConfigs>
+                    <AttributeImageConfig>
+                      <attributelogicalname>cdxmeta_profileimage</attributelogicalname>
+                      <parententitylogicalname>cdxmeta_photoasset</parententitylogicalname>
+                      <canstorefullimage>1</canstorefullimage>
+                    </AttributeImageConfig>
+                  </AttributeImageConfigs>
+                </ImportExportXml>
+                """);
+
+            var reader = new XmlSolutionReader();
+            var solution = reader.Read(new ReadRequest(tempRoot));
+
+            var entityImage = FindArtifact(solution, ComponentFamily.ImageConfiguration, "cdxmeta_photoasset|entity-image");
+            entityImage.Properties![ArtifactPropertyKeys.PrimaryImageAttribute].Should().Be("cdxmeta_profileimage");
+            entityImage.Properties![ArtifactPropertyKeys.CanStoreFullImage].Should().Be("true");
+
+            var attributeImage = FindArtifact(solution, ComponentFamily.ImageConfiguration, "cdxmeta_photoasset|cdxmeta_profileimage|attribute-image");
+            attributeImage.Properties![ArtifactPropertyKeys.CanStoreFullImage].Should().Be("true");
+            attributeImage.Properties![ArtifactPropertyKeys.IsPrimaryImage].Should().Be("true");
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
     }
 
     [Fact]
@@ -193,13 +341,13 @@ public sealed class XmlSolutionReaderTests
     {
         var solution = ReadFixture("seed-plugin-registration");
 
-        var assembly = FindArtifact(solution, ComponentFamily.PluginAssembly, "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+        var assembly = FindArtifact(solution, ComponentFamily.PluginAssembly, "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098");
         assembly.DisplayName.Should().Be("Codex.Metadata.Plugins");
         assembly.Properties![ArtifactPropertyKeys.AssemblyFileName].Should().Be("Codex.Metadata.Plugins.dll");
         assembly.Properties![ArtifactPropertyKeys.AssetSourcePath].Should().Be("PluginAssemblies/CodexMetadataPlugins-2F08B2D4-7F38-4B6F-84C8-5AB6FA4B6D10/Codex.Metadata.Plugins.dll");
 
         var pluginType = FindArtifact(solution, ComponentFamily.PluginType, "Codex.Metadata.Plugins.AccountUpdateTrace");
-        pluginType.Properties![ArtifactPropertyKeys.AssemblyFullName].Should().Be("Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+        pluginType.Properties![ArtifactPropertyKeys.AssemblyFullName].Should().Be("Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098");
         pluginType.Properties![ArtifactPropertyKeys.FriendlyName].Should().Be("Account Update Trace");
 
         var step = FindArtifact(solution, ComponentFamily.PluginStep, "Codex.Metadata.Plugins.AccountUpdateTrace|Update|account|20|0|Account Update Trace Step");
@@ -400,6 +548,23 @@ public sealed class XmlSolutionReaderTests
         catch
         {
             return false;
+        }
+    }
+
+    private static void CopyDirectory(string sourceRoot, string destinationRoot)
+    {
+        Directory.CreateDirectory(destinationRoot);
+
+        foreach (var directory in Directory.GetDirectories(sourceRoot, "*", SearchOption.AllDirectories))
+        {
+            Directory.CreateDirectory(Path.Combine(destinationRoot, Path.GetRelativePath(sourceRoot, directory)));
+        }
+
+        foreach (var file in Directory.GetFiles(sourceRoot, "*", SearchOption.AllDirectories))
+        {
+            var destinationPath = Path.Combine(destinationRoot, Path.GetRelativePath(sourceRoot, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+            File.Copy(file, destinationPath, overwrite: true);
         }
     }
 }

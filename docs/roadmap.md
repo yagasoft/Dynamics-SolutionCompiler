@@ -59,34 +59,72 @@ Priority order:
 Exit criteria:
 - each family has a documented source shape, a compare-safe field set, and a clear boundary for what remains best-effort
 
-## Phase 5: Rebuild Fidelity And Controlled Expansion
+## Phase 5: Completion Program For All Remaining Incomplete Dataverse Families
+
+This phase is now complete. While it was active, narrower execution slices were allowed to refine sequencing, but not to replace the program in the roadmap, backlog, current-thread baton, acceptance ledger, or coverage docs.
 
 Goal:
-- make the already-supported authoring subset deeply trustworthy from real exports before adding more breadth
-- expand breadth only after the reverse-authoring and rebuild loop stays honest about omissions and authorable scope
+- finish every still-incomplete touched family into one explicit end state:
+  - `full rebuildable (structured)`
+  - `full rebuildable (hybrid source-backed)`
+  - `source-first / permanent best-effort`
+- keep one compiler-native `intent-spec.json` document and retain `sourceBackedArtifacts[]` as the hybrid completion surface for XML-heavy or asset-heavy families
 
-Current hardening baseline:
-- `emit --layout intent-spec` now reverse-generates the supported tracked-source subset into one editable compiler-native intent-spec JSON document plus a machine-readable omission report
-- `intent-spec.json` now also supports `sourceBackedArtifacts[]`, allowing broader rebuildable families to round-trip through staged XML or asset evidence inside the same authoring document
-- classic exported solution zips are now first-class reverse-authoring input; the compiler normalizes them internally through PAC unpack before typed parsing and intent emission
-- preserved form and view IDs now flow through the intent surface when reverse generation needs them for rebuild fidelity
-- structured `main`, `quick`, and `card` forms plus supported `field`, `quickView`, and `subgrid` controls now reverse-generate and rebuild through the intent surface for the supported subset, with unsupported form shapes falling back to explicit source-backed handling
-- rebuild-safe authored saved-query visualizations now reverse-generate structurally from both unpacked source and classic export ZIPs when the chart metadata is complete
-- supported app-shell detail such as `appSettings` plus `entity` / `url` / `webResource` site map subareas now also survives reverse generation in structured form, while staged web resources remain explicit source-backed artifacts
-- tracked-source remains the primary reverse-authoring path, while classic export ZIP, unpacked XML, and existing intent input can also emit normalized intent-spec output
-- omission reporting now distinguishes unsupported families, unsupported shapes, platform-generated or non-authorable artifacts, missing source fidelity, and staged source-backed artifacts instead of collapsing them into a generic partial warning
-- the supported authoring subset now has a compact live export/delete/reimport proof that includes a custom table, custom column, main form, rebuild-safe authored savedquery view, entity-only app module plus site map, and environment variable definition plus current value
-- broader touched families can now reverse-generate and rebuild through hybrid source-backed intent even when they are not yet fully structured-authoring or live-reimport proven end to end
-- hybrid package rebuild now overlays staged web-resource payload assets as well as metadata files, closing a real app-shell rebuild gap for reverse-generated source-backed intent
+Program-wide completion rule:
+- a family is promoted only when it clears:
+  - source read
+  - tracked-source emit
+  - reverse-generation to `intent-spec.json`
+  - package-input rebuild
+  - PAC pack
+  - live `export -> reverse -> delete -> rebuild -> import/publish -> verify`
+- do not leave any currently touched family in an ambiguous middle state after this program
+- keep platform-generated system views, effective-access/runtime privilege expansion, and import-map or SLA or similarity-rule parity out of the rebuildability target unless new evidence overturns that boundary
 
-Immediate priority:
+Wave order:
+1. Close schema-detail and form gaps with structured authoring.
+   - Promote image authoring, reverse `ImageConfiguration` into the owning table authoring surface, expand structured `main` / `quick` / `card` forms with supported `field` / `subgrid` / `quickView` controls, and promote supported authored-chart support.
+   - Completion target: schema-detail extension and advanced model-driven UI become `full rebuildable (structured)` for the supported subset.
+2. Finish the broader app-shell lane.
+   - Keep stable structured authoring for supported site-map subareas and `appModules[].appSettings[]`.
+   - Keep `WebResource`, ribbon payloads, and custom-control manifests/assets on the hybrid source-backed path unless a clearly safe structured shape is proven.
+   - Completion target: broader app shell becomes fully rebuildable, using structured intent where stable and hybrid source-backed intent for payload-heavy UI assets.
+3. Promote canvas, entity analytics, and AI to `full rebuildable (hybrid source-backed)`.
+4. Promote code and extensibility to `full rebuildable (hybrid source-backed)`.
+   - Keep payload-heavy pieces such as plugin binaries and connector or endpoint adjunct files source-backed.
+   - Keep code-first SDK registration ingestion out of scope.
+5. Promote process and security definitions to `full rebuildable (hybrid source-backed)`.
+   - Keep these as definition-only families, never runtime/effective-access families.
+   - Allow `RolePrivilege` to remain an explicit carve-out if export-backed live parity is not stable enough.
+6. Permanently close the families that should not be forced into full generation.
+   - `ImportMap`
+   - `DataSourceMapping`
+   - `SimilarityRule`
+   - `Sla`
+   - `SlaItem`
+   - platform-generated system/default/lookup/quick-find views
+   - effective access/runtime privilege expansion
+   - reporting/legacy as separate future work rather than hidden debt inside this program
+7. Run a program-end maximal proof.
+   - Build one compact maximal supported solution containing one representative artifact from every family promoted by Waves 1-5.
+   - Run classic export, direct reverse generation, delete, rebuild, pack, import/publish, and verify.
+
+Completion outcome:
+- Wave 1 image proof, Wave 2 advanced UI / broader app-shell proof, Wave 3 `CanvasApp` plus `EntityAnalyticsConfiguration`, Wave 4 code/extensibility, Wave 5 process-policy plus security-definition, and Wave 7 maximal supported proof now all clear the required live bar.
+- Wave 6 permanent-boundary closure is complete: import-map, SLA, similarity-rule, platform-generated-view, effective-access, and reporting/legacy surfaces now have explicit non-silent boundaries instead of hidden rebuildability debt.
+- Compact AI families are now also closed as an explicit permanent boundary for the current environment: package-level reverse/rebuild remains available, but live Dataverse create rejects `AITemplate` with `OperationNotSupported`, so that lane is not treated as rebuildable.
+
+Next priority:
+- resume `B-007` breadth-first work from this completed baseline
+- the first post-`B-010` breadth slice now lands compact reporting/legacy source-first proof: typed source parsing, deterministic tracked-source summaries, reverse generation into `sourceBackedArtifacts[]`, deterministic package preservation, and an explicit PAC-pack boundary rather than silent rebuildability debt
 - keep future authoring expansion on the same proof bar: `export zip -> intent-spec -> package-inputs -> pack -> import/publish` plus honest omission typing
-- live-prove representative source-backed families next so the wider rebuildability program is not only package-level but import-level where the family surface is credible, starting with the newer advanced UI and broader app-shell subset
-- resume controlled breadth only after new families can meet the same export-backed rebuild standard instead of falling back to “touched means generatable”
 
 Exit criteria:
-- a compact real exported solution can go straight from classic ZIP to editable intent-spec JSON and back to a successful rebuild without hidden manual unpack steps
-- hybrid source-backed intent can carry broader rebuildable families through the same loop without silent loss
-- family coverage grows without weakening the difference between source evidence, readback evidence, and package evidence
-- reverse-generation remains canonical-first, omission-typed, and partial-intent safe as family coverage grows
-- the docs spine remains short enough for a fresh thread to use in one pass
+- every currently touched family lands in one explicit end state:
+  - `full rebuildable (structured)`
+  - `full rebuildable (hybrid source-backed)`
+  - `source-first / permanent best-effort`
+- the program-end maximal proof succeeds for one compact supported solution
+- coverage docs no longer imply hidden rebuildability debt for the permanently bounded families
+
+Those exit criteria are now met.

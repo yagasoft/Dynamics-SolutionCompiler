@@ -1,0 +1,75 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_wave7photoasset|Quick Find Active Photo Assets",
+  "DisplayName": "Quick Find Active Photo Assets",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7PhotoAsset/SavedQueries/{fe936cbc-67a2-4e03-9b04-a66744a9be5f}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "false",
+    "comparisonSignature": "785dbfd756d91233f777aa47eb1d23368818673dae36633a85651650b64c4fed",
+    "entityLogicalName": "cdxmeta_wave7photoasset",
+    "fetchAttributesJson": [
+      "cdxmeta_wave7photoassetid",
+      "cdxmeta_wave7photoassetname",
+      "createdon"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "cdxmeta_wave7photoassetname",
+        "operator": "like",
+        "value": "{0}"
+      },
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "true",
+    "layoutColumnsJson": [
+      "cdxmeta_wave7photoassetname",
+      "createdon"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_wave7photoassetname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "4",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_wave7photoasset",
+      "layoutColumns": [
+        "cdxmeta_wave7photoassetname",
+        "createdon"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_wave7photoassetid",
+        "cdxmeta_wave7photoassetname",
+        "createdon"
+      ],
+      "filters": [
+        {
+          "attribute": "cdxmeta_wave7photoassetname",
+          "operator": "like",
+          "value": "{0}"
+        },
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": [
+        {
+          "attribute": "cdxmeta_wave7photoassetname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_wave7photoasset",
+    "viewId": "fe936cbc-67a2-4e03-9b04-a66744a9be5f"
+  }
+}

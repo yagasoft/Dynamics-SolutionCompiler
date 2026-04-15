@@ -1,6 +1,8 @@
 using System.Text;
 using FluentAssertions;
+using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Emitters.Package;
+using DataverseSolutionCompiler.Emitters.TrackedSource;
 using DataverseSolutionCompiler.Domain.Emission;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Read;
@@ -251,6 +253,209 @@ public sealed class PackageEmitterTests
     }
 
     [Fact]
+    public void Emit_preserves_source_backed_canvas_app_layout()
+    {
+        var model = ReadFixture("seed-environment");
+        var emitter = new PackageEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-environment-{Guid.NewGuid():N}");
+
+        try
+        {
+            var first = emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            var firstSnapshot = SnapshotPackageInputs(outputRoot);
+            var second = emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            var secondSnapshot = SnapshotPackageInputs(outputRoot);
+
+            first.Success.Should().BeTrue();
+            second.Success.Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "CanvasApps", "cat_overview_3dbf5.meta.xml")).Should().BeTrue();
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Customizations.xml")).Should().Contain("<CanvasApps");
+
+            firstSnapshot.Keys.Should().BeEquivalentTo(secondSnapshot.Keys);
+            foreach (var path in firstSnapshot.Keys)
+            {
+                secondSnapshot[path].Should().Equal(firstSnapshot[path]);
+            }
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emit_preserves_source_backed_reporting_legacy_layout()
+    {
+        var model = ReadFixture("seed-reporting-legacy");
+        var emitter = new PackageEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-reporting-legacy-{Guid.NewGuid():N}");
+
+        try
+        {
+            var first = emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            var firstSnapshot = SnapshotPackageInputs(outputRoot);
+            var second = emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            var secondSnapshot = SnapshotPackageInputs(outputRoot);
+
+            first.Success.Should().BeTrue();
+            second.Success.Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Reports", "cdxmeta_account_summary.rdl.data.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Reports", "cdxmeta_account_summary.rdl")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Templates", "cdxmeta_welcome_email.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "DisplayStrings", "cdxmeta_reporting_labels.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Attachments", "cdxmeta_report_payload.txt.data.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Attachments", "cdxmeta_report_payload.txt")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "WebWizards", "cdxmeta_onboarding_wizard.xml")).Should().BeTrue();
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "manifest.json")).Should().Contain("package-inputs/Reports/cdxmeta_account_summary.rdl.data.xml");
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "manifest.json")).Should().Contain("package-inputs/Attachments/cdxmeta_report_payload.txt");
+
+            firstSnapshot.Keys.Should().BeEquivalentTo(secondSnapshot.Keys);
+            foreach (var path in firstSnapshot.Keys)
+            {
+                secondSnapshot[path].Should().Equal(firstSnapshot[path]);
+            }
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emit_sanitizes_hybrid_entity_analytics_package_for_live_apply()
+    {
+        var sourceModel = ReadFixture("seed-entity-analytics");
+        var reverseOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-analytics-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-analytics-hybrid-{Guid.NewGuid():N}");
+
+        try
+        {
+            var reverseEmit = new IntentSpecEmitter().Emit(sourceModel, new EmitRequest(reverseOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reverseIntentPath = Path.Combine(reverseOutputRoot, "intent-spec", "intent-spec.json");
+            var hybridModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(reverseIntentPath, Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(hybridModel, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+
+            emitted.Success.Should().BeTrue();
+            Directory.Exists(Path.Combine(packageOutputRoot, "package-inputs", "entityanalyticsconfigs")).Should().BeFalse();
+            var solutionXml = File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml"));
+            solutionXml.Should().NotContain("type=\"430\"");
+            solutionXml.Should().NotContain("schemaName=\"contact\"");
+        }
+        finally
+        {
+            if (Directory.Exists(reverseOutputRoot))
+            {
+                Directory.Delete(reverseOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emit_sanitizes_hybrid_ai_package_for_live_apply()
+    {
+        var sourceModel = ReadFixture("seed-ai-families");
+        var reverseOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-ai-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-ai-hybrid-{Guid.NewGuid():N}");
+
+        try
+        {
+            var reverseEmit = new IntentSpecEmitter().Emit(sourceModel, new EmitRequest(reverseOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reverseIntentPath = Path.Combine(reverseOutputRoot, "intent-spec", "intent-spec.json");
+            var hybridModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(reverseIntentPath, Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(hybridModel, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+
+            emitted.Success.Should().BeTrue();
+            Directory.Exists(Path.Combine(packageOutputRoot, "package-inputs", "AIProjectTypes")).Should().BeFalse();
+            Directory.Exists(Path.Combine(packageOutputRoot, "package-inputs", "AIProjects")).Should().BeFalse();
+            Directory.Exists(Path.Combine(packageOutputRoot, "package-inputs", "AIConfigurations")).Should().BeFalse();
+            var solutionXml = File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml"));
+            solutionXml.Should().NotContain("type=\"400\"");
+            solutionXml.Should().NotContain("type=\"401\"");
+            solutionXml.Should().NotContain("type=\"402\"");
+        }
+        finally
+        {
+            if (Directory.Exists(reverseOutputRoot))
+            {
+                Directory.Delete(reverseOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("seed-environment", "<CanvasApps")]
+    [InlineData("seed-service-endpoint-connector", "")]
+    [InlineData("seed-process-policy", "<RoutingRules")]
+    [InlineData("seed-reporting-legacy", "<Reports;<DisplayStrings;<Attachments;<WebWizards")]
+    public void Emit_hybrid_source_backed_packages_augment_customizations_shells(string fixtureName, string expectedShellFragments)
+    {
+        var sourceModel = ReadFixture(fixtureName);
+        var reverseOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-hybrid-intent-{fixtureName}-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-hybrid-package-{fixtureName}-{Guid.NewGuid():N}");
+
+        try
+        {
+            var reverseEmit = new IntentSpecEmitter().Emit(sourceModel, new EmitRequest(reverseOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reverseIntentPath = Path.Combine(reverseOutputRoot, "intent-spec", "intent-spec.json");
+            var hybridModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(reverseIntentPath, Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(hybridModel, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+
+            emitted.Success.Should().BeTrue();
+            var customizationsXml = File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Customizations.xml"));
+            foreach (var expectedShellFragment in expectedShellFragments.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                customizationsXml.Should().Contain(expectedShellFragment);
+            }
+
+            if (string.Equals(fixtureName, "seed-service-endpoint-connector", StringComparison.Ordinal))
+            {
+                var solutionXml = File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml"));
+                solutionXml.Should().NotContain("type=\"95\"");
+                solutionXml.Should().NotContain("type=\"371\"");
+                customizationsXml.Should().NotContain("<ServiceEndpoints");
+                customizationsXml.Should().NotContain("<Connectors");
+            }
+        }
+        finally
+        {
+            if (Directory.Exists(reverseOutputRoot))
+            {
+                Directory.Delete(reverseOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
     public void Emit_preserves_source_backed_image_configuration_layout()
     {
         var model = ReadFixture("seed-image-config");
@@ -268,8 +473,11 @@ public sealed class PackageEmitterTests
             second.Success.Should().BeTrue();
             var entityPath = Path.Combine(outputRoot, "package-inputs", "Entities", "cdxmeta_PhotoAsset", "Entity.xml");
             File.Exists(entityPath).Should().BeTrue();
-            File.ReadAllText(entityPath).Should().Contain("<PrimaryImageAttribute>cdxmeta_profileimage</PrimaryImageAttribute>");
-            File.ReadAllText(entityPath).Should().Contain("<CanStoreFullImage>1</CanStoreFullImage>");
+            var entityXml = File.ReadAllText(entityPath);
+            entityXml.Should().Contain("<PrimaryImageAttribute>cdxmeta_profileimage</PrimaryImageAttribute>");
+            entityXml.Should().Contain("<CanStoreFullImage>1</CanStoreFullImage>");
+            entityXml.Should().Contain("<attribute PhysicalName=\"cdxmeta_ProfileImage\">");
+            entityXml.Should().Contain("<Name>cdxmeta_ProfileImage</Name>");
 
             firstSnapshot.Keys.Should().BeEquivalentTo(secondSnapshot.Keys);
             foreach (var path in firstSnapshot.Keys)
@@ -377,6 +585,8 @@ public sealed class PackageEmitterTests
             File.Exists(Path.Combine(outputRoot, "package-inputs", "Connectors", "shared-offerings-connector", "Connector.xml")).Should().BeTrue();
             File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "manifest.json")).Should().Contain("package-inputs/ServiceEndpoints/codex_webhook_endpoint/ServiceEndpoint.xml");
             File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "manifest.json")).Should().Contain("package-inputs/Connectors/shared-offerings-connector/Connector.xml");
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Customizations.xml")).Should().Contain("<ServiceEndpoints");
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Customizations.xml")).Should().Contain("<Connectors");
 
             firstSnapshot.Keys.Should().BeEquivalentTo(secondSnapshot.Keys);
             foreach (var path in firstSnapshot.Keys)
@@ -412,6 +622,8 @@ public sealed class PackageEmitterTests
             File.Exists(Path.Combine(outputRoot, "package-inputs", "duplicaterules", "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367", "duplicaterule.xml")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "package-inputs", "RoutingRules", "Codex Metadata Routing Rule.meta.xml")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "package-inputs", "MobileOfflineProfiles", "Codex Metadata Mobile Offline Profile.xml")).Should().BeTrue();
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Customizations.xml")).Should().Contain("<RoutingRules");
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Customizations.xml")).Should().Contain("<MobileOfflineProfiles");
 
             firstSnapshot.Keys.Should().BeEquivalentTo(secondSnapshot.Keys);
             foreach (var path in firstSnapshot.Keys)

@@ -1,0 +1,29 @@
+<optionset Name="cdxmeta_priorityband" localizedName="cdxmeta_priorityband" description="Reusable global choice required by the hybrid alternate-key representative." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<OptionSetType>picklist</OptionSetType>
+<IsGlobal>1</IsGlobal>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<IsCustomizable>1</IsCustomizable>
+<LocalizedNames>
+<LocalizedName description="cdxmeta_priorityband" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Reusable global choice required by the hybrid alternate-key representative." languagecode="1033" />
+</Descriptions>
+<options>
+<option value="727270010" ExternalValue="" IsHidden="false">
+<labels>
+<label description="Low" languagecode="1033" />
+</labels>
+</option>
+<option value="727270011" ExternalValue="" IsHidden="false">
+<labels>
+<label description="Medium" languagecode="1033" />
+</labels>
+</option>
+<option value="727270012" ExternalValue="" IsHidden="false">
+<labels>
+<label description="High" languagecode="1033" />
+</labels>
+</option>
+</options>
+</optionset>

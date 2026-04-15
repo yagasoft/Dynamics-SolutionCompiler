@@ -9,6 +9,7 @@ using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Packaging;
 using DataverseSolutionCompiler.Domain.Planning;
 using DataverseSolutionCompiler.Emitters.TrackedSource;
+using System.Xml.Linq;
 
 namespace DataverseSolutionCompiler.Cli;
 
@@ -266,16 +267,50 @@ public static class CliApplication
             return 1;
         }
 
+        if (ShouldSkipImportForApplyOnlyPackage(Path.Combine(outputRoot, "package-inputs")))
+        {
+            var applyOnlyDiagnostics = new[]
+            {
+                new CompilerDiagnostic(
+                    "publish-skip-empty-package-import",
+                    DiagnosticSeverity.Info,
+                    "Skipped PAC import because the rebuilt package contains no packageable root components. Live apply will create or update the solution shell and finalize apply-only hybrid families directly.",
+                    Path.Combine(outputRoot, "package-inputs", "Other", "Solution.xml"))
+            };
+
+            var applyOnlyResult = runtime.ApplyExecutor.Apply(
+                result.Solution,
+                new ApplyRequest(CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: true)));
+
+            output.WriteLine("Publish");
+            output.WriteLine($"Package path: {packageResult.PackagePath}");
+            output.WriteLine("Published: False");
+            WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics).Concat(applyOnlyDiagnostics).Concat(applyOnlyResult.Diagnostics));
+            return applyOnlyResult.Success && !HasErrors(applyOnlyResult.Diagnostics) ? 0 : 1;
+        }
+
         var importResult = runtime.ImportExecutor.Import(new ImportRequest(
             CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: false),
             packageResult.PackagePath,
             PublishAfterImport: true));
+        if (!importResult.Success || HasErrors(importResult.Diagnostics))
+        {
+            output.WriteLine("Publish");
+            output.WriteLine($"Package path: {packageResult.PackagePath}");
+            output.WriteLine($"Published: {importResult.Published}");
+            WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics).Concat(importResult.Diagnostics));
+            return 1;
+        }
+
+        var applyResult = runtime.ApplyExecutor.Apply(
+            result.Solution,
+            new ApplyRequest(CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: true)));
 
         output.WriteLine("Publish");
         output.WriteLine($"Package path: {packageResult.PackagePath}");
         output.WriteLine($"Published: {importResult.Published}");
-        WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics).Concat(importResult.Diagnostics));
-        return importResult.Success && !HasErrors(importResult.Diagnostics) ? 0 : 1;
+        WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics).Concat(importResult.Diagnostics).Concat(applyResult.Diagnostics));
+        return applyResult.Success && !HasErrors(importResult.Diagnostics) && !HasErrors(applyResult.Diagnostics) ? 0 : 1;
     }
 
     private static int RunDoctor(CliCommandOptions options, TextWriter output, TextWriter error, CompilerCliRuntime runtime)
@@ -350,6 +385,23 @@ public static class CliApplication
 
     private static bool HasErrors(IEnumerable<CompilerDiagnostic> diagnostics) =>
         diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
+
+    private static bool ShouldSkipImportForApplyOnlyPackage(string packageInputRoot)
+    {
+        var solutionManifestPath = Path.Combine(packageInputRoot, "Other", "Solution.xml");
+        if (!File.Exists(solutionManifestPath))
+        {
+            return false;
+        }
+
+        var document = XDocument.Load(solutionManifestPath, LoadOptions.PreserveWhitespace);
+        var rootComponents = document
+            .Descendants()
+            .FirstOrDefault(element => string.Equals(element.Name.LocalName, "RootComponents", StringComparison.OrdinalIgnoreCase));
+
+        return rootComponents is not null
+            && !rootComponents.Elements().Any();
+    }
 
     private static string ResolveOutputRoot(CliCommandOptions options) =>
         Path.GetFullPath(string.IsNullOrWhiteSpace(options.OutputRoot)

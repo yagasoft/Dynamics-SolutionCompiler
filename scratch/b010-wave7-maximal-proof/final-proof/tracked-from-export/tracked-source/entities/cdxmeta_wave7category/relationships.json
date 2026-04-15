@@ -1,0 +1,10 @@
+[
+  {
+    "LogicalName": "cdxmeta_wave7category_wave7workitem",
+    "relationshipType": "OneToMany",
+    "referencedEntity": "cdxmeta_wave7category",
+    "referencingEntity": "cdxmeta_wave7workitem",
+    "referencingAttribute": "cdxmeta_wave7categoryid",
+    "description": "Parent category for the work item."
+  }
+]

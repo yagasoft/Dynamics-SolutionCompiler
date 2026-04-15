@@ -1,0 +1,12 @@
+{
+  "LogicalName": "codex metadata seed role|prvReadPluginType|Global",
+  "DisplayName": "prvReadPluginType",
+  "metadataSourcePath": "Roles/Codex Metadata Seed Role.xml",
+  "assetSourcePaths": [],
+  "parentRoleLogicalName": "codex metadata seed role",
+  "privilegeName": "prvReadPluginType",
+  "accessLevel": "Global",
+  "objectTypeCode": null,
+  "comparisonSignature": "32611d5c4508b589e32aa94b8633e06e9502a9d65fee3d41fa87a8a4e60a4e21",
+  "evidence": "BestEffort"
+}

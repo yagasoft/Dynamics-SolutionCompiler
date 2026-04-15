@@ -31,7 +31,12 @@ public sealed partial class IntentSpecEmitter
         ComponentFamily.RolePrivilege,
         ComponentFamily.FieldSecurityProfile,
         ComponentFamily.FieldPermission,
-        ComponentFamily.ConnectionRole
+        ComponentFamily.ConnectionRole,
+        ComponentFamily.Report,
+        ComponentFamily.Template,
+        ComponentFamily.DisplayString,
+        ComponentFamily.Attachment,
+        ComponentFamily.LegacyAsset
     };
 
     private static readonly HashSet<string> KnownPlatformFormFieldNames = new(StringComparer.OrdinalIgnoreCase)
@@ -939,6 +944,11 @@ public sealed partial class IntentSpecEmitter
             return true;
         }
 
+        if (artifact.Family == ComponentFamily.Table)
+        {
+            return ShouldStageTableMetadataAsSourceBacked(artifact, allArtifacts);
+        }
+
         if (artifact.Family == ComponentFamily.Form)
         {
             return HasUnsupportedStructuredFormShape(artifact, allArtifacts);
@@ -964,10 +974,67 @@ public sealed partial class IntentSpecEmitter
 
     private static bool IsPotentialSourceBackedSibling(FamilyArtifact artifact, IEnumerable<FamilyArtifact> allArtifacts) =>
         SourceBackedFamilies.Contains(artifact.Family)
+        || artifact.Family == ComponentFamily.Table && ShouldStageTableMetadataAsSourceBacked(artifact, allArtifacts)
         || artifact.Family == ComponentFamily.Form && HasUnsupportedStructuredFormShape(artifact, allArtifacts)
         || artifact.Family == ComponentFamily.Visualization && HasUnsupportedStructuredVisualizationShape(artifact)
         || artifact.Family == ComponentFamily.SiteMap && HasAdvancedSiteMapShape(artifact)
         || artifact.Family == ComponentFamily.AppModule && ParseInt(GetProperty(artifact, ArtifactPropertyKeys.RoleMapCount)) > 0;
+
+    private static bool ShouldStageTableMetadataAsSourceBacked(FamilyArtifact tableArtifact, IEnumerable<FamilyArtifact> allArtifacts)
+    {
+        if (string.IsNullOrWhiteSpace(GetProperty(tableArtifact, ArtifactPropertyKeys.MetadataSourcePath)))
+        {
+            return false;
+        }
+
+        var tableLogicalName = NormalizeLogicalName(GetProperty(tableArtifact, ArtifactPropertyKeys.EntityLogicalName))
+            ?? NormalizeLogicalName(tableArtifact.LogicalName);
+        if (string.IsNullOrWhiteSpace(tableLogicalName))
+        {
+            return false;
+        }
+
+        var hasStructuredColumns = allArtifacts.Any(artifact =>
+            artifact.Family == ComponentFamily.Column
+            && string.Equals(NormalizeLogicalName(GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName)), tableLogicalName, StringComparison.OrdinalIgnoreCase)
+            && !GetBoolProperty(artifact, ArtifactPropertyKeys.IsPrimaryKey)
+            && !GetBoolProperty(artifact, ArtifactPropertyKeys.IsPrimaryName));
+        var hasStructuredKeys = allArtifacts.Any(artifact =>
+            artifact.Family == ComponentFamily.Key
+            && string.Equals(NormalizeLogicalName(GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName)), tableLogicalName, StringComparison.OrdinalIgnoreCase));
+        var hasStructuredForms = allArtifacts.Any(artifact =>
+            artifact.Family == ComponentFamily.Form
+            && string.Equals(NormalizeLogicalName(GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName)), tableLogicalName, StringComparison.OrdinalIgnoreCase)
+            && !ShouldEmitAsSourceBacked(artifact, allArtifacts));
+        var hasStructuredViews = allArtifacts.Any(artifact =>
+            artifact.Family == ComponentFamily.View
+            && string.Equals(NormalizeLogicalName(GetProperty(artifact, ArtifactPropertyKeys.EntityLogicalName)), tableLogicalName, StringComparison.OrdinalIgnoreCase)
+            && CanEmitStructuredView(artifact));
+
+        return !hasStructuredColumns
+               && !hasStructuredKeys
+               && !hasStructuredForms
+               && !hasStructuredViews;
+    }
+
+    private static bool CanEmitStructuredView(FamilyArtifact view)
+    {
+        var queryType = GetProperty(view, ArtifactPropertyKeys.QueryType);
+        if (!string.IsNullOrWhiteSpace(queryType) && !string.Equals(queryType, "0", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        if (GetProperty(view, ArtifactPropertyKeys.CanBeDeleted) is { } canBeDeleted
+            && !NormalizeBoolean(canBeDeleted))
+        {
+            return false;
+        }
+
+        var layoutColumns = ReadStringArray(GetProperty(view, ArtifactPropertyKeys.LayoutColumnsJson));
+        var fetchAttributes = ReadStringArray(GetProperty(view, ArtifactPropertyKeys.FetchAttributesJson));
+        return layoutColumns.Count > 0 && fetchAttributes.Count > 0;
+    }
 
     private static bool HasUnsupportedStructuredFormShape(FamilyArtifact artifact, IEnumerable<FamilyArtifact> allArtifacts)
     {
@@ -1062,9 +1129,9 @@ public sealed partial class IntentSpecEmitter
         value?.Trim() switch
         {
             { Length: 0 } => null,
-            var text when text.Equals("field", StringComparison.OrdinalIgnoreCase) => "field",
-            var text when text.Equals("quickView", StringComparison.OrdinalIgnoreCase) || text.Equals("quick-view", StringComparison.OrdinalIgnoreCase) => "quickView",
-            var text when text.Equals("subgrid", StringComparison.OrdinalIgnoreCase) => "subgrid",
+            string text when text.Equals("field", StringComparison.OrdinalIgnoreCase) => "field",
+            string text when text.Equals("quickView", StringComparison.OrdinalIgnoreCase) || text.Equals("quick-view", StringComparison.OrdinalIgnoreCase) => "quickView",
+            string text when text.Equals("subgrid", StringComparison.OrdinalIgnoreCase) => "subgrid",
             _ => null
         };
 
@@ -1318,8 +1385,8 @@ public sealed partial class IntentSpecEmitter
             "money" => "decimal",
             "double" => "decimal",
             "float" => "decimal",
-            "integer" => "decimal",
-            "int" => "decimal",
+            "integer" => "integer",
+            "int" => "integer",
             "bigint" => "decimal",
             "image" => "image",
             "picklist" => "choice",

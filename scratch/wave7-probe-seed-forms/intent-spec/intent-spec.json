@@ -1,0 +1,491 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedForms",
+    "displayName": "Codex Metadata Seed Forms",
+    "description": "Curated Codex skill seed solution: Codex Metadata Seed Forms",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [
+    {
+      "logicalName": "cdxmeta_category",
+      "schemaName": "cdxmeta_Category",
+      "displayName": "Category",
+      "description": "Reference category for the Dataverse metadata synthesis seed.",
+      "entitySetName": "cdxmeta_categories",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [],
+      "keys": [],
+      "forms": [],
+      "views": [],
+      "visualizations": []
+    },
+    {
+      "logicalName": "cdxmeta_checkpoint",
+      "schemaName": "cdxmeta_Checkpoint",
+      "displayName": "Checkpoint",
+      "description": "Child records used to demonstrate related-data form composition.",
+      "entitySetName": "cdxmeta_checkpoints",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_notes",
+          "schemaName": "cdxmeta_notes",
+          "displayName": "Notes",
+          "description": "Checkpoint notes.",
+          "type": "memo",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_sequence",
+          "schemaName": "cdxmeta_sequence",
+          "displayName": "Sequence",
+          "description": "Display order for the checkpoint.",
+          "type": "decimal",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_workitemid",
+          "schemaName": "cdxmeta_workitemid",
+          "displayName": "Work Item",
+          "description": "Parent work item for the checkpoint.",
+          "type": "lookup",
+          "isSecured": false,
+          "isCustomizable": true,
+          "targetTable": "cdxmeta_workitem",
+          "relationshipSchemaName": "cdxmeta_workitem_checkpoint"
+        }
+      ],
+      "keys": [],
+      "forms": [
+        {
+          "id": "7c2d07e7-c51b-491b-861d-1fb283a2c78d",
+          "name": "Information",
+          "description": "A card form for this entity.",
+          "type": "card",
+          "tabs": [
+            {
+              "name": "general",
+              "label": "general",
+              "sections": [
+                {
+                  "name": "ColorStrip",
+                  "label": "ColorStrip",
+                  "fields": []
+                },
+                {
+                  "name": "CardHeader",
+                  "label": "Header",
+                  "fields": []
+                },
+                {
+                  "name": "CardDetails",
+                  "label": "Details",
+                  "fields": []
+                },
+                {
+                  "name": "CardFooter",
+                  "label": "Footer",
+                  "fields": []
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        },
+        {
+          "id": "46da5e3d-fbf9-4060-9f79-b9ac4a0b7b7d",
+          "name": "Information",
+          "description": "A form for this entity.",
+          "type": "main",
+          "tabs": [
+            {
+              "name": "tab_1",
+              "label": "General",
+              "sections": [
+                {
+                  "name": "section_1",
+                  "label": "General",
+                  "fields": []
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        },
+        {
+          "id": "4e60526b-43c9-4eff-980e-12fb152572de",
+          "name": "Information",
+          "type": "quick",
+          "tabs": [
+            {
+              "name": "tab_1",
+              "label": "Tab 1",
+              "sections": [
+                {
+                  "name": "section_1",
+                  "label": "GENERAL",
+                  "fields": []
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        }
+      ],
+      "views": [],
+      "visualizations": []
+    },
+    {
+      "logicalName": "cdxmeta_workitem",
+      "schemaName": "cdxmeta_WorkItem",
+      "displayName": "Work Item",
+      "description": "Seed table that mixes representative Dataverse metadata types.",
+      "entitySetName": "cdxmeta_workitems",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_categoryid",
+          "schemaName": "cdxmeta_categoryid",
+          "displayName": "Category",
+          "description": "Parent category for the work item.",
+          "type": "lookup",
+          "isSecured": false,
+          "isCustomizable": true,
+          "targetTable": "cdxmeta_category",
+          "relationshipSchemaName": "cdxmeta_category_workitem"
+        },
+        {
+          "logicalName": "cdxmeta_details",
+          "schemaName": "cdxmeta_details",
+          "displayName": "Details",
+          "description": "Long-form notes.",
+          "type": "memo",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_duedate",
+          "schemaName": "cdxmeta_duedate",
+          "displayName": "Due Date",
+          "description": "Representative date-only column.",
+          "type": "datetime",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_efforthours",
+          "schemaName": "cdxmeta_efforthours",
+          "displayName": "Effort Hours",
+          "description": "Decimal effort estimate.",
+          "type": "decimal",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_isblocked",
+          "schemaName": "cdxmeta_isblocked",
+          "displayName": "Blocked",
+          "description": "Whether the work item is blocked.",
+          "type": "boolean",
+          "isSecured": false,
+          "isCustomizable": true,
+          "options": [
+            {
+              "value": "1",
+              "label": "Yes"
+            },
+            {
+              "value": "0",
+              "label": "No"
+            }
+          ]
+        },
+        {
+          "logicalName": "cdxmeta_priority",
+          "schemaName": "cdxmeta_priority",
+          "displayName": "Priority",
+          "description": "Whole-number priority value.",
+          "type": "decimal",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_stage",
+          "schemaName": "cdxmeta_stage",
+          "displayName": "Stage",
+          "description": "Representative local choice.",
+          "type": "choice",
+          "isSecured": false,
+          "isCustomizable": true,
+          "options": [
+            {
+              "value": "727270000",
+              "label": "Planned"
+            },
+            {
+              "value": "727270001",
+              "label": "Active"
+            },
+            {
+              "value": "727270002",
+              "label": "Done"
+            }
+          ]
+        },
+        {
+          "logicalName": "cdxmeta_summary",
+          "schemaName": "cdxmeta_summary",
+          "displayName": "Summary",
+          "description": "Compact single-line summary.",
+          "type": "string",
+          "isSecured": false,
+          "isCustomizable": true
+        }
+      ],
+      "keys": [],
+      "forms": [
+        {
+          "id": "337dbfeb-0f67-4f81-b71e-3bd05a4b597a",
+          "name": "Information",
+          "description": "A card form for this entity.",
+          "type": "card",
+          "tabs": [
+            {
+              "name": "general",
+              "label": "general",
+              "sections": [
+                {
+                  "name": "ColorStrip",
+                  "label": "ColorStrip",
+                  "fields": []
+                },
+                {
+                  "name": "CardHeader",
+                  "label": "Header",
+                  "fields": []
+                },
+                {
+                  "name": "CardDetails",
+                  "label": "Details",
+                  "fields": []
+                },
+                {
+                  "name": "CardFooter",
+                  "label": "Footer",
+                  "fields": []
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        },
+        {
+          "id": "38cc575f-ed67-4a02-8f01-2631e59b33d5",
+          "name": "Information",
+          "type": "quick",
+          "tabs": [
+            {
+              "name": "tab_1",
+              "label": "Tab 1",
+              "sections": [
+                {
+                  "name": "section_1",
+                  "label": "GENERAL",
+                  "fields": []
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        },
+        {
+          "id": "c67be8a4-c475-4041-90e6-78e3ed79b018",
+          "name": "Work Item Seed Main",
+          "description": "Rich main form for the Dataverse metadata synthesis seed.",
+          "type": "main",
+          "tabs": [
+            {
+              "name": "summary",
+              "label": "Summary",
+              "sections": [
+                {
+                  "name": "overview",
+                  "label": "Overview",
+                  "fields": []
+                },
+                {
+                  "name": "details",
+                  "label": "Details",
+                  "fields": []
+                }
+              ]
+            },
+            {
+              "name": "planning",
+              "label": "Planning",
+              "sections": [
+                {
+                  "name": "schedule",
+                  "label": "Schedule",
+                  "fields": []
+                },
+                {
+                  "name": "status",
+                  "label": "Status",
+                  "fields": []
+                }
+              ]
+            },
+            {
+              "name": "related",
+              "label": "Related",
+              "sections": [
+                {
+                  "name": "category_snapshot",
+                  "label": "Category Snapshot",
+                  "controls": [
+                    {
+                      "kind": "quickView",
+                      "field": "cdxmeta_categoryid",
+                      "label": "Category Snapshot",
+                      "quickFormEntity": "cdxmeta_category",
+                      "quickFormId": "5978624f-3b37-f111-88b3-0022489b9600",
+                      "controlMode": "Edit"
+                    }
+                  ]
+                },
+                {
+                  "name": "checkpoints",
+                  "label": "Checkpoints",
+                  "controls": [
+                    {
+                      "kind": "subgrid",
+                      "label": "Checkpoints",
+                      "relationshipName": "cdxmeta_workitem_checkpoint",
+                      "targetTable": "cdxmeta_checkpoint",
+                      "defaultViewId": "500a740d-e399-42c5-9f3a-0f9c203ef9cd",
+                      "isUserView": false,
+                      "autoExpand": "Auto",
+                      "enableQuickFind": false,
+                      "enableViewPicker": false,
+                      "enableJumpBar": false,
+                      "enableChartPicker": false,
+                      "recordsPerPage": 5
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": [
+            "cdxmeta_stage",
+            "cdxmeta_duedate",
+            "cdxmeta_categoryid"
+          ]
+        }
+      ],
+      "views": [],
+      "visualizations": []
+    }
+  ],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedForms",
+      "displayName": "Codex Metadata Seed Forms",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "description": "Curated Codex skill seed solution: Codex Metadata Seed Forms",
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata"
+      }
+    },
+    {
+      "family": "Table",
+      "logicalName": "cdxmeta_category",
+      "displayName": "Category",
+      "metadataSourcePath": "source-backed/Entities/cdxmeta_Category/Entity.xml",
+      "packageRelativePath": "Entities/cdxmeta_Category/Entity.xml",
+      "stableProperties": {
+        "description": "Reference category for the Dataverse metadata synthesis seed.",
+        "entityLogicalName": "cdxmeta_category",
+        "entitySetName": "cdxmeta_categories",
+        "isCustomizable": "true",
+        "ownershipTypeMask": "UserOwned",
+        "schemaName": "cdxmeta_Category",
+        "shellOnly": "false"
+      }
+    },
+    {
+      "family": "Form",
+      "logicalName": "cdxmeta_category|quick|5978624f-3b37-f111-88b3-0022489b9600",
+      "displayName": "Category Snapshot",
+      "metadataSourcePath": "source-backed/Entities/cdxmeta_Category/FormXml/quick/{5978624f-3b37-f111-88b3-0022489b9600}.xml",
+      "packageRelativePath": "Entities/cdxmeta_Category/FormXml/quick/{5978624f-3b37-f111-88b3-0022489b9600}.xml",
+      "stableProperties": {
+        "controlCount": "2",
+        "controlDescriptionCount": "2",
+        "description": "Compact quick view form for the metadata synthesis seed.",
+        "entityLogicalName": "cdxmeta_category",
+        "footerControlCount": "0",
+        "formDefinitionJson": {
+          "name": "Category Snapshot",
+          "description": "Compact quick view form for the metadata synthesis seed.",
+          "type": "quick",
+          "tabs": [
+            {
+              "name": "general",
+              "label": "general",
+              "sections": [
+                {
+                  "name": "snapshot",
+                  "label": "snapshot",
+                  "controls": [
+                    {
+                      "kind": "field",
+                      "field": "cdxmeta_categoryname",
+                      "label": "Category"
+                    },
+                    {
+                      "kind": "field",
+                      "field": "cdxmeta_description",
+                      "label": "Description"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        },
+        "formId": "5978624f-3b37-f111-88b3-0022489b9600",
+        "formType": "quick",
+        "formTypeCode": "0",
+        "headerControlCount": "0",
+        "quickFormCount": "0",
+        "sectionCount": "1",
+        "subgridCount": "0",
+        "tabCount": "1"
+      }
+    }
+  ]
+}

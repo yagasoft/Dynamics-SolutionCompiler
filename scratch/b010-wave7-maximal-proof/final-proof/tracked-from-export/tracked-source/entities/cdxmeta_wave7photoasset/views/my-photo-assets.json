@@ -1,0 +1,55 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_wave7photoasset|My Photo Assets",
+  "DisplayName": "My Photo Assets",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7PhotoAsset/SavedQueries/{5f3ac0c3-e638-f111-88b3-0022489b9600}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "true",
+    "comparisonSignature": "2938f7db1f0db724bd63c4afba69d9ef5c7fb17c9c16edb52c6fa93077c9a462",
+    "entityLogicalName": "cdxmeta_wave7photoasset",
+    "fetchAttributesJson": [
+      "cdxmeta_wave7photoassetid"
+    ],
+    "filtersJson": [
+      {
+        "attribute": "ownerid",
+        "operator": "eq-userid",
+        "value": ""
+      },
+      {
+        "attribute": "statecode",
+        "operator": "eq",
+        "value": "0"
+      }
+    ],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "true",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [],
+    "ordersJson": [],
+    "queryType": "8192",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_wave7photoasset",
+      "layoutColumns": [],
+      "fetchAttributes": [
+        "cdxmeta_wave7photoassetid"
+      ],
+      "filters": [
+        {
+          "attribute": "ownerid",
+          "operator": "eq-userid",
+          "value": ""
+        },
+        {
+          "attribute": "statecode",
+          "operator": "eq",
+          "value": "0"
+        }
+      ],
+      "orders": []
+    },
+    "targetEntity": "cdxmeta_wave7photoasset",
+    "viewId": "5f3ac0c3-e638-f111-88b3-0022489b9600"
+  }
+}

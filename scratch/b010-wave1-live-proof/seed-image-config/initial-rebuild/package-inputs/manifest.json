@@ -1,0 +1,31 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedImageConfig",
+    "DisplayName": "Codex Metadata Seed Image Config",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-derived",
+  "copiedDirectories": [
+    "AppModuleSiteMaps",
+    "AppModules",
+    "Entities",
+    "OptionSets",
+    "Other",
+    "environmentvariabledefinitions"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Entities/cdxmeta_PhotoAsset/Entity.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/manifest.json"
+  ]
+}

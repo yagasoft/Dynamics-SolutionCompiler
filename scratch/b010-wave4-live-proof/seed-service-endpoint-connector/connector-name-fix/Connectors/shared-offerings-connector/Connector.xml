@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Connector>
+  <LogicalName>shared-offerings-connector</LogicalName>
+  <Name>codex_shared_connector</Name>
+  <DisplayName>Codex Shared Connector</DisplayName>
+  <Description>Neutral shared connector for compiler proof.</Description>
+  <ConnectorInternalId>shared-offerings-connector</ConnectorInternalId>
+  <ConnectorType>1</ConnectorType>
+  <Capabilities>
+    <Capability>actions</Capability>
+    <Capability>cloud</Capability>
+  </Capabilities>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+</Connector>

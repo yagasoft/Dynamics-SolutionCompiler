@@ -1,0 +1,43 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedAdvancedUI",
+    "DisplayName": "Codex Metadata Seed Advanced UI",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "AppModuleSiteMaps",
+    "AppModules",
+    "Entities",
+    "Other",
+    "WebResources",
+    "environmentvariabledefinitions"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/AppModuleSiteMaps/codex_metadata_advanced_ui_924e69cb/AppModuleSiteMap.xml",
+    "package-inputs/AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+    "package-inputs/AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+    "package-inputs/Entities/Account/Entity.xml",
+    "package-inputs/Entities/Account/Entity.xml",
+    "package-inputs/Entities/Account/Visualizations/{74a622c0-5193-de11-97d4-00155da3b01e}.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/WebResources/cdxmeta_/advancedui/icon.svg",
+    "package-inputs/WebResources/cdxmeta_/advancedui/icon.svg.data.xml",
+    "package-inputs/WebResources/cdxmeta_/advancedui/landing.html",
+    "package-inputs/WebResources/cdxmeta_/advancedui/landing.html.data.xml",
+    "package-inputs/environmentvariabledefinitions/cdxmeta_AdvancedUiMode/environmentvariabledefinition.xml",
+    "package-inputs/environmentvariabledefinitions/cdxmeta_AdvancedUiMode/environmentvariablevalues.json",
+    "package-inputs/manifest.json"
+  ]
+}

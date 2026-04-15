@@ -1,0 +1,29 @@
+{
+  "inputKind": "unpacked-xml-folder",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "EntityAnalyticsConfiguration",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "EntityAnalyticsConfiguration",
+      "artifact": "contact",
+      "packageRelativePath": "entityanalyticsconfigs/contact/entityanalyticsconfig.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedEntityAnalytics",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

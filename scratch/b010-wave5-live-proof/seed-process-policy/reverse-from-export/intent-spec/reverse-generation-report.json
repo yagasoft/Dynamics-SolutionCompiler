@@ -1,0 +1,65 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "DuplicateRule",
+    "DuplicateRuleCondition",
+    "MobileOfflineProfile",
+    "MobileOfflineProfileItem",
+    "RoutingRule",
+    "RoutingRuleItem",
+    "SolutionShell",
+    "Table"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "DuplicateRule",
+      "artifact": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml"
+    },
+    {
+      "family": "DuplicateRuleCondition",
+      "artifact": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367|name|name|0",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml"
+    },
+    {
+      "family": "MobileOfflineProfile",
+      "artifact": "codex metadata mobile offline profile",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml"
+    },
+    {
+      "family": "MobileOfflineProfileItem",
+      "artifact": "codex metadata mobile offline profile|account",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml"
+    },
+    {
+      "family": "RoutingRule",
+      "artifact": "codex metadata routing rule",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml"
+    },
+    {
+      "family": "RoutingRuleItem",
+      "artifact": "codex metadata routing rule|route all",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedProcessPolicy",
+      "packageRelativePath": "Other/Solution.xml"
+    },
+    {
+      "family": "Table",
+      "artifact": "account",
+      "packageRelativePath": "Entities/Account/Entity.xml"
+    }
+  ]
+}

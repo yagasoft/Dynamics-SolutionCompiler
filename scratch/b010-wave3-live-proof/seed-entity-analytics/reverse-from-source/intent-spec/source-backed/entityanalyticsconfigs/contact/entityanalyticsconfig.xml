@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EntityAnalyticsConfig>
+  <ParentEntityLogicalName>contact</ParentEntityLogicalName>
+  <EntityDataSource>dataverse</EntityDataSource>
+  <IsEnabledForADLS>true</IsEnabledForADLS>
+  <IsEnabledForTimeSeries>false</IsEnabledForTimeSeries>
+</EntityAnalyticsConfig>

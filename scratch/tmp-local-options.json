@@ -1,0 +1,45 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "LocalOptionIntent",
+    "displayName": "Local Option Intent",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata"
+  },
+  "tables": [
+    {
+      "logicalName": "cdxmeta_task",
+      "schemaName": "cdxmeta_Task",
+      "displayName": "Task",
+      "columns": [
+        {
+          "logicalName": "cdxmeta_isblocked",
+          "schemaName": "cdxmeta_IsBlocked",
+          "displayName": "Blocked",
+          "type": "boolean",
+          "options": [
+            { "value": "1", "label": "Yes" },
+            { "value": "0", "label": "No" }
+          ]
+        },
+        {
+          "logicalName": "cdxmeta_stage",
+          "schemaName": "cdxmeta_Stage",
+          "displayName": "Stage",
+          "type": "choice",
+          "options": [
+            { "value": "727270000", "label": "Planned" },
+            { "value": "727270001", "label": "Active" }
+          ]
+        }
+      ],
+      "forms": [],
+      "views": []
+    }
+  ]
+}

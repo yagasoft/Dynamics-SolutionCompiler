@@ -2,7 +2,7 @@
 
 ## Thread State
 
-- Purpose: continue the approved `.NET 10` compiler roadmap with the hybrid rebuildability program as the first next lane before more breadth-only work.
+- Purpose: continue the approved `.NET 10` compiler roadmap after completing `B-010`, with `B-007` now resuming as the active breadth item from the explicit rebuildability baseline.
 - Scope: source/readback canonicalization, generator breadth, release-path operation, docs, and tests.
 - Roadmap boundary: approved `.NET 10` direction.
 
@@ -30,12 +30,12 @@
   - structured form authoring and reverse-generation for the supported richer subset: `main`, `quick`, and `card` forms plus `field`, `quickView`, and `subgrid` controls now compile, reverse-generate, and rebuild through package-inputs, while unsupported form shapes or missing-fidelity field references fall back to explicit source-backed handling
   - structured authored-chart support for rebuild-safe saved-query visualizations: supported chart metadata now reverse-generates into `tables[].visualizations[]` and rebuilds back into `Entities/<entity>/Visualizations/<id>.xml`, while unsupported chart shapes can still fall back to explicit source-backed handling
   - direct classic export ZIP reverse-generation for the advanced UI seed now preserves both structured authored-chart intent and supported structured app-shell detail such as `appSettings` plus `entity` / `url` / `webResource` site map subareas, while staged web resources remain explicit `sourceBackedArtifacts[]`
-  - compact entity-analytics proof through typed XML parsing, deterministic tracked/package emission, real `entityanalyticsconfigs` live readback, and stable-overlap drift on compare-safe fields
-  - compact AI-family proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `AI Project Type`, `AI Project`, and `AI Configuration`, with `AI Configuration` anchored to the official `msdyn_aiconfiguration` surface and the other two families currently using the neutral seed as the live-shape authority
+  - compact entity-analytics proof through typed XML parsing, deterministic tracked/package emission, real `entityanalyticsconfigs` live readback, stable-overlap drift on compare-safe fields, and a full live export/delete/rebuild/import/re-export proof through the hybrid apply-only path
+  - compact AI-family proof through typed XML parsing, deterministic tracked/package emission, live readback, stable-overlap drift, and hybrid package rebuild for `AI Project Type`, `AI Project`, and `AI Configuration`, now closed as an explicit permanent boundary for the current environment: package-level reverse/rebuild remains available, but live `publish` fails fast with a clear compiler diagnostic because Dataverse rejects `AITemplate` create with `OperationNotSupported`
   - neutral plugin-registration proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `PluginAssembly`, `PluginType`, `PluginStep`, and `PluginStepImage`
   - neutral integration-endpoint proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `ServiceEndpoint` and `Connector`
   - process-policy proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `DuplicateRule`, `DuplicateRuleCondition`, `RoutingRule`, `RoutingRuleItem`, `MobileOfflineProfile`, and `MobileOfflineProfileItem`, with workflow and queue links kept as best-effort associations
-  - security-definition proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `Role`, `FieldSecurityProfile`, `FieldPermission`, and `ConnectionRole`, with `RolePrivilege` kept definition-adjacent best effort and effective access intentionally out of scope
+  - security-definition proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `Role`, `RolePrivilege`, `FieldSecurityProfile`, `FieldPermission`, and `ConnectionRole`, with effective access intentionally out of scope
   - source-first service-policy adjunct support for `SimilarityRule`, `Sla`, and `SlaItem`, with parser, tracked-source, and package-input coverage plus explicit unsupported-live or non-blocking diff behavior rather than overclaimed neutral live parity
   - code-first SDK registration ingestion still left as explicit follow-up work rather than a neutral runtime path
   - family-semantic stable-overlap drift for the same first-family slice, exercised against fixture-backed live snapshots and generated round-trip package rereads with non-blocking warning surfaces preserved
@@ -47,32 +47,42 @@
   - conditional real-`pac` proof for both source-backed and generated package-inputs in the current environment
   - a compact live export/delete/reimport proof for `DemoTableToolTest` that now succeeds through the direct classic export ZIP -> `emit --layout intent-spec` -> pack -> import path without manual unpack
   - a richer live export/delete/reimport proof for `RebuildFidelityWave` that now succeeds for the supported rebuild-safe subset covering a savedquery view, entity-only app shell, and environment variable in addition to the table, column, and main form path
+  - a Wave 1 live proof for `seed-image-config` that now succeeds end to end: `publish` performs a targeted post-import image metadata finalize step, live `diff` drops to non-blocking warnings only, and direct classic-export reverse generation now reconstructs `primaryImageAttribute`, `canStoreFullImage`, and `isPrimaryImage` by reading image configuration from `Other/Customizations.xml`
   - broader hybrid reverse/rebuild proof through automated source-backed tests for representative process-policy, security-definition, plugin-registration, service-endpoint, visualization, canvas-app, AI, and entity-analytics seeds
+  - direct classic export ZIP reverse-generation plus real PAC pack proof for representative hybrid source-backed seeds in the compact environment, process-policy, and security-definition lanes
   - hybrid app-shell rebuild now correctly overlays staged web-resource payload assets in addition to `.data.xml` metadata files, so reverse-generated web-resource-backed shells rebuild without silent payload loss
   - conditional real-`pac` proof that a reverse-generated advanced UI intent document can rebuild and pack successfully after carrying structured authored-chart metadata plus the supported structured app-shell subset
+  - a live Wave 2 export/delete/rebuild/import/re-export proof for `seed-advanced-ui` now succeeds: reverse-generated intent keeps the authored visualization structured, stages the `account` table shell as source-backed `Entities/Account/Entity.xml`, preserves supported app-shell detail (`appSettings`, `webResource` site-map subarea, environment variable), rebuilds and publishes successfully, and re-exports back into the same hybrid intent shape
+  - a live Wave 3 export/delete/rebuild/import/re-export proof now succeeds for `seed-environment` and `seed-entity-analytics`: packaged canvas-app assets and entity-analytics metadata both survive direct classic-export reverse generation, rebuild, publish, and post-import re-reverse
+  - a live Wave 4 export/delete/rebuild/import/re-export proof now succeeds for both code/extensibility compact seeds: `seed-service-endpoint-connector` survives direct classic-export reverse generation, rebuild, import, and post-import re-export through the real connector (`372`) plus service-endpoint source shape, and `seed-plugin-registration` now survives the same loop after sharded `SdkMessageProcessingSteps/*.xml` reverse generation starts preserving `handlerPluginTypeName` plus `sdkMessageId`, allowing clean recreate of the plug-in assembly, type, step, and step image from a fully deleted live state
+  - a live Wave 5 export/delete/rebuild/import/re-export proof now succeeds for `seed-process-policy` and `seed-process-security`: duplicate-rule, routing-rule, mobile-offline, role shell, role privilege, field-security profile or permission, and connection-role artifacts all survive the reverse-generated hybrid rebuild loop, while effective access stays intentionally out of scope
+  - a live Wave 7 maximal supported proof now succeeds through `CodexMetadataWave7Maximal`: the compiler can export the compact supported composite solution, reverse-generate it to intent, delete the live solution and owned components, rebuild package-inputs, pack, publish, re-export, reverse-generate again, and keep only the expected platform-generated-view/legacy omissions in `reverse-generation-report.json`
+  - the first post-`B-010` `B-007` breadth slice now lands compact reporting/legacy source-first proof: `Report`, `Template`, `DisplayString`, `Attachment`, and `LegacyAsset` now parse from source, emit tracked-source summaries, reverse-generate into `sourceBackedArtifacts[]`, rebuild their deterministic package layout, and stay non-blocking in drift when honest live proof is absent
+  - PAC pack is now explicitly boundary-tested for that reporting/legacy slice: the compact synthetic seed still fails root-component validation because those legacy artifacts are not defined in `Customizations.xml`, so the lane is closed honestly as source-first / permanent best-effort rather than overclaimed rebuild parity
   - bootstrap apply and agent orchestration adapters
 - The copied `dataverse-metadata-synthesis` corpus lives under `fixtures/skill-corpus`, and dedicated generator fixtures now live under `fixtures/intent-specs`.
 
 ## What Still Needs Attention
 
-- Keep future authoring expansion on the same export-backed rebuild bar now proven for rebuild-safe authored views, entity-only app shells, and environment variables.
-- Live-prove representative source-backed families next so the broader rebuildability program is not only package-level but import-level where the family surface is credible, starting with the newer advanced UI and broader app-shell subset.
-- Extend structured authoring only where editability clearly beats source-backed references, especially beyond the now-supported quick/card/control-rich form, authored-chart, and supported broader app-shell subset.
-- Broaden the JSON intent / generator surface beyond the current v1 families only after the supported subset stays clean through:
-  - intent read
-  - tracked-source reverse-generation
-  - tracked/package emit
-  - XML reread
-  - stable-overlap compare
-  - PAC pack
-- Deepen typed reader coverage only where a later family still lacks enough metadata or asset anchoring for hybrid reverse generation, especially ribbon, richer app-shell controls, and any remaining code-extensibility adjuncts beyond the neutral plugin-registration plus integration-endpoint slices.
-- Continue schema-detail breadth beyond the alternate-key and image-config slices, especially any broader managed-property surface that can be captured honestly without overclaiming a standalone family.
-- Extend Phase 4 beyond the current canvas-app, explicit source-first import-map boundary, entity-analytics, and compact AI footholds by choosing the next honest environment/config family that can clear the same seed/readback/drift bar without overclaiming parity.
-- Deepen drift coverage beyond the current first-family slice and reduce the remaining non-blocking warning surfaces around under-reported local option sets, visualizations, and live-only platform relationship noise.
-- Extend live readback proof into later partial families such as visualizations, web resources, richer app-role detail, deeper process/security surfaces, and later environment/config families beyond the explicit permanent best-effort import-map boundary.
-- Broaden package-input coverage beyond the current proven release-path and generated-v1 directories so later families can ship through the same governed path.
-- Keep PAC auth/profile management and advanced import flags intentionally narrow unless a later slice proves they are needed.
-- Keep the skill corpus fixture manifest and generator fixtures in sync as the source skill and compiler surface evolve.
+- `B-010` is complete.
+- Completion outcome:
+  - every currently touched family now lands in one explicit end state
+  - Wave 7 maximal supported proof is green
+  - compact AI is now a documented permanent boundary rather than a hidden partial
+- Active execution focus:
+  - resume `B-007` breadth-first work from the completed `B-010` baseline
+  - keep reporting/legacy closed as an explicit source-first boundary, not as hidden future debt
+  - keep future authoring expansion on the same export-backed rebuild bar already proven for the supported subset
+- Permanent-boundary targets unless new evidence overturns them:
+  - `ImportMap`
+  - `DataSourceMapping`
+  - compact AI families in the current environment because live Dataverse create rejects `AITemplate` with `OperationNotSupported`
+  - `SimilarityRule`
+  - `Sla`
+  - `SlaItem`
+  - platform-generated system/default/lookup/quick-find views
+  - effective access/runtime privilege expansion
+  - reporting/legacy live rebuild parity beyond the current compact source-first slice, because the synthetic seed still fails PAC root-component validation
 
 ## Handoff Rule
 

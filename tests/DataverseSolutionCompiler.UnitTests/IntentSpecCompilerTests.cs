@@ -38,6 +38,17 @@ public sealed class IntentSpecCompilerTests
         "skill-corpus",
         "examples");
 
+    private static readonly string SeedAlternateKeyEntityPath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-alternate-key",
+        "unpacked",
+        "Entities",
+        "cdxmeta_WorkItem",
+        "Entity.xml");
+
     [Fact]
     public void Compile_reads_json_intent_fixture_into_canonical_solution()
     {
@@ -62,6 +73,465 @@ public sealed class IntentSpecCompilerTests
         result.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.SiteMap && artifact.LogicalName == "codex_metadata_intent_shell");
         result.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.EnvironmentVariableDefinition && artifact.LogicalName == "cdxmeta_AppShellMode");
         result.Solution.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.EnvironmentVariableValue && artifact.LogicalName == "cdxmeta_AppShellMode");
+    }
+
+    [Fact]
+    public void Compile_and_package_support_integer_columns_in_json_intent()
+    {
+        var intentPath = Path.Combine(Path.GetTempPath(), $"dsc-intent-integer-{Guid.NewGuid():N}.json");
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-intent-integer-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            File.WriteAllText(
+                intentPath,
+                """
+                {
+                  "specVersion": "1.0",
+                  "solution": {
+                    "uniqueName": "IntegerIntent",
+                    "displayName": "Integer Intent",
+                    "version": "1.0.0.0",
+                    "layeringIntent": "UnmanagedDevelopment"
+                  },
+                  "publisher": {
+                    "uniqueName": "CodexMetadata",
+                    "prefix": "cdxmeta",
+                    "displayName": "Codex Metadata"
+                  },
+                  "tables": [
+                    {
+                      "logicalName": "cdxmeta_counter",
+                      "schemaName": "cdxmeta_Counter",
+                      "displayName": "Counter",
+                      "columns": [
+                        {
+                          "logicalName": "cdxmeta_sequence",
+                          "schemaName": "cdxmeta_Sequence",
+                          "displayName": "Sequence",
+                          "type": "integer"
+                        }
+                      ],
+                      "forms": [],
+                      "views": []
+                    }
+                  ]
+                }
+                """);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(intentPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+            compiled.Solution.Artifacts.Should().Contain(artifact =>
+                artifact.Family == ComponentFamily.Column
+                && artifact.LogicalName == "cdxmeta_counter|cdxmeta_sequence"
+                && artifact.Properties![ArtifactPropertyKeys.AttributeType] == "integer");
+
+            var emitted = new PackageEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Entities", "cdxmeta_Counter", "Entity.xml"))
+                .Should()
+                .Contain("<Type>int</Type>")
+                .And.Contain("<Name>cdxmeta_sequence</Name>");
+        }
+        finally
+        {
+            if (File.Exists(intentPath))
+            {
+                File.Delete(intentPath);
+            }
+
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Compile_and_package_reference_global_option_sets_without_nested_attribute_optionset()
+    {
+        var intentPath = Path.Combine(Path.GetTempPath(), $"dsc-intent-global-optionset-{Guid.NewGuid():N}.json");
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-intent-global-optionset-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            File.WriteAllText(
+                intentPath,
+                """
+                {
+                  "specVersion": "1.0",
+                  "solution": {
+                    "uniqueName": "GlobalOptionIntent",
+                    "displayName": "Global Option Intent",
+                    "version": "1.0.0.0",
+                    "layeringIntent": "UnmanagedDevelopment"
+                  },
+                  "publisher": {
+                    "uniqueName": "CodexMetadata",
+                    "prefix": "cdxmeta",
+                    "displayName": "Codex Metadata"
+                  },
+                  "globalOptionSets": [
+                    {
+                      "logicalName": "cdxmeta_priorityband_test",
+                      "displayName": "Priority Band",
+                      "optionSetType": "picklist",
+                      "options": [
+                        { "value": "727270010", "label": "Low" },
+                        { "value": "727270011", "label": "Medium" }
+                      ]
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "logicalName": "cdxmeta_task",
+                      "schemaName": "cdxmeta_Task",
+                      "displayName": "Task",
+                      "columns": [
+                        {
+                          "logicalName": "cdxmeta_priorityband",
+                          "schemaName": "cdxmeta_PriorityBand",
+                          "displayName": "Priority Band",
+                          "type": "choice",
+                          "globalOptionSet": "cdxmeta_priorityband_test"
+                        }
+                      ],
+                      "forms": [],
+                      "views": []
+                    }
+                  ]
+                }
+                """);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(intentPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new PackageEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Entities", "cdxmeta_Task", "Entity.xml"))
+                .Should()
+                .Contain("<OptionSetName>cdxmeta_priorityband_test</OptionSetName>")
+                .And.NotContain("<optionset Name=\"cdxmeta_priorityband_test\">");
+        }
+        finally
+        {
+            if (File.Exists(intentPath))
+            {
+                File.Delete(intentPath);
+            }
+
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Compile_and_package_scope_local_choice_and_boolean_option_sets_to_the_entity()
+    {
+        var intentPath = Path.Combine(Path.GetTempPath(), $"dsc-intent-local-options-{Guid.NewGuid():N}.json");
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-intent-local-options-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            File.WriteAllText(
+                intentPath,
+                """
+                {
+                  "specVersion": "1.0",
+                  "solution": {
+                    "uniqueName": "LocalOptionIntent",
+                    "displayName": "Local Option Intent",
+                    "version": "1.0.0.0",
+                    "layeringIntent": "UnmanagedDevelopment"
+                  },
+                  "publisher": {
+                    "uniqueName": "CodexMetadata",
+                    "prefix": "cdxmeta",
+                    "displayName": "Codex Metadata"
+                  },
+                  "tables": [
+                    {
+                      "logicalName": "cdxmeta_task",
+                      "schemaName": "cdxmeta_Task",
+                      "displayName": "Task",
+                      "columns": [
+                        {
+                          "logicalName": "cdxmeta_isblocked",
+                          "schemaName": "cdxmeta_IsBlocked",
+                          "displayName": "Blocked",
+                          "type": "boolean",
+                          "options": [
+                            { "value": "1", "label": "Yes" },
+                            { "value": "0", "label": "No" }
+                          ]
+                        },
+                        {
+                          "logicalName": "cdxmeta_stage",
+                          "schemaName": "cdxmeta_Stage",
+                          "displayName": "Stage",
+                          "type": "choice",
+                          "options": [
+                            { "value": "727270000", "label": "Planned" },
+                            { "value": "727270001", "label": "Active" }
+                          ]
+                        }
+                      ],
+                      "forms": [],
+                      "views": []
+                    }
+                  ]
+                }
+                """);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(intentPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new PackageEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+
+            var entityXml = File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Entities", "cdxmeta_Task", "Entity.xml"));
+            entityXml.Should().Contain("<optionset Name=\"cdxmeta_task_cdxmeta_isblocked\">");
+            entityXml.Should().Contain("<optionset Name=\"cdxmeta_task_cdxmeta_stage\">");
+            entityXml.Should().NotContain("<optionset Name=\"cdxmeta_isblocked\">");
+            entityXml.Should().NotContain("<optionset Name=\"cdxmeta_stage\">");
+        }
+        finally
+        {
+            if (File.Exists(intentPath))
+            {
+                File.Delete(intentPath);
+            }
+
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Compile_and_package_emit_card_forms_with_dataverse_card_shell_sections()
+    {
+        var intentPath = Path.Combine(Path.GetTempPath(), $"dsc-intent-card-form-{Guid.NewGuid():N}.json");
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-intent-card-form-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            File.WriteAllText(
+                intentPath,
+                """
+                {
+                  "specVersion": "1.0",
+                  "solution": {
+                    "uniqueName": "CardIntent",
+                    "displayName": "Card Intent",
+                    "version": "1.0.0.0",
+                    "layeringIntent": "UnmanagedDevelopment"
+                  },
+                  "publisher": {
+                    "uniqueName": "CodexMetadata",
+                    "prefix": "cdxmeta",
+                    "displayName": "Codex Metadata"
+                  },
+                  "tables": [
+                    {
+                      "logicalName": "cdxmeta_task",
+                      "schemaName": "cdxmeta_Task",
+                      "displayName": "Task",
+                      "columns": [
+                        {
+                          "logicalName": "cdxmeta_summary",
+                          "schemaName": "cdxmeta_Summary",
+                          "displayName": "Summary",
+                          "type": "string"
+                        }
+                      ],
+                      "forms": [
+                        {
+                          "id": "11111111-1111-1111-1111-111111111111",
+                          "name": "Task Card",
+                          "type": "card",
+                          "tabs": [
+                            {
+                              "name": "card",
+                              "label": "Card",
+                              "sections": [
+                                {
+                                  "name": "details",
+                                  "label": "Details",
+                                  "fields": [ "cdxmeta_taskname", "cdxmeta_summary" ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "views": []
+                    }
+                  ]
+                }
+                """);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(intentPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new PackageEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Entities", "cdxmeta_Task", "FormXml", "card", "{11111111-1111-1111-1111-111111111111}.xml"))
+                .Should()
+                .Contain("section name=\"ColorStrip\"")
+                .And.Contain("section name=\"CardDetails\"")
+                .And.Contain("section name=\"CardFooter\"")
+                .And.NotContain("section name=\"details\"");
+        }
+        finally
+        {
+            if (File.Exists(intentPath))
+            {
+                File.Delete(intentPath);
+            }
+
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Hybrid_source_backed_tables_do_not_emit_standalone_entity_key_root_components()
+    {
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-source-backed-key-{Guid.NewGuid():N}");
+        var intentPath = Path.Combine(tempRoot, "intent-spec.json");
+        var sourceBackedEntityDirectory = Path.Combine(tempRoot, "source-backed", "Entities", "cdxmeta_WorkItem");
+        var outputRoot = Path.Combine(tempRoot, "out");
+
+        Directory.CreateDirectory(sourceBackedEntityDirectory);
+        File.Copy(SeedAlternateKeyEntityPath, Path.Combine(sourceBackedEntityDirectory, "Entity.xml"), overwrite: true);
+
+        try
+        {
+            File.WriteAllText(
+                intentPath,
+                """
+                {
+                  "specVersion": "1.0",
+                  "solution": {
+                    "uniqueName": "SourceBackedKeyIntent",
+                    "displayName": "Source-Backed Key Intent",
+                    "version": "1.0.0.0",
+                    "layeringIntent": "UnmanagedDevelopment"
+                  },
+                  "publisher": {
+                    "uniqueName": "CodexMetadata",
+                    "prefix": "cdxmeta",
+                    "displayName": "Codex Metadata"
+                  },
+                  "tables": [],
+                  "sourceBackedArtifacts": [
+                    {
+                      "family": "Table",
+                      "logicalName": "cdxmeta_workitem",
+                      "displayName": "Work Item",
+                      "metadataSourcePath": "source-backed/Entities/cdxmeta_WorkItem/Entity.xml",
+                      "packageRelativePath": "Entities/cdxmeta_WorkItem/Entity.xml"
+                    }
+                  ]
+                }
+                """);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(intentPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new PackageEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Solution.xml"))
+                .Should()
+                .Contain("type=\"1\"")
+                .And.Contain("schemaName=\"cdxmeta_workitem\"")
+                .And.NotContain("type=\"14\"")
+                .And.NotContain("schemaName=\"cdxmeta_WorkItem_ExternalCode\"");
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Hybrid_source_backed_tables_normalize_mismatched_entity_name_and_report_diagnostic()
+    {
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-source-backed-entity-name-{Guid.NewGuid():N}");
+        var intentPath = Path.Combine(tempRoot, "intent-spec.json");
+        var sourceBackedEntityDirectory = Path.Combine(tempRoot, "source-backed", "Entities", "cdxmeta_WorkItem");
+        var outputRoot = Path.Combine(tempRoot, "out");
+
+        Directory.CreateDirectory(sourceBackedEntityDirectory);
+        var malformedXml = File.ReadAllText(SeedAlternateKeyEntityPath)
+            .Replace("entity Name=\"cdxmeta_WorkItem\"", "entity Name=\"cdxmeta_workitem\"", StringComparison.Ordinal);
+        File.WriteAllText(Path.Combine(sourceBackedEntityDirectory, "Entity.xml"), malformedXml);
+
+        try
+        {
+            File.WriteAllText(
+                intentPath,
+                """
+                {
+                  "specVersion": "1.0",
+                  "solution": {
+                    "uniqueName": "SourceBackedEntityNameIntent",
+                    "displayName": "Source-Backed Entity Name Intent",
+                    "version": "1.0.0.0",
+                    "layeringIntent": "UnmanagedDevelopment"
+                  },
+                  "publisher": {
+                    "uniqueName": "CodexMetadata",
+                    "prefix": "cdxmeta",
+                    "displayName": "Codex Metadata"
+                  },
+                  "tables": [],
+                  "sourceBackedArtifacts": [
+                    {
+                      "family": "Table",
+                      "logicalName": "cdxmeta_workitem",
+                      "displayName": "Work Item",
+                      "metadataSourcePath": "source-backed/Entities/cdxmeta_WorkItem/Entity.xml",
+                      "packageRelativePath": "Entities/cdxmeta_WorkItem/Entity.xml"
+                    }
+                  ]
+                }
+                """);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(intentPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new PackageEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            emitted.Success.Should().BeTrue();
+            emitted.Diagnostics.Should().Contain(diagnostic =>
+                diagnostic.Code == "package-emitter-normalized-source-backed-table-entity-name"
+                && diagnostic.Message.Contains("cdxmeta_workitem", StringComparison.Ordinal));
+
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Entities", "cdxmeta_WorkItem", "Entity.xml"))
+                .Should()
+                .Contain("entity Name=\"cdxmeta_WorkItem\"")
+                .And.NotContain("entity Name=\"cdxmeta_workitem\"");
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
     }
 
     [Fact]
@@ -579,9 +1049,13 @@ public sealed class IntentSpecCompilerTests
 
     [Theory]
     [InlineData("seed-process-policy", "DuplicateRule", "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml")]
+    [InlineData("seed-process-policy", "MobileOfflineProfile", "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml")]
     [InlineData("seed-process-security", "Role", "Roles/Codex Metadata Seed Role.xml")]
+    [InlineData("seed-process-security", "ConnectionRole", "Other/ConnectionRoles.xml")]
+    [InlineData("seed-reporting-legacy", "Report", "Reports/cdxmeta_account_summary.rdl.data.xml")]
     [InlineData("seed-plugin-registration", "PluginAssembly", "Other/Customizations.xml")]
     [InlineData("seed-service-endpoint-connector", "ServiceEndpoint", "ServiceEndpoints/codex_webhook_endpoint/ServiceEndpoint.xml")]
+    [InlineData("seed-service-endpoint-connector", "Connector", "Connectors/shared-offerings-connector/Connector.xml")]
     [InlineData("seed-ai-families", "AiProjectType", "AIProjectTypes/document_automation/AIProjectType.xml")]
     [InlineData("seed-entity-analytics", "EntityAnalyticsConfiguration", "entityanalyticsconfigs/contact/entityanalyticsconfig.xml")]
     [InlineData("seed-environment", "CanvasApp", "CanvasApps/cat_overview_3dbf5.meta.xml")]
@@ -620,11 +1094,29 @@ public sealed class IntentSpecCompilerTests
 
             var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
             packageEmit.Success.Should().BeTrue();
+            var expectedPackagePath = Path.Combine(packageOutputRoot, "package-inputs", expectedPackageRelativePath.Replace('/', Path.DirectorySeparatorChar));
+            if (IsApplyOnlyHybridFamily(expectedFamily))
+            {
+                if (string.Equals(expectedPackageRelativePath, "Other/Customizations.xml", StringComparison.OrdinalIgnoreCase))
+                {
+                    File.Exists(expectedPackagePath).Should().BeTrue();
+                }
+                else
+                {
+                    File.Exists(expectedPackagePath).Should().BeFalse();
+                }
 
-            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", expectedPackageRelativePath.Replace('/', Path.DirectorySeparatorChar))).Should().BeTrue();
-            File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "manifest.json"))
-                .Should()
-                .Contain(expectedPackageRelativePath.Replace('\\', '/'));
+                File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml"))
+                    .Should()
+                    .NotContain(GetApplyOnlyRootComponentMarker(expectedFamily));
+            }
+            else
+            {
+                File.Exists(expectedPackagePath).Should().BeTrue();
+                File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "manifest.json"))
+                    .Should()
+                    .Contain(expectedPackageRelativePath.Replace('\\', '/'));
+            }
         }
         finally
         {
@@ -645,10 +1137,71 @@ public sealed class IntentSpecCompilerTests
         }
     }
 
+    [Fact]
+    public void Reverse_generation_from_seed_reporting_legacy_emits_source_backed_artifacts_and_rebuilds_package_layout()
+    {
+        var seedPath = Path.Combine(ExamplesRoot, "seed-reporting-legacy");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-reporting-legacy-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-reporting-legacy-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(seedPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var report = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "reverse-generation-report.json")))!.AsObject();
+            report["isPartial"]!.GetValue<bool>().Should().BeFalse();
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"family\":\"Report\"");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"family\":\"Template\"");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"family\":\"DisplayString\"");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"family\":\"Attachment\"");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"family\":\"LegacyAsset\"");
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"Report\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"packageRelativePath\":\"Reports/cdxmeta_account_summary.rdl.data.xml\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"Template\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"packageRelativePath\":\"Templates/cdxmeta_welcome_email.xml\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"DisplayString\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"Attachment\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"LegacyAsset\"");
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "Reports", "cdxmeta_account_summary.rdl.data.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "Reports", "cdxmeta_account_summary.rdl")).Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "Templates", "cdxmeta_welcome_email.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "DisplayStrings", "cdxmeta_reporting_labels.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "Attachments", "cdxmeta_report_payload.txt.data.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "Attachments", "cdxmeta_report_payload.txt")).Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "WebWizards", "cdxmeta_onboarding_wizard.xml")).Should().BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
     [Theory]
     [InlineData("seed-environment", "CodexMetadataSeedEnvironment.zip", "CanvasApp", "CanvasApps/cat_overview_3dbf5.meta.xml")]
     [InlineData("seed-process-policy", "CodexMetadataSeedProcessPolicy.zip", "DuplicateRule", "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml")]
+    [InlineData("seed-process-policy", "CodexMetadataSeedProcessPolicy.zip", "MobileOfflineProfile", "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml")]
     [InlineData("seed-process-security", "CodexMetadataSeedProcessSecurity.zip", "Role", "Roles/Codex Metadata Seed Role.xml")]
+    [InlineData("seed-process-security", "CodexMetadataSeedProcessSecurity.zip", "ConnectionRole", "Other/ConnectionRoles.xml")]
     public void Classic_export_zip_can_reverse_generate_source_backed_intent_and_rebuild_package_inputs(
         string seedName,
         string zipFileName,
@@ -684,11 +1237,21 @@ public sealed class IntentSpecCompilerTests
 
             var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
             packageEmit.Success.Should().BeTrue();
-
-            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", expectedPackageRelativePath.Replace('/', Path.DirectorySeparatorChar))).Should().BeTrue();
-            File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "manifest.json"))
-                .Should()
-                .Contain(expectedPackageRelativePath.Replace('\\', '/'));
+            var expectedPackagePath = Path.Combine(packageOutputRoot, "package-inputs", expectedPackageRelativePath.Replace('/', Path.DirectorySeparatorChar));
+            if (IsApplyOnlyHybridFamily(expectedFamily))
+            {
+                File.Exists(expectedPackagePath).Should().BeFalse();
+                File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml"))
+                    .Should()
+                    .NotContain(GetApplyOnlyRootComponentMarker(expectedFamily));
+            }
+            else
+            {
+                File.Exists(expectedPackagePath).Should().BeTrue();
+                File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "manifest.json"))
+                    .Should()
+                    .Contain(expectedPackageRelativePath.Replace('\\', '/'));
+            }
         }
         finally
         {
@@ -700,6 +1263,82 @@ public sealed class IntentSpecCompilerTests
             if (Directory.Exists(packageOutputRoot))
             {
                 Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Sharded_plugin_step_reverse_generation_preserves_step_apply_metadata()
+    {
+        var sourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-plugin-step-source-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-plugin-step-intent-{Guid.NewGuid():N}");
+
+        try
+        {
+            Directory.CreateDirectory(Path.Combine(sourceRoot, "Other"));
+            Directory.CreateDirectory(Path.Combine(sourceRoot, "SdkMessageProcessingSteps"));
+
+            File.Copy(
+                Path.Combine(ExamplesRoot, "seed-plugin-registration", "unpacked", "Other", "Solution.xml"),
+                Path.Combine(sourceRoot, "Other", "Solution.xml"),
+                overwrite: true);
+
+            File.WriteAllText(
+                Path.Combine(sourceRoot, "Other", "Customizations.xml"),
+                """
+                <?xml version="1.0" encoding="utf-8"?>
+                <ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                  <SolutionPluginAssemblies />
+                  <SdkMessageProcessingSteps />
+                </ImportExportXml>
+                """);
+
+            File.WriteAllText(
+                Path.Combine(sourceRoot, "SdkMessageProcessingSteps", "{498a9146-c438-f111-88b3-0022489b9600}.xml"),
+                """
+                <?xml version="1.0" encoding="utf-8"?>
+                <SdkMessageProcessingStep Name="Account Update Trace Step" SdkMessageProcessingStepId="{498a9146-c438-f111-88b3-0022489b9600}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                  <SdkMessageId>20bebb1b-ea3e-db11-86a7-000a3a5473e8</SdkMessageId>
+                  <PluginTypeName>Codex.Metadata.Plugins.AccountUpdateTrace, Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098</PluginTypeName>
+                  <PrimaryEntity>account</PrimaryEntity>
+                  <Description>Neutral synchronous update step for account.</Description>
+                  <FilteringAttributes>accountnumber,name</FilteringAttributes>
+                  <Mode>0</Mode>
+                  <Rank>1</Rank>
+                  <Stage>20</Stage>
+                  <SupportedDeployment>0</SupportedDeployment>
+                  <IntroducedVersion>1.0</IntroducedVersion>
+                </SdkMessageProcessingStep>
+                """);
+
+            var original = new CompilerKernel().Compile(new CompilationRequest(sourceRoot, Array.Empty<string>()));
+            original.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(original.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            var pluginStepArtifact = intent["sourceBackedArtifacts"]!.AsArray()
+                .OfType<JsonObject>()
+                .Single(artifact => string.Equals(artifact["family"]?.GetValue<string>(), ComponentFamily.PluginStep.ToString(), StringComparison.Ordinal));
+
+            pluginStepArtifact["stableProperties"]!["handlerPluginTypeName"]!.GetValue<string>()
+                .Should()
+                .Be("Codex.Metadata.Plugins.AccountUpdateTrace");
+            pluginStepArtifact["stableProperties"]!["sdkMessageId"]!.GetValue<string>()
+                .Should()
+                .Be("20bebb1b-ea3e-db11-86a7-000a3a5473e8");
+        }
+        finally
+        {
+            if (Directory.Exists(sourceRoot))
+            {
+                Directory.Delete(sourceRoot, recursive: true);
+            }
+
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
             }
         }
     }
@@ -776,7 +1415,10 @@ public sealed class IntentSpecCompilerTests
             var report = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "reverse-generation-report.json")))!.AsObject();
             report["inputKind"]!.GetValue<string>().Should().Be("packed-zip");
             report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("WebResource");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"family\":\"Table\"");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"artifact\":\"account\"");
             report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().NotContain("Visualization");
+            report["unsupportedFamiliesOmitted"]!.ToJsonString().Should().NotContain("\"family\":\"Visualization\"");
 
             var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
             var appModule = intent["appModules"]!.AsArray().Single()!.AsObject();
@@ -788,6 +1430,8 @@ public sealed class IntentSpecCompilerTests
             visualizations.Count.Should().Be(1);
             visualizations[0]!["id"]!.GetValue<string>().Should().Be("74a622c0-5193-de11-97d4-00155da3b01e");
             visualizations[0]!["chartTypes"]!.ToJsonString().Should().Contain("bar");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"Table\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"packageRelativePath\":\"Entities/Account/Entity.xml\"");
         }
         finally
         {
@@ -1078,4 +1722,37 @@ public sealed class IntentSpecCompilerTests
             return false;
         }
     }
+
+    private static bool IsApplyOnlyHybridFamily(string family) =>
+        string.Equals(family, ComponentFamily.EntityAnalyticsConfiguration.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.AiProjectType.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.AiProject.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.AiConfiguration.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.ServiceEndpoint.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.MobileOfflineProfile.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.ConnectionRole.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.Connector.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.PluginAssembly.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.PluginType.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.PluginStep.ToString(), StringComparison.Ordinal)
+        || string.Equals(family, ComponentFamily.PluginStepImage.ToString(), StringComparison.Ordinal)
+        ;
+
+    private static string GetApplyOnlyRootComponentMarker(string family) =>
+        family switch
+        {
+            nameof(ComponentFamily.EntityAnalyticsConfiguration) => "type=\"430\"",
+            nameof(ComponentFamily.AiProjectType) => "type=\"400\"",
+            nameof(ComponentFamily.AiProject) => "type=\"401\"",
+            nameof(ComponentFamily.AiConfiguration) => "type=\"402\"",
+            nameof(ComponentFamily.ServiceEndpoint) => "type=\"95\"",
+            nameof(ComponentFamily.MobileOfflineProfile) => "type=\"161\"",
+            nameof(ComponentFamily.ConnectionRole) => "type=\"63\"",
+            nameof(ComponentFamily.Connector) => "type=\"371\"",
+            nameof(ComponentFamily.PluginAssembly) => "type=\"91\"",
+            nameof(ComponentFamily.PluginType) => "type=\"90\"",
+            nameof(ComponentFamily.PluginStep) => "type=\"92\"",
+            nameof(ComponentFamily.PluginStepImage) => "type=\"93\"",
+            _ => throw new ArgumentOutOfRangeException(nameof(family), family, "Unknown apply-only hybrid family.")
+        };
 }

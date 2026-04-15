@@ -1,0 +1,76 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_wave7category|quick|6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91",
+  "DisplayName": "Category Snapshot",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7Category/FormXml/quick/{6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "a1e0aee41c1178bbf1a6b9d503205199aee0fbe39ff94043c8396f26625d47a4",
+    "controlCount": "2",
+    "controlDescriptionCount": "2",
+    "description": "Quick form used by the work item quick-view control.",
+    "entityLogicalName": "cdxmeta_wave7category",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Category Snapshot",
+      "description": "Quick form used by the work item quick-view control.",
+      "type": "quick",
+      "tabs": [
+        {
+          "name": "general",
+          "label": "General",
+          "sections": [
+            {
+              "name": "snapshot",
+              "label": "Snapshot",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_wave7categoryname",
+                  "label": "Category"
+                },
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_description",
+                  "label": "Description"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": []
+    },
+    "formId": "6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91",
+    "formType": "quick",
+    "formTypeCode": "1",
+    "headerControlCount": "0",
+    "quickFormCount": "0",
+    "sectionCount": "1",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "quick",
+      "formId": "6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91",
+      "tabCount": 1,
+      "sectionCount": 1,
+      "controlCount": 2,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 0,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_description",
+          "dataFieldName": "cdxmeta_description",
+          "role": "field"
+        },
+        {
+          "id": "cdxmeta_wave7categoryname",
+          "dataFieldName": "cdxmeta_wave7categoryname",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

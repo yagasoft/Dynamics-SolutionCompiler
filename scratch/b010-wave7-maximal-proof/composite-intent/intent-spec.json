@@ -1,0 +1,1282 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataWave7Maximal",
+    "displayName": "Codex Metadata Wave 7 Maximal",
+    "description": "Program-end maximal supported proof for the Dataverse Solution Compiler B-010 backlog.",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [
+    {
+      "logicalName": "cdxmeta_priorityband",
+      "displayName": "Priority Band",
+      "description": "Reusable global choice required by the hybrid alternate-key representative.",
+      "optionSetType": "picklist",
+      "options": [
+        {
+          "value": "727270010",
+          "label": "Low"
+        },
+        {
+          "value": "727270011",
+          "label": "Medium"
+        },
+        {
+          "value": "727270012",
+          "label": "High"
+        }
+      ]
+    },
+    {
+      "logicalName": "cdxmeta_wave7prioritybandf",
+      "displayName": "Priority Band",
+      "description": "Reusable global priority choice for the Wave 7 maximal supported proof.",
+      "optionSetType": "picklist",
+      "options": [
+        {
+          "value": "727270010",
+          "label": "Low"
+        },
+        {
+          "value": "727270011",
+          "label": "Medium"
+        },
+        {
+          "value": "727270012",
+          "label": "High"
+        }
+      ]
+    }
+  ],
+  "environmentVariables": [
+    {
+      "schemaName": "cdxmeta_AdvancedUiMode",
+      "displayName": "Advanced UI Scaffold Mode",
+      "type": "100000000",
+      "defaultValue": "scaffold",
+      "currentValue": "seed",
+      "secretStore": "0",
+      "valueSchema": "string"
+    }
+  ],
+  "appModules": [
+    {
+      "uniqueName": "codex_metadata_advanced_ui_924e69cb",
+      "displayName": "Codex Metadata Advanced UI",
+      "description": "Neutral app-shell scaffold for advanced UI component synthesis.",
+      "siteMap": {
+        "areas": [
+          {
+            "id": "cdxmeta_area",
+            "title": "Codex Metadata Advanced UI",
+            "groups": [
+              {
+                "id": "cdxmeta_group",
+                "title": "Advanced UI Seed",
+                "subAreas": [
+                  {
+                    "id": "cdxmeta_shell",
+                    "title": "Advanced UI Shell",
+                    "webResource": "cdxmeta_/advancedui/landing.html"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "appSettings": [
+        {
+          "definitionUniqueName": "AppChannel",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "logicalName": "cdxmeta_wave7category",
+      "schemaName": "cdxmeta_Wave7Category",
+      "displayName": "Category",
+      "description": "Reference category for the Wave 7 maximal supported proof.",
+      "entitySetName": "cdxmeta_wave7categories",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_description",
+          "schemaName": "cdxmeta_description",
+          "displayName": "Description",
+          "description": "Optional descriptive text for the category.",
+          "type": "memo",
+          "isSecured": false,
+          "isCustomizable": true
+        }
+      ],
+      "keys": [],
+      "forms": [
+        {
+          "id": "6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91",
+          "name": "Category Snapshot",
+          "description": "Quick form used by the work item quick-view control.",
+          "type": "quick",
+          "tabs": [
+            {
+              "name": "general",
+              "label": "General",
+              "sections": [
+                {
+                  "name": "snapshot",
+                  "label": "Snapshot",
+                  "fields": [
+                    "cdxmeta_wave7categoryname",
+                    "cdxmeta_description"
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        }
+      ],
+      "views": [
+        {
+          "id": "6f7a00a4-440f-44b2-8f67-8e1e713f3eb8",
+          "name": "All Categories",
+          "layoutColumns": [
+            "cdxmeta_wave7categoryname",
+            "cdxmeta_description"
+          ],
+          "fetchAttributes": [
+            "cdxmeta_wave7categoryid",
+            "cdxmeta_wave7categoryname",
+            "cdxmeta_description"
+          ],
+          "orders": [
+            {
+              "attribute": "cdxmeta_wave7categoryname",
+              "descending": false
+            }
+          ]
+        }
+      ],
+      "visualizations": []
+    },
+    {
+      "logicalName": "cdxmeta_wave7checkpoint",
+      "schemaName": "cdxmeta_Wave7Checkpoint",
+      "displayName": "Checkpoint",
+      "description": "Child records used to demonstrate related-data form composition.",
+      "entitySetName": "cdxmeta_wave7checkpoints",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_notes",
+          "schemaName": "cdxmeta_notes",
+          "displayName": "Notes",
+          "description": "Checkpoint notes.",
+          "type": "memo",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_sequence",
+          "schemaName": "cdxmeta_sequence",
+          "displayName": "Sequence",
+          "description": "Display order for the checkpoint.",
+          "type": "integer",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_wave7workitemid",
+          "schemaName": "cdxmeta_wave7workitemid",
+          "displayName": "Work Item",
+          "description": "Parent work item for the checkpoint.",
+          "type": "lookup",
+          "isSecured": false,
+          "isCustomizable": true,
+          "targetTable": "cdxmeta_wave7workitem",
+          "relationshipSchemaName": "cdxmeta_wave7workitem_wave7checkpoint"
+        }
+      ],
+      "keys": [],
+      "forms": [],
+      "views": [
+        {
+          "id": "2c770a3f-0c8f-4a58-b4af-6f5878ef13b8",
+          "name": "All Checkpoints",
+          "layoutColumns": [
+            "cdxmeta_wave7checkpointname",
+            "cdxmeta_sequence",
+            "cdxmeta_wave7workitemid"
+          ],
+          "fetchAttributes": [
+            "cdxmeta_wave7checkpointid",
+            "cdxmeta_wave7checkpointname",
+            "cdxmeta_sequence",
+            "cdxmeta_wave7workitemid"
+          ],
+          "orders": [
+            {
+              "attribute": "cdxmeta_sequence",
+              "descending": false
+            }
+          ]
+        }
+      ],
+      "visualizations": []
+    },
+    {
+      "logicalName": "cdxmeta_wave7workitem",
+      "schemaName": "cdxmeta_Wave7WorkItem",
+      "displayName": "Work Item",
+      "description": "Maximal-proof work item table that carries schema, form, view, and security evidence.",
+      "entitySetName": "cdxmeta_wave7workitems",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_externalcode",
+          "schemaName": "cdxmeta_externalcode",
+          "displayName": "External Code",
+          "description": "Business key for the work item.",
+          "type": "string",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_wave7categoryid",
+          "schemaName": "cdxmeta_wave7categoryid",
+          "displayName": "Category",
+          "description": "Parent category for the work item.",
+          "type": "lookup",
+          "isSecured": false,
+          "isCustomizable": true,
+          "targetTable": "cdxmeta_wave7category",
+          "relationshipSchemaName": "cdxmeta_wave7category_wave7workitem"
+        },
+        {
+          "logicalName": "cdxmeta_details",
+          "schemaName": "cdxmeta_details",
+          "displayName": "Details",
+          "description": "Long-form notes.",
+          "type": "memo",
+          "isSecured": true,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_duedate",
+          "schemaName": "cdxmeta_duedate",
+          "displayName": "Due Date",
+          "description": "Representative date-only column.",
+          "type": "datetime",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_efforthours",
+          "schemaName": "cdxmeta_efforthours",
+          "displayName": "Effort Hours",
+          "description": "Decimal effort estimate.",
+          "type": "decimal",
+          "isSecured": false,
+          "isCustomizable": true
+        },
+        {
+          "logicalName": "cdxmeta_isblocked",
+          "schemaName": "cdxmeta_isblocked",
+          "displayName": "Blocked",
+          "description": "Whether the work item is blocked.",
+          "type": "boolean",
+          "isSecured": false,
+          "isCustomizable": true,
+          "options": [
+            {
+              "value": "1",
+              "label": "Yes"
+            },
+            {
+              "value": "0",
+              "label": "No"
+            }
+          ]
+        },
+        {
+          "logicalName": "cdxmeta_priority",
+          "schemaName": "cdxmeta_priority",
+          "displayName": "Priority",
+          "description": "Global priority choice.",
+          "type": "choice",
+          "isSecured": false,
+          "isCustomizable": true,
+          "globalOptionSet": "cdxmeta_wave7prioritybandf"
+        },
+        {
+          "logicalName": "cdxmeta_stage",
+          "schemaName": "cdxmeta_stage",
+          "displayName": "Stage",
+          "description": "Representative local choice.",
+          "type": "choice",
+          "isSecured": false,
+          "isCustomizable": true,
+          "options": [
+            {
+              "value": "727270000",
+              "label": "Planned"
+            },
+            {
+              "value": "727270001",
+              "label": "Active"
+            },
+            {
+              "value": "727270002",
+              "label": "Done"
+            }
+          ]
+        },
+        {
+          "logicalName": "cdxmeta_summary",
+          "schemaName": "cdxmeta_summary",
+          "displayName": "Summary",
+          "description": "Compact single-line summary.",
+          "type": "string",
+          "isSecured": false,
+          "isCustomizable": true
+        }
+      ],
+      "keys": [],
+      "forms": [
+        {
+          "id": "f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17",
+          "name": "Work Item Quick",
+          "description": "Quick form for compact work item snapshots.",
+          "type": "quick",
+          "tabs": [
+            {
+              "name": "quick",
+              "label": "Quick",
+              "sections": [
+                {
+                  "name": "snapshot",
+                  "label": "Snapshot",
+                  "fields": [
+                    "cdxmeta_wave7workitemname",
+                    "cdxmeta_summary",
+                    "cdxmeta_stage"
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        },
+        {
+          "id": "125df510-a5c1-475d-a1b4-2de66cfd1cfe",
+          "name": "Work Item Card",
+          "description": "Card form for the maximal proof lane.",
+          "type": "card",
+          "tabs": [
+            {
+              "name": "card",
+              "label": "Card",
+              "sections": [
+                {
+                  "name": "details",
+                  "label": "Details",
+                  "fields": [
+                    "cdxmeta_wave7workitemname",
+                    "cdxmeta_summary",
+                    "cdxmeta_priority"
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": []
+        },
+        {
+          "id": "0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4",
+          "name": "Work Item Main",
+          "description": "Structured main form proving field, quick-view, and subgrid controls.",
+          "type": "main",
+          "tabs": [
+            {
+              "name": "summary",
+              "label": "Summary",
+              "sections": [
+                {
+                  "name": "overview",
+                  "label": "Overview",
+                  "fields": [
+                    "cdxmeta_wave7workitemname",
+                    "cdxmeta_summary",
+                    "cdxmeta_wave7categoryid"
+                  ]
+                },
+                {
+                  "name": "planning",
+                  "label": "Planning",
+                  "fields": [
+                    "cdxmeta_priority",
+                    "cdxmeta_stage",
+                    "cdxmeta_efforthours",
+                    "cdxmeta_duedate",
+                    "cdxmeta_isblocked"
+                  ]
+                },
+                {
+                  "name": "related",
+                  "label": "Related",
+                  "controls": [
+                    {
+                      "kind": "quickView",
+                      "field": "cdxmeta_wave7categoryid",
+                      "quickFormEntity": "cdxmeta_wave7category",
+                      "quickFormId": "6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91",
+                      "controlMode": "Edit"
+                    },
+                    {
+                      "kind": "subgrid",
+                      "label": "Checkpoints",
+                      "relationshipName": "cdxmeta_wave7workitem_wave7checkpoint",
+                      "targetTable": "cdxmeta_wave7checkpoint",
+                      "defaultViewId": "2c770a3f-0c8f-4a58-b4af-6f5878ef13b8",
+                      "enableViewPicker": true,
+                      "enableChartPicker": false,
+                      "recordsPerPage": 5
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerFields": [
+            "cdxmeta_priority",
+            "cdxmeta_stage"
+          ]
+        }
+      ],
+      "views": [
+        {
+          "id": "3e6d013f-87b4-48fb-a880-a30a6ba9877e",
+          "name": "All Work Items",
+          "layoutColumns": [
+            "cdxmeta_wave7workitemname",
+            "cdxmeta_summary",
+            "cdxmeta_priority",
+            "cdxmeta_stage"
+          ],
+          "fetchAttributes": [
+            "cdxmeta_wave7workitemid",
+            "cdxmeta_wave7workitemname",
+            "cdxmeta_summary",
+            "cdxmeta_priority",
+            "cdxmeta_stage"
+          ],
+          "orders": [
+            {
+              "attribute": "cdxmeta_wave7workitemname",
+              "descending": false
+            }
+          ]
+        }
+      ],
+      "visualizations": []
+    },
+    {
+      "logicalName": "cdxmeta_wave7photoasset",
+      "schemaName": "cdxmeta_Wave7PhotoAsset",
+      "displayName": "Photo Asset",
+      "description": "Compact photo-asset seed for image configuration and stable managed-flag proof.",
+      "entitySetName": "cdxmeta_wave7photoassets",
+      "ownershipTypeMask": "UserOwned",
+      "primaryImageAttribute": "cdxmeta_profileimage",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_caption",
+          "schemaName": "cdxmeta_caption",
+          "displayName": "Caption",
+          "description": "Companion text column used to prove blocking managed-flag drift.",
+          "type": "string",
+          "isSecured": false,
+          "isCustomizable": false
+        },
+        {
+          "logicalName": "cdxmeta_profileimage",
+          "schemaName": "cdxmeta_profileimage",
+          "displayName": "Profile Image",
+          "description": "Image column used to prove entity-level and attribute-level image configuration.",
+          "type": "image",
+          "isSecured": false,
+          "isCustomizable": true,
+          "canStoreFullImage": true,
+          "isPrimaryImage": true
+        }
+      ],
+      "keys": [],
+      "forms": [],
+      "views": [],
+      "visualizations": []
+    },
+    {
+      "logicalName": "account",
+      "schemaName": "Account",
+      "displayName": "Account",
+      "isCustomizable": false,
+      "columns": [],
+      "keys": [],
+      "forms": [],
+      "views": [],
+      "visualizations": [
+        {
+          "id": "74a622c0-5193-de11-97d4-00155da3b01e",
+          "name": "Accounts by Industry",
+          "description": "Shows the total number of accounts by industry.",
+          "chartTypes": [
+            "bar"
+          ],
+          "groupByColumns": [
+            "industrycode"
+          ],
+          "measureAliases": [
+            "aggregate_column"
+          ],
+          "titleNames": [
+            "chart title"
+          ],
+          "dataDescriptionXml": "<datadescription><datadefinition><fetchcollection><fetch mapping=\"logical\" aggregate=\"true\"><entity name=\"account\"><attribute groupby=\"true\" alias=\"groupby_column\" name=\"industrycode\" /><attribute alias=\"aggregate_column\" name=\"name\" aggregate=\"count\" /></entity></fetch></fetchcollection><categorycollection><category><measurecollection><measure alias=\"aggregate_column\" /></measurecollection></category></categorycollection></datadefinition></datadescription>",
+          "presentationDescriptionXml": "<presentationdescription><Chart><Series><Series ChartType=\"Bar\" IsValueShownAsLabel=\"True\" Color=\"91, 151, 213\" BackSecondaryColor=\"112, 142, 50\" Font=\"{0}, 9.5px\" LabelForeColor=\"59, 59, 59\" CustomProperties=\"PointWidth=0.75, MaxPixelPointWidth=40\"><SmartLabelStyle Enabled=\"True\" /></Series></Series><ChartAreas><ChartArea BorderColor=\"White\" BorderDashStyle=\"Solid\"><AxisY LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\"><MajorGrid LineColor=\"239, 242, 246\" /><LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" /></AxisY><AxisX LabelAutoFitMinFontSize=\"8\" TitleForeColor=\"59, 59, 59\" TitleFont=\"{0}, 10.5px\" LineColor=\"165, 172, 181\" IsReversed=\"False\"><MajorGrid Enabled=\"False\" /><MajorTickMark Enabled=\"False\" /><LabelStyle Font=\"{0}, 10.5px\" ForeColor=\"59, 59, 59\" /></AxisX></ChartArea></ChartAreas><Titles><Title Name=\"Chart Title\" DockingOffset=\"-3\" Font=\"{0}, 13px\" ForeColor=\"59, 59, 59\" Alignment=\"TopLeft\"></Title></Titles></Chart></presentationdescription>"
+        }
+      ]
+    }
+  ],
+  "sourceBackedArtifacts": [
+    {
+      "family": "Table",
+      "logicalName": "account",
+      "displayName": "Account",
+      "metadataSourcePath": "source-backed/Entities/Account/Entity.xml",
+      "packageRelativePath": "Entities/Account/Entity.xml",
+      "stableProperties": {
+        "entityLogicalName": "account",
+        "isCustomizable": "false",
+        "schemaName": "Account",
+        "shellOnly": "false"
+      }
+    },
+    {
+      "family": "Table",
+      "logicalName": "cdxmeta_category",
+      "displayName": "Category",
+      "metadataSourcePath": "source-backed/Entities/cdxmeta_Category/Entity.xml",
+      "packageRelativePath": "Entities/cdxmeta_Category/Entity.xml",
+      "stableProperties": {
+        "entityLogicalName": "cdxmeta_category",
+        "schemaName": "cdxmeta_Category",
+        "shellOnly": "false"
+      }
+    },
+    {
+      "family": "Table",
+      "logicalName": "cdxmeta_checkpoint",
+      "displayName": "Checkpoint",
+      "metadataSourcePath": "source-backed/Entities/cdxmeta_Checkpoint/Entity.xml",
+      "packageRelativePath": "Entities/cdxmeta_Checkpoint/Entity.xml",
+      "stableProperties": {
+        "entityLogicalName": "cdxmeta_checkpoint",
+        "schemaName": "cdxmeta_Checkpoint",
+        "shellOnly": "false"
+      }
+    },
+    {
+      "family": "Table",
+      "logicalName": "cdxmeta_workitem",
+      "displayName": "Work Item",
+      "metadataSourcePath": "source-backed/Entities/cdxmeta_WorkItem/Entity.xml",
+      "packageRelativePath": "Entities/cdxmeta_WorkItem/Entity.xml",
+      "stableProperties": {
+        "entityLogicalName": "cdxmeta_workitem",
+        "schemaName": "cdxmeta_WorkItem",
+        "shellOnly": "false"
+      }
+    },
+    {
+      "family": "AppModule",
+      "logicalName": "codex_metadata_advanced_ui_924e69cb",
+      "displayName": "Codex Metadata Advanced UI",
+      "metadataSourcePath": "source-backed/AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+      "packageRelativePath": "AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml",
+      "stableProperties": {
+        "appSettingCount": "1",
+        "componentTypesJson": [
+          "62"
+        ],
+        "description": "Neutral app-shell scaffold for advanced UI component synthesis.",
+        "roleIdsJson": [
+          "119f245c-3cc8-4b62-b31c-d1a046ced15d",
+          "627090ff-40a3-4053-8790-584edc5be201"
+        ],
+        "roleMapCount": "2"
+      }
+    },
+    {
+      "family": "WebResource",
+      "logicalName": "cdxmeta_/advancedui/icon.svg",
+      "displayName": "Advanced UI Icon",
+      "metadataSourcePath": "source-backed/WebResources/cdxmeta_/advancedui/icon.svg.data.xml",
+      "assetSourcePaths": [
+        "source-backed/WebResources/cdxmeta_/advancedui/icon.svg"
+      ],
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/icon.svg.data.xml",
+      "stableProperties": {
+        "byteLength": "362",
+        "contentHash": "f3a8c8498372e2081eb9367c3c999af8934be94fa5731dc29e33e42d0223960e",
+        "description": "Neutral app shell icon for the Codex advanced UI scaffold.",
+        "webResourceType": "11",
+        "webResourceTypeLabel": "svg"
+      }
+    },
+    {
+      "family": "WebResource",
+      "logicalName": "cdxmeta_/advancedui/landing.html",
+      "displayName": "Advanced UI Landing",
+      "metadataSourcePath": "source-backed/WebResources/cdxmeta_/advancedui/landing.html.data.xml",
+      "assetSourcePaths": [
+        "source-backed/WebResources/cdxmeta_/advancedui/landing.html"
+      ],
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/landing.html.data.xml",
+      "stableProperties": {
+        "byteLength": "1389",
+        "contentHash": "769c1328ba2445211a1e99b9eca7a19657fcb0c093a32c4e05d378b56f7e7007",
+        "description": "Neutral landing page for the Codex advanced UI scaffold.",
+        "webResourceType": "1",
+        "webResourceTypeLabel": "html"
+      }
+    },
+    {
+      "family": "CanvasApp",
+      "logicalName": "cat_overview_3dbf5",
+      "displayName": "Overview",
+      "metadataSourcePath": "source-backed/CanvasApps/cat_overview_3dbf5.meta.xml",
+      "assetSourcePaths": [
+        "source-backed/CanvasApps/cat_overview_3dbf5_BackgroundImageUri",
+        "source-backed/CanvasApps/cat_overview_3dbf5_DocumentUri.msapp"
+      ],
+      "packageRelativePath": "CanvasApps/cat_overview_3dbf5.meta.xml",
+      "stableProperties": {
+        "appVersion": "2023-09-06T20:22:07Z",
+        "authorizationReferencesJson": [],
+        "backgroundColor": "RGBA(0,176,240,1)",
+        "backgroundImageUri": "/CanvasApps/cat_overview_3dbf5_BackgroundImageUri",
+        "canConsumeAppPass": "true",
+        "canvasAppType": "2",
+        "cdsDependenciesJson": {
+          "cdsdependencies": [
+            {
+              "componenttype": 1,
+              "logicalname": "entity"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "solution"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "customapi"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "customapirequestparameter"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "publisher"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "customapiresponseproperty"
+            },
+            {
+              "componenttype": 1,
+              "logicalname": "sdkmessageprocessingstep"
+            },
+            {
+              "componenttype": 61,
+              "componenttypeplatformname": "WebResource",
+              "logicalname": "cat_DVPageLoc"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVCommandBar"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVAutoWidthLabel"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.DVIcon"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.NavigationComponentPCF"
+            },
+            {
+              "componenttype": 66,
+              "componenttypeplatformname": "CustomControl",
+              "logicalname": "cat_PowerCAT.NavigationComponentPCF"
+            }
+          ]
+        },
+        "connectionReferencesJson": {},
+        "createdByClientVersion": "3.23081.15.0",
+        "databaseReferencesJson": {
+          "default.cds": {
+            "components": [
+              {
+                "componentName": "WebResource",
+                "identifier": "cat_DVPageLoc",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVCommandBar",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVAutoWidthLabel",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.DVIcon",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.NavigationComponentPCF",
+                "identifierType": "LogicalName"
+              },
+              {
+                "capabilities": {
+                  "pcfExternalServiceUsageAllowed": false
+                },
+                "componentName": "CustomControl",
+                "identifier": "cat_PowerCAT.NavigationComponentPCF",
+                "identifierType": "LogicalName"
+              }
+            ],
+            "dataSources": {
+              "Custom API Request Parameters": {
+                "entitySetName": "customapirequestparameters",
+                "logicalName": "customapirequestparameter"
+              },
+              "Custom API Response Properties": {
+                "entitySetName": "customapiresponseproperties",
+                "logicalName": "customapiresponseproperty"
+              },
+              "Custom APIs": {
+                "entitySetName": "customapis",
+                "logicalName": "customapi"
+              },
+              "Entities": {
+                "entitySetName": "entities",
+                "logicalName": "entity"
+              },
+              "Publishers": {
+                "entitySetName": "publishers",
+                "logicalName": "publisher"
+              },
+              "Sdk Message Processing Steps": {
+                "entitySetName": "sdkmessageprocessingsteps",
+                "logicalName": "sdkmessageprocessingstep"
+              },
+              "Solutions": {
+                "entitySetName": "solutions",
+                "logicalName": "solution"
+              },
+              "environment_39a902ba": {
+                "entitySetName": "Environment",
+                "logicalName": "environment_39a902ba"
+              }
+            },
+            "databaseDetails": {
+              "environmentName": "default.cds",
+              "overrideValues": {
+                "status": "NotSpecified"
+              },
+              "referenceType": "Environmental"
+            }
+          }
+        },
+        "documentUri": "/CanvasApps/cat_overview_3dbf5_DocumentUri.msapp",
+        "introducedVersion": "1.0",
+        "isCustomizable": "false",
+        "isManaged": "false",
+        "minClientVersion": "3.23081.15.0",
+        "status": "Ready",
+        "tagsJson": {
+          "hasComponent": "false",
+          "hasUnlockedComponent": "false",
+          "isUnifiedRootApp": "false",
+          "minimumRequiredApiVersion": "2.2.0",
+          "primaryDeviceHeight": "768",
+          "primaryDeviceWidth": "1366",
+          "primaryFormFactor": "Tablet",
+          "publisherVersion": "3.23081.15",
+          "showStatusBar": "false",
+          "sienaVersion": "20230823T035157Z-3.23081.15.0",
+          "supportsLandscape": "true",
+          "supportsPortrait": "true"
+        }
+      }
+    },
+    {
+      "family": "EntityAnalyticsConfiguration",
+      "logicalName": "contact",
+      "displayName": "contact",
+      "metadataSourcePath": "source-backed/Other/Customizations.xml",
+      "packageRelativePath": "Other/Customizations.xml",
+      "stableProperties": {
+        "entityDataSource": "dataverse",
+        "isEnabledForAdls": "true",
+        "isEnabledForTimeSeries": "false",
+        "parentEntityLogicalName": "contact"
+      }
+    },
+    {
+      "family": "PluginAssembly",
+      "logicalName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+      "displayName": "Codex.Metadata.Plugins",
+      "metadataSourcePath": "source-backed/PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "assetSourcePaths": [
+        "source-backed/PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll"
+      ],
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "stableProperties": {
+        "assemblyFileName": "CodexMetadataPlugins.dll",
+        "assemblyFullName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+        "byteLength": "10752",
+        "contentHash": "17e7ede16f1f833922ded7773f94a9588864bd4a80400354cab561b38e455371",
+        "introducedVersion": "1.0",
+        "isolationMode": "2",
+        "sourceType": "0"
+      }
+    },
+    {
+      "family": "PluginType",
+      "logicalName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+      "displayName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+      "metadataSourcePath": "source-backed/PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "packageRelativePath": "PluginAssemblies/CodexMetadataPlugins-0F97BC39-C738-F111-88B3-0022489B9600/CodexMetadataPlugins.dll.data.xml",
+      "stableProperties": {
+        "assemblyFullName": "Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+        "assemblyQualifiedName": "Codex.Metadata.Plugins.AccountUpdateTrace, Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+        "description": "Neutral plugin type for account update tracing.",
+        "friendlyName": "Account Update Trace",
+        "workflowActivityGroupName": "Codex.Metadata.Plugins (1.0.0.0)"
+      }
+    },
+    {
+      "family": "PluginStep",
+      "logicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+      "displayName": "Account Update Trace Step",
+      "metadataSourcePath": "source-backed/SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "packageRelativePath": "SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "stableProperties": {
+        "description": "Neutral synchronous update step for account.",
+        "filteringAttributes": "accountnumber,name",
+        "handlerPluginTypeName": "Codex.Metadata.Plugins.AccountUpdateTrace",
+        "introducedVersion": "1.0",
+        "mode": "0",
+        "primaryEntity": "account",
+        "rank": "1",
+        "sdkMessageId": "20bebb1b-ea3e-db11-86a7-000a3a5473e8",
+        "stage": "20",
+        "supportedDeployment": "0"
+      }
+    },
+    {
+      "family": "PluginStepImage",
+      "logicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step|Account PreImage|preimage|0",
+      "displayName": "Account PreImage",
+      "metadataSourcePath": "source-backed/SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "packageRelativePath": "SdkMessageProcessingSteps/{616a9862-c738-f111-88b3-0022489b9600}.xml",
+      "stableProperties": {
+        "description": "Pre-image for account update tracing.",
+        "entityAlias": "preimage",
+        "imageType": "0",
+        "messagePropertyName": "Target",
+        "parentPluginStepLogicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+        "selectedAttributes": "accountnumber,name"
+      }
+    },
+    {
+      "family": "ServiceEndpoint",
+      "logicalName": "codex_webhook_endpoint",
+      "displayName": "codex_webhook_endpoint",
+      "metadataSourcePath": "source-backed/ServiceEndpoints/codex_webhook_endpoint/ServiceEndpoint.xml",
+      "packageRelativePath": "ServiceEndpoints/codex_webhook_endpoint/ServiceEndpoint.xml",
+      "stableProperties": {
+        "authType": "4",
+        "connectionMode": "1",
+        "contract": "8",
+        "description": "Neutral webhook endpoint for compiler proof.",
+        "isCustomizable": "true",
+        "messageFormat": "2",
+        "messageCharset": "65001",
+        "name": "codex_webhook_endpoint",
+        "namespaceAddress": "https://hooks.contoso.example",
+        "path": "/dataverse/codex",
+        "introducedVersion": "1.0",
+        "url": "https://hooks.contoso.example/dataverse/codex"
+      }
+    },
+    {
+      "family": "Role",
+      "logicalName": "codex metadata seed role",
+      "displayName": "Codex Metadata Seed Role",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "capabilitiesJson": [
+          {
+            "name": "prvCreateSharePointData",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadPluginAssembly",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadPluginType",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSdkMessage",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSdkMessageProcessingStep",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSdkMessageProcessingStepImage",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSharePointData",
+            "level": "Global"
+          },
+          {
+            "name": "prvReadSharePointDocument",
+            "level": "Global"
+          },
+          {
+            "name": "prvWriteSharePointData",
+            "level": "Global"
+          }
+        ],
+        "isCustomizable": "true",
+        "privilegeCount": "9"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvCreateSharePointData|Global",
+      "displayName": "prvCreateSharePointData",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvCreateSharePointData"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadPluginAssembly|Global",
+      "displayName": "prvReadPluginAssembly",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadPluginAssembly"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadPluginType|Global",
+      "displayName": "prvReadPluginType",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadPluginType"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSdkMessageProcessingStepImage|Global",
+      "displayName": "prvReadSdkMessageProcessingStepImage",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSdkMessageProcessingStepImage"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSdkMessageProcessingStep|Global",
+      "displayName": "prvReadSdkMessageProcessingStep",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSdkMessageProcessingStep"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSdkMessage|Global",
+      "displayName": "prvReadSdkMessage",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSdkMessage"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSharePointData|Global",
+      "displayName": "prvReadSharePointData",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSharePointData"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvReadSharePointDocument|Global",
+      "displayName": "prvReadSharePointDocument",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvReadSharePointDocument"
+      }
+    },
+    {
+      "family": "RolePrivilege",
+      "logicalName": "codex metadata seed role|prvWriteSharePointData|Global",
+      "displayName": "prvWriteSharePointData",
+      "metadataSourcePath": "source-backed/Roles/Codex Metadata Seed Role.xml",
+      "packageRelativePath": "Roles/Codex Metadata Seed Role.xml",
+      "stableProperties": {
+        "accessLevel": "Global",
+        "parentRoleLogicalName": "codex metadata seed role",
+        "privilegeName": "prvWriteSharePointData"
+      }
+    },
+    {
+      "family": "FieldSecurityProfile",
+      "logicalName": "codex metadata seed field security",
+      "displayName": "Codex Metadata Seed Field Security",
+      "metadataSourcePath": "source-backed/Other/FieldSecurityProfiles.xml",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml",
+      "stableProperties": {
+        "itemCount": "1"
+      }
+    },
+    {
+      "family": "FieldPermission",
+      "logicalName": "codex metadata seed field security|cdxmeta_workitem|cdxmeta_details",
+      "displayName": "cdxmeta_workitem.cdxmeta_details",
+      "metadataSourcePath": "source-backed/Other/FieldSecurityProfiles.xml",
+      "packageRelativePath": "Other/FieldSecurityProfiles.xml",
+      "stableProperties": {
+        "attributeLogicalName": "cdxmeta_details",
+        "canCreate": "4",
+        "canRead": "4",
+        "canReadUnmasked": "0",
+        "canUpdate": "4",
+        "entityLogicalName": "cdxmeta_workitem",
+        "parentFieldSecurityProfileLogicalName": "codex metadata seed field security"
+      }
+    },
+    {
+      "family": "ConnectionRole",
+      "logicalName": "codex metadata seed connection role",
+      "displayName": "Codex Metadata Seed Connection Role",
+      "metadataSourcePath": "source-backed/Other/ConnectionRoles.xml",
+      "packageRelativePath": "Other/ConnectionRoles.xml",
+      "stableProperties": {
+        "category": "1",
+        "description": "Neutral connection role placeholder for Dataverse metadata synthesis.",
+        "introducedVersion": "1.0.0.0",
+        "isCustomizable": "true",
+        "objectTypeMappingsJson": [
+          "All"
+        ]
+      }
+    },
+    {
+      "family": "DuplicateRule",
+      "logicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367",
+      "displayName": "Codex Metadata Account Name Duplicate Rule",
+      "metadataSourcePath": "source-backed/duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "stableProperties": {
+        "baseEntityName": "account",
+        "description": "Neutral duplicate rule for Dataverse metadata synthesis.",
+        "excludeInactiveRecords": "true",
+        "isCaseSensitive": "false",
+        "isCustomizable": "true",
+        "itemCount": "1",
+        "matchingEntityName": "account"
+      }
+    },
+    {
+      "family": "DuplicateRuleCondition",
+      "logicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367|name|name|0",
+      "displayName": "name -> name",
+      "metadataSourcePath": "source-backed/duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "stableProperties": {
+        "baseAttributeName": "name",
+        "ignoreBlankValues": "true",
+        "isCustomizable": "true",
+        "matchingAttributeName": "name",
+        "operatorCode": "0",
+        "parentDuplicateRuleLogicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367"
+      }
+    },
+    {
+      "family": "RoutingRule",
+      "logicalName": "codex metadata routing rule",
+      "displayName": "Codex Metadata Routing Rule",
+      "metadataSourcePath": "source-backed/RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "stableProperties": {
+        "description": "Neutral routing rule for Dataverse metadata synthesis.",
+        "itemCount": "1"
+      }
+    },
+    {
+      "family": "RoutingRuleItem",
+      "logicalName": "codex metadata routing rule|route all",
+      "displayName": "Codex Metadata Routing Rule Item",
+      "metadataSourcePath": "source-backed/RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "stableProperties": {
+        "conditionXml": "<conditions />",
+        "description": "Route all",
+        "parentRoutingRuleLogicalName": "codex metadata routing rule"
+      }
+    },
+    {
+      "family": "MobileOfflineProfile",
+      "logicalName": "codex metadata mobile offline profile",
+      "displayName": "Codex Metadata Mobile Offline Profile",
+      "metadataSourcePath": "source-backed/MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "stableProperties": {
+        "description": "Neutral mobile offline profile for Dataverse metadata synthesis.",
+        "isValidated": "false",
+        "itemCount": "1"
+      }
+    },
+    {
+      "family": "MobileOfflineProfileItem",
+      "logicalName": "codex metadata mobile offline profile|account",
+      "displayName": "Codex Metadata Mobile Offline Profile Item",
+      "metadataSourcePath": "source-backed/MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "stableProperties": {
+        "entityLogicalName": "account",
+        "parentMobileOfflineProfileLogicalName": "codex metadata mobile offline profile",
+        "recordDistributionCriteria": "0",
+        "recordsOwnedByMe": "false",
+        "recordsOwnedByMyBusinessUnit": "false",
+        "recordsOwnedByMyTeam": "false"
+      }
+    }
+  ]
+}

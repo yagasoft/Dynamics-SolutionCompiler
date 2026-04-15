@@ -1,0 +1,25 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedPluginRegistration",
+    "DisplayName": "Codex Metadata Seed Plugin Registration",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "files": [
+    "tracked-source/manifest.json",
+    "tracked-source/plugin-assemblies/Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098.json",
+    "tracked-source/plugin-step-images/Codex.Metadata.Plugins.AccountUpdateTrace-Update-account-20-0-Account Update Trace Step-Account PreImage-preimage-0.json",
+    "tracked-source/plugin-steps/Codex.Metadata.Plugins.AccountUpdateTrace-Update-account-20-0-Account Update Trace Step.json",
+    "tracked-source/plugin-types/Codex.Metadata.Plugins.AccountUpdateTrace.json",
+    "tracked-source/solution/manifest.json",
+    "tracked-source/source-backed/Other/Customizations.xml",
+    "tracked-source/source-backed/Other/Solution.xml",
+    "tracked-source/source-backed/PluginAssemblies/CodexMetadataPlugins-2F08B2D4-7F38-4B6F-84C8-5AB6FA4B6D10/Codex.Metadata.Plugins.dll"
+  ]
+}

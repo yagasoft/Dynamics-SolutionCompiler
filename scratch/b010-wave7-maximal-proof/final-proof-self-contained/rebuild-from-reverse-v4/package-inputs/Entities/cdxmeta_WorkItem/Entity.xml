@@ -1,0 +1,605 @@
+<Entity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Name LocalizedName="Work Item" OriginalName="Work Item">cdxmeta_WorkItem</Name>
+<EntityInfo>
+<entity Name="cdxmeta_WorkItem">
+<LocalizedNames>
+<LocalizedName description="Work Item" languagecode="1033" />
+</LocalizedNames>
+<LocalizedCollectionNames>
+<LocalizedCollectionName description="Work Items" languagecode="1033" />
+</LocalizedCollectionNames>
+<Descriptions>
+<Description description="Compact work-item seed for alternate-key proof." languagecode="1033" />
+</Descriptions>
+<EntitySetName>cdxmeta_workitems</EntitySetName>
+<IsDuplicateCheckSupported>0</IsDuplicateCheckSupported>
+<IsBusinessProcessEnabled>0</IsBusinessProcessEnabled>
+<IsRequiredOffline>0</IsRequiredOffline>
+<IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+<IsCollaboration>0</IsCollaboration>
+<AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+<IsConnectionsEnabled>0</IsConnectionsEnabled>
+<IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+<AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+<IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+<IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
+<IsSLAEnabled>0</IsSLAEnabled>
+<IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+<IsBPFEntity>0</IsBPFEntity>
+<OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+<IsAuditEnabled>0</IsAuditEnabled>
+<IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
+<IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
+<IsActivity>0</IsActivity>
+<ActivityTypeMask />
+<IsActivityParty>0</IsActivityParty>
+<IsReplicated>0</IsReplicated>
+<IsReplicationUserFiltered>0</IsReplicationUserFiltered>
+<IsMailMergeEnabled>0</IsMailMergeEnabled>
+<IsVisibleInMobile>0</IsVisibleInMobile>
+<IsVisibleInMobileClient>0</IsVisibleInMobileClient>
+<IsReadOnlyInMobileClient>0</IsReadOnlyInMobileClient>
+<IsOfflineInMobileClient>0</IsOfflineInMobileClient>
+<DaysSinceRecordLastModified>0</DaysSinceRecordLastModified>
+<MobileOfflineFilters />
+<IsMapiGridEnabled>1</IsMapiGridEnabled>
+<IsReadingPaneEnabled>1</IsReadingPaneEnabled>
+<IsQuickCreateEnabled>0</IsQuickCreateEnabled>
+<SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<IsMappable>1</IsMappable>
+<CanModifyAuditSettings>1</CanModifyAuditSettings>
+<CanModifyMobileVisibility>1</CanModifyMobileVisibility>
+<CanModifyMobileClientVisibility>1</CanModifyMobileClientVisibility>
+<CanModifyMobileClientReadOnly>1</CanModifyMobileClientReadOnly>
+<CanModifyMobileClientOffline>1</CanModifyMobileClientOffline>
+<CanModifyConnectionSettings>1</CanModifyConnectionSettings>
+<CanModifyDuplicateDetectionSettings>1</CanModifyDuplicateDetectionSettings>
+<CanModifyMailMergeSettings>1</CanModifyMailMergeSettings>
+<CanModifyQueueSettings>1</CanModifyQueueSettings>
+<CanCreateAttributes>1</CanCreateAttributes>
+<CanCreateForms>1</CanCreateForms>
+<CanCreateCharts>1</CanCreateCharts>
+<CanCreateViews>1</CanCreateViews>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
+<EnforceStateTransitions>0</EnforceStateTransitions>
+<CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
+<EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
+<ChangeTrackingEnabled>0</ChangeTrackingEnabled>
+<CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+<IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
+<IsMSTeamsIntegrationEnabled>0</IsMSTeamsIntegrationEnabled>
+<IsSolutionAware>0</IsSolutionAware>
+<attributes>
+<attribute PhysicalName="cdxmeta_categoryid">
+<Type>lookup</Type>
+<Name>cdxmeta_categoryid</Name>
+<LogicalName>cdxmeta_categoryid</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Category" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Parent category for the work item." languagecode="1033" />
+</Descriptions>
+</attribute>
+<attribute PhysicalName="cdxmeta_details">
+<Type>ntext</Type>
+<Name>cdxmeta_details</Name>
+<LogicalName>cdxmeta_details</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>1</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Details" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Long-form notes." languagecode="1033" />
+</Descriptions>
+<Format>textarea</Format>
+<MaxLength>2000</MaxLength>
+</attribute>
+<attribute PhysicalName="cdxmeta_duedate">
+<Type>datetime</Type>
+<Name>cdxmeta_duedate</Name>
+<LogicalName>cdxmeta_duedate</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Due Date" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Representative date-only column." languagecode="1033" />
+</Descriptions>
+</attribute>
+<attribute PhysicalName="cdxmeta_efforthours">
+<Type>decimal</Type>
+<Name>cdxmeta_efforthours</Name>
+<LogicalName>cdxmeta_efforthours</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Effort Hours" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Decimal effort estimate." languagecode="1033" />
+</Descriptions>
+</attribute>
+<attribute PhysicalName="cdxmeta_externalcode">
+<Type>nvarchar</Type>
+<Name>cdxmeta_externalcode</Name>
+<LogicalName>cdxmeta_externalcode</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="External Code" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Business identifier used by the neutral alternate key." languagecode="1033" />
+</Descriptions>
+<Format>text</Format>
+<MaxLength>100</MaxLength>
+<Length>200</Length>
+</attribute>
+<attribute PhysicalName="cdxmeta_isblocked">
+<Type>bit</Type>
+<Name>cdxmeta_isblocked</Name>
+<LogicalName>cdxmeta_isblocked</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Blocked" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Whether the work item is blocked." languagecode="1033" />
+</Descriptions>
+<optionset Name="cdxmeta_workitem_cdxmeta_isblocked">
+<OptionSetType>bit</OptionSetType>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<IsCustomizable>1</IsCustomizable>
+<LocalizedNames>
+<LocalizedName description="Blocked" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Whether the work item is blocked." languagecode="1033" />
+</Descriptions>
+<options>
+<option value="1" ExternalValue="" IsHidden="false">
+<labels>
+<label description="Yes" languagecode="1033" />
+</labels>
+</option>
+<option value="0" ExternalValue="" IsHidden="false">
+<labels>
+<label description="No" languagecode="1033" />
+</labels>
+</option>
+</options>
+</optionset>
+</attribute>
+<attribute PhysicalName="cdxmeta_priority">
+<Type>int</Type>
+<Name>cdxmeta_priority</Name>
+<LogicalName>cdxmeta_priority</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Priority" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Whole-number priority value." languagecode="1033" />
+</Descriptions>
+<Format>none</Format>
+<MinValue>-2147483648</MinValue>
+<MaxValue>2147483647</MaxValue>
+</attribute>
+<attribute PhysicalName="cdxmeta_priorityband">
+<Type>picklist</Type>
+<Name>cdxmeta_priorityband</Name>
+<LogicalName>cdxmeta_priorityband</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Priority Band" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Representative global choice." languagecode="1033" />
+</Descriptions>
+<OptionSetName>cdxmeta_priorityband</OptionSetName>
+</attribute>
+<attribute PhysicalName="cdxmeta_stage">
+<Type>picklist</Type>
+<Name>cdxmeta_stage</Name>
+<LogicalName>cdxmeta_stage</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Stage" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Representative local choice." languagecode="1033" />
+</Descriptions>
+<optionset Name="cdxmeta_workitem_cdxmeta_stage">
+<OptionSetType>picklist</OptionSetType>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<IsCustomizable>1</IsCustomizable>
+<LocalizedNames>
+<LocalizedName description="Stage" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Representative local choice." languagecode="1033" />
+</Descriptions>
+<options>
+<option value="727270000" ExternalValue="" IsHidden="false">
+<labels>
+<label description="Planned" languagecode="1033" />
+</labels>
+</option>
+<option value="727270001" ExternalValue="" IsHidden="false">
+<labels>
+<label description="Active" languagecode="1033" />
+</labels>
+</option>
+<option value="727270002" ExternalValue="" IsHidden="false">
+<labels>
+<label description="Done" languagecode="1033" />
+</labels>
+</option>
+</options>
+</optionset>
+</attribute>
+<attribute PhysicalName="cdxmeta_summary">
+<Type>nvarchar</Type>
+<Name>cdxmeta_summary</Name>
+<LogicalName>cdxmeta_summary</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Summary" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Companion text field kept so the seed still looks like a realistic authored table shell." languagecode="1033" />
+</Descriptions>
+<Format>text</Format>
+<MaxLength>100</MaxLength>
+<Length>200</Length>
+</attribute>
+<attribute PhysicalName="cdxmeta_WorkItemId">
+<Type>primarykey</Type>
+<Name>cdxmeta_workitemid</Name>
+<LogicalName>cdxmeta_workitemid</LogicalName>
+<RequiredLevel>systemrequired</RequiredLevel>
+<DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>0</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>0</IsCustomField>
+<IsAuditEnabled>0</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>0</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>0</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>0</IsSearchable>
+<IsFilterable>1</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Work Item Id" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Compact work-item seed for alternate-key proof." languagecode="1033" />
+</Descriptions>
+</attribute>
+<attribute PhysicalName="cdxmeta_WorkItemName">
+<Type>nvarchar</Type>
+<Name>cdxmeta_workitemname</Name>
+<LogicalName>cdxmeta_workitemname</LogicalName>
+<RequiredLevel>none</RequiredLevel>
+<DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+<ImeMode>auto</ImeMode>
+<ValidForUpdateApi>1</ValidForUpdateApi>
+<ValidForReadApi>1</ValidForReadApi>
+<ValidForCreateApi>1</ValidForCreateApi>
+<IsCustomField>1</IsCustomField>
+<IsAuditEnabled>1</IsAuditEnabled>
+<IsSecured>0</IsSecured>
+<IsCustomizable>1</IsCustomizable>
+<IsRenameable>1</IsRenameable>
+<CanModifySearchSettings>1</CanModifySearchSettings>
+<CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+<CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+<SourceType>0</SourceType>
+<IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+<IsSortableEnabled>0</IsSortableEnabled>
+<CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+<CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+<IsDataSourceSecret>0</IsDataSourceSecret>
+<AutoNumberFormat />
+<IsSearchable>1</IsSearchable>
+<IsFilterable>0</IsFilterable>
+<IsRetrievable>1</IsRetrievable>
+<IsLocalizable>0</IsLocalizable>
+<IsLogical>0</IsLogical>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<displaynames>
+<displayname description="Work Item" languagecode="1033" />
+</displaynames>
+<Descriptions>
+<Description description="Compact work-item seed for alternate-key proof." languagecode="1033" />
+</Descriptions>
+<Format>text</Format>
+<MaxLength>200</MaxLength>
+<Length>400</Length>
+</attribute>
+</attributes>
+</entity>
+</EntityInfo>
+<FormXml />
+<SavedQueries />
+<RibbonDiffXml />
+</Entity>

@@ -1,0 +1,24 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "SourceBackedKeyIntent",
+    "displayName": "Source-Backed Key Intent",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata"
+  },
+  "tables": [],
+  "sourceBackedArtifacts": [
+    {
+      "family": "Table",
+      "logicalName": "cdxmeta_workitem",
+      "displayName": "Work Item",
+      "metadataSourcePath": "C:/Git/Dataverse-Solution-KB/fixtures/skill-corpus/examples/seed-alternate-key/unpacked/Entities/cdxmeta_WorkItem/Entity.xml",
+      "packageRelativePath": "Entities/cdxmeta_WorkItem/Entity.xml"
+    }
+  ]
+}

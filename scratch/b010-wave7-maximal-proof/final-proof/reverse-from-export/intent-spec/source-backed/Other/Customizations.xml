@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26033.170" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26033.00170">
+  <Entities />
+  <Roles />
+  <Workflows />
+  <FieldSecurityProfiles />
+  <Templates />
+  <ConnectionRoles />
+  <EntityImageConfigs>
+    <EntityImageConfig>
+      <parententitylogicalname>cdxmeta_wave7photoasset</parententitylogicalname>
+      <primaryimageattribute>cdxmeta_profileimage</primaryimageattribute>
+    </EntityImageConfig>
+  </EntityImageConfigs>
+  <AttributeImageConfigs>
+    <AttributeImageConfig>
+      <attributelogicalname>cdxmeta_profileimage</attributelogicalname>
+      <parententitylogicalname>cdxmeta_wave7photoasset</parententitylogicalname>
+      <canstorefullimage>1</canstorefullimage>
+    </AttributeImageConfig>
+  </AttributeImageConfigs>
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <RoutingRules />
+  <MobileOfflineProfiles />
+  <WebResources />
+  <CustomControls />
+  <SolutionPluginAssemblies />
+  <SdkMessageProcessingSteps />
+  <ServiceEndpoints />
+  <AppModuleSiteMaps />
+  <AppModules />
+  <EntityDataProviders />
+  <CanvasApps />
+  <EntityAnalyticsConfigs>
+    <EntityAnalyticsConfig>
+      <parententitylogicalname>contact</parententitylogicalname>
+      <isenabledforadls>1</isenabledforadls>
+      <isenabledfortimeseries>0</isenabledfortimeseries>
+      <entitydatasource></entitydatasource>
+    </EntityAnalyticsConfig>
+  </EntityAnalyticsConfigs>
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

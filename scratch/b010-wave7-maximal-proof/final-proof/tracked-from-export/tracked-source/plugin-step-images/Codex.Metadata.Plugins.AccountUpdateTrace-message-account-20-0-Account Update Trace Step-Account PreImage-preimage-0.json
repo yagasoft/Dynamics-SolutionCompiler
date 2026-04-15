@@ -1,0 +1,13 @@
+{
+  "LogicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step|Account PreImage|preimage|0",
+  "DisplayName": "Account PreImage",
+  "metadataSourcePath": "SdkMessageProcessingSteps/{ba123f38-e738-f111-88b3-0022489b9600}.xml",
+  "assetSourcePaths": [],
+  "parentPluginStepLogicalName": "Codex.Metadata.Plugins.AccountUpdateTrace|message|account|20|0|Account Update Trace Step",
+  "entityAlias": "preimage",
+  "imageType": "0",
+  "messagePropertyName": "Target",
+  "selectedAttributes": "accountnumber,name",
+  "description": "Pre-image for account update tracing.",
+  "comparisonSignature": "a2ade3cb9efd8b86545e0c61944c007eb1b162858a294f198f1d5d8ee3f878ee"
+}

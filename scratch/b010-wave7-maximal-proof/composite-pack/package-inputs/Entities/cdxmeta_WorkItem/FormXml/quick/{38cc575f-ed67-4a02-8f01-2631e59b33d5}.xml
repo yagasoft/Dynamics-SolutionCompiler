@@ -1,0 +1,62 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{38cc575f-ed67-4a02-8f01-2631e59b33d5}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="quick" id="{6e439bbf-0711-3fa4-af5f-2ec2316dade6}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Quick" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="snapshot" id="{9e34778c-06b9-9a65-0152-4eb306d51864}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Snapshot" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{cb90ec4a-a3b6-5803-7f7e-d08bcfb21645}" showlabel="true">
+<labels>
+<label description="Work Item" languagecode="1033" />
+</labels>
+<control id="cdxmeta_workitemname" datafieldname="cdxmeta_workitemname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{c4c10da3-8441-dff2-f70d-63c38a4205e9}" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<control id="cdxmeta_summary" datafieldname="cdxmeta_summary" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{eba9cce3-1186-08bd-ccb8-fb7b527cd44e}" showlabel="true">
+<labels>
+<label description="Stage" languagecode="1033" />
+</labels>
+<control id="cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Work Item Quick" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Quick form for compact work item snapshots." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RoutingRule RoutingRuleId="4c205db4-6737-f111-88b3-0022489b9600" Name="Codex Metadata Routing Rule" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <RoutingRuleId>{4c205db4-6737-f111-88b3-0022489b9600}</RoutingRuleId>
+  <Name>Codex Metadata Routing Rule</Name>
+  <Description>Neutral routing rule for Dataverse metadata synthesis.</Description>
+  <RoutingRuleItems>
+    <RoutingRuleItem RoutingRuleItemId="bdd324c4-6737-f111-88b3-0022489b9600" Name="Codex Metadata Routing Rule Item">
+      <Name>Codex Metadata Routing Rule Item</Name>
+      <Description>Route all</Description>
+      <RoutingRuleId>{4c205db4-6737-f111-88b3-0022489b9600}</RoutingRuleId>
+      <ConditionXml>&lt;conditions /&gt;</ConditionXml>
+    </RoutingRuleItem>
+  </RoutingRuleItems>
+</RoutingRule>

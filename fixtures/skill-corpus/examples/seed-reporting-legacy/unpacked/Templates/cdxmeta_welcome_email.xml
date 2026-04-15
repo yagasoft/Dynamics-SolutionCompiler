@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Template>
+  <Name>cdxmeta_welcome_email</Name>
+  <DisplayName>Welcome Email</DisplayName>
+  <Description>Seed email template metadata for source-first reporting and legacy coverage.</Description>
+</Template>

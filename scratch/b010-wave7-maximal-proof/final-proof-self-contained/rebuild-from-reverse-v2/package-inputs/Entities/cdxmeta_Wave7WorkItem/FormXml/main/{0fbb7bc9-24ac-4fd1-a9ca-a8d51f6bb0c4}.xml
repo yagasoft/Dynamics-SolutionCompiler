@@ -1,0 +1,98 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{0fbb7bc9-24ac-4fd1-a9ca-a8d51f6bb0c4}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="summary" id="{d41d72aa-0b33-5aad-31a7-781e1827d354}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="overview" id="{1d4c9af5-e691-4804-3f38-bc97d817b107}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Overview" languagecode="1033" />
+</labels>
+<rows />
+</section>
+<section name="planning" id="{e2f1fe42-3af6-30cb-c612-b3a5f67fdcff}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Planning" languagecode="1033" />
+</labels>
+<rows />
+</section>
+<section name="related" id="{475484bf-aa01-9705-e9ac-9a300bdb336e}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Related" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{da491325-0b3e-129f-b357-c6b7b84e5978}" showlabel="true">
+<labels>
+<label description="Category" languagecode="1033" />
+</labels>
+<control id="cdxmeta_wave7categoryid" datafieldname="cdxmeta_wave7categoryid" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}">
+<parameters>
+<QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="cdxmeta_wave7category"&gt;6c0a84a1-7e5d-49d7-bceb-0bfc216f2f91&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+<ControlMode>Edit</ControlMode>
+</parameters>
+</control>
+</cell>
+</row>
+<row>
+<cell id="{71b619b7-45ef-ebe4-22ac-ddf6752babac}" showlabel="true">
+<labels>
+<label description="Checkpoints" languagecode="1033" />
+</labels>
+<control id="cdxmeta_wave7workitem_wave7checkpoint" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+<parameters>
+<ViewId>{2c770a3f-0c8f-4a58-b4af-6f5878ef13b8}</ViewId>
+<RelationshipName>cdxmeta_wave7workitem_wave7checkpoint</RelationshipName>
+<TargetEntityType>cdxmeta_wave7checkpoint</TargetEntityType>
+<EnableViewPicker>true</EnableViewPicker>
+<EnableChartPicker>false</EnableChartPicker>
+<RecordsPerPage>5</RecordsPerPage>
+</parameters>
+</control>
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+<header id="{4625eca3-32ca-39a5-85ff-1bf07cfba950}" columns="111" celllabelposition="Top" labelwidth="115">
+<rows>
+<row>
+<cell id="{0f9f62b1-5675-34ea-353c-5d51feb581db}" showlabel="true">
+<labels>
+<label description="Priority" languagecode="1033" />
+</labels>
+<control id="header_cdxmeta_priority" datafieldname="cdxmeta_priority" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+<cell id="{303bca08-e898-7d86-15fa-190d0880ff47}" showlabel="true">
+<labels>
+<label description="Stage" languagecode="1033" />
+</labels>
+<control id="header_cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</header>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Work Item Main" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Structured main form proving field, quick-view, and subgrid controls." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

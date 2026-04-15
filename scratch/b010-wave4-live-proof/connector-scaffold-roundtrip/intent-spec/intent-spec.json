@@ -1,0 +1,69 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedServiceEndpointConnector",
+    "displayName": "Codex Metadata Seed Service Endpoint Connector",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedServiceEndpointConnector",
+      "displayName": "Codex Metadata Seed Service Endpoint Connector",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata"
+      }
+    },
+    {
+      "family": "ServiceEndpoint",
+      "logicalName": "codex_webhook_endpoint",
+      "displayName": "codex_webhook_endpoint",
+      "metadataSourcePath": "source-backed/PluginAssemblies/ServiceEndpoints.xml",
+      "packageRelativePath": "PluginAssemblies/ServiceEndpoints.xml",
+      "stableProperties": {
+        "authType": "4",
+        "connectionMode": "1",
+        "contract": "8",
+        "description": "Neutral webhook endpoint for compiler proof.",
+        "isCustomizable": "true",
+        "messageFormat": "2",
+        "name": "codex_webhook_endpoint",
+        "namespaceAddress": "https://hooks.contoso.example",
+        "url": "https://hooks.contoso.example/dataverse/codex"
+      }
+    },
+    {
+      "family": "Connector",
+      "logicalName": "new_codex-20shared-20connector",
+      "displayName": "Codex Shared Connector",
+      "metadataSourcePath": "source-backed/Connectors/new_codex-20shared-20connector.xml",
+      "assetSourcePaths": [
+        "source-backed/Connectors/new_codex-20shared-20connector_connectionparameters.json",
+        "source-backed/Connectors/new_codex-20shared-20connector_openapidefinition.json",
+        "source-backed/Connectors/new_codex-20shared-20connector_policytemplateinstances.json"
+      ],
+      "packageRelativePath": "Connectors/new_codex-20shared-20connector.xml",
+      "stableProperties": {
+        "backgroundColor": "#007ee5",
+        "connectorType": "1",
+        "name": "new_codex-20shared-20connector"
+      }
+    }
+  ]
+}

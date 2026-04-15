@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml>
+  <SolutionPluginAssemblies>
+    <PluginAssembly FullName="Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" PluginAssemblyId="2f08b2d4-7f38-4b6f-84c8-5ab6fa4b6d10" CustomizationLevel="1">
+      <IsolationMode>2</IsolationMode>
+      <SourceType>0</SourceType>
+      <IntroducedVersion>1.0</IntroducedVersion>
+      <FileName>/PluginAssemblies/CodexMetadataPlugins-2F08B2D4-7F38-4B6F-84C8-5AB6FA4B6D10/Codex.Metadata.Plugins.dll</FileName>
+      <PluginTypes>
+        <PluginType AssemblyQualifiedName="Codex.Metadata.Plugins.AccountUpdateTrace, Codex.Metadata.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" PluginTypeId="3f6e46da-96e3-4c9c-9389-f50fe2d1cf80" Name="Codex.Metadata.Plugins.AccountUpdateTrace">
+          <FriendlyName>Account Update Trace</FriendlyName>
+          <WorkflowActivityGroupName>Codex.Metadata.Plugins (1.0.0.0)</WorkflowActivityGroupName>
+          <Description>Neutral plugin type for account update tracing.</Description>
+        </PluginType>
+      </PluginTypes>
+    </PluginAssembly>
+  </SolutionPluginAssemblies>
+  
+  
+</ImportExportXml>
+

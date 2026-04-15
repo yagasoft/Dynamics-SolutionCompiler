@@ -1,0 +1,44 @@
+{
+  "Family": 11,
+  "LogicalName": "account|Accounts by Industry",
+  "DisplayName": "Accounts by Industry",
+  "metadataSourcePath": "Entities/Account/Visualizations/{74A622C0-5193-DE11-97D4-00155DA3B01E}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "chartTypesJson": [
+      "Bar"
+    ],
+    "comparisonSignature": "98aa8406f3b1d9b4fa09441a5922f1119198b349c9bc8de0f8295eee7544a5cd",
+    "dataDescriptionXml": "\u003Cdatadescription\u003E\u003Cdatadefinition\u003E\u003Cfetchcollection\u003E\u003Cfetch mapping=\u0022logical\u0022 aggregate=\u0022true\u0022\u003E\u003Centity name=\u0022account\u0022\u003E\u003Cattribute groupby=\u0022true\u0022 alias=\u0022groupby_column\u0022 name=\u0022industrycode\u0022 /\u003E\u003Cattribute alias=\u0022aggregate_column\u0022 name=\u0022name\u0022 aggregate=\u0022count\u0022 /\u003E\u003C/entity\u003E\u003C/fetch\u003E\u003C/fetchcollection\u003E\u003Ccategorycollection\u003E\u003Ccategory\u003E\u003Cmeasurecollection\u003E\u003Cmeasure alias=\u0022aggregate_column\u0022 /\u003E\u003C/measurecollection\u003E\u003C/category\u003E\u003C/categorycollection\u003E\u003C/datadefinition\u003E\u003C/datadescription\u003E",
+    "description": "Shows the total number of accounts by industry.",
+    "entityLogicalName": "account",
+    "groupByColumnsJson": [
+      "industrycode"
+    ],
+    "introducedVersion": "5.0.0.0",
+    "measureAliasesJson": [
+      "aggregate_column"
+    ],
+    "presentationDescriptionXml": "\u003Cpresentationdescription\u003E\u003CChart\u003E\u003CSeries\u003E\u003CSeries ChartType=\u0022Bar\u0022 IsValueShownAsLabel=\u0022True\u0022 Color=\u002291, 151, 213\u0022 BackSecondaryColor=\u0022112, 142, 50\u0022 Font=\u0022{0}, 9.5px\u0022 LabelForeColor=\u002259, 59, 59\u0022 CustomProperties=\u0022PointWidth=0.75, MaxPixelPointWidth=40\u0022\u003E\u003CSmartLabelStyle Enabled=\u0022True\u0022 /\u003E\u003C/Series\u003E\u003C/Series\u003E\u003CChartAreas\u003E\u003CChartArea BorderColor=\u0022White\u0022 BorderDashStyle=\u0022Solid\u0022\u003E\u003CAxisY LabelAutoFitMinFontSize=\u00228\u0022 TitleForeColor=\u002259, 59, 59\u0022 TitleFont=\u0022{0}, 10.5px\u0022 LineColor=\u0022165, 172, 181\u0022 IsReversed=\u0022False\u0022\u003E\u003CMajorGrid LineColor=\u0022239, 242, 246\u0022 /\u003E\u003CLabelStyle Font=\u0022{0}, 10.5px\u0022 ForeColor=\u002259, 59, 59\u0022 /\u003E\u003C/AxisY\u003E\u003CAxisX LabelAutoFitMinFontSize=\u00228\u0022 TitleForeColor=\u002259, 59, 59\u0022 TitleFont=\u0022{0}, 10.5px\u0022 LineColor=\u0022165, 172, 181\u0022 IsReversed=\u0022False\u0022\u003E\u003CMajorGrid Enabled=\u0022False\u0022 /\u003E\u003CMajorTickMark Enabled=\u0022False\u0022 /\u003E\u003CLabelStyle Font=\u0022{0}, 10.5px\u0022 ForeColor=\u002259, 59, 59\u0022 /\u003E\u003C/AxisX\u003E\u003C/ChartArea\u003E\u003C/ChartAreas\u003E\u003CTitles\u003E\u003CTitle Name=\u0022Chart Title\u0022 DockingOffset=\u0022-3\u0022 Font=\u0022{0}, 13px\u0022 ForeColor=\u002259, 59, 59\u0022 Alignment=\u0022TopLeft\u0022\u003E\u003C/Title\u003E\u003C/Titles\u003E\u003C/Chart\u003E\u003C/presentationdescription\u003E",
+    "summaryJson": {
+      "targetEntity": "account",
+      "chartTypes": [
+        "Bar"
+      ],
+      "groupByColumns": [
+        "industrycode"
+      ],
+      "measureAliases": [
+        "aggregate_column"
+      ],
+      "titleNames": [
+        "Chart Title"
+      ]
+    },
+    "targetEntity": "account",
+    "titleNamesJson": [
+      "Chart Title"
+    ],
+    "visualizationId": "74a622c0-5193-de11-97d4-00155da3b01e"
+  }
+}

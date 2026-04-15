@@ -1,0 +1,20 @@
+[
+  {
+    "LogicalName": "cdxmeta_wave7photoasset|cdxmeta_profileimage|attribute-image",
+    "DisplayName": "Profile Image",
+    "scope": "attribute",
+    "primaryImageAttribute": "cdxmeta_profileimage",
+    "imageAttributeLogicalName": "cdxmeta_profileimage",
+    "canStoreFullImage": true,
+    "isPrimaryImage": true
+  },
+  {
+    "LogicalName": "cdxmeta_wave7photoasset|entity-image",
+    "DisplayName": "Profile Image",
+    "scope": "entity",
+    "primaryImageAttribute": "cdxmeta_profileimage",
+    "imageAttributeLogicalName": "cdxmeta_profileimage",
+    "canStoreFullImage": true,
+    "isPrimaryImage": true
+  }
+]

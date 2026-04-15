@@ -1,0 +1,10 @@
+[
+  {
+    "LogicalName": "cdxmeta_wave7workitem_wave7checkpoint",
+    "relationshipType": "OneToMany",
+    "referencedEntity": "cdxmeta_wave7workitem",
+    "referencingEntity": "cdxmeta_wave7checkpoint",
+    "referencingAttribute": "cdxmeta_wave7workitemid",
+    "description": "Parent work item for the checkpoint."
+  }
+]

@@ -1,0 +1,149 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{c67be8a4-c475-4041-90e6-78e3ed79b018}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="summary" id="{03e1d116-51cb-c1c4-d5ed-8bf3cd8724b2}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="overview" id="{dee5398f-689b-23a9-b367-ee6c0734fa4c}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Overview" languagecode="1033" />
+</labels>
+<rows />
+</section>
+<section name="details" id="{f02004c2-7e84-4b60-756e-2e303500b854}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Details" languagecode="1033" />
+</labels>
+<rows />
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+<tab name="planning" id="{dc6abf8f-bed7-b595-263d-334503d14387}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Planning" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="schedule" id="{afcf3b45-dcb3-370d-3726-6b0a8bece265}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Schedule" languagecode="1033" />
+</labels>
+<rows />
+</section>
+<section name="status" id="{295e4f36-b81a-c10a-35ce-c8230b46577b}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Status" languagecode="1033" />
+</labels>
+<rows />
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+<tab name="related" id="{ede30a6a-1adb-ca33-735f-1a8bb971a811}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Related" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="category_snapshot" id="{d135bfd3-3b99-1426-9bda-6e5067d4cccd}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Category Snapshot" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{e24cc13d-c892-38e8-9854-746e5b2ee476}" showlabel="true">
+<labels>
+<label description="Category Snapshot" languagecode="1033" />
+</labels>
+<control id="cdxmeta_categoryid" datafieldname="cdxmeta_categoryid" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}">
+<parameters>
+<QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="cdxmeta_category"&gt;5978624f-3b37-f111-88b3-0022489b9600&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+<ControlMode>Edit</ControlMode>
+</parameters>
+</control>
+</cell>
+</row>
+</rows>
+</section>
+<section name="checkpoints" id="{d68ed646-19fb-ca24-ddba-a5784b40a340}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Checkpoints" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{b60c3341-6126-7b28-d6b6-daad2b64a9b0}" showlabel="true">
+<labels>
+<label description="Checkpoints" languagecode="1033" />
+</labels>
+<control id="cdxmeta_workitem_checkpoint" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+<parameters>
+<ViewId>{500a740d-e399-42c5-9f3a-0f9c203ef9cd}</ViewId>
+<IsUserView>false</IsUserView>
+<RelationshipName>cdxmeta_workitem_checkpoint</RelationshipName>
+<TargetEntityType>cdxmeta_checkpoint</TargetEntityType>
+<AutoExpand>Auto</AutoExpand>
+<EnableQuickFind>false</EnableQuickFind>
+<EnableViewPicker>false</EnableViewPicker>
+<EnableJumpBar>false</EnableJumpBar>
+<EnableChartPicker>false</EnableChartPicker>
+<RecordsPerPage>5</RecordsPerPage>
+</parameters>
+</control>
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+<header id="{99510bd1-1a0f-46bf-4729-639a8fb9ef43}" columns="111" celllabelposition="Top" labelwidth="115">
+<rows>
+<row>
+<cell id="{525532a9-34f6-ecf0-52de-5668f87c7734}" showlabel="true">
+<labels>
+<label description="Stage" languagecode="1033" />
+</labels>
+<control id="header_cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+<cell id="{37c8833c-aad3-9a91-7916-fcbff590e623}" showlabel="true">
+<labels>
+<label description="Due Date" languagecode="1033" />
+</labels>
+<control id="header_cdxmeta_duedate" datafieldname="cdxmeta_duedate" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+<cell id="{3acdcd7b-4202-00ae-0a98-30c0c610e78c}" showlabel="true">
+<labels>
+<label description="Category" languagecode="1033" />
+</labels>
+<control id="header_cdxmeta_categoryid" datafieldname="cdxmeta_categoryid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</header>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Work Item Seed Main" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Rich main form for the Dataverse metadata synthesis seed." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

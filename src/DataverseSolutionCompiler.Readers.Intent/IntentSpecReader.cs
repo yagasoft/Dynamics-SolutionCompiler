@@ -265,6 +265,7 @@ public sealed class IntentSpecReader : ISolutionReader
                     case "memo":
                     case "datetime":
                     case "decimal":
+                    case "integer":
                     case "image":
                         if (column.Options is { Count: > 0 } || !string.IsNullOrWhiteSpace(column.GlobalOptionSet) || !string.IsNullOrWhiteSpace(column.TargetTable))
                         {
@@ -307,7 +308,7 @@ public sealed class IntentSpecReader : ISolutionReader
                         diagnostics.Add(CreateError(
                             sourcePath,
                             $"{columnPath}.type",
-                            $"Unsupported column type '{column.Type}'. Supported JSON v1 types are string, memo, datetime, decimal, image, choice, boolean, and lookup."));
+                            $"Unsupported column type '{column.Type}'. Supported JSON v1 types are string, memo, datetime, decimal, integer, image, choice, boolean, and lookup."));
                         break;
                 }
 
@@ -771,6 +772,14 @@ public sealed class IntentSpecReader : ISolutionReader
                 normalizedColumnLogicalName,
                 column,
                 sourcePath);
+            var localOptionSetName = localOptionArtifact?.Properties is not null
+                && localOptionArtifact.Properties.TryGetValue(ArtifactPropertyKeys.OptionSetName, out var localOptionSetNameValue)
+                    ? localOptionSetNameValue
+                    : null;
+            var localOptionSetType = localOptionArtifact?.Properties is not null
+                && localOptionArtifact.Properties.TryGetValue(ArtifactPropertyKeys.OptionSetType, out var localOptionSetTypeValue)
+                    ? localOptionSetTypeValue
+                    : null;
 
             artifacts.Add(CreateColumnArtifact(
                 tableLogicalName,
@@ -784,8 +793,8 @@ public sealed class IntentSpecReader : ISolutionReader
                 isCustomField: true,
                 isPrimaryKey: false,
                 isPrimaryName: false,
-                optionSetName: normalizedGlobalOptionSet ?? localOptionArtifact?.LogicalName,
-                optionSetType: localOptionArtifact is null ? (normalizedGlobalOptionSet is null ? null : "picklist") : GetProperty(localOptionArtifact, ArtifactPropertyKeys.OptionSetType),
+                optionSetName: normalizedGlobalOptionSet ?? localOptionSetName,
+                optionSetType: localOptionArtifact is null ? (normalizedGlobalOptionSet is null ? null : "picklist") : localOptionSetType,
                 isGlobalOptionSet: normalizedGlobalOptionSet is not null ? "true" : (localOptionArtifact is null ? null : "false"),
                 canStoreFullImage: normalizedColumnType == "image" ? (column.CanStoreFullImage ?? false) : null,
                 isPrimaryImage: normalizedColumnType == "image" ? (column.IsPrimaryImage ?? string.Equals(NormalizeLogicalName(table.PrimaryImageAttribute), normalizedColumnLogicalName, StringComparison.OrdinalIgnoreCase)) : null,
@@ -945,6 +954,7 @@ public sealed class IntentSpecReader : ISolutionReader
                 })
                 .ToArray();
 
+        var optionSetName = BuildLocalOptionSetName(entityLogicalName, columnLogicalName);
         var summaryJson = SerializeJson(new
         {
             entityLogicalName,
@@ -963,7 +973,7 @@ public sealed class IntentSpecReader : ISolutionReader
             EvidenceKind.Derived,
             CreateProperties(
                 (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
-                (ArtifactPropertyKeys.OptionSetName, columnLogicalName),
+                (ArtifactPropertyKeys.OptionSetName, optionSetName),
                 (ArtifactPropertyKeys.OptionSetType, optionSetType),
                 (ArtifactPropertyKeys.Description, column.Description),
                 (ArtifactPropertyKeys.IsGlobal, "false"),
@@ -972,6 +982,9 @@ public sealed class IntentSpecReader : ISolutionReader
                 (ArtifactPropertyKeys.SummaryJson, summaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
+
+    private static string BuildLocalOptionSetName(string entityLogicalName, string columnLogicalName) =>
+        $"{NormalizeLogicalName(entityLogicalName)}_{NormalizeLogicalName(columnLogicalName)}";
 
     private static FamilyArtifact CreateColumnArtifact(
         string entityLogicalName,
@@ -1551,6 +1564,7 @@ public sealed class IntentSpecReader : ISolutionReader
             "memo" => "memo",
             "datetime" => "datetime",
             "decimal" => "decimal",
+            "integer" => "integer",
             "image" => "image",
             "lookup" => "lookup",
             var other => other
@@ -1569,9 +1583,9 @@ public sealed class IntentSpecReader : ISolutionReader
         value?.Trim() switch
         {
             { Length: 0 } => null,
-            var text when text.Equals("field", StringComparison.OrdinalIgnoreCase) => "field",
-            var text when text.Equals("quickView", StringComparison.OrdinalIgnoreCase) || text.Equals("quick-view", StringComparison.OrdinalIgnoreCase) => "quickView",
-            var text when text.Equals("subgrid", StringComparison.OrdinalIgnoreCase) => "subgrid",
+            string text when text.Equals("field", StringComparison.OrdinalIgnoreCase) => "field",
+            string text when text.Equals("quickView", StringComparison.OrdinalIgnoreCase) || text.Equals("quick-view", StringComparison.OrdinalIgnoreCase) => "quickView",
+            string text when text.Equals("subgrid", StringComparison.OrdinalIgnoreCase) => "subgrid",
             _ => null
         };
 

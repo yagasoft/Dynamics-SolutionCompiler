@@ -1,0 +1,70 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedAiFamilies",
+    "displayName": "Codex Metadata Seed AI Families",
+    "description": "Curated Codex skill seed solution: Codex Metadata Seed AI Families",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedAiFamilies",
+      "displayName": "Codex Metadata Seed AI Families",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "description": "Curated Codex skill seed solution: Codex Metadata Seed AI Families",
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata"
+      }
+    },
+    {
+      "family": "AiProjectType",
+      "logicalName": "document_automation",
+      "displayName": "Document Automation",
+      "metadataSourcePath": "source-backed/AIProjectTypes/document_automation/AIProjectType.xml",
+      "packageRelativePath": "AIProjectTypes/document_automation/AIProjectType.xml",
+      "stableProperties": {
+        "description": "Core AI project type for document workflows."
+      }
+    },
+    {
+      "family": "AiProject",
+      "logicalName": "invoice_processing",
+      "displayName": "Invoice Processing",
+      "metadataSourcePath": "source-backed/AIProjects/invoice_processing/AIProject.xml",
+      "packageRelativePath": "AIProjects/invoice_processing/AIProject.xml",
+      "stableProperties": {
+        "description": "Invoice extraction and normalization pipeline.",
+        "parentAiProjectTypeLogicalName": "document_automation",
+        "targetEntity": "invoice"
+      }
+    },
+    {
+      "family": "AiConfiguration",
+      "logicalName": "invoice_processing_training",
+      "displayName": "Invoice Processing Training",
+      "metadataSourcePath": "source-backed/AIConfigurations/invoice_processing_training/AIConfiguration.xml",
+      "packageRelativePath": "AIConfigurations/invoice_processing_training/AIConfiguration.xml",
+      "stableProperties": {
+        "configurationKind": "training",
+        "parentAiProjectLogicalName": "invoice_processing",
+        "value": "{\u0022provider\u0022:\u0022azure-openai\u0022,\u0022prompt\u0022:\u0022invoice-train-v1\u0022}"
+      }
+    }
+  ]
+}

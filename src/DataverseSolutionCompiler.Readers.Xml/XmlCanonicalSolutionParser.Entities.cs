@@ -66,6 +66,7 @@ internal sealed partial class XmlCanonicalSolutionParser
                 displayName,
                 entityPath,
                 CreateProperties(
+                    (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(entityPath)),
                     (ArtifactPropertyKeys.EntityLogicalName, logicalName),
                     (ArtifactPropertyKeys.SchemaName, schemaName),
                     (ArtifactPropertyKeys.Description, description),
@@ -83,10 +84,15 @@ internal sealed partial class XmlCanonicalSolutionParser
                 var attributeType = Text(attribute.ElementLocal("Type")) ?? "unknown";
                 var attributeDisplayName = LocalizedDescription(attribute.ElementLocal("displaynames")) ?? attributeSchemaName;
                 var optionSet = attribute.ElementLocal("optionset");
-                var optionSetType = optionSet is null ? null : (Text(optionSet.ElementLocal("OptionSetType")) ?? attributeType);
-                var isGlobalOptionSet = optionSet is null ? null : NormalizeBoolean(Text(optionSet.ElementLocal("IsGlobal")));
+                var exportOptionSetName = NormalizeLogicalName(Text(attribute.ElementLocal("OptionSetName")));
+                var optionSetType = optionSet is null
+                    ? (!string.IsNullOrWhiteSpace(exportOptionSetName) ? attributeType : null)
+                    : (Text(optionSet.ElementLocal("OptionSetType")) ?? attributeType);
+                var isGlobalOptionSet = optionSet is null
+                    ? (!string.IsNullOrWhiteSpace(exportOptionSetName) ? "true" : null)
+                    : NormalizeBoolean(Text(optionSet.ElementLocal("IsGlobal")));
                 var optionSetName = optionSet is null
-                    ? null
+                    ? exportOptionSetName
                     : optionSet.AttributeValue("Name")
                         ?? (string.Equals(isGlobalOptionSet, "true", StringComparison.OrdinalIgnoreCase)
                             ? null

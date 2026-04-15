@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebResource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <WebResourceId>{7f5c0f2a-6037-f111-88b3-0022489b9600}</WebResourceId>
+  <Name>cdxmeta_/advancedui/landing.html</Name>
+  <DisplayName>Advanced UI Landing</DisplayName>
+  <Description>Neutral landing page for the Codex advanced UI scaffold.</Description>
+  <WebResourceType>1</WebResourceType>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/cdxmeta_advanceduilandinghtml7F5C0F2A-6037-F111-88B3-0022489B9600</FileName>
+</WebResource>

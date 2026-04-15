@@ -1,0 +1,53 @@
+{
+  "Family": 10,
+  "LogicalName": "cdxmeta_wave7category|All Categories",
+  "DisplayName": "All Categories",
+  "metadataSourcePath": "Entities/cdxmeta_Wave7Category/SavedQueries/{6f7a00a4-440f-44b2-8f67-8e1e713f3eb8}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "canBeDeleted": "true",
+    "comparisonSignature": "e9ec167a44f1944206226e3585fb6597791f50806ed9ab0cc3c645baf9f1f00d",
+    "entityLogicalName": "cdxmeta_wave7category",
+    "fetchAttributesJson": [
+      "cdxmeta_wave7categoryid",
+      "cdxmeta_wave7categoryname",
+      "cdxmeta_description"
+    ],
+    "filtersJson": [],
+    "introducedVersion": "1.0.0.0",
+    "isDefault": "false",
+    "isQuickFindQuery": "false",
+    "layoutColumnsJson": [
+      "cdxmeta_wave7categoryname",
+      "cdxmeta_description"
+    ],
+    "ordersJson": [
+      {
+        "attribute": "cdxmeta_wave7categoryname",
+        "descending": "false"
+      }
+    ],
+    "queryType": "0",
+    "summaryJson": {
+      "targetEntity": "cdxmeta_wave7category",
+      "layoutColumns": [
+        "cdxmeta_wave7categoryname",
+        "cdxmeta_description"
+      ],
+      "fetchAttributes": [
+        "cdxmeta_wave7categoryid",
+        "cdxmeta_wave7categoryname",
+        "cdxmeta_description"
+      ],
+      "filters": [],
+      "orders": [
+        {
+          "attribute": "cdxmeta_wave7categoryname",
+          "descending": "false"
+        }
+      ]
+    },
+    "targetEntity": "cdxmeta_wave7category",
+    "viewId": "6f7a00a4-440f-44b2-8f67-8e1e713f3eb8"
+  }
+}

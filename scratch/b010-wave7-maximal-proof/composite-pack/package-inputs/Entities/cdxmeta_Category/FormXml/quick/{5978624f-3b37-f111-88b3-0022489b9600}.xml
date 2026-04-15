@@ -1,0 +1,54 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{5978624f-3b37-f111-88b3-0022489b9600}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="general" id="{72c7babe-b24b-6eb7-2074-428c40d611b8}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="General" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="snapshot" id="{b3632fab-f39b-b7de-22f4-47e7cc5e0276}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Snapshot" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{bc3af4c4-6d88-8776-86bb-a001daf1315d}" showlabel="true">
+<labels>
+<label description="Category" languagecode="1033" />
+</labels>
+<control id="cdxmeta_categoryname" datafieldname="cdxmeta_categoryname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{45fbee34-7f1d-cfba-2955-d62ed4253178}" showlabel="true">
+<labels>
+<label description="Description" languagecode="1033" />
+</labels>
+<control id="cdxmeta_description" datafieldname="cdxmeta_description" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Category Snapshot" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Quick form used by the work item quick-view control." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

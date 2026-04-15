@@ -1,0 +1,38 @@
+{
+  "solution": {
+    "UniqueName": "CodexMetadataSeedReportingLegacy",
+    "DisplayName": "Codex Metadata Seed Reporting Legacy",
+    "Version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "UniqueName": "CodexMetadata",
+    "Prefix": "cdxmeta",
+    "CustomizationPrefix": "cdxmeta",
+    "DisplayName": "Codex Metadata"
+  },
+  "sourceLayout": "intent-spec-hybrid",
+  "copiedDirectories": [
+    "Attachments",
+    "DisplayStrings",
+    "Other",
+    "Reports",
+    "Templates",
+    "WebWizards"
+  ],
+  "unsupportedDirectories": [],
+  "deploymentSettingsIncluded": false,
+  "files": [
+    "package-inputs/Attachments/cdxmeta_report_payload.txt",
+    "package-inputs/Attachments/cdxmeta_report_payload.txt.data.xml",
+    "package-inputs/DisplayStrings/cdxmeta_reporting_labels.xml",
+    "package-inputs/Other/Customizations.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Other/Solution.xml",
+    "package-inputs/Reports/cdxmeta_account_summary.rdl",
+    "package-inputs/Reports/cdxmeta_account_summary.rdl.data.xml",
+    "package-inputs/Templates/cdxmeta_welcome_email.xml",
+    "package-inputs/WebWizards/cdxmeta_onboarding_wizard.xml",
+    "package-inputs/manifest.json"
+  ]
+}

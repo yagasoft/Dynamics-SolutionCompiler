@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Codex Shared Connector",
+    "description": "Temporary minimal connector for Wave 4 proof.",
+    "version": "1.0"
+  },
+  "host": "example.org",
+  "basePath": "/",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/ping": {
+      "get": {
+        "operationId": "Ping",
+        "summary": "Ping",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

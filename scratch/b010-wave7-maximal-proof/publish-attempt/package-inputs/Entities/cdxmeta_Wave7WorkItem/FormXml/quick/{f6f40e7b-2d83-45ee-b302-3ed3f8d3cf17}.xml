@@ -1,0 +1,62 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{f6f40e7b-2d83-45ee-b302-3ed3f8d3cf17}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="quick" id="{0e8ae863-6b75-8f6a-39e5-4924d40a94a5}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Quick" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="snapshot" id="{3b8b98fe-6d6e-8237-4570-fe62d0bbcbd9}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="Snapshot" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{0310f450-e2f5-9676-7201-cfc62b1c88de}" showlabel="true">
+<labels>
+<label description="Work Item" languagecode="1033" />
+</labels>
+<control id="cdxmeta_wave7workitemname" datafieldname="cdxmeta_wave7workitemname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{9de1ea04-75f5-3f75-df67-72caacd0030f}" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<control id="cdxmeta_summary" datafieldname="cdxmeta_summary" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{c9746c01-7783-0c9e-47ad-88cbf0163bef}" showlabel="true">
+<labels>
+<label description="Stage" languagecode="1033" />
+</labels>
+<control id="cdxmeta_stage" datafieldname="cdxmeta_stage" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Work Item Quick" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Quick form for compact work item snapshots." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

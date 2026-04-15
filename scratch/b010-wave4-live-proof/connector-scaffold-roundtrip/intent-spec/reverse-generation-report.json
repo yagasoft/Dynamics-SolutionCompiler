@@ -1,0 +1,35 @@
+{
+  "inputKind": "unpacked-xml-folder",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "Connector",
+    "ServiceEndpoint",
+    "SolutionShell"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "Connector",
+      "artifact": "new_codex-20shared-20connector",
+      "packageRelativePath": "Connectors/new_codex-20shared-20connector.xml"
+    },
+    {
+      "family": "ServiceEndpoint",
+      "artifact": "codex_webhook_endpoint",
+      "packageRelativePath": "PluginAssemblies/ServiceEndpoints.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedServiceEndpointConnector",
+      "packageRelativePath": "Other/Solution.xml"
+    }
+  ]
+}

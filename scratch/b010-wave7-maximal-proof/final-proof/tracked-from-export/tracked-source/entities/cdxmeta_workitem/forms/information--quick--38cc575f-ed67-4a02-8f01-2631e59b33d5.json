@@ -1,0 +1,75 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_workitem|quick|38cc575f-ed67-4a02-8f01-2631e59b33d5",
+  "DisplayName": "Information",
+  "metadataSourcePath": "Entities/cdxmeta_WorkItem/FormXml/quick/{38cc575f-ed67-4a02-8f01-2631e59b33d5}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "c5670e93374e2411e39f086c2d910b23b84d155c401f9d9066994072869aa26d",
+    "controlCount": "2",
+    "controlDescriptionCount": "2",
+    "entityLogicalName": "cdxmeta_workitem",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Information",
+      "description": null,
+      "type": "quick",
+      "tabs": [
+        {
+          "name": "tab_1",
+          "label": "Tab 1",
+          "sections": [
+            {
+              "name": "section_1",
+              "label": "GENERAL",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_workitemname",
+                  "label": "Work Item"
+                },
+                {
+                  "kind": "field",
+                  "field": "ownerid",
+                  "label": "Owner"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": []
+    },
+    "formId": "38cc575f-ed67-4a02-8f01-2631e59b33d5",
+    "formType": "quick",
+    "formTypeCode": "1",
+    "headerControlCount": "0",
+    "quickFormCount": "0",
+    "sectionCount": "1",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "quick",
+      "formId": "38cc575f-ed67-4a02-8f01-2631e59b33d5",
+      "tabCount": 1,
+      "sectionCount": 1,
+      "controlCount": 2,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 0,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_workitemname",
+          "dataFieldName": "cdxmeta_workitemname",
+          "role": "field"
+        },
+        {
+          "id": "ownerid",
+          "dataFieldName": "ownerid",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

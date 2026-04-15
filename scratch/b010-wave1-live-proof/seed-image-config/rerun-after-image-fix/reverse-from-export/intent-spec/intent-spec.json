@@ -1,0 +1,57 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedImageConfig",
+    "displayName": "Codex Metadata Seed Image Config",
+    "description": "Curated Codex skill seed solution: compact image-configuration and managed-flag proof.",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [
+    {
+      "logicalName": "cdxmeta_photoasset",
+      "schemaName": "cdxmeta_PhotoAsset",
+      "displayName": "Photo Asset",
+      "description": "Compact photo-asset seed for image configuration and stable managed-flag proof.",
+      "entitySetName": "cdxmeta_photoassets",
+      "ownershipTypeMask": "UserOwned",
+      "isCustomizable": true,
+      "columns": [
+        {
+          "logicalName": "cdxmeta_caption",
+          "schemaName": "cdxmeta_caption",
+          "displayName": "Caption",
+          "description": "Companion text column used to prove blocking managed-flag drift.",
+          "type": "string",
+          "isSecured": false,
+          "isCustomizable": false
+        },
+        {
+          "logicalName": "cdxmeta_profileimage",
+          "schemaName": "cdxmeta_profileimage",
+          "displayName": "Profile Image",
+          "description": "Image column used to prove entity-level and attribute-level image configuration.",
+          "type": "image",
+          "isSecured": false,
+          "isCustomizable": true,
+          "canStoreFullImage": false,
+          "isPrimaryImage": false
+        }
+      ],
+      "keys": [],
+      "forms": [],
+      "views": [],
+      "visualizations": []
+    }
+  ],
+  "sourceBackedArtifacts": []
+}

@@ -1,0 +1,37 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{38cc575f-ed67-4a02-8f01-2631e59b33d5}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="tab_1" id="{6e439bbf-0711-3fa4-af5f-2ec2316dade6}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="Tab 1" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="section_1" id="{9e34778c-06b9-9a65-0152-4eb306d51864}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="GENERAL" languagecode="1033" />
+</labels>
+<rows />
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Information" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="" languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Xml.Linq;
 using DataverseSolutionCompiler.Domain.Model;
 
 namespace DataverseSolutionCompiler.Readers.Xml;
@@ -158,53 +159,114 @@ internal sealed partial class XmlCanonicalSolutionParser
 
     private void ParseEntityAnalyticsConfigurations()
     {
+        var emittedLogicalNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var analyticsDirectory = Path.Combine(_root, "entityanalyticsconfigs");
-        if (!Directory.Exists(analyticsDirectory))
+        if (Directory.Exists(analyticsDirectory))
+        {
+            foreach (var directory in Directory.GetDirectories(analyticsDirectory).OrderBy(path => path, StringComparer.OrdinalIgnoreCase))
+            {
+                var analyticsPath = Path.Combine(directory, "entityanalyticsconfig.xml");
+                if (!File.Exists(analyticsPath))
+                {
+                    continue;
+                }
+
+                var root = LoadRoot(analyticsPath);
+                var parentEntityLogicalName = NormalizeLogicalName(Text(root.ElementLocal("ParentEntityLogicalName")) ?? Path.GetFileName(directory));
+                if (string.IsNullOrWhiteSpace(parentEntityLogicalName))
+                {
+                    continue;
+                }
+
+                if (AddEntityAnalyticsConfigurationArtifact(root, analyticsPath, parentEntityLogicalName))
+                {
+                    emittedLogicalNames.Add(parentEntityLogicalName);
+                }
+            }
+        }
+
+        var customizationsPath = Path.Combine(_root, "Other", "Customizations.xml");
+        if (!File.Exists(customizationsPath))
         {
             return;
         }
 
-        foreach (var directory in Directory.GetDirectories(analyticsDirectory).OrderBy(path => path, StringComparer.OrdinalIgnoreCase))
+        var customizationsRoot = LoadCustomizationsRoot();
+        var configurationElements = customizationsRoot?.ElementLocal("EntityAnalyticsConfigs")?
+            .Elements()
+            .Where(element => element.Name.LocalName.Equals("EntityAnalyticsConfig", StringComparison.OrdinalIgnoreCase))
+            .ToArray()
+            ?? [];
+        foreach (var configurationElement in configurationElements)
         {
-            var analyticsPath = Path.Combine(directory, "entityanalyticsconfig.xml");
-            if (!File.Exists(analyticsPath))
+            var parentEntityLogicalName = NormalizeLogicalName(
+                Text(configurationElement.ElementLocal("ParentEntityLogicalName"))
+                ?? Text(configurationElement.ElementLocal("parententitylogicalname")));
+            if (string.IsNullOrWhiteSpace(parentEntityLogicalName)
+                || emittedLogicalNames.Contains(parentEntityLogicalName))
             {
                 continue;
             }
 
-            var root = LoadRoot(analyticsPath);
-            var parentEntityLogicalName = NormalizeLogicalName(Text(root.ElementLocal("ParentEntityLogicalName")) ?? Path.GetFileName(directory));
-            if (string.IsNullOrWhiteSpace(parentEntityLogicalName))
+            if (AddEntityAnalyticsConfigurationArtifact(configurationElement, customizationsPath, parentEntityLogicalName))
             {
-                continue;
+                emittedLogicalNames.Add(parentEntityLogicalName);
             }
-
-            var entityDataSource = Text(root.ElementLocal("EntityDataSource"));
-            var isEnabledForAdls = NormalizeBoolean(Text(root.ElementLocal("IsEnabledForADLS")) ?? Text(root.ElementLocal("IsEnabledForAdls")));
-            var isEnabledForTimeSeries = NormalizeBoolean(Text(root.ElementLocal("IsEnabledForTimeSeries")));
-            var summaryJson = SerializeJson(new
-            {
-                parentEntityLogicalName,
-                entityDataSource,
-                isEnabledForAdls,
-                isEnabledForTimeSeries
-            });
-
-            AddArtifact(
-                ComponentFamily.EntityAnalyticsConfiguration,
-                parentEntityLogicalName!,
-                parentEntityLogicalName,
-                analyticsPath,
-                CreateProperties(
-                    (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(analyticsPath)),
-                    (ArtifactPropertyKeys.ParentEntityLogicalName, parentEntityLogicalName),
-                    (ArtifactPropertyKeys.EntityDataSource, entityDataSource),
-                    (ArtifactPropertyKeys.IsEnabledForAdls, isEnabledForAdls),
-                    (ArtifactPropertyKeys.IsEnabledForTimeSeries, isEnabledForTimeSeries),
-                    (ArtifactPropertyKeys.SummaryJson, summaryJson),
-                    (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
         }
     }
+
+    private bool AddEntityAnalyticsConfigurationArtifact(XElement root, string sourcePath, string parentEntityLogicalName)
+    {
+        if (string.IsNullOrWhiteSpace(parentEntityLogicalName))
+        {
+            return false;
+        }
+
+        var entityDataSource = NormalizeEntityAnalyticsDataSource(
+            Text(root.ElementLocal("EntityDataSource"))
+            ?? Text(root.ElementLocal("entitydatasource")))
+            ?? "dataverse";
+        var isEnabledForAdls = NormalizeBoolean(
+            Text(root.ElementLocal("IsEnabledForADLS"))
+            ?? Text(root.ElementLocal("IsEnabledForAdls"))
+            ?? Text(root.ElementLocal("isenabledforadls")));
+        var isEnabledForTimeSeries = NormalizeBoolean(
+            Text(root.ElementLocal("IsEnabledForTimeSeries"))
+            ?? Text(root.ElementLocal("isenabledfortimeseries")));
+        var summaryJson = SerializeJson(new
+        {
+            parentEntityLogicalName,
+            entityDataSource,
+            isEnabledForAdls,
+            isEnabledForTimeSeries
+        });
+
+        AddArtifact(
+            ComponentFamily.EntityAnalyticsConfiguration,
+            parentEntityLogicalName,
+            parentEntityLogicalName,
+            sourcePath,
+            CreateProperties(
+                (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(sourcePath)),
+                (ArtifactPropertyKeys.ParentEntityLogicalName, parentEntityLogicalName),
+                (ArtifactPropertyKeys.EntityDataSource, entityDataSource),
+                (ArtifactPropertyKeys.IsEnabledForAdls, isEnabledForAdls),
+                (ArtifactPropertyKeys.IsEnabledForTimeSeries, isEnabledForTimeSeries),
+                (ArtifactPropertyKeys.SummaryJson, summaryJson),
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+
+        return true;
+    }
+
+    private static string? NormalizeEntityAnalyticsDataSource(string? value) =>
+        NormalizeLogicalName(value) switch
+        {
+            null => null,
+            "0" or "none" => "none",
+            "1" or "dataverse" => "dataverse",
+            "2" or "fnotables" => "fnotables",
+            _ => NormalizeLogicalName(value)
+        };
 
     private void ParseImportMaps()
     {

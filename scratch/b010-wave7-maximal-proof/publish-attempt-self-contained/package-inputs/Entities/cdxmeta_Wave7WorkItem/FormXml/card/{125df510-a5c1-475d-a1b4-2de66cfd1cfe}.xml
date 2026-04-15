@@ -1,0 +1,81 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{125df510-a5c1-475d-a1b4-2de66cfd1cfe}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form>
+<tabs>
+<tab name="general" verticallayout="true" id="{6eea57dc-b809-1672-4b0f-1a314c5934c2}" IsUserDefined="0">
+<labels>
+<label description="" languagecode="1033" />
+</labels>
+<columns>
+<column width="25%">
+<sections>
+<section name="ColorStrip" showlabel="false" showbar="false" columns="1" IsUserDefined="0" id="{295c9d2a-1b8a-4b8d-0024-91eda281f08f}">
+<labels>
+<label description="ColorStrip" languagecode="1033" />
+</labels>
+</section>
+</sections>
+</column>
+<column width="75%">
+<sections>
+<section name="CardHeader" showlabel="false" showbar="false" columns="111" IsUserDefined="0" id="{a0e8bbe8-abb8-7401-13fd-a9f0e68aaa72}">
+<labels>
+<label description="Header" languagecode="1033" />
+</labels>
+</section>
+<section name="CardDetails" showlabel="false" showbar="false" columns="1" IsUserDefined="0" id="{0e240196-62ee-efd2-bad6-00aea24753f7}">
+<labels>
+<label description="Details" languagecode="1033" />
+</labels>
+<rows>
+<row>
+<cell id="{5013f760-0110-2902-0692-e6d755ec7a61}" showlabel="true">
+<labels>
+<label description="Work Item" languagecode="1033" />
+</labels>
+<control id="cdxmeta_wave7workitemname" datafieldname="cdxmeta_wave7workitemname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{0df5a50f-c242-9db8-2e50-a036787afe65}" showlabel="true">
+<labels>
+<label description="Summary" languagecode="1033" />
+</labels>
+<control id="cdxmeta_summary" datafieldname="cdxmeta_summary" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+<row>
+<cell id="{b1eb88bb-6cc8-ad76-23e2-23b44a3bffd9}" showlabel="true">
+<labels>
+<label description="Priority" languagecode="1033" />
+</labels>
+<control id="cdxmeta_priority" datafieldname="cdxmeta_priority" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+</cell>
+</row>
+</rows>
+</section>
+<section name="CardFooter" showlabel="false" showbar="false" columns="1111" IsUserDefined="0" id="{bc783a28-8ab6-5adf-f852-5fb196d36f20}">
+<labels>
+<label description="Footer" languagecode="1033" />
+</labels>
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Work Item Card" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Card form for the maximal proof lane." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

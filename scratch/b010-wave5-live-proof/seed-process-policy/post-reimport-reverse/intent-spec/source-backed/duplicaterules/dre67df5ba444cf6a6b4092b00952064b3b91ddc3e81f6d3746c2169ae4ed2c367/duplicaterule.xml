@@ -1,0 +1,15 @@
+<duplicaterule uniquename="dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367">
+  <baseentityname>account</baseentityname>
+  <description>Neutral duplicate rule for Dataverse metadata synthesis.</description>
+  <excludeinactiverecords>1</excludeinactiverecords>
+  <iscasesensitive>0</iscasesensitive>
+  <iscustomizable>1</iscustomizable>
+  <matchingentityname>account</matchingentityname>
+  <name>Codex Metadata Account Name Duplicate Rule</name>
+  <duplicateruleconditions>
+    <duplicaterulecondition baseattributename="name" matchingattributename="name" operatorcode="0" uniquerulename="dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367">
+      <ignoreblankvalues>1</ignoreblankvalues>
+      <iscustomizable>1</iscustomizable>
+    </duplicaterulecondition>
+  </duplicateruleconditions>
+</duplicaterule>

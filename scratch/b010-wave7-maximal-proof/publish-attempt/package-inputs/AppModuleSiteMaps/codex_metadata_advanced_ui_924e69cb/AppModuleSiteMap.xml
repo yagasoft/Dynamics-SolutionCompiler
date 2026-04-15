@@ -1,0 +1,27 @@
+<AppModuleSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SiteMapUniqueName>codex_metadata_advanced_ui_924e69cb</SiteMapUniqueName>
+<EnableCollapsibleGroups>False</EnableCollapsibleGroups>
+<ShowHome>True</ShowHome>
+<ShowPinned>True</ShowPinned>
+<ShowRecents>True</ShowRecents>
+<SiteMap IntroducedVersion="7.0.0.0">
+<Area Id="cdxmeta_area" ShowGroups="true" ResourceId="SitemapDesigner.NewArea" IntroducedVersion="7.0.0.0">
+<Titles>
+<Title LCID="1033" Title="Codex Metadata Advanced UI" />
+</Titles>
+<Group Id="cdxmeta_group" ResourceId="SitemapDesigner.NewGroup" IntroducedVersion="7.0.0.0">
+<Titles>
+<Title LCID="1033" Title="Advanced UI Seed" />
+</Titles>
+<SubArea Id="cdxmeta_shell" ResourceId="SitemapDesigner.NewSubArea" Url="$webresource:cdxmeta_/advancedui/landing.html" Client="Web" PassParams="true">
+<Titles>
+<Title LCID="1033" Title="Advanced UI Shell" />
+</Titles>
+</SubArea>
+</Group>
+</Area>
+</SiteMap>
+<LocalizedNames>
+<LocalizedName description="Codex Metadata Advanced UI" languagecode="1033" />
+</LocalizedNames>
+</AppModuleSiteMap>

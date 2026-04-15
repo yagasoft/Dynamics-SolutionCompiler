@@ -1,0 +1,10 @@
+{
+  "LogicalName": "codex metadata routing rule",
+  "DisplayName": "Codex Metadata Routing Rule",
+  "metadataSourcePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml",
+  "assetSourcePaths": [],
+  "description": "Neutral routing rule for Dataverse metadata synthesis.",
+  "workflowId": null,
+  "itemCount": 1,
+  "comparisonSignature": "3e29acd12b1afa1c02d2660c6686a9fb85086c7651cf6c95c4974744498f06b2"
+}

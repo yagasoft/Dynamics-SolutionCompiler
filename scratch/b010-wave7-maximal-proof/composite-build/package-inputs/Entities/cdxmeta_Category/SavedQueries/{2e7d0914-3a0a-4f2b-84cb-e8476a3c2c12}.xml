@@ -1,0 +1,33 @@
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<savedquery>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<isquickfindquery>0</isquickfindquery>
+<isprivate>0</isprivate>
+<isdefault>0</isdefault>
+<savedqueryid>{2e7d0914-3a0a-4f2b-84cb-e8476a3c2c12}</savedqueryid>
+<layoutxml>
+<grid name="resultset" jump="cdxmeta_categoryname" select="1" icon="1" preview="1">
+<row name="result" id="cdxmeta_categoryid">
+<cell name="cdxmeta_categoryname" width="150" />
+<cell name="cdxmeta_description" width="150" />
+</row>
+</grid>
+</layoutxml>
+<querytype>0</querytype>
+<fetchxml>
+<fetch version="1.0" mapping="logical">
+<entity name="cdxmeta_category">
+<attribute name="cdxmeta_categoryid" />
+<attribute name="cdxmeta_categoryname" />
+<attribute name="cdxmeta_description" />
+<order attribute="cdxmeta_categoryname" descending="false" />
+</entity>
+</fetch>
+</fetchxml>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<LocalizedNames>
+<LocalizedName description="All Categories" languagecode="1033" />
+</LocalizedNames>
+</savedquery>
+</savedqueries>

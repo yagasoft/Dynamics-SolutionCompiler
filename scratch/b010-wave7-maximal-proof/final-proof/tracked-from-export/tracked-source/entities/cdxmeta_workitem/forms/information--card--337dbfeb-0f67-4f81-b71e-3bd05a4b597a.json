@@ -1,0 +1,113 @@
+{
+  "Family": 9,
+  "LogicalName": "cdxmeta_workitem|card|337dbfeb-0f67-4f81-b71e-3bd05a4b597a",
+  "DisplayName": "Information",
+  "metadataSourcePath": "Entities/cdxmeta_WorkItem/FormXml/card/{337dbfeb-0f67-4f81-b71e-3bd05a4b597a}.xml",
+  "assetSourcePaths": [],
+  "properties": {
+    "comparisonSignature": "d4a0b9132aa9302c0895d653da3134fd178c434bd80c65711b9c8125f60dab5e",
+    "controlCount": "4",
+    "controlDescriptionCount": "4",
+    "description": "A card form for this entity.",
+    "entityLogicalName": "cdxmeta_workitem",
+    "footerControlCount": "0",
+    "formDefinitionJson": {
+      "name": "Information",
+      "description": "A card form for this entity.",
+      "type": "card",
+      "tabs": [
+        {
+          "name": "general",
+          "label": "general",
+          "sections": [
+            {
+              "name": "ColorStrip",
+              "label": "ColorStrip",
+              "controls": []
+            },
+            {
+              "name": "CardHeader",
+              "label": "Header",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "statuscode",
+                  "label": "Status Reason"
+                }
+              ]
+            },
+            {
+              "name": "CardDetails",
+              "label": "Details",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "cdxmeta_workitemname",
+                  "label": "Work Item"
+                }
+              ]
+            },
+            {
+              "name": "CardFooter",
+              "label": "Footer",
+              "controls": [
+                {
+                  "kind": "field",
+                  "field": "ownerid",
+                  "label": "Owner"
+                },
+                {
+                  "kind": "field",
+                  "field": "createdon",
+                  "label": "Created On"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "headerFields": []
+    },
+    "formId": "337dbfeb-0f67-4f81-b71e-3bd05a4b597a",
+    "formType": "card",
+    "formTypeCode": "1",
+    "headerControlCount": "0",
+    "quickFormCount": "0",
+    "sectionCount": "4",
+    "subgridCount": "0",
+    "summaryJson": {
+      "formType": "card",
+      "formId": "337dbfeb-0f67-4f81-b71e-3bd05a4b597a",
+      "tabCount": 1,
+      "sectionCount": 4,
+      "controlCount": 4,
+      "quickFormCount": 0,
+      "subgridCount": 0,
+      "headerControlCount": 0,
+      "footerControlCount": 0,
+      "controlDescriptions": [
+        {
+          "id": "cdxmeta_workitemname",
+          "dataFieldName": "cdxmeta_workitemname",
+          "role": "field"
+        },
+        {
+          "id": "createdon",
+          "dataFieldName": "createdon",
+          "role": "field"
+        },
+        {
+          "id": "ownerid",
+          "dataFieldName": "ownerid",
+          "role": "field"
+        },
+        {
+          "id": "statuscode",
+          "dataFieldName": "statuscode",
+          "role": "field"
+        }
+      ]
+    },
+    "tabCount": "1"
+  }
+}

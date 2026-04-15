@@ -1,0 +1,37 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<systemform>
+<formid>{5978624f-3b37-f111-88b3-0022489b9600}</formid>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<FormPresentation>1</FormPresentation>
+<FormActivationState>1</FormActivationState>
+<form headerdensity="HighWithControls">
+<tabs>
+<tab name="general" id="{72c7babe-b24b-6eb7-2074-428c40d611b8}" IsUserDefined="1" expanded="true" showlabel="true">
+<labels>
+<label description="general" languagecode="1033" />
+</labels>
+<columns>
+<column width="100%">
+<sections>
+<section name="snapshot" id="{b3632fab-f39b-b7de-22f4-47e7cc5e0276}" IsUserDefined="1" showlabel="true" showbar="false" columns="1">
+<labels>
+<label description="snapshot" languagecode="1033" />
+</labels>
+<rows />
+</section>
+</sections>
+</column>
+</columns>
+</tab>
+</tabs>
+</form>
+<IsCustomizable>1</IsCustomizable>
+<CanBeDeleted>1</CanBeDeleted>
+<LocalizedNames>
+<LocalizedName description="Category Snapshot" languagecode="1033" />
+</LocalizedNames>
+<Descriptions>
+<Description description="Compact quick view form for the metadata synthesis seed." languagecode="1033" />
+</Descriptions>
+</systemform>
+</forms>

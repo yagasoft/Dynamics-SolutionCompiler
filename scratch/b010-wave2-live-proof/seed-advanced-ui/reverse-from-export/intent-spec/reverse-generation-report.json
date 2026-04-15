@@ -1,0 +1,57 @@
+{
+  "inputKind": "packed-zip",
+  "isPartial": true,
+  "supportedFamiliesEmitted": [
+    "AppModule",
+    "AppSetting",
+    "EnvironmentVariableDefinition",
+    "EnvironmentVariableValue",
+    "SiteMap",
+    "SolutionShell",
+    "Table",
+    "Visualization",
+    "WebResource"
+  ],
+  "unsupportedFamiliesOmitted": [
+    {
+      "family": "LegacyAsset",
+      "artifact": "customizations",
+      "reason": "Family is outside the supported reverse-generation subset for intent-spec JSON.",
+      "category": "unsupportedFamily"
+    }
+  ],
+  "preservedIdsIncluded": [
+    {
+      "family": "Visualization",
+      "artifact": "account|Accounts by Industry",
+      "id": "74a622c0-5193-de11-97d4-00155da3b01e"
+    }
+  ],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "AppModule",
+      "artifact": "codex_metadata_advanced_ui_924e69cb",
+      "packageRelativePath": "AppModules/codex_metadata_advanced_ui_924e69cb/AppModule.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedAdvancedUI",
+      "packageRelativePath": "Other/Solution.xml"
+    },
+    {
+      "family": "Table",
+      "artifact": "account",
+      "packageRelativePath": "Entities/Account/Entity.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/icon.svg",
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/icon.svg.data.xml"
+    },
+    {
+      "family": "WebResource",
+      "artifact": "cdxmeta_/advancedui/landing.html",
+      "packageRelativePath": "WebResources/cdxmeta_/advancedui/landing.html.data.xml"
+    }
+  ]
+}

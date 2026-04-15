@@ -30,6 +30,7 @@ public sealed partial class IntentSpecEmitter : ISolutionEmitter
         ComponentFamily.ImageConfiguration,
         ComponentFamily.Form,
         ComponentFamily.View,
+        ComponentFamily.Visualization,
         ComponentFamily.AppModule,
         ComponentFamily.AppSetting,
         ComponentFamily.SiteMap,

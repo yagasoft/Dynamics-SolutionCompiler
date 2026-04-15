@@ -1,0 +1,142 @@
+{
+  "specVersion": "1.0",
+  "solution": {
+    "uniqueName": "CodexMetadataSeedProcessPolicy",
+    "displayName": "Codex Metadata Seed Process Policy",
+    "description": "Curated Codex skill seed solution: Codex Metadata Seed Process Policy",
+    "version": "1.0.0.0",
+    "layeringIntent": "UnmanagedDevelopment"
+  },
+  "publisher": {
+    "uniqueName": "CodexMetadata",
+    "prefix": "cdxmeta",
+    "displayName": "Codex Metadata",
+    "description": "Neutral publisher for Codex Dataverse metadata synthesis seed solutions."
+  },
+  "globalOptionSets": [],
+  "environmentVariables": [],
+  "appModules": [],
+  "tables": [
+    {
+      "logicalName": "account",
+      "schemaName": "Account",
+      "displayName": "Account",
+      "isCustomizable": false,
+      "columns": [],
+      "keys": [],
+      "forms": [],
+      "views": [],
+      "visualizations": []
+    }
+  ],
+  "sourceBackedArtifacts": [
+    {
+      "family": "SolutionShell",
+      "logicalName": "CodexMetadataSeedProcessPolicy",
+      "displayName": "Codex Metadata Seed Process Policy",
+      "metadataSourcePath": "source-backed/Other/Solution.xml",
+      "packageRelativePath": "Other/Solution.xml",
+      "stableProperties": {
+        "description": "Curated Codex skill seed solution: Codex Metadata Seed Process Policy",
+        "managed": "false",
+        "publisherDisplayName": "Codex Metadata",
+        "publisherPrefix": "cdxmeta",
+        "publisherUniqueName": "CodexMetadata"
+      }
+    },
+    {
+      "family": "Table",
+      "logicalName": "account",
+      "displayName": "Account",
+      "metadataSourcePath": "source-backed/Entities/Account/Entity.xml",
+      "packageRelativePath": "Entities/Account/Entity.xml",
+      "stableProperties": {
+        "entityLogicalName": "account",
+        "isCustomizable": "false",
+        "schemaName": "Account",
+        "shellOnly": "true"
+      }
+    },
+    {
+      "family": "DuplicateRule",
+      "logicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367",
+      "displayName": "Codex Metadata Account Name Duplicate Rule",
+      "metadataSourcePath": "source-backed/duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "stableProperties": {
+        "baseEntityName": "account",
+        "description": "Neutral duplicate rule for Dataverse metadata synthesis.",
+        "excludeInactiveRecords": "true",
+        "isCaseSensitive": "false",
+        "isCustomizable": "true",
+        "itemCount": "1",
+        "matchingEntityName": "account"
+      }
+    },
+    {
+      "family": "DuplicateRuleCondition",
+      "logicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367|name|name|0",
+      "displayName": "name -\u003E name",
+      "metadataSourcePath": "source-backed/duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "packageRelativePath": "duplicaterules/dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367/duplicaterule.xml",
+      "stableProperties": {
+        "baseAttributeName": "name",
+        "ignoreBlankValues": "true",
+        "isCustomizable": "true",
+        "matchingAttributeName": "name",
+        "operatorCode": "0",
+        "parentDuplicateRuleLogicalName": "dre67df5ba444cf6a6b4092b00952064b3b91ddc3e81f6d3746c2169ae4ed2c367"
+      }
+    },
+    {
+      "family": "RoutingRule",
+      "logicalName": "codex metadata routing rule",
+      "displayName": "Codex Metadata Routing Rule",
+      "metadataSourcePath": "source-backed/RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "stableProperties": {
+        "description": "Neutral routing rule for Dataverse metadata synthesis.",
+        "itemCount": "1"
+      }
+    },
+    {
+      "family": "RoutingRuleItem",
+      "logicalName": "codex metadata routing rule|route all",
+      "displayName": "Codex Metadata Routing Rule Item",
+      "metadataSourcePath": "source-backed/RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "packageRelativePath": "RoutingRules/Codex Metadata Routing Rule.meta.xml",
+      "stableProperties": {
+        "conditionXml": "\u003Cconditions /\u003E",
+        "description": "Route all",
+        "parentRoutingRuleLogicalName": "codex metadata routing rule"
+      }
+    },
+    {
+      "family": "MobileOfflineProfile",
+      "logicalName": "codex metadata mobile offline profile",
+      "displayName": "Codex Metadata Mobile Offline Profile",
+      "metadataSourcePath": "source-backed/MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "stableProperties": {
+        "description": "Neutral mobile offline profile for Dataverse metadata synthesis.",
+        "isValidated": "false",
+        "itemCount": "1"
+      }
+    },
+    {
+      "family": "MobileOfflineProfileItem",
+      "logicalName": "codex metadata mobile offline profile|account",
+      "displayName": "Codex Metadata Mobile Offline Profile Item",
+      "metadataSourcePath": "source-backed/MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "packageRelativePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+      "stableProperties": {
+        "entityLogicalName": "account",
+        "parentMobileOfflineProfileLogicalName": "codex metadata mobile offline profile",
+        "recordDistributionCriteria": "0",
+        "recordsOwnedByMe": "false",
+        "recordsOwnedByMyBusinessUnit": "false",
+        "recordsOwnedByMyTeam": "false"
+      }
+    }
+  ]
+}

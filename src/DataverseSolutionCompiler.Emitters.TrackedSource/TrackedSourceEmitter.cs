@@ -47,6 +47,7 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         WriteAiFamilies(model, trackedSourceRoot, emittedFiles);
         WriteEntityAnalyticsConfigurations(model, trackedSourceRoot, emittedFiles);
         WriteCanvasApps(model, trackedSourceRoot, emittedFiles);
+        WriteReportingLegacyFamilies(model, trackedSourceRoot, emittedFiles);
         WriteSourceBackedEvidence(model, trackedSourceRoot, emittedFiles);
 
         var inventory = emittedFiles.Select(file => file.RelativePath)
@@ -326,6 +327,36 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 BuildSummaryArtifactJson(visualization),
                 emittedFiles,
                 $"Tracked chart summary for {visualization.DisplayName ?? visualization.LogicalName}.");
+        }
+    }
+
+    private static void WriteReportingLegacyFamilies(CanonicalSolution model, string trackedSourceRoot, List<EmittedArtifact> emittedFiles)
+    {
+        foreach (var artifact in model.Artifacts
+                     .Where(artifact => artifact.Family is ComponentFamily.Report
+                         or ComponentFamily.Template
+                         or ComponentFamily.DisplayString
+                         or ComponentFamily.Attachment
+                         or ComponentFamily.LegacyAsset)
+                     .OrderBy(artifact => artifact.Family)
+                     .ThenBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase))
+        {
+            var relativePath = artifact.Family switch
+            {
+                ComponentFamily.Report => $"reports/{SafeSegment(artifact.LogicalName)}.json",
+                ComponentFamily.Template => $"templates/{SafeSegment(artifact.LogicalName)}.json",
+                ComponentFamily.DisplayString => $"display-strings/{SafeSegment(artifact.LogicalName)}.json",
+                ComponentFamily.Attachment => $"attachments/{SafeSegment(artifact.LogicalName)}.json",
+                ComponentFamily.LegacyAsset => $"legacy-assets/{SafeSegment(artifact.LogicalName)}.json",
+                _ => throw new InvalidOperationException($"Unexpected reporting or legacy family '{artifact.Family}'.")
+            };
+
+            WriteJson(
+                trackedSourceRoot,
+                relativePath,
+                BuildSummaryArtifactJson(artifact),
+                emittedFiles,
+                $"Tracked reporting or legacy summary for {artifact.DisplayName ?? artifact.LogicalName}.");
         }
     }
 

@@ -1,0 +1,46 @@
+{
+  "inputKind": "unpacked-xml-folder",
+  "isPartial": false,
+  "supportedFamiliesEmitted": [
+    "Attachment",
+    "DisplayString",
+    "LegacyAsset",
+    "Report",
+    "SolutionShell",
+    "Template"
+  ],
+  "unsupportedFamiliesOmitted": [],
+  "preservedIdsIncluded": [],
+  "sourceBackedArtifactsIncluded": [
+    {
+      "family": "Attachment",
+      "artifact": "cdxmeta_report_payload",
+      "packageRelativePath": "Attachments/cdxmeta_report_payload.txt.data.xml"
+    },
+    {
+      "family": "DisplayString",
+      "artifact": "cdxmeta_reporting_labels",
+      "packageRelativePath": "DisplayStrings/cdxmeta_reporting_labels.xml"
+    },
+    {
+      "family": "LegacyAsset",
+      "artifact": "cdxmeta_onboarding_wizard",
+      "packageRelativePath": "WebWizards/cdxmeta_onboarding_wizard.xml"
+    },
+    {
+      "family": "Report",
+      "artifact": "cdxmeta_account_summary",
+      "packageRelativePath": "Reports/cdxmeta_account_summary.rdl.data.xml"
+    },
+    {
+      "family": "SolutionShell",
+      "artifact": "CodexMetadataSeedReportingLegacy",
+      "packageRelativePath": "Other/Solution.xml"
+    },
+    {
+      "family": "Template",
+      "artifact": "cdxmeta_welcome_email",
+      "packageRelativePath": "Templates/cdxmeta_welcome_email.xml"
+    }
+  ]
+}

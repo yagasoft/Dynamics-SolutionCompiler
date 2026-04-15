@@ -1,0 +1,97 @@
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26033.170" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26033.00170">
+<Entities />
+<Roles />
+<Workflows />
+<FieldSecurityProfiles />
+<Templates />
+<EntityMaps />
+<EntityRelationships>
+<EntityRelationship Name="cdxmeta_wave7category_wave7workitem">
+<EntityRelationshipType>OneToMany</EntityRelationshipType>
+<IsCustomizable>1</IsCustomizable>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<IsHierarchical>0</IsHierarchical>
+<ReferencingEntityName>cdxmeta_Wave7WorkItem</ReferencingEntityName>
+<ReferencedEntityName>cdxmeta_Wave7Category</ReferencedEntityName>
+<CascadeAssign>NoCascade</CascadeAssign>
+<CascadeDelete>RemoveLink</CascadeDelete>
+<CascadeArchive>RemoveLink</CascadeArchive>
+<CascadeReparent>NoCascade</CascadeReparent>
+<CascadeShare>NoCascade</CascadeShare>
+<CascadeUnshare>NoCascade</CascadeUnshare>
+<CascadeRollupView>NoCascade</CascadeRollupView>
+<IsValidForAdvancedFind>1</IsValidForAdvancedFind>
+<ReferencingAttributeName>cdxmeta_wave7categoryid</ReferencingAttributeName>
+<RelationshipDescription>
+<Descriptions>
+<Description description="Parent category for the work item." languagecode="1033" />
+</Descriptions>
+</RelationshipDescription>
+<EntityRelationshipRoles>
+<EntityRelationshipRole>
+<NavPaneDisplayOption>UseCollectionName</NavPaneDisplayOption>
+<NavPaneArea>Details</NavPaneArea>
+<NavPaneOrder>10000</NavPaneOrder>
+<NavigationPropertyName>cdxmeta_wave7categoryid</NavigationPropertyName>
+<CustomLabels>
+<CustomLabel description="Category" languagecode="1033" />
+</CustomLabels>
+<RelationshipRoleType>1</RelationshipRoleType>
+</EntityRelationshipRole>
+<EntityRelationshipRole>
+<NavigationPropertyName>cdxmeta_wave7category_wave7workitem</NavigationPropertyName>
+<RelationshipRoleType>0</RelationshipRoleType>
+</EntityRelationshipRole>
+</EntityRelationshipRoles>
+</EntityRelationship>
+<EntityRelationship Name="cdxmeta_wave7workitem_wave7checkpoint">
+<EntityRelationshipType>OneToMany</EntityRelationshipType>
+<IsCustomizable>1</IsCustomizable>
+<IntroducedVersion>1.0.0.0</IntroducedVersion>
+<IsHierarchical>0</IsHierarchical>
+<ReferencingEntityName>cdxmeta_Wave7Checkpoint</ReferencingEntityName>
+<ReferencedEntityName>cdxmeta_Wave7WorkItem</ReferencedEntityName>
+<CascadeAssign>NoCascade</CascadeAssign>
+<CascadeDelete>RemoveLink</CascadeDelete>
+<CascadeArchive>RemoveLink</CascadeArchive>
+<CascadeReparent>NoCascade</CascadeReparent>
+<CascadeShare>NoCascade</CascadeShare>
+<CascadeUnshare>NoCascade</CascadeUnshare>
+<CascadeRollupView>NoCascade</CascadeRollupView>
+<IsValidForAdvancedFind>1</IsValidForAdvancedFind>
+<ReferencingAttributeName>cdxmeta_wave7workitemid</ReferencingAttributeName>
+<RelationshipDescription>
+<Descriptions>
+<Description description="Parent work item for the checkpoint." languagecode="1033" />
+</Descriptions>
+</RelationshipDescription>
+<EntityRelationshipRoles>
+<EntityRelationshipRole>
+<NavPaneDisplayOption>UseCollectionName</NavPaneDisplayOption>
+<NavPaneArea>Details</NavPaneArea>
+<NavPaneOrder>10000</NavPaneOrder>
+<NavigationPropertyName>cdxmeta_wave7workitemid</NavigationPropertyName>
+<CustomLabels>
+<CustomLabel description="Work Item" languagecode="1033" />
+</CustomLabels>
+<RelationshipRoleType>1</RelationshipRoleType>
+</EntityRelationshipRole>
+<EntityRelationshipRole>
+<NavigationPropertyName>cdxmeta_wave7workitem_wave7checkpoint</NavigationPropertyName>
+<RelationshipRoleType>0</RelationshipRoleType>
+</EntityRelationshipRole>
+</EntityRelationshipRoles>
+</EntityRelationship>
+</EntityRelationships>
+<OrganizationSettings />
+<optionsets />
+<CanvasApps /><RoutingRules /><SavedQueryVisualizations />
+<WebResources />
+<CustomControls />
+<AppModuleSiteMaps />
+<AppModules />
+<EntityDataProviders />
+<Languages>
+<Language>1033</Language>
+</Languages>
+</ImportExportXml>

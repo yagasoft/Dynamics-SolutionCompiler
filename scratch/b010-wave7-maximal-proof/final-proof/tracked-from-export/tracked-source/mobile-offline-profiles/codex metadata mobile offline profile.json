@@ -1,0 +1,10 @@
+{
+  "LogicalName": "codex metadata mobile offline profile",
+  "DisplayName": "Codex Metadata Mobile Offline Profile",
+  "metadataSourcePath": "MobileOfflineProfiles/Codex Metadata Mobile Offline Profile.xml",
+  "assetSourcePaths": [],
+  "description": "Neutral mobile offline profile for Dataverse metadata synthesis.",
+  "isValidated": false,
+  "itemCount": 1,
+  "comparisonSignature": "f1ca1ab94336b05f78d6606687dd33bf726cf941b00fcb110768aa1edff1f1ac"
+}

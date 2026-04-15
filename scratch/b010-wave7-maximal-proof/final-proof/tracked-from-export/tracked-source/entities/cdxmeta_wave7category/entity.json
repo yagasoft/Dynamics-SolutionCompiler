@@ -1,0 +1,12 @@
+{
+  "logicalName": "cdxmeta_wave7category",
+  "DisplayName": "Category",
+  "schemaName": "cdxmeta_Wave7Category",
+  "description": "Reference category for the Wave 7 maximal supported proof.",
+  "entitySetName": "cdxmeta_wave7categories",
+  "ownershipTypeMask": "UserOwned",
+  "primaryIdAttribute": "cdxmeta_wave7categoryid",
+  "primaryNameAttribute": "cdxmeta_wave7categoryname",
+  "isCustomizable": true,
+  "shellOnly": false
+}

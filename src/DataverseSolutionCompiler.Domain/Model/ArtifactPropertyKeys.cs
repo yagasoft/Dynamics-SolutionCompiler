@@ -185,6 +185,11 @@ public static class ArtifactPropertyKeys
     public const string ConnectorInternalId = "connectorInternalId";
     public const string ConnectorType = "connectorType";
     public const string CapabilitiesJson = "capabilitiesJson";
+    public const string OpenApiDefinitionSourcePath = "openApiDefinitionSourcePath";
+    public const string ConnectionParametersSourcePath = "connectionParametersSourcePath";
+    public const string PolicyTemplateInstancesSourcePath = "policyTemplateInstancesSourcePath";
+    public const string IconSourcePath = "iconSourcePath";
+    public const string ScriptSourcePath = "scriptSourcePath";
     public const string AssemblyFullName = "assemblyFullName";
     public const string AssemblyFileName = "assemblyFileName";
     public const string IsolationMode = "isolationMode";
@@ -197,6 +202,7 @@ public static class ArtifactPropertyKeys
     public const string Rank = "rank";
     public const string SupportedDeployment = "supportedDeployment";
     public const string MessageName = "messageName";
+    public const string SdkMessageId = "sdkMessageId";
     public const string PrimaryEntity = "primaryEntity";
     public const string HandlerPluginTypeName = "handlerPluginTypeName";
     public const string FilteringAttributes = "filteringAttributes";

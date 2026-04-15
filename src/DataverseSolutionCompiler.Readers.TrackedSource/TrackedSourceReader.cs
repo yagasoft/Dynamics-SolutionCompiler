@@ -595,7 +595,12 @@ public sealed class TrackedSourceReader : ISolutionReader
             ["role-privileges"] = ComponentFamily.RolePrivilege,
             ["field-security-profiles"] = ComponentFamily.FieldSecurityProfile,
             ["field-permissions"] = ComponentFamily.FieldPermission,
-            ["connection-roles"] = ComponentFamily.ConnectionRole
+            ["connection-roles"] = ComponentFamily.ConnectionRole,
+            ["reports"] = ComponentFamily.Report,
+            ["templates"] = ComponentFamily.Template,
+            ["display-strings"] = ComponentFamily.DisplayString,
+            ["attachments"] = ComponentFamily.Attachment,
+            ["legacy-assets"] = ComponentFamily.LegacyAsset
         };
 
     private static string NormalizeTrackedSourceRelativePath(string value)
