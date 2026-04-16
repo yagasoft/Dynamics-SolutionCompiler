@@ -32,6 +32,7 @@ public sealed partial class IntentSpecEmitter
         ComponentFamily.FieldSecurityProfile,
         ComponentFamily.FieldPermission,
         ComponentFamily.ConnectionRole,
+        ComponentFamily.Ribbon,
         ComponentFamily.Report,
         ComponentFamily.Template,
         ComponentFamily.DisplayString,
@@ -594,6 +595,7 @@ public sealed partial class IntentSpecEmitter
                 UniqueName = appModule.LogicalName,
                 DisplayName = appModule.DisplayName ?? appModule.LogicalName,
                 Description = GetProperty(appModule, ArtifactPropertyKeys.Description),
+                RoleIds = ReadGuidArray(GetProperty(appModule, ArtifactPropertyKeys.RoleIdsJson)),
                 SiteMap = siteMap,
                 AppSettings = appSettings
             });
@@ -676,9 +678,21 @@ public sealed partial class IntentSpecEmitter
                 foreach (var subArea in group.SubAreas ?? [])
                 {
                     var entity = NormalizeLogicalName(subArea.Entity);
+                    var viewId = NormalizeGuid(subArea.ViewId);
+                    var viewType = NormalizeSiteMapViewType(subArea.ViewType);
+                    var recordId = NormalizeGuid(subArea.RecordId);
+                    var formId = NormalizeGuid(subArea.FormId);
                     var hasUrl = !string.IsNullOrWhiteSpace(subArea.Url);
                     var hasWebResource = !string.IsNullOrWhiteSpace(subArea.WebResource);
-                    if (!string.IsNullOrWhiteSpace(entity) == false && !hasUrl && !hasWebResource)
+                    var dashboard = NormalizeGuid(subArea.Dashboard);
+                    var hasDashboard = !string.IsNullOrWhiteSpace(dashboard);
+                    var customPage = NormalizeLogicalName(subArea.CustomPage);
+                    var hasCustomPage = !string.IsNullOrWhiteSpace(customPage);
+                    var customPageEntityName = NormalizeLogicalName(subArea.CustomPageEntityName);
+                    var customPageRecordId = NormalizeGuid(subArea.CustomPageRecordId);
+                    var hasEntityList = !string.IsNullOrWhiteSpace(entity) && !string.IsNullOrWhiteSpace(viewId);
+                    var hasEntityRecord = !string.IsNullOrWhiteSpace(entity) && !string.IsNullOrWhiteSpace(recordId);
+                    if (!string.IsNullOrWhiteSpace(entity) == false && !hasUrl && !hasWebResource && !hasDashboard && !hasCustomPage)
                     {
                         return null;
                     }
@@ -686,14 +700,28 @@ public sealed partial class IntentSpecEmitter
                     subAreas.Add(new IntentSiteMapSubAreaSpec
                     {
                         Id = subArea.Id ?? $"subarea_{subAreas.Count + 1}",
-                        Title = subArea.Title ?? subArea.Entity ?? subArea.WebResource ?? subArea.Url!,
+                        Title = subArea.Title ?? subArea.Entity ?? subArea.WebResource ?? dashboard ?? customPage ?? viewId ?? recordId ?? subArea.Url!,
                         Entity = entity,
-                        Url = subArea.Url is { Length: > 0 } url && !url.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase) ? url : null,
+                        ViewId = viewId,
+                        ViewType = viewType,
+                        RecordId = recordId,
+                        FormId = formId,
+                        Url = !hasEntityList && !hasEntityRecord && subArea.Url is { Length: > 0 } url && !url.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase) ? url : null,
                         WebResource = !string.IsNullOrWhiteSpace(subArea.WebResource)
                             ? subArea.WebResource
                             : subArea.Url is { Length: > 0 } encodedUrl && encodedUrl.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase)
                                 ? encodedUrl["$webresource:".Length..]
-                                : null
+                                : null,
+                        Dashboard = dashboard,
+                        CustomPage = customPage,
+                        CustomPageEntityName = hasCustomPage ? customPageEntityName : null,
+                        CustomPageRecordId = hasCustomPage ? customPageRecordId : null,
+                        AppId = hasCustomPage || hasDashboard || hasEntityList || hasEntityRecord ? NormalizeGuid(subArea.AppId) : null,
+                        Client = subArea.Client,
+                        PassParams = subArea.PassParams,
+                        AvailableOffline = subArea.AvailableOffline,
+                        Icon = subArea.Icon,
+                        VectorIcon = subArea.VectorIcon
                     });
                 }
 
@@ -789,6 +817,15 @@ public sealed partial class IntentSpecEmitter
         .Where(value => !string.IsNullOrWhiteSpace(value))
         .Select(value => NormalizeLogicalName(value) ?? value)
         .Distinct(StringComparer.OrdinalIgnoreCase)
+        .ToList();
+
+    private static List<string> ReadGuidArray(string? json) =>
+        (Deserialize<List<string>>(json) ?? [])
+        .Select(NormalizeGuid)
+        .Where(value => !string.IsNullOrWhiteSpace(value))
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+        .Cast<string>()
         .ToList();
 
     private static List<IntentViewFilterSpec> ReadViewFilters(string? json) =>
@@ -964,11 +1001,6 @@ public sealed partial class IntentSpecEmitter
             return HasAdvancedSiteMapShape(artifact);
         }
 
-        if (artifact.Family == ComponentFamily.AppModule)
-        {
-            return ParseInt(GetProperty(artifact, ArtifactPropertyKeys.RoleMapCount)) > 0;
-        }
-
         return false;
     }
 
@@ -977,8 +1009,7 @@ public sealed partial class IntentSpecEmitter
         || artifact.Family == ComponentFamily.Table && ShouldStageTableMetadataAsSourceBacked(artifact, allArtifacts)
         || artifact.Family == ComponentFamily.Form && HasUnsupportedStructuredFormShape(artifact, allArtifacts)
         || artifact.Family == ComponentFamily.Visualization && HasUnsupportedStructuredVisualizationShape(artifact)
-        || artifact.Family == ComponentFamily.SiteMap && HasAdvancedSiteMapShape(artifact)
-        || artifact.Family == ComponentFamily.AppModule && ParseInt(GetProperty(artifact, ArtifactPropertyKeys.RoleMapCount)) > 0;
+        || artifact.Family == ComponentFamily.SiteMap && HasAdvancedSiteMapShape(artifact);
 
     private static bool ShouldStageTableMetadataAsSourceBacked(FamilyArtifact tableArtifact, IEnumerable<FamilyArtifact> allArtifacts)
     {
@@ -1147,7 +1178,9 @@ public sealed partial class IntentSpecEmitter
                 {
                     !string.IsNullOrWhiteSpace(subArea.Entity),
                     !string.IsNullOrWhiteSpace(subArea.Url),
-                    !string.IsNullOrWhiteSpace(subArea.WebResource)
+                    !string.IsNullOrWhiteSpace(subArea.WebResource),
+                    !string.IsNullOrWhiteSpace(subArea.Dashboard),
+                    !string.IsNullOrWhiteSpace(subArea.CustomPage)
                 }.Count(value => value);
                 return populatedTargets != 1;
             });
@@ -1401,6 +1434,16 @@ public sealed partial class IntentSpecEmitter
 
     private static string? NormalizeGuid(string? value) =>
         Guid.TryParse(value, out var guid) ? guid.ToString("D") : null;
+
+    private static string? NormalizeSiteMapViewType(string? value) =>
+        value?.Trim().ToLowerInvariant() switch
+        {
+            "1039" => "savedquery",
+            "4230" => "userquery",
+            "savedquery" => "savedquery",
+            "userquery" => "userquery",
+            _ => null
+        };
 
     private static string? NormalizeLogicalName(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToLowerInvariant();

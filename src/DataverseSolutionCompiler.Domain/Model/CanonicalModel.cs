@@ -25,6 +25,7 @@ public enum ComponentFamily
     View,
     Visualization,
     Ribbon,
+    CustomControl,
     AppModule,
     SiteMap,
     WebResource,
@@ -166,7 +167,8 @@ public sealed record CanonicalSolution(
             [
                 new FamilyArtifact(ComponentFamily.Form, "main-form"),
                 new FamilyArtifact(ComponentFamily.Visualization, "chart"),
-                new FamilyArtifact(ComponentFamily.Ribbon, "ribbon")
+                new FamilyArtifact(ComponentFamily.Ribbon, "ribbon"),
+                new FamilyArtifact(ComponentFamily.CustomControl, "standalone-custom-control")
             ],
             CapabilityKind.AppShell =>
             [

@@ -999,6 +999,7 @@ public sealed partial class PackageEmitter
         foreach (var appModule in model.Artifacts.Where(artifact => artifact.Family == ComponentFamily.AppModule).OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase))
         {
             var componentTypes = JsonSerializer.Deserialize<List<string>>(GetProperty(appModule, ArtifactPropertyKeys.ComponentTypesJson) ?? "[]", DerivedJsonOptions) ?? [];
+            var roleIds = JsonSerializer.Deserialize<List<string>>(GetProperty(appModule, ArtifactPropertyKeys.RoleIdsJson) ?? "[]", DerivedJsonOptions) ?? [];
             var appSettings = model.Artifacts
                 .Where(artifact => artifact.Family == ComponentFamily.AppSetting
                     && string.Equals(GetProperty(artifact, ArtifactPropertyKeys.ParentAppModuleUniqueName), appModule.LogicalName, StringComparison.OrdinalIgnoreCase))
@@ -1016,7 +1017,13 @@ public sealed partial class PackageEmitter
                 new XElement("NavigationType", "0"),
                 new XElement("AppModuleComponents",
                     componentTypes.Select(componentType => new XElement("AppModuleComponent", new XAttribute("type", componentType), new XAttribute("schemaName", appModule.LogicalName)))),
-                new XElement("AppModuleRoleMaps"),
+                new XElement("AppModuleRoleMaps",
+                    roleIds
+                        .Select(NormalizeGuid)
+                        .Where(value => !string.IsNullOrWhiteSpace(value))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                        .Select(roleId => new XElement("Role", new XAttribute("id", $"{{{roleId}}}")))),
                 CreateLocalizedNames(appModule.DisplayName ?? appModule.LogicalName),
                 CreateDescriptions(GetProperty(appModule, ArtifactPropertyKeys.Description)),
                 new XElement("appsettings",
@@ -1081,12 +1088,111 @@ public sealed partial class PackageEmitter
         new("SubArea",
             new XAttribute("Id", subArea.Id ?? $"subarea_{subAreaIndex + 1}"),
             new XAttribute("ResourceId", "SitemapDesigner.NewSubArea"),
-            string.IsNullOrWhiteSpace(subArea.Entity) ? null : new XAttribute("Entity", subArea.Entity),
-            string.IsNullOrWhiteSpace(subArea.Url) ? null : new XAttribute("Url", subArea.Url),
-            string.IsNullOrWhiteSpace(subArea.WebResource) ? null : new XAttribute("Url", $"$webresource:{subArea.WebResource}"),
-            new XAttribute("Client", "Web"),
-            new XAttribute("PassParams", "true"),
+            string.IsNullOrWhiteSpace(subArea.Entity) || !string.IsNullOrWhiteSpace(subArea.ViewId) || !string.IsNullOrWhiteSpace(subArea.RecordId)
+                ? null
+                : new XAttribute("Entity", subArea.Entity),
+            BuildSiteMapSubAreaUrl(subArea) is { Length: > 0 } subAreaUrl ? new XAttribute("Url", subAreaUrl) : null,
+            string.IsNullOrWhiteSpace(subArea.Client) ? null : new XAttribute("Client", subArea.Client),
+            subArea.PassParams.HasValue ? new XAttribute("PassParams", subArea.PassParams.Value ? "true" : "false") : null,
+            subArea.AvailableOffline.HasValue ? new XAttribute("AvailableOffline", subArea.AvailableOffline.Value ? "true" : "false") : null,
+            string.IsNullOrWhiteSpace(subArea.Icon) ? null : new XAttribute("Icon", subArea.Icon),
+            string.IsNullOrWhiteSpace(subArea.VectorIcon) ? null : new XAttribute("VectorIcon", subArea.VectorIcon),
             new XElement("Titles", new XElement("Title", new XAttribute("LCID", "1033"), new XAttribute("Title", subArea.Title ?? $"SubArea {subAreaIndex + 1}"))));
+
+    private static string? BuildSiteMapSubAreaUrl(GeneratedSiteMapSubArea subArea)
+    {
+        if (!string.IsNullOrWhiteSpace(subArea.WebResource))
+        {
+            return $"$webresource:{subArea.WebResource}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(subArea.CustomPage))
+        {
+            var normalizedCustomPage = NormalizeLogicalName(subArea.CustomPage) ?? subArea.CustomPage.Trim();
+            var normalizedContextEntityName = NormalizeLogicalName(subArea.CustomPageEntityName);
+            var normalizedContextRecordId = NormalizeGuid(subArea.CustomPageRecordId);
+            var normalizedAppId = NormalizeGuid(subArea.AppId);
+            var queryParameters = new List<string>
+            {
+                "pagetype=custom",
+                $"name={normalizedCustomPage}"
+            };
+
+            if (!string.IsNullOrWhiteSpace(normalizedContextEntityName))
+            {
+                queryParameters.Add($"entityName={normalizedContextEntityName}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(normalizedContextRecordId))
+            {
+                queryParameters.Add($"recordId={normalizedContextRecordId}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(normalizedAppId))
+            {
+                queryParameters.Add($"appid={normalizedAppId}");
+            }
+
+            return $"/main.aspx?{string.Join("&", queryParameters)}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(subArea.ViewId) && !string.IsNullOrWhiteSpace(subArea.Entity))
+        {
+            var normalizedEntity = NormalizeLogicalName(subArea.Entity) ?? subArea.Entity.Trim();
+            var normalizedViewId = NormalizeGuid(subArea.ViewId) ?? subArea.ViewId.Trim();
+            var normalizedViewType = NormalizeSiteMapViewType(subArea.ViewType);
+            var normalizedAppId = NormalizeGuid(subArea.AppId);
+            var queryParameters = new List<string>();
+            if (!string.IsNullOrWhiteSpace(normalizedAppId))
+            {
+                queryParameters.Add($"appid={normalizedAppId}");
+            }
+
+            queryParameters.Add("pagetype=entitylist");
+            queryParameters.Add($"etn={normalizedEntity}");
+            queryParameters.Add($"viewid={normalizedViewId}");
+            if (!string.IsNullOrWhiteSpace(normalizedViewType))
+            {
+                queryParameters.Add($"viewtype={normalizedViewType}");
+            }
+
+            return $"/main.aspx?{string.Join("&", queryParameters)}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(subArea.RecordId) && !string.IsNullOrWhiteSpace(subArea.Entity))
+        {
+            var normalizedEntity = NormalizeLogicalName(subArea.Entity) ?? subArea.Entity.Trim();
+            var normalizedRecordId = NormalizeGuid(subArea.RecordId) ?? subArea.RecordId.Trim();
+            var normalizedFormId = NormalizeGuid(subArea.FormId);
+            var normalizedAppId = NormalizeGuid(subArea.AppId);
+            var queryParameters = new List<string>();
+            if (!string.IsNullOrWhiteSpace(normalizedAppId))
+            {
+                queryParameters.Add($"appid={normalizedAppId}");
+            }
+
+            queryParameters.Add("pagetype=entityrecord");
+            queryParameters.Add($"etn={normalizedEntity}");
+            queryParameters.Add($"id={normalizedRecordId}");
+            if (!string.IsNullOrWhiteSpace(normalizedFormId))
+            {
+                queryParameters.Add($"extraqs=formid%3D{normalizedFormId}");
+            }
+
+            return $"/main.aspx?{string.Join("&", queryParameters)}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(subArea.Dashboard))
+        {
+            var normalizedDashboard = NormalizeGuid(subArea.Dashboard) ?? subArea.Dashboard.Trim();
+            var normalizedAppId = NormalizeGuid(subArea.AppId);
+            return string.IsNullOrWhiteSpace(normalizedAppId)
+                ? $"/main.aspx?pagetype=dashboard&id={normalizedDashboard}"
+                : $"/main.aspx?appid={normalizedAppId}&pagetype=dashboard&id={normalizedDashboard}";
+        }
+
+        return string.IsNullOrWhiteSpace(subArea.Url) ? null : subArea.Url;
+    }
 
     private static XElement ParseXmlFragment(string? xml, string fallbackElementName)
     {
@@ -1157,6 +1263,17 @@ public sealed partial class PackageEmitter
 
     private static string? NormalizeGuid(string? value) =>
         Guid.TryParse(value, out var guid) ? guid.ToString("D") : null;
+
+    private static string? NormalizeSiteMapViewType(string? value) =>
+        value?.Trim() switch
+        {
+            "1039" or "savedquery" => "1039",
+            "4230" or "userquery" => "4230",
+            _ => null
+        };
+
+    private static string? NormalizeLogicalName(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToLowerInvariant();
 
     private static void WriteXml(string packageRoot, string relativePath, XElement root, List<EmittedArtifact> emittedFiles, string description)
     {
@@ -1426,9 +1543,51 @@ internal sealed record GeneratedSiteMapSubArea
     [JsonPropertyName("entity")]
     public string? Entity { get; init; }
 
+    [JsonPropertyName("viewId")]
+    public string? ViewId { get; init; }
+
+    [JsonPropertyName("viewType")]
+    public string? ViewType { get; init; }
+
+    [JsonPropertyName("recordId")]
+    public string? RecordId { get; init; }
+
+    [JsonPropertyName("formId")]
+    public string? FormId { get; init; }
+
     [JsonPropertyName("url")]
     public string? Url { get; init; }
 
     [JsonPropertyName("webResource")]
     public string? WebResource { get; init; }
+
+    [JsonPropertyName("dashboard")]
+    public string? Dashboard { get; init; }
+
+    [JsonPropertyName("customPage")]
+    public string? CustomPage { get; init; }
+
+    [JsonPropertyName("customPageEntityName")]
+    public string? CustomPageEntityName { get; init; }
+
+    [JsonPropertyName("customPageRecordId")]
+    public string? CustomPageRecordId { get; init; }
+
+    [JsonPropertyName("appId")]
+    public string? AppId { get; init; }
+
+    [JsonPropertyName("client")]
+    public string? Client { get; init; }
+
+    [JsonPropertyName("passParams")]
+    public bool? PassParams { get; init; }
+
+    [JsonPropertyName("availableOffline")]
+    public bool? AvailableOffline { get; init; }
+
+    [JsonPropertyName("icon")]
+    public string? Icon { get; init; }
+
+    [JsonPropertyName("vectorIcon")]
+    public string? VectorIcon { get; init; }
 }

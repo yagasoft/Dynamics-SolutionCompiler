@@ -596,6 +596,7 @@ public sealed class TrackedSourceReader : ISolutionReader
             ["field-security-profiles"] = ComponentFamily.FieldSecurityProfile,
             ["field-permissions"] = ComponentFamily.FieldPermission,
             ["connection-roles"] = ComponentFamily.ConnectionRole,
+            ["ribbons"] = ComponentFamily.Ribbon,
             ["reports"] = ComponentFamily.Report,
             ["templates"] = ComponentFamily.Template,
             ["display-strings"] = ComponentFamily.DisplayString,

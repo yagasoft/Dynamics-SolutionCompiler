@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Xml.Linq;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Model;
 
@@ -21,6 +22,13 @@ internal sealed partial class DataverseWebApiLiveReader
                 $"systemforms?$select=formid,name,type,description,isdefault,objecttypecode,formxml,formjson&$filter={BuildGuidFilter("formid", scopedFormIds)}",
                 cancellationToken).ConfigureAwait(false)).OfType<JsonObject>());
         }
+
+        strictScopeRows = strictScopeRows
+            .Where(row => string.Equals(
+                NormalizeLogicalName(GetString(row, "objecttypecode")),
+                entityLogicalName,
+                StringComparison.OrdinalIgnoreCase))
+            .ToList();
 
         IReadOnlyList<JsonObject> rows = strictScopeRows;
         var scope = SolutionScope;
@@ -59,6 +67,13 @@ internal sealed partial class DataverseWebApiLiveReader
                 cancellationToken).ConfigureAwait(false)).OfType<JsonObject>());
         }
 
+        strictScopeRows = strictScopeRows
+            .Where(row => string.Equals(
+                NormalizeLogicalName(GetString(row, "returnedtypecode")),
+                entityLogicalName,
+                StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
         IReadOnlyList<JsonObject> rows = strictScopeRows;
         var scope = SolutionScope;
         if (strictScopeRows.Count == 0 && _options.EnableEntityScopedUiFallback)
@@ -82,6 +97,32 @@ internal sealed partial class DataverseWebApiLiveReader
             .ToArray();
     }
 
+    private async Task<IReadOnlyList<FamilyArtifact>> ReadVisualizationArtifactsAsync(
+        string entityLogicalName,
+        IReadOnlyCollection<Guid> scopedVisualizationIds,
+        CancellationToken cancellationToken)
+    {
+        if (scopedVisualizationIds.Count == 0)
+        {
+            return [];
+        }
+
+        var rows = await GetCollectionAsync(
+            $"savedqueryvisualizations?$select=savedqueryvisualizationid,name,description,charttype,type,primaryentitytypecode,datadescription,presentationdescription&$filter={BuildGuidFilter("savedqueryvisualizationid", scopedVisualizationIds)}",
+            cancellationToken).ConfigureAwait(false);
+
+        return rows
+            .OfType<JsonObject>()
+            .Where(row => string.Equals(
+                NormalizeLogicalName(GetString(row, "primaryentitytypecode")),
+                entityLogicalName,
+                StringComparison.OrdinalIgnoreCase))
+            .Select(row => CreateVisualizationArtifact(entityLogicalName, row))
+            .Where(artifact => artifact is not null)
+            .Cast<FamilyArtifact>()
+            .ToArray();
+    }
+
     private async Task ReadAppShellFamiliesAsync(
         SolutionComponentScope scope,
         IReadOnlySet<ComponentFamily> requestedFamilies,
@@ -90,6 +131,29 @@ internal sealed partial class DataverseWebApiLiveReader
         CancellationToken cancellationToken)
     {
         var appModulesById = new Dictionary<Guid, AppModuleContext>();
+
+        if (requestedFamilies.Contains(ComponentFamily.CustomControl) && scope.CustomControlIds.Count > 0)
+        {
+            try
+            {
+                var rows = await GetCollectionAsync(
+                    $"customcontrols?$select=customcontrolid,name,manifest,authoringmanifest,clientjson,compatibledatatypes,supportedplatform,version&$filter={BuildGuidFilter("customcontrolid", scope.CustomControlIds)}",
+                    cancellationToken).ConfigureAwait(false);
+
+                foreach (var row in rows.OfType<JsonObject>())
+                {
+                    var artifact = CreateCustomControlArtifact(row, diagnostics);
+                    if (artifact is not null)
+                    {
+                        artifacts.Add(artifact);
+                    }
+                }
+            }
+            catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
+            {
+                diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.CustomControl, "customcontrols", exception));
+            }
+        }
 
         if (ShouldReadAny(requestedFamilies, ComponentFamily.AppModule, ComponentFamily.AppSetting) && scope.AppModuleIds.Count > 0)
         {
@@ -190,6 +254,29 @@ internal sealed partial class DataverseWebApiLiveReader
             catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
             {
                 diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.SiteMap, "sitemaps", exception));
+            }
+        }
+
+        if (requestedFamilies.Contains(ComponentFamily.WebResource) && scope.WebResourceIds.Count > 0)
+        {
+            try
+            {
+                var rows = await GetCollectionAsync(
+                    $"webresourceset?$select=webresourceid,name,displayname,description,webresourcetype,content&$filter={BuildGuidFilter("webresourceid", scope.WebResourceIds)}",
+                    cancellationToken).ConfigureAwait(false);
+
+                foreach (var row in rows.OfType<JsonObject>())
+                {
+                    var artifact = CreateWebResourceArtifact(row, diagnostics);
+                    if (artifact is not null)
+                    {
+                        artifacts.Add(artifact);
+                    }
+                }
+            }
+            catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
+            {
+                diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.WebResource, "webresourceset", exception));
             }
         }
 
@@ -579,6 +666,51 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
 
+    private static FamilyArtifact? CreateVisualizationArtifact(string entityLogicalName, JsonObject row)
+    {
+        var visualizationId = NormalizeGuid(GetString(row, "savedqueryvisualizationid"));
+        var displayName = GetString(row, "name");
+        if (string.IsNullOrWhiteSpace(visualizationId) || string.IsNullOrWhiteSpace(displayName))
+        {
+            return null;
+        }
+
+        var normalizedDataDescriptionXml = NormalizeVisualizationFragment(GetString(row, "datadescription"), "datadescription");
+        var normalizedPresentationDescriptionXml = NormalizeVisualizationFragment(GetString(row, "presentationdescription"), "presentationdescription");
+        var summary = SummarizeVisualizationXml(
+            normalizedDataDescriptionXml,
+            normalizedPresentationDescriptionXml,
+            NormalizeLogicalName(GetString(row, "primaryentitytypecode")) ?? entityLogicalName);
+        var summaryJson = SerializeJson(new
+        {
+            targetEntity = summary.TargetEntity,
+            chartTypes = summary.ChartTypes,
+            groupByColumns = summary.GroupByColumns,
+            measureAliases = summary.MeasureAliases,
+            titleNames = summary.TitleNames
+        });
+
+        return new FamilyArtifact(
+            ComponentFamily.Visualization,
+            $"{summary.TargetEntity}|{displayName}",
+            displayName,
+            $"savedqueryvisualizations/{visualizationId}",
+            EvidenceKind.Readback,
+            CreateProperties(
+                (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
+                (ArtifactPropertyKeys.TargetEntity, summary.TargetEntity),
+                (ArtifactPropertyKeys.VisualizationId, visualizationId),
+                (ArtifactPropertyKeys.Description, GetString(row, "description")),
+                (ArtifactPropertyKeys.DataDescriptionXml, normalizedDataDescriptionXml),
+                (ArtifactPropertyKeys.PresentationDescriptionXml, normalizedPresentationDescriptionXml),
+                (ArtifactPropertyKeys.ChartTypesJson, SerializeJson(summary.ChartTypes)),
+                (ArtifactPropertyKeys.GroupByColumnsJson, SerializeJson(summary.GroupByColumns)),
+                (ArtifactPropertyKeys.MeasureAliasesJson, SerializeJson(summary.MeasureAliases)),
+                (ArtifactPropertyKeys.TitleNamesJson, SerializeJson(summary.TitleNames)),
+                (ArtifactPropertyKeys.SummaryJson, summaryJson),
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+    }
+
     private static string NormalizeStringArrayJson(JsonArray values) =>
         SerializeJson(values
             .Select(StringValue)
@@ -707,6 +839,60 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.Value, rowValue)));
     }
 
+    private static FamilyArtifact? CreateCustomControlArtifact(JsonObject row, ICollection<CompilerDiagnostic> diagnostics)
+    {
+        var logicalName = NormalizeLogicalName(GetString(row, "name"));
+        if (string.IsNullOrWhiteSpace(logicalName))
+        {
+            return null;
+        }
+
+        var manifestXml = GetString(row, "manifest");
+        var clientJson = GetString(row, "clientjson");
+        var summary = SummarizeCustomControl(manifestXml, clientJson, diagnostics, logicalName);
+        var supportedPlatforms = NormalizeSupportedPlatforms(GetString(row, "supportedplatform"), summary.SupportedPlatforms);
+        var summaryJson = SerializeJson(new
+        {
+            version = GetString(row, "version"),
+            supportedPlatforms = JsonNode.Parse(SerializeJson(supportedPlatforms)),
+            namespaceName = summary.NamespaceName,
+            constructorName = summary.ConstructorName,
+            controlType = summary.ControlType,
+            apiVersion = summary.ApiVersion,
+            propertyNames = JsonNode.Parse(SerializeJson(summary.PropertyNames)),
+            datasetNames = JsonNode.Parse(SerializeJson(summary.DatasetNames)),
+            featureNames = JsonNode.Parse(SerializeJson(summary.FeatureNames)),
+            resourcePaths = JsonNode.Parse(SerializeJson(summary.ResourcePaths)),
+            platformLibraries = JsonNode.Parse(SerializeJson(summary.PlatformLibraries))
+        });
+
+        return new FamilyArtifact(
+            ComponentFamily.CustomControl,
+            logicalName,
+            GetString(row, "name") ?? logicalName,
+            $"customcontrols/{logicalName}",
+            EvidenceKind.Readback,
+            CreateProperties(
+                (ArtifactPropertyKeys.Name, GetString(row, "name")),
+                (ArtifactPropertyKeys.Version, GetString(row, "version")),
+                (ArtifactPropertyKeys.SupportedPlatformsJson, SerializeJson(supportedPlatforms)),
+                (ArtifactPropertyKeys.Namespace, summary.NamespaceName),
+                (ArtifactPropertyKeys.ConstructorName, summary.ConstructorName),
+                (ArtifactPropertyKeys.ControlType, summary.ControlType),
+                (ArtifactPropertyKeys.ApiVersion, summary.ApiVersion),
+                (ArtifactPropertyKeys.PropertyCount, summary.PropertyNames.Length.ToString(CultureInfo.InvariantCulture)),
+                (ArtifactPropertyKeys.DatasetCount, summary.DatasetNames.Length.ToString(CultureInfo.InvariantCulture)),
+                (ArtifactPropertyKeys.FeatureCount, summary.FeatureNames.Length.ToString(CultureInfo.InvariantCulture)),
+                (ArtifactPropertyKeys.ResourceCount, (summary.ResourcePaths.Length + summary.PlatformLibraries.Length).ToString(CultureInfo.InvariantCulture)),
+                (ArtifactPropertyKeys.PropertyNamesJson, SerializeJson(summary.PropertyNames)),
+                (ArtifactPropertyKeys.DatasetNamesJson, SerializeJson(summary.DatasetNames)),
+                (ArtifactPropertyKeys.FeatureNamesJson, SerializeJson(summary.FeatureNames)),
+                (ArtifactPropertyKeys.ResourcePathsJson, SerializeJson(summary.ResourcePaths)),
+                (ArtifactPropertyKeys.PlatformLibrariesJson, SerializeJson(summary.PlatformLibraries)),
+                (ArtifactPropertyKeys.SummaryJson, summaryJson),
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+    }
+
     private static FamilyArtifact? CreateSiteMapArtifact(JsonObject row)
     {
         var uniqueName = NormalizeLogicalName(GetString(row, "sitemapnameunique"));
@@ -735,6 +921,268 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.GroupCount, summary.GroupCount.ToString(CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SubAreaCount, summary.SubAreaCount.ToString(CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.WebResourceSubAreaCount, summary.WebResourceSubAreaCount.ToString(CultureInfo.InvariantCulture)),
+                (ArtifactPropertyKeys.SiteMapDefinitionJson, summary.DefinitionJson),
+                (ArtifactPropertyKeys.SummaryJson, summaryJson),
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summary.DefinitionJson))));
+    }
+
+    private sealed record CustomControlSummary(
+        string? NamespaceName,
+        string? ConstructorName,
+        string? ControlType,
+        string? ApiVersion,
+        string[] SupportedPlatforms,
+        string[] PropertyNames,
+        string[] DatasetNames,
+        string[] FeatureNames,
+        string[] ResourcePaths,
+        string[] PlatformLibraries);
+
+    private static CustomControlSummary SummarizeCustomControl(
+        string? manifestXml,
+        string? clientJson,
+        ICollection<CompilerDiagnostic> diagnostics,
+        string logicalName)
+    {
+        string? namespaceName = null;
+        string? constructorName = null;
+        string? controlType = null;
+        string? apiVersion = null;
+        var propertyNames = Array.Empty<string>();
+        var datasetNames = Array.Empty<string>();
+        var featureNames = Array.Empty<string>();
+        var resourcePaths = Array.Empty<string>();
+        var platformLibraries = Array.Empty<string>();
+        var supportedPlatforms = Array.Empty<string>();
+
+        if (!string.IsNullOrWhiteSpace(manifestXml))
+        {
+            try
+            {
+                var root = XDocument.Parse(manifestXml).Root;
+                var control = root?.Descendants().FirstOrDefault(element => element.Name.LocalName.Equals("control", StringComparison.OrdinalIgnoreCase));
+                if (control is not null)
+                {
+                    namespaceName = control.AttributeValue("namespace");
+                    constructorName = control.AttributeValue("constructor");
+                    controlType = control.AttributeValue("control-type");
+                    apiVersion = control.AttributeValue("api-version");
+                    propertyNames = control
+                        .Descendants()
+                        .Where(element => element.Name.LocalName.Equals("property", StringComparison.OrdinalIgnoreCase))
+                        .Select(element => element.AttributeValue("name") ?? string.Empty)
+                        .Where(value => !string.IsNullOrWhiteSpace(value))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+                    datasetNames = control
+                        .Descendants()
+                        .Where(element =>
+                            element.Name.LocalName.Equals("data-set", StringComparison.OrdinalIgnoreCase)
+                            || element.Name.LocalName.Equals("dataset", StringComparison.OrdinalIgnoreCase))
+                        .Select(element => element.AttributeValue("name") ?? string.Empty)
+                        .Where(value => !string.IsNullOrWhiteSpace(value))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+                    featureNames = control
+                        .Descendants()
+                        .Where(element => element.Name.LocalName.Equals("uses-feature", StringComparison.OrdinalIgnoreCase))
+                        .Select(element => element.AttributeValue("name") ?? string.Empty)
+                        .Where(value => !string.IsNullOrWhiteSpace(value))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+                    resourcePaths = control
+                        .Descendants()
+                        .Where(element => element.Name.LocalName.Equals("code", StringComparison.OrdinalIgnoreCase))
+                        .Select(element => element.AttributeValue("path") ?? string.Empty)
+                        .Where(value => !string.IsNullOrWhiteSpace(value))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+                    platformLibraries = control
+                        .Descendants()
+                        .Where(element => element.Name.LocalName.Equals("platform-library", StringComparison.OrdinalIgnoreCase))
+                        .Select(element =>
+                        {
+                            var name = element.AttributeValue("name");
+                            var version = element.AttributeValue("version");
+                            return string.IsNullOrWhiteSpace(name)
+                                ? string.Empty
+                                : string.IsNullOrWhiteSpace(version)
+                                    ? name!
+                                    : $"{name}:{version}";
+                        })
+                        .Where(value => !string.IsNullOrWhiteSpace(value))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+                }
+            }
+            catch (Exception exception) when (exception is InvalidOperationException or System.Xml.XmlException)
+            {
+                diagnostics.Add(new CompilerDiagnostic(
+                    "live-readback-customcontrol-manifest-best-effort",
+                    DiagnosticSeverity.Warning,
+                    $"CustomControl '{logicalName}' returned a manifest that could not be parsed as XML. Keeping the artifact with JSON-backed summary only.",
+                    logicalName));
+            }
+        }
+
+        var clientObject = ParseJsonObjectSafe(clientJson);
+        var clientProperties = GetProperty(clientObject, "Properties");
+        namespaceName ??= GetString(clientObject, "Namespace");
+        constructorName ??= GetString(clientObject, "ConstructorName");
+        controlType ??= NormalizeBoolean(GetString(clientObject, "IsVirtual")) == "true" ? "virtual" : GetString(clientObject, "ControlMode");
+        apiVersion ??= GetString(clientObject, "ApiVersion");
+        supportedPlatforms = NormalizeSupportedPlatforms(null, supportedPlatforms);
+
+        propertyNames = MergeNormalizedArrays(
+            propertyNames,
+            ReadArray(clientProperties, "Properties")
+                .OfType<JsonObject>()
+                .Select(property => GetString(property, "Name")));
+        datasetNames = MergeNormalizedArrays(
+            datasetNames,
+            ReadArray(clientProperties, "DataSets")
+                .OfType<JsonObject>()
+                .Select(dataset => GetString(dataset, "Name")));
+        featureNames = MergeNormalizedArrays(
+            featureNames,
+            ReadArray(clientProperties, "FeatureUsage")
+                .OfType<JsonObject>()
+                .Select(feature => GetString(feature, "Name")));
+        if (resourcePaths.Length == 0)
+        {
+            resourcePaths = ReadArray(clientProperties, "Resources")
+                .OfType<JsonObject>()
+                .Where(resource => !IsClientCustomControlPlatformLibrary(resource))
+                .Select(resource => GetString(resource, "Name"))
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Select(value => value!.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+        }
+
+        if (platformLibraries.Length == 0)
+        {
+            platformLibraries = ReadArray(clientProperties, "Resources")
+                .OfType<JsonObject>()
+                .Where(IsClientCustomControlPlatformLibrary)
+                .Select(resource => GetString(resource, "LibraryName") ?? GetString(resource, "Name"))
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Select(value => value!.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+        }
+
+        return new CustomControlSummary(
+            namespaceName,
+            constructorName,
+            controlType,
+            apiVersion,
+            supportedPlatforms,
+            propertyNames,
+            datasetNames,
+            featureNames,
+            resourcePaths,
+            platformLibraries);
+    }
+
+    private static string[] NormalizeSupportedPlatforms(string? raw, IEnumerable<string>? fallback)
+    {
+        var values = new List<string>();
+        if (!string.IsNullOrWhiteSpace(raw))
+        {
+            values.AddRange(raw
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(value => value.Trim().Trim('(', ')'))
+                .Where(value => !string.IsNullOrWhiteSpace(value)));
+        }
+
+        if (fallback is not null)
+        {
+            values.AddRange(fallback.Where(value => !string.IsNullOrWhiteSpace(value)));
+        }
+
+        return values
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    private static string[] MergeNormalizedArrays(IEnumerable<string> primary, IEnumerable<string?> secondary) =>
+        primary
+            .Concat(secondary.Where(value => !string.IsNullOrWhiteSpace(value))!)
+            .Select(value => value!)
+            .Select(value => value.Trim())
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+    private static bool IsClientCustomControlPlatformLibrary(JsonObject resource)
+    {
+        var resourceType = GetInt32(resource, "Type");
+        return resourceType == 0 || !string.IsNullOrWhiteSpace(GetString(resource, "LibraryName"));
+    }
+
+    private static FamilyArtifact? CreateWebResourceArtifact(JsonObject row, ICollection<CompilerDiagnostic> diagnostics)
+    {
+        var logicalName = GetString(row, "name");
+        if (string.IsNullOrWhiteSpace(logicalName))
+        {
+            return null;
+        }
+
+        var type = GetString(row, "webresourcetype");
+        var content = GetString(row, "content");
+        string? byteLength = null;
+        string? contentHash = null;
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            diagnostics.Add(new CompilerDiagnostic(
+                "live-readback-webresource-content-best-effort",
+                DiagnosticSeverity.Warning,
+                $"WebResource '{logicalName}' was returned without content bytes. Keeping the artifact without payload hash evidence.",
+                GetString(row, "webresourceid") ?? logicalName));
+        }
+        else if (TryDecodeBase64Content(content, out var contentBytes))
+        {
+            byteLength = contentBytes.Length.ToString(CultureInfo.InvariantCulture);
+            contentHash = ComputeByteHash(contentBytes);
+        }
+        else
+        {
+            diagnostics.Add(new CompilerDiagnostic(
+                "live-readback-webresource-content-best-effort",
+                DiagnosticSeverity.Warning,
+                $"WebResource '{logicalName}' returned content that could not be decoded as base64. Keeping the artifact without payload hash evidence.",
+                GetString(row, "webresourceid") ?? logicalName));
+        }
+
+        var summaryJson = SerializeJson(new
+        {
+            webResourceType = type,
+            byteLength,
+            contentHash
+        });
+
+        return new FamilyArtifact(
+            ComponentFamily.WebResource,
+            logicalName,
+            GetString(row, "displayname") ?? logicalName,
+            $"webresourceset/{logicalName}",
+            EvidenceKind.Readback,
+            CreateProperties(
+                (ArtifactPropertyKeys.Description, GetString(row, "description")),
+                (ArtifactPropertyKeys.WebResourceType, type),
+                (ArtifactPropertyKeys.WebResourceTypeLabel, DescribeWebResourceType(type)),
+                (ArtifactPropertyKeys.ByteLength, byteLength),
+                (ArtifactPropertyKeys.ContentHash, contentHash),
                 (ArtifactPropertyKeys.SummaryJson, summaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }

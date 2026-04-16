@@ -36,6 +36,7 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         WriteEntityFiles(model, trackedSourceRoot, emittedFiles);
         WriteGlobalOptionSets(model, trackedSourceRoot, emittedFiles);
         WriteVisualizationFiles(model, trackedSourceRoot, emittedFiles);
+        WriteRibbons(model, trackedSourceRoot, emittedFiles);
         WriteAppShellFiles(model, trackedSourceRoot, emittedFiles);
         WriteWebResources(model, trackedSourceRoot, emittedFiles);
         WriteEnvironmentVariables(model, trackedSourceRoot, emittedFiles);
@@ -327,6 +328,19 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 BuildSummaryArtifactJson(visualization),
                 emittedFiles,
                 $"Tracked chart summary for {visualization.DisplayName ?? visualization.LogicalName}.");
+        }
+    }
+
+    private static void WriteRibbons(CanonicalSolution model, string trackedSourceRoot, List<EmittedArtifact> emittedFiles)
+    {
+        foreach (var ribbon in model.Artifacts.Where(artifact => artifact.Family == ComponentFamily.Ribbon))
+        {
+            WriteJson(
+                trackedSourceRoot,
+                $"ribbons/{SafeSegment(ribbon.LogicalName)}.json",
+                BuildSummaryArtifactJson(ribbon),
+                emittedFiles,
+                $"Tracked ribbon summary for {ribbon.LogicalName}.");
         }
     }
 

@@ -32,8 +32,15 @@ public sealed class PackageEmitterTests
             first.Files.Should().Contain(file => file.RelativePath == "package-inputs/manifest.json");
             File.Exists(Path.Combine(outputRoot, "package-inputs", "Other", "Solution.xml")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "package-inputs", "AppModules", "codex_metadata_advanced_ui_924e69cb", "AppModule.xml")).Should().BeTrue();
+            var siteMapPath = Path.Combine(outputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_advanced_ui_924e69cb", "AppModuleSiteMap.xml");
+            File.Exists(siteMapPath).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Entities", "Account", "RibbonDiff.xml")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "package-inputs", "WebResources", "cdxmeta_", "advancedui", "landing.html")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "package-inputs", "settings", "deployment-settings.json")).Should().BeFalse();
+            File.ReadAllText(siteMapPath).Should().Contain("Icon=\"/WebResources/cdxmeta_/advancedui/icon.svg\"");
+            File.ReadAllText(siteMapPath).Should().Contain("PassParams=\"false\"");
+            File.ReadAllText(siteMapPath).Should().Contain("AvailableOffline=\"false\"");
+            File.ReadAllText(siteMapPath).Should().NotContain("Client=\"Web\"");
 
             firstSnapshot.Keys.Should().BeEquivalentTo(secondSnapshot.Keys);
             foreach (var path in firstSnapshot.Keys)

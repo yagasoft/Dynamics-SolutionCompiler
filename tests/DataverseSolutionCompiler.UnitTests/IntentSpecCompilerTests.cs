@@ -9,6 +9,7 @@ using DataverseSolutionCompiler.Domain.Emission;
 using DataverseSolutionCompiler.Domain.Live;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Planning;
+using DataverseSolutionCompiler.Domain.Read;
 using DataverseSolutionCompiler.Emitters.TrackedSource;
 using DataverseSolutionCompiler.Emitters.Package;
 using DataverseSolutionCompiler.Readers.Xml;
@@ -1360,8 +1361,13 @@ public sealed class IntentSpecCompilerTests
 
             var report = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "reverse-generation-report.json")))!.AsObject();
             report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().NotContain("Visualization");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().NotContain("\"family\":\"AppModule\"");
 
             var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            var appModule = intent["appModules"]!.AsArray().Single()!.AsObject();
+            appModule["roleIds"]!.AsArray().Count.Should().Be(2);
+            appModule["roleIds"]!.ToJsonString().Should().Contain("119f245c-3cc8-4b62-b31c-d1a046ced15d");
+            appModule["roleIds"]!.ToJsonString().Should().Contain("627090ff-40a3-4053-8790-584edc5be201");
             var accountTable = intent["tables"]!.AsArray().Single(node => string.Equals(node?["logicalName"]?.GetValue<string>(), "account", StringComparison.OrdinalIgnoreCase))!.AsObject();
             var visualizations = accountTable["visualizations"]!.AsArray();
             visualizations.Count.Should().Be(1);
@@ -1378,6 +1384,11 @@ public sealed class IntentSpecCompilerTests
             var visualizationPath = Path.Combine(packageOutputRoot, "package-inputs", "Entities", "Account", "Visualizations", "{74a622c0-5193-de11-97d4-00155da3b01e}.xml");
             File.Exists(visualizationPath).Should().BeTrue();
             File.ReadAllText(visualizationPath).Should().Contain("<savedqueryvisualizationid>{74a622c0-5193-de11-97d4-00155da3b01e}</savedqueryvisualizationid>");
+            var appModulePath = Path.Combine(packageOutputRoot, "package-inputs", "AppModules", "codex_metadata_advanced_ui_924e69cb", "AppModule.xml");
+            File.Exists(appModulePath).Should().BeTrue();
+            File.ReadAllText(appModulePath).Should().Contain("<AppModuleRoleMaps>");
+            File.ReadAllText(appModulePath).Should().Contain("Role id=\"{119f245c-3cc8-4b62-b31c-d1a046ced15d}\"");
+            File.ReadAllText(appModulePath).Should().Contain("Role id=\"{627090ff-40a3-4053-8790-584edc5be201}\"");
         }
         finally
         {
@@ -1418,11 +1429,13 @@ public sealed class IntentSpecCompilerTests
             report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"family\":\"Table\"");
             report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().Contain("\"artifact\":\"account\"");
             report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().NotContain("Visualization");
+            report["sourceBackedArtifactsIncluded"]!.ToJsonString().Should().NotContain("\"family\":\"AppModule\"");
             report["unsupportedFamiliesOmitted"]!.ToJsonString().Should().NotContain("\"family\":\"Visualization\"");
 
             var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
             var appModule = intent["appModules"]!.AsArray().Single()!.AsObject();
             appModule["appSettings"]!.AsArray().Count.Should().BeGreaterThan(0);
+            appModule["roleIds"]!.AsArray().Count.Should().Be(2);
             appModule["siteMap"]!.ToJsonString().Should().Contain("\"webResource\":\"cdxmeta_/advancedui/landing.html\"");
 
             var accountTable = intent["tables"]!.AsArray().Single(node => string.Equals(node?["logicalName"]?.GetValue<string>(), "account", StringComparison.OrdinalIgnoreCase))!.AsObject();
@@ -1540,18 +1553,438 @@ public sealed class IntentSpecCompilerTests
             var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
             intent["appModules"]!.AsArray()[0]!["appSettings"]!.AsArray().Count.Should().BeGreaterThan(0);
             intent["appModules"]!.ToJsonString().Should().Contain("\"webResource\":\"cdxmeta_/advancedui/landing.html\"");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"icon\":\"/WebResources/cdxmeta_/advancedui/icon.svg\"");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"passParams\":false");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"availableOffline\":false");
             intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"WebResource\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"family\":\"Ribbon\"");
+            intent["sourceBackedArtifacts"]!.ToJsonString().Should().Contain("\"packageRelativePath\":\"Entities/Account/RibbonDiff.xml\"");
 
             var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
             reversed.Success.Should().BeTrue();
 
             var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
             packageEmit.Success.Should().BeTrue();
-            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_advanced_ui_924e69cb", "AppModuleSiteMap.xml")).Should().BeTrue();
+            var siteMapPath = Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_advanced_ui_924e69cb", "AppModuleSiteMap.xml");
+            File.Exists(siteMapPath).Should().BeTrue();
+            File.ReadAllText(siteMapPath).Should().Contain("Icon=\"/WebResources/cdxmeta_/advancedui/icon.svg\"");
+            File.ReadAllText(siteMapPath).Should().Contain("PassParams=\"false\"");
+            File.ReadAllText(siteMapPath).Should().Contain("AvailableOffline=\"false\"");
+            File.ReadAllText(siteMapPath).Should().NotContain("Client=\"Web\"");
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "Entities", "Account", "RibbonDiff.xml")).Should().BeTrue();
             Directory.GetFiles(Path.Combine(packageOutputRoot, "package-inputs", "WebResources"), "landing.html", SearchOption.AllDirectories).Should().NotBeEmpty();
         }
         finally
         {
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_from_seed_app_shell_preserves_site_map_adjunct_fields()
+    {
+        var seedPath = Path.Combine(ExamplesRoot, "seed-app-shell");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-site-map-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-site-map-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(seedPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            intent["appModules"]!.ToJsonString().Should().Contain("\"client\":\"Web\"");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"passParams\":true");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"icon\":\"/WebResources/cdxmeta_/shell/icon.svg\"");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"vectorIcon\":\"/WebResources/cdxmeta_/shell/icon.svg\"");
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+
+            var siteMapPath = Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            File.Exists(siteMapPath).Should().BeTrue();
+            File.ReadAllText(siteMapPath).Should().Contain("Client=\"Web\"");
+            File.ReadAllText(siteMapPath).Should().Contain("PassParams=\"true\"");
+            File.ReadAllText(siteMapPath).Should().Contain("Icon=\"/WebResources/cdxmeta_/shell/icon.svg\"");
+            File.ReadAllText(siteMapPath).Should().Contain("VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\"");
+        }
+        finally
+        {
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_and_package_emit_preserve_supported_site_map_dashboard_targets_with_app_scope()
+    {
+        const string dashboardId = "3c5d4df8-4c0d-4d57-9e8f-6d4b3a8d5812";
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        var sourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-dashboard-source-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-dashboard-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-dashboard-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(Path.Combine(ExamplesRoot, "seed-app-shell"), sourceRoot);
+
+            var siteMapPath = Path.Combine(sourceRoot, "unpacked", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=dashboard&amp;id={dashboardId}\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(sourceRoot, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"dashboard\":\"{dashboardId}\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"appId\":\"{appId}\"");
+            intent["appModules"]!.ToJsonString().Should().NotContain("/main.aspx?appid=");
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+
+            var rebuiltSiteMapPath = Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            File.Exists(rebuiltSiteMapPath).Should().BeTrue();
+            File.ReadAllText(rebuiltSiteMapPath).Should().Contain($"Url=\"/main.aspx?appid={appId}&amp;pagetype=dashboard&amp;id={dashboardId}\"");
+
+            var reread = new XmlSolutionReader().Read(new ReadRequest(Path.Combine(packageOutputRoot, "package-inputs")));
+            var rereadSiteMap = reread.Artifacts.Single(artifact =>
+                artifact.Family == ComponentFamily.SiteMap
+                && string.Equals(artifact.LogicalName, "codex_metadata_shell_dd96cf20", StringComparison.OrdinalIgnoreCase));
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"dashboard\":\"{dashboardId}\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        }
+        finally
+        {
+            if (Directory.Exists(sourceRoot))
+            {
+                Directory.Delete(sourceRoot, recursive: true);
+            }
+
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_and_package_emit_preserve_supported_site_map_custom_page_targets_with_record_context()
+    {
+        const string customPage = "cdxmeta_shellhome";
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string contextRecordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        var sourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-custom-page-source-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-custom-page-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-custom-page-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(Path.Combine(ExamplesRoot, "seed-app-shell"), sourceRoot);
+
+            var siteMapPath = Path.Combine(sourceRoot, "unpacked", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=custom&amp;name={customPage}&amp;entityName=account&amp;recordId=%7B{contextRecordId}%7D\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(sourceRoot, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"customPage\":\"{customPage}\"");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"customPageEntityName\":\"account\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"customPageRecordId\":\"{contextRecordId}\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"appId\":\"{appId}\"");
+            intent["appModules"]!.ToJsonString().Should().NotContain("/main.aspx?appid=");
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+
+            var rebuiltSiteMapPath = Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            File.Exists(rebuiltSiteMapPath).Should().BeTrue();
+            File.ReadAllText(rebuiltSiteMapPath).Should().Contain($"Url=\"/main.aspx?pagetype=custom&amp;name={customPage}&amp;entityName=account&amp;recordId={contextRecordId}&amp;appid={appId}\"");
+
+            var reread = new XmlSolutionReader().Read(new ReadRequest(Path.Combine(packageOutputRoot, "package-inputs")));
+            var rereadSiteMap = reread.Artifacts.Single(artifact =>
+                artifact.Family == ComponentFamily.SiteMap
+                && string.Equals(artifact.LogicalName, "codex_metadata_shell_dd96cf20", StringComparison.OrdinalIgnoreCase));
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"customPage\":\"{customPage}\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"customPageEntityName\":\"account\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"customPageRecordId\":\"{contextRecordId}\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        }
+        finally
+        {
+            if (Directory.Exists(sourceRoot))
+            {
+                Directory.Delete(sourceRoot, recursive: true);
+            }
+
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_and_package_emit_preserve_supported_site_map_entity_list_targets()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string viewId = "0cc7bf59-5fb4-4f11-a3b2-9170a9d6ef42";
+        var sourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-entity-list-source-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-entity-list-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-entity-list-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(Path.Combine(ExamplesRoot, "seed-app-shell"), sourceRoot);
+
+            var siteMapPath = Path.Combine(sourceRoot, "unpacked", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=entitylist&amp;etn=account&amp;viewid=%7B{viewId}%7D&amp;viewtype=1039\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(sourceRoot, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            intent["appModules"]!.ToJsonString().Should().Contain("\"entity\":\"account\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"viewId\":\"{viewId}\"");
+            intent["appModules"]!.ToJsonString().Should().Contain("\"viewType\":\"savedquery\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"appId\":\"{appId}\"");
+            intent["appModules"]!.ToJsonString().Should().NotContain("/main.aspx?appid=");
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+
+            var rebuiltSiteMapPath = Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            File.Exists(rebuiltSiteMapPath).Should().BeTrue();
+            File.ReadAllText(rebuiltSiteMapPath).Should().Contain($"Url=\"/main.aspx?appid={appId}&amp;pagetype=entitylist&amp;etn=account&amp;viewid={viewId}&amp;viewtype=1039\"");
+
+            var reread = new XmlSolutionReader().Read(new ReadRequest(Path.Combine(packageOutputRoot, "package-inputs")));
+            var rereadSiteMap = reread.Artifacts.Single(artifact =>
+                artifact.Family == ComponentFamily.SiteMap
+                && string.Equals(artifact.LogicalName, "codex_metadata_shell_dd96cf20", StringComparison.OrdinalIgnoreCase));
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"entity\":\"account\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"viewId\":\"{viewId}\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"viewType\":\"savedquery\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        }
+        finally
+        {
+            if (Directory.Exists(sourceRoot))
+            {
+                Directory.Delete(sourceRoot, recursive: true);
+            }
+
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_and_package_emit_preserve_supported_site_map_entity_record_targets()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string recordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        const string formId = "a77ba3f0-df52-46a1-a0a2-2c4fd6e25cdf";
+        var sourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-entity-record-source-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-entity-record-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-entity-record-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(Path.Combine(ExamplesRoot, "seed-app-shell"), sourceRoot);
+
+            var siteMapPath = Path.Combine(sourceRoot, "unpacked", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=entityrecord&amp;etn=account&amp;id=%7B{recordId}%7D&amp;extraqs=formid%3D%7B{formId}%7D\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(sourceRoot, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            intent["appModules"]!.ToJsonString().Should().Contain("\"entity\":\"account\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"recordId\":\"{recordId}\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"formId\":\"{formId}\"");
+            intent["appModules"]!.ToJsonString().Should().Contain($"\"appId\":\"{appId}\"");
+            intent["appModules"]!.ToJsonString().Should().NotContain("/main.aspx?appid=");
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+
+            var rebuiltSiteMapPath = Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            File.Exists(rebuiltSiteMapPath).Should().BeTrue();
+            File.ReadAllText(rebuiltSiteMapPath).Should().Contain($"Url=\"/main.aspx?appid={appId}&amp;pagetype=entityrecord&amp;etn=account&amp;id={recordId}&amp;extraqs=formid%3D{formId}\"");
+
+            var reread = new XmlSolutionReader().Read(new ReadRequest(Path.Combine(packageOutputRoot, "package-inputs")));
+            var rereadSiteMap = reread.Artifacts.Single(artifact =>
+                artifact.Family == ComponentFamily.SiteMap
+                && string.Equals(artifact.LogicalName, "codex_metadata_shell_dd96cf20", StringComparison.OrdinalIgnoreCase));
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"entity\":\"account\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"recordId\":\"{recordId}\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"formId\":\"{formId}\"");
+            rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        }
+        finally
+        {
+            if (Directory.Exists(sourceRoot))
+            {
+                Directory.Delete(sourceRoot, recursive: true);
+            }
+
+            if (Directory.Exists(intentOutputRoot))
+            {
+                Directory.Delete(intentOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_and_package_emit_preserve_unsupported_site_map_urls_as_canonical_raw_url_boundary()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string dashboardId = "3c5d4df8-4c0d-4d57-9e8f-6d4b3a8d5812";
+        const string contextRecordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        var expectedRawUrl = $"/main.aspx?appid={appId}&extraqs=entityName%3Daccount%26recordId%3D{contextRecordId}&id={dashboardId}&pagetype=dashboard&showWelcome=true";
+        var sourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-raw-url-source-{Guid.NewGuid():N}");
+        var intentOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-raw-url-intent-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-seed-app-shell-raw-url-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(Path.Combine(ExamplesRoot, "seed-app-shell"), sourceRoot);
+
+            var siteMapPath = Path.Combine(sourceRoot, "unpacked", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?showWelcome=1&amp;id=%7B{dashboardId}%7D&amp;extraqs=recordId%3D%7B{contextRecordId}%7D%26entityName%3DAccount&amp;appid=%7B{appId}%7D&amp;pagetype=dashboard\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(sourceRoot, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var reverseEmit = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(intentOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            var subArea = intent["appModules"]![0]!["siteMap"]!["areas"]![0]!["groups"]![0]!["subAreas"]![0]!;
+            subArea["url"]!.GetValue<string>().Should().Be(expectedRawUrl);
+            subArea["dashboard"].Should().BeNull();
+            subArea["customPage"].Should().BeNull();
+            subArea["webResource"].Should().BeNull();
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(intentOutputRoot, "intent-spec", "intent-spec.json"), Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+            packageEmit.Success.Should().BeTrue();
+
+            var rebuiltSiteMapPath = Path.Combine(packageOutputRoot, "package-inputs", "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            File.Exists(rebuiltSiteMapPath).Should().BeTrue();
+            File.ReadAllText(rebuiltSiteMapPath).Should().Contain($"Url=\"{expectedRawUrl.Replace("&", "&amp;")}\"");
+
+            var reread = new XmlSolutionReader().Read(new ReadRequest(Path.Combine(packageOutputRoot, "package-inputs")));
+            var rereadSiteMap = reread.Artifacts.Single(artifact =>
+                artifact.Family == ComponentFamily.SiteMap
+                && string.Equals(artifact.LogicalName, "codex_metadata_shell_dd96cf20", StringComparison.OrdinalIgnoreCase));
+            var rereadSubArea = JsonNode.Parse(rereadSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson])!["areas"]![0]!["groups"]![0]!["subAreas"]![0]!;
+            rereadSubArea["url"]!.GetValue<string>().Should().Be(expectedRawUrl);
+            rereadSiteMap.Properties![ArtifactPropertyKeys.WebResourceSubAreaCount].Should().Be("0");
+            rereadSubArea["dashboard"].Should().BeNull();
+            rereadSubArea["customPage"].Should().BeNull();
+        }
+        finally
+        {
+            if (Directory.Exists(sourceRoot))
+            {
+                Directory.Delete(sourceRoot, recursive: true);
+            }
+
             if (Directory.Exists(intentOutputRoot))
             {
                 Directory.Delete(intentOutputRoot, recursive: true);
@@ -1589,6 +2022,7 @@ public sealed class IntentSpecCompilerTests
 
             var packageEmit = new PackageEmitter().Emit(reversed.Solution, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
             packageEmit.Success.Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", "Entities", "Account", "RibbonDiff.xml")).Should().BeTrue();
 
             var result = new DataverseSolutionCompiler.Packaging.Pac.PacCliExecutor().Pack(new DataverseSolutionCompiler.Domain.Packaging.PackageRequest(
                 Path.Combine(packageOutputRoot, "package-inputs"),
@@ -1755,4 +2189,21 @@ public sealed class IntentSpecCompilerTests
             nameof(ComponentFamily.PluginStepImage) => "type=\"93\"",
             _ => throw new ArgumentOutOfRangeException(nameof(family), family, "Unknown apply-only hybrid family.")
         };
+
+    private static void CopyDirectory(string sourceRoot, string destinationRoot)
+    {
+        Directory.CreateDirectory(destinationRoot);
+
+        foreach (var directory in Directory.GetDirectories(sourceRoot, "*", SearchOption.AllDirectories))
+        {
+            Directory.CreateDirectory(Path.Combine(destinationRoot, Path.GetRelativePath(sourceRoot, directory)));
+        }
+
+        foreach (var file in Directory.GetFiles(sourceRoot, "*", SearchOption.AllDirectories))
+        {
+            var destinationPath = Path.Combine(destinationRoot, Path.GetRelativePath(sourceRoot, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+            File.Copy(file, destinationPath, overwrite: true);
+        }
+    }
 }

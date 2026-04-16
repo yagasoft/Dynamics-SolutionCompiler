@@ -26,9 +26,12 @@ internal sealed partial class DataverseWebApiLiveReader
         ComponentFamily.ImageConfiguration,
         ComponentFamily.Form,
         ComponentFamily.View,
+        ComponentFamily.Visualization,
+        ComponentFamily.CustomControl,
         ComponentFamily.AppModule,
         ComponentFamily.AppSetting,
         ComponentFamily.SiteMap,
+        ComponentFamily.WebResource,
         ComponentFamily.EnvironmentVariableDefinition,
         ComponentFamily.EnvironmentVariableValue,
         ComponentFamily.ImportMap,
@@ -161,7 +164,7 @@ internal sealed partial class DataverseWebApiLiveReader
             diagnostics.Add(ToDiagnostic(exception, DiagnosticSeverity.Warning));
         }
 
-        if (ShouldReadAny(requestedFamilies, ComponentFamily.Table, ComponentFamily.Column, ComponentFamily.Relationship, ComponentFamily.OptionSet, ComponentFamily.Key, ComponentFamily.ImageConfiguration, ComponentFamily.Form, ComponentFamily.View))
+        if (ShouldReadAny(requestedFamilies, ComponentFamily.Table, ComponentFamily.Column, ComponentFamily.Relationship, ComponentFamily.OptionSet, ComponentFamily.Key, ComponentFamily.ImageConfiguration, ComponentFamily.Form, ComponentFamily.View, ComponentFamily.Visualization))
         {
             await ReadSchemaFamiliesAsync(solution, scope, requestedFamilies, artifacts, diagnostics, cancellationToken).ConfigureAwait(false);
         }
@@ -181,7 +184,7 @@ internal sealed partial class DataverseWebApiLiveReader
             await ReadSecurityFamiliesAsync(scope, requestedFamilies, artifacts, diagnostics, cancellationToken).ConfigureAwait(false);
         }
 
-        if (ShouldReadAny(requestedFamilies, ComponentFamily.AppModule, ComponentFamily.AppSetting, ComponentFamily.SiteMap, ComponentFamily.EnvironmentVariableDefinition, ComponentFamily.EnvironmentVariableValue, ComponentFamily.AiProjectType, ComponentFamily.AiProject, ComponentFamily.AiConfiguration, ComponentFamily.EntityAnalyticsConfiguration, ComponentFamily.CanvasApp))
+        if (ShouldReadAny(requestedFamilies, ComponentFamily.CustomControl, ComponentFamily.AppModule, ComponentFamily.AppSetting, ComponentFamily.SiteMap, ComponentFamily.WebResource, ComponentFamily.EnvironmentVariableDefinition, ComponentFamily.EnvironmentVariableValue, ComponentFamily.AiProjectType, ComponentFamily.AiProject, ComponentFamily.AiConfiguration, ComponentFamily.EntityAnalyticsConfiguration, ComponentFamily.CanvasApp))
         {
             await ReadAppShellFamiliesAsync(scope, requestedFamilies, artifacts, diagnostics, cancellationToken).ConfigureAwait(false);
         }
@@ -227,6 +230,15 @@ internal sealed partial class DataverseWebApiLiveReader
                 DiagnosticSeverity.Info,
                 "ImportMap and DataSourceMapping remain explicit source-first families in the neutral corpus. Live readback does not project them into blocking overlap today.",
                 "import-maps"));
+        }
+
+        if (requestedFamilies.Contains(ComponentFamily.CustomControl))
+        {
+            diagnostics.Add(new CompilerDiagnostic(
+                "live-readback-customcontrol-source-asymmetry",
+                DiagnosticSeverity.Info,
+                "Standalone CustomControl artifacts can surface in live solution scope even when unmanaged export omits matching source artifacts. Drift treats that lane as an explicit source-asymmetric best-effort boundary instead of open parity debt.",
+                "custom-controls"));
         }
 
         var sourceFirstPolicyFamilies = new[]
@@ -313,8 +325,11 @@ internal sealed partial class DataverseWebApiLiveReader
         public HashSet<Guid> EntityImageConfigurationIds { get; } = [];
         public HashSet<Guid> FormIds { get; } = [];
         public HashSet<Guid> ViewIds { get; } = [];
+        public HashSet<Guid> VisualizationIds { get; } = [];
+        public HashSet<Guid> CustomControlIds { get; } = [];
         public HashSet<Guid> AppModuleIds { get; } = [];
         public HashSet<Guid> SiteMapIds { get; } = [];
+        public HashSet<Guid> WebResourceIds { get; } = [];
         public HashSet<Guid> EnvironmentVariableDefinitionIds { get; } = [];
         public HashSet<Guid> EnvironmentVariableValueIds { get; } = [];
         public HashSet<Guid> PluginAssemblyIds { get; } = [];
@@ -374,7 +389,14 @@ internal sealed partial class DataverseWebApiLiveReader
 
     private sealed record ViewOrder(string Attribute, string Descending);
 
-    private sealed record SiteMapSummary(int AreaCount, int GroupCount, int SubAreaCount, int WebResourceSubAreaCount);
+    private sealed record VisualizationSummary(
+        string TargetEntity,
+        IReadOnlyList<string> ChartTypes,
+        IReadOnlyList<string> GroupByColumns,
+        IReadOnlyList<string> MeasureAliases,
+        IReadOnlyList<string> TitleNames);
+
+    private sealed record SiteMapSummary(int AreaCount, int GroupCount, int SubAreaCount, int WebResourceSubAreaCount, string DefinitionJson);
 }
 
 internal sealed class DataverseWebApiException : Exception

@@ -79,6 +79,20 @@ public static class ArtifactPropertyKeys
     public const string GroupByColumnsJson = "groupByColumnsJson";
     public const string MeasureAliasesJson = "measureAliasesJson";
     public const string TitleNamesJson = "titleNamesJson";
+    public const string SupportedPlatformsJson = "supportedPlatformsJson";
+    public const string Namespace = "namespace";
+    public const string ConstructorName = "constructorName";
+    public const string ControlType = "controlType";
+    public const string ApiVersion = "apiVersion";
+    public const string PropertyCount = "propertyCount";
+    public const string DatasetCount = "datasetCount";
+    public const string FeatureCount = "featureCount";
+    public const string ResourceCount = "resourceCount";
+    public const string PropertyNamesJson = "propertyNamesJson";
+    public const string DatasetNamesJson = "datasetNamesJson";
+    public const string FeatureNamesJson = "featureNamesJson";
+    public const string ResourcePathsJson = "resourcePathsJson";
+    public const string PlatformLibrariesJson = "platformLibrariesJson";
 
     public const string ComponentTypesJson = "componentTypesJson";
     public const string RoleIdsJson = "roleIdsJson";

@@ -157,6 +157,16 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
                 ArtifactPropertyKeys.TargetEntity,
                 ArtifactPropertyKeys.ComparisonSignature
             ],
+            [ComponentFamily.Ribbon] =
+            [
+                ArtifactPropertyKeys.EntityLogicalName,
+                ArtifactPropertyKeys.ComparisonSignature
+            ],
+            [ComponentFamily.CustomControl] =
+            [
+                ArtifactPropertyKeys.Version,
+                ArtifactPropertyKeys.ComparisonSignature
+            ],
             [ComponentFamily.AppModule] =
             [
                 ArtifactPropertyKeys.ComponentTypesJson
@@ -449,15 +459,67 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
             }
         }
 
+        var diagnostics = new List<CompilerDiagnostic>
+        {
+            new(
+                "stable-overlap-family-semantic",
+                DiagnosticSeverity.Info,
+                "Drift comparison now uses stable family-aware fields for the strongest proven Dataverse families while later families remain overlap-only.")
+        };
+        diagnostics.AddRange(BuildAppModuleRoleMapBestEffortDiagnostics(sourceKeys, liveKeys));
+        diagnostics.AddRange(BuildCustomControlSourceAsymmetryDiagnostics(sourceKeys, liveKeys));
+
         return new DriftReport(
             findings.Any(finding => finding.Severity == DriftSeverity.Error),
             findings,
-            [
-                new CompilerDiagnostic(
-                    "stable-overlap-family-semantic",
-                    DiagnosticSeverity.Info,
-                    "Drift comparison now uses stable family-aware fields for the strongest proven Dataverse families while later families remain overlap-only.")
-            ]);
+            diagnostics);
+    }
+
+    private static IEnumerable<CompilerDiagnostic> BuildAppModuleRoleMapBestEffortDiagnostics(
+        IReadOnlyDictionary<string, FamilyArtifact> sourceKeys,
+        IReadOnlyDictionary<string, FamilyArtifact> liveKeys)
+    {
+        foreach (var (key, sourceArtifact) in sourceKeys)
+        {
+            if (sourceArtifact.Family != ComponentFamily.AppModule
+                || !liveKeys.TryGetValue(key, out var liveArtifact))
+            {
+                continue;
+            }
+
+            var sourceRoleMapCount = ParseInt(GetProperty(sourceArtifact, ArtifactPropertyKeys.RoleMapCount));
+            var liveRoleMapCount = ParseInt(GetProperty(liveArtifact, ArtifactPropertyKeys.RoleMapCount));
+            if (sourceRoleMapCount <= 0 || liveRoleMapCount > 0)
+            {
+                continue;
+            }
+
+            yield return new CompilerDiagnostic(
+                "stable-overlap-appmodule-rolemap-best-effort",
+                DiagnosticSeverity.Info,
+                $"AppModule '{sourceArtifact.LogicalName}' carries role-map source evidence, but live app-module readback currently underreports role_ids in the neutral corpus. Drift keeps role-map detail as explicit best-effort instead of blocking parity.",
+                sourceArtifact.LogicalName);
+        }
+    }
+
+    private static IEnumerable<CompilerDiagnostic> BuildCustomControlSourceAsymmetryDiagnostics(
+        IReadOnlyDictionary<string, FamilyArtifact> sourceKeys,
+        IReadOnlyDictionary<string, FamilyArtifact> liveKeys)
+    {
+        foreach (var (key, liveArtifact) in liveKeys)
+        {
+            if (liveArtifact.Family != ComponentFamily.CustomControl
+                || sourceKeys.ContainsKey(key))
+            {
+                continue;
+            }
+
+            yield return new CompilerDiagnostic(
+                "stable-overlap-customcontrol-source-asymmetry",
+                DiagnosticSeverity.Info,
+                $"CustomControl '{liveArtifact.LogicalName}' is present in live solution scope, but unmanaged source export does not currently emit a matching standalone source artifact in the neutral corpus. Drift treats that lane as an explicit source-asymmetric best-effort boundary.",
+                liveArtifact.LogicalName);
+        }
     }
 
     private static DriftFinding? CompareArtifact(FamilyArtifact source, FamilyArtifact live)
@@ -668,7 +730,6 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
         {
             ComponentFamily.AppSetting => true,
             ComponentFamily.Column => ShouldIgnoreColumn(artifact),
-            ComponentFamily.Form => ShouldIgnoreForm(artifact),
             ComponentFamily.LegacyAsset => true,
             ComponentFamily.OptionSet => ShouldIgnoreOptionSet(artifact),
             ComponentFamily.Relationship => ShouldIgnoreRelationship(artifact),
@@ -679,6 +740,7 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
         artifact.Family == ComponentFamily.Publisher
         || artifact.Family == ComponentFamily.ImportMap
         || artifact.Family == ComponentFamily.DataSourceMapping
+        || artifact.Family == ComponentFamily.Ribbon
         || artifact.Family == ComponentFamily.Report
         || artifact.Family == ComponentFamily.Template
         || artifact.Family == ComponentFamily.DisplayString
@@ -689,7 +751,7 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
         || artifact.Family == ComponentFamily.Sla
         || artifact.Family == ComponentFamily.SlaItem
         || (artifact.Family == ComponentFamily.OptionSet
-            && !string.Equals(GetProperty(artifact, ArtifactPropertyKeys.IsGlobal), "true", StringComparison.OrdinalIgnoreCase));
+            && ShouldIgnoreOptionSet(artifact));
 
     private static bool ShouldIgnoreExtraLiveArtifact(FamilyArtifact artifact)
     {
@@ -700,6 +762,7 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
 
         return artifact.Family switch
         {
+            ComponentFamily.CustomControl => true,
             ComponentFamily.Form => string.Equals(
                 GetProperty(artifact, ArtifactPropertyKeys.IsDefault),
                 "true",
@@ -748,13 +811,6 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
             || logicalName.EndsWith("type", StringComparison.OrdinalIgnoreCase);
     }
 
-    private static bool ShouldIgnoreForm(FamilyArtifact artifact)
-    {
-        var formType = GetProperty(artifact, ArtifactPropertyKeys.FormType);
-        return string.Equals(formType, "card", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(formType, "quick", StringComparison.OrdinalIgnoreCase);
-    }
-
     private static bool ShouldIgnoreRelationship(FamilyArtifact artifact)
     {
         var logicalName = artifact.LogicalName;
@@ -771,13 +827,10 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
     private static bool ShouldIgnoreOptionSet(FamilyArtifact artifact)
     {
         var optionSetType = GetProperty(artifact, ArtifactPropertyKeys.OptionSetType);
-        if (string.Equals(optionSetType, "bit", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(optionSetType, "boolean", StringComparison.OrdinalIgnoreCase))
-        {
-            return true;
-        }
-
         return string.Equals(optionSetType, "state", StringComparison.OrdinalIgnoreCase)
             || string.Equals(optionSetType, "status", StringComparison.OrdinalIgnoreCase);
     }
+
+    private static int ParseInt(string? value) =>
+        int.TryParse(value, out var parsed) ? parsed : 0;
 }

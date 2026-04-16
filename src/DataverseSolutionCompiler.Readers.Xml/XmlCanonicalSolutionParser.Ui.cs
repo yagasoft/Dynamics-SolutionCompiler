@@ -268,6 +268,71 @@ internal sealed partial class XmlCanonicalSolutionParser
         }
     }
 
+    private void ParseRibbons(string entityDirectory, string entityLogicalName)
+    {
+        var ribbonPath = Path.Combine(entityDirectory, "RibbonDiff.xml");
+        if (!File.Exists(ribbonPath))
+        {
+            return;
+        }
+
+        var root = LoadRoot(ribbonPath);
+        var customActionIds = CollectRibbonIds(root, "CustomAction", "Id", "Location", "Command");
+        var commandDefinitionIds = CollectRibbonIds(root, "CommandDefinition", "Id");
+        var buttonIds = CollectRibbonIds(root, "Button", "Id");
+        var displayRuleIds = CollectRibbonIds(root, "DisplayRule", "Id");
+        var enableRuleIds = CollectRibbonIds(root, "EnableRule", "Id");
+        var hideCustomActionIds = CollectRibbonIds(root, "HideCustomAction", "Id", "Location", "Command");
+        var locLabelIds = CollectRibbonIds(root, "LocLabel", "Id");
+        var byteLength = new FileInfo(ribbonPath).Length;
+        var summaryJson = SerializeJson(new
+        {
+            entityLogicalName,
+            counts = new
+            {
+                customActionCount = customActionIds.Length,
+                commandDefinitionCount = commandDefinitionIds.Length,
+                displayRuleCount = displayRuleIds.Length,
+                enableRuleCount = enableRuleIds.Length,
+                hideCustomActionCount = hideCustomActionIds.Length,
+                buttonCount = buttonIds.Length,
+                locLabelCount = locLabelIds.Length,
+                byteLength
+            },
+            customActionIds,
+            commandDefinitionIds,
+            buttonIds,
+            displayRuleIds,
+            enableRuleIds,
+            hideCustomActionIds,
+            locLabelIds
+        });
+
+        AddArtifact(
+            ComponentFamily.Ribbon,
+            entityLogicalName,
+            $"{entityLogicalName} Ribbon Diff",
+            ribbonPath,
+            CreateProperties(
+                (ArtifactPropertyKeys.EntityLogicalName, entityLogicalName),
+                (ArtifactPropertyKeys.MetadataSourcePath, RelativePath(ribbonPath)),
+                (ArtifactPropertyKeys.ByteLength, byteLength.ToString(CultureInfo.InvariantCulture)),
+                (ArtifactPropertyKeys.ContentHash, ComputeFileHash(ribbonPath)),
+                (ArtifactPropertyKeys.SummaryJson, summaryJson),
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+    }
+
+    private static string[] CollectRibbonIds(System.Xml.Linq.XElement root, string elementName, params string[] attributeNames) =>
+        root.Descendants()
+            .Where(element => element.Name.LocalName.Equals(elementName, StringComparison.OrdinalIgnoreCase))
+            .Select(element => attributeNames
+                .Select(attributeName => element.AttributeValue(attributeName))
+                .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value)))
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray()!;
+
     private static bool IsQuickFormControl(System.Xml.Linq.XElement control) =>
         !string.IsNullOrWhiteSpace(Text(control.ElementLocal("parameters")?.ElementLocal("QuickForms")));
 

@@ -36,8 +36,12 @@ public sealed class TrackedSourceEmitterIntegrationTests
             File.Exists(Path.Combine(outputRoot, "tracked-source", "solution", "manifest.json")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "tracked-source", "app-modules", "codex_metadata_advanced_ui_924e69cb.json")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "tracked-source", "site-maps", "codex_metadata_advanced_ui_924e69cb.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "ribbons", "account.json")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "tracked-source", "web-resources", "cdxmeta-advancedui-landing-html.json")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "tracked-source", "web-resources", "cdxmeta-advancedui-landing-html.html")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "Entities", "Account", "RibbonDiff.xml")).Should().BeTrue();
+            File.ReadAllText(Path.Combine(outputRoot, "tracked-source", "app-modules", "codex_metadata_advanced_ui_924e69cb.json")).Should().Contain("\"roleIds\"");
+            File.ReadAllText(Path.Combine(outputRoot, "tracked-source", "app-modules", "codex_metadata_advanced_ui_924e69cb.json")).Should().Contain("\"roleMapCount\": 2");
 
             var manifestJson = File.ReadAllText(Path.Combine(outputRoot, "tracked-source", "manifest.json"));
             manifestJson.Should().NotContain("C:\\Git\\Dataverse-Solution-KB");

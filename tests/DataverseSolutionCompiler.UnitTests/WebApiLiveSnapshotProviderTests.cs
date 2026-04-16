@@ -37,6 +37,16 @@ public sealed class WebApiLiveSnapshotProviderTests
         snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Column && artifact.LogicalName == "cdxmeta_workitem|cdxmeta_details");
         snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.Relationship && artifact.LogicalName == "cdxmeta_category_workitem");
         snapshot.Artifacts.Should().Contain(artifact => artifact.Family == ComponentFamily.OptionSet && artifact.LogicalName == "cdxmeta_priorityband");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.OptionSet
+            && artifact.LogicalName == "cdxmeta_workitem|cdxmeta_stage"
+            && artifact.Properties![ArtifactPropertyKeys.OptionSetType] == "picklist"
+            && artifact.Properties![ArtifactPropertyKeys.OptionCount] == "3");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.OptionSet
+            && artifact.LogicalName == "cdxmeta_workitem|cdxmeta_isblocked"
+            && artifact.Properties![ArtifactPropertyKeys.OptionSetType] == "boolean"
+            && artifact.Properties![ArtifactPropertyKeys.OptionCount] == "2");
         harness.Requests.Should().Contain(request => request.Contains("$skiptoken=page2", StringComparison.OrdinalIgnoreCase));
     }
 
@@ -122,6 +132,718 @@ public sealed class WebApiLiveSnapshotProviderTests
         environment.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.CanvasApp && artifact.LogicalName == "cat_overview_3dbf5");
         environment.Artifacts.Single(artifact => artifact.Family == ComponentFamily.CanvasApp).Properties![ArtifactPropertyKeys.AppVersion]
             .Should().Be("2023-09-06T20:22:07Z");
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_quick_and_card_forms_for_seed_forms()
+    {
+        var harness = LiveFixtureHarness.Create("seed-forms");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Form);
+        var source = ReadSourceFixture("seed-forms");
+        var expectedForms = source.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.Form
+                && artifact.Properties is not null
+                && artifact.Properties.TryGetValue(ArtifactPropertyKeys.FormType, out var formType)
+                && (string.Equals(formType, "quick", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(formType, "card", StringComparison.OrdinalIgnoreCase)))
+            .OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        var actualForms = snapshot.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.Form
+                && artifact.Properties is not null
+                && artifact.Properties.TryGetValue(ArtifactPropertyKeys.FormType, out var formType)
+                && (string.Equals(formType, "quick", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(formType, "card", StringComparison.OrdinalIgnoreCase)))
+            .OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        actualForms.Select(artifact => artifact.LogicalName).Should().Equal(expectedForms.Select(artifact => artifact.LogicalName));
+        actualForms.Should().OnlyContain(artifact =>
+            string.Equals(artifact.Properties![ArtifactPropertyKeys.FormType], "quick", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(artifact.Properties![ArtifactPropertyKeys.FormType], "card", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/systemforms", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_saved_query_visualization_family_for_seed_advanced_ui()
+    {
+        var harness = LiveFixtureHarness.Create("seed-advanced-ui");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Visualization);
+        var source = ReadSourceFixture("seed-advanced-ui");
+        var expectedVisualization = source.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Visualization);
+        var actualVisualization = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Visualization);
+
+        actualVisualization.DisplayName.Should().Be(expectedVisualization.DisplayName);
+        actualVisualization.Properties![ArtifactPropertyKeys.VisualizationId].Should().Be(expectedVisualization.Properties![ArtifactPropertyKeys.VisualizationId]);
+        actualVisualization.Properties![ArtifactPropertyKeys.TargetEntity].Should().Be(expectedVisualization.Properties![ArtifactPropertyKeys.TargetEntity]);
+        actualVisualization.Properties![ArtifactPropertyKeys.DataDescriptionXml].Should().Be(expectedVisualization.Properties![ArtifactPropertyKeys.DataDescriptionXml]);
+        actualVisualization.Properties![ArtifactPropertyKeys.PresentationDescriptionXml].Should().Be(expectedVisualization.Properties![ArtifactPropertyKeys.PresentationDescriptionXml]);
+        actualVisualization.Properties![ArtifactPropertyKeys.ComparisonSignature].Should().Be(expectedVisualization.Properties![ArtifactPropertyKeys.ComparisonSignature]);
+        harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/savedqueryvisualizations", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Theory]
+    [InlineData("seed-app-shell")]
+    [InlineData("seed-advanced-ui")]
+    public async Task ReadAsync_projects_web_resource_family_for_app_shell_seeds(string fixtureName)
+    {
+        var harness = LiveFixtureHarness.Create(fixtureName);
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.WebResource);
+        var source = ReadSourceFixture(fixtureName);
+        var expectedWebResources = source.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.WebResource)
+            .OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        var actualWebResources = snapshot.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.WebResource)
+            .OrderBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        actualWebResources.Should().HaveCount(expectedWebResources.Length);
+        foreach (var expected in expectedWebResources)
+        {
+            var actual = actualWebResources.Single(artifact =>
+                string.Equals(artifact.LogicalName, expected.LogicalName, StringComparison.OrdinalIgnoreCase));
+            actual.DisplayName.Should().Be(expected.DisplayName);
+            actual.Properties![ArtifactPropertyKeys.WebResourceType].Should().Be(expected.Properties![ArtifactPropertyKeys.WebResourceType]);
+            actual.Properties![ArtifactPropertyKeys.ByteLength].Should().Be(expected.Properties![ArtifactPropertyKeys.ByteLength]);
+            actual.Properties![ArtifactPropertyKeys.ContentHash].Should().Be(expected.Properties![ArtifactPropertyKeys.ContentHash]);
+        }
+
+        harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/webresourceset", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Theory]
+    [InlineData("seed-app-shell")]
+    [InlineData("seed-advanced-ui")]
+    public async Task ReadAsync_projects_site_map_definition_detail_for_app_shell_seeds(string fixtureName)
+    {
+        var harness = LiveFixtureHarness.Create(fixtureName);
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.SiteMap);
+        var source = ReadSourceFixture(fixtureName);
+        var expectedSiteMap = source.Artifacts.Single(artifact => artifact.Family == ComponentFamily.SiteMap);
+        var actualSiteMap = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.SiteMap);
+
+        actualSiteMap.DisplayName.Should().Be(expectedSiteMap.DisplayName);
+        actualSiteMap.Properties![ArtifactPropertyKeys.AreaCount].Should().Be(expectedSiteMap.Properties![ArtifactPropertyKeys.AreaCount]);
+        actualSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Be(expectedSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson]);
+        actualSiteMap.Properties![ArtifactPropertyKeys.ComparisonSignature].Should().Be(expectedSiteMap.Properties![ArtifactPropertyKeys.ComparisonSignature]);
+        switch (fixtureName)
+        {
+            case "seed-app-shell":
+                actualSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"client\":\"Web\"");
+                actualSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"vectorIcon\":\"/WebResources/cdxmeta_/shell/icon.svg\"");
+                actualSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"passParams\":true");
+                break;
+            case "seed-advanced-ui":
+                actualSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"icon\":\"/WebResources/cdxmeta_/advancedui/icon.svg\"");
+                actualSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"passParams\":false");
+                actualSiteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"availableOffline\":false");
+                break;
+        }
+        harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/sitemaps", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_supported_site_map_dashboard_targets_with_app_scope()
+    {
+        const string dashboardId = "3c5d4df8-4c0d-4d57-9e8f-6d4b3a8d5812";
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        var requests = new List<string>();
+        static HttpResponseMessage CreateJsonResponse(JsonNode body) =>
+            new(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body.ToJsonString())
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
+                }
+            };
+
+        using var client = new HttpClient(new StaticResponseHandler(request =>
+        {
+            var relative = request.RequestUri?.PathAndQuery.TrimStart('/') ?? string.Empty;
+            requests.Add(relative);
+
+            if (relative.Contains("solutions?$select=", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["solutionid"] = "49916849-57f1-ee11-9048-000d3ab5d944",
+                            ["friendlyname"] = "Codex Metadata App Shell",
+                            ["uniquename"] = "CodexMetadataSeedAppShell",
+                            ["version"] = "1.0.0.0",
+                            ["ismanaged"] = false
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["componenttype"] = 62,
+                            ["objectid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24"
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("sitemaps", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["sitemapid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24",
+                            ["sitemapname"] = "Codex Metadata Shell",
+                            ["sitemapnameunique"] = "codex_metadata_shell_dd96cf20",
+                            ["sitemapxml"] = $"<SiteMap><Area Id=\"area_codex_metadata_shell\" Title=\"Codex Metadata\"><Group Id=\"group_codex_metadata_shell\" Title=\"Shell\"><SubArea Id=\"subarea_codex_metadata_shell\" Title=\"Metadata Dashboard\" Url=\"/main.aspx?appid={appId}&amp;pagetype=dashboard&amp;id={dashboardId}\" Client=\"Web\" PassParams=\"true\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" /></Group></Area></SiteMap>"
+                        }
+                    }
+                });
+            }
+
+            return CreateJsonResponse(new JsonObject
+            {
+                ["value"] = new JsonArray()
+            });
+        }))
+        {
+            BaseAddress = new Uri("https://example.crm.dynamics.com/")
+        };
+
+        var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            "CodexMetadataSeedAppShell",
+            [ComponentFamily.SiteMap]);
+
+        var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+        var siteMap = snapshot.Artifacts.Single(artifact =>
+            artifact.Family == ComponentFamily.SiteMap
+            && artifact.LogicalName == "codex_metadata_shell_dd96cf20");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"dashboard\":\"{dashboardId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"client\":\"Web\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("/main.aspx?appid=");
+        requests.Should().Contain(requestPath => requestPath.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        requests.Should().Contain(requestPath => requestPath.Contains("sitemaps", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_supported_site_map_custom_page_targets_with_record_context()
+    {
+        const string customPage = "cdxmeta_shellhome";
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string contextRecordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        var requests = new List<string>();
+        static HttpResponseMessage CreateJsonResponse(JsonNode body) =>
+            new(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body.ToJsonString())
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
+                }
+            };
+
+        using var client = new HttpClient(new StaticResponseHandler(request =>
+        {
+            var relative = request.RequestUri?.PathAndQuery.TrimStart('/') ?? string.Empty;
+            requests.Add(relative);
+
+            if (relative.Contains("solutions?$select=", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["solutionid"] = "49916849-57f1-ee11-9048-000d3ab5d944",
+                            ["friendlyname"] = "Codex Metadata App Shell",
+                            ["uniquename"] = "CodexMetadataSeedAppShell",
+                            ["version"] = "1.0.0.0",
+                            ["ismanaged"] = false
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["componenttype"] = 62,
+                            ["objectid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24"
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("sitemaps", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["sitemapid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24",
+                            ["sitemapname"] = "Codex Metadata Shell",
+                            ["sitemapnameunique"] = "codex_metadata_shell_dd96cf20",
+                            ["sitemapxml"] = $"<SiteMap><Area Id=\"area_codex_metadata_shell\" Title=\"Codex Metadata\"><Group Id=\"group_codex_metadata_shell\" Title=\"Shell\"><SubArea Id=\"subarea_codex_metadata_shell\" Title=\"Metadata Home\" Url=\"/main.aspx?appid={appId}&amp;pagetype=custom&amp;name={customPage}&amp;entityName=account&amp;recordId=%7B{contextRecordId}%7D\" Client=\"Web\" PassParams=\"true\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" /></Group></Area></SiteMap>"
+                        }
+                    }
+                });
+            }
+
+            return CreateJsonResponse(new JsonObject
+            {
+                ["value"] = new JsonArray()
+            });
+        }))
+        {
+            BaseAddress = new Uri("https://example.crm.dynamics.com/")
+        };
+
+        var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            "CodexMetadataSeedAppShell",
+            [ComponentFamily.SiteMap]);
+
+        var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+        var siteMap = snapshot.Artifacts.Single(artifact =>
+            artifact.Family == ComponentFamily.SiteMap
+            && artifact.LogicalName == "codex_metadata_shell_dd96cf20");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"customPage\":\"{customPage}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"customPageEntityName\":\"account\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"customPageRecordId\":\"{contextRecordId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"client\":\"Web\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("/main.aspx?appid=");
+        requests.Should().Contain(requestPath => requestPath.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        requests.Should().Contain(requestPath => requestPath.Contains("sitemaps", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_supported_site_map_entity_list_targets()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string viewId = "0cc7bf59-5fb4-4f11-a3b2-9170a9d6ef42";
+        var requests = new List<string>();
+        static HttpResponseMessage CreateJsonResponse(JsonNode body) =>
+            new(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body.ToJsonString())
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
+                }
+            };
+
+        using var client = new HttpClient(new StaticResponseHandler(request =>
+        {
+            var relative = request.RequestUri?.PathAndQuery.TrimStart('/') ?? string.Empty;
+            requests.Add(relative);
+
+            if (relative.Contains("solutions?$select=", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["solutionid"] = "49916849-57f1-ee11-9048-000d3ab5d944",
+                            ["friendlyname"] = "Codex Metadata App Shell",
+                            ["uniquename"] = "CodexMetadataSeedAppShell",
+                            ["version"] = "1.0.0.0",
+                            ["ismanaged"] = false
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["componenttype"] = 62,
+                            ["objectid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24"
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("sitemaps", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["sitemapid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24",
+                            ["sitemapname"] = "Codex Metadata Shell",
+                            ["sitemapnameunique"] = "codex_metadata_shell_dd96cf20",
+                            ["sitemapxml"] = $"<SiteMap><Area Id=\"area_codex_metadata_shell\" Title=\"Codex Metadata\"><Group Id=\"group_codex_metadata_shell\" Title=\"Shell\"><SubArea Id=\"subarea_codex_metadata_shell\" Title=\"Metadata Accounts\" Url=\"/main.aspx?appid={appId}&amp;pagetype=entitylist&amp;etn=account&amp;viewid=%7B{viewId}%7D&amp;viewtype=1039\" Client=\"Web\" PassParams=\"true\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" /></Group></Area></SiteMap>"
+                        }
+                    }
+                });
+            }
+
+            return CreateJsonResponse(new JsonObject
+            {
+                ["value"] = new JsonArray()
+            });
+        }))
+        {
+            BaseAddress = new Uri("https://example.crm.dynamics.com/")
+        };
+
+        var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            "CodexMetadataSeedAppShell",
+            [ComponentFamily.SiteMap]);
+
+        var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+        var siteMap = snapshot.Artifacts.Single(artifact =>
+            artifact.Family == ComponentFamily.SiteMap
+            && artifact.LogicalName == "codex_metadata_shell_dd96cf20");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"entity\":\"account\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"viewId\":\"{viewId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"viewType\":\"savedquery\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("/main.aspx?appid=");
+        requests.Should().Contain(requestPath => requestPath.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        requests.Should().Contain(requestPath => requestPath.Contains("sitemaps", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_supported_site_map_entity_record_targets()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string recordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        const string formId = "a77ba3f0-df52-46a1-a0a2-2c4fd6e25cdf";
+        var requests = new List<string>();
+        static HttpResponseMessage CreateJsonResponse(JsonNode body) =>
+            new(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body.ToJsonString())
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
+                }
+            };
+
+        using var client = new HttpClient(new StaticResponseHandler(request =>
+        {
+            var relative = request.RequestUri?.PathAndQuery.TrimStart('/') ?? string.Empty;
+            requests.Add(relative);
+
+            if (relative.Contains("solutions?$select=", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["solutionid"] = "49916849-57f1-ee11-9048-000d3ab5d944",
+                            ["friendlyname"] = "Codex Metadata App Shell",
+                            ["uniquename"] = "CodexMetadataSeedAppShell",
+                            ["version"] = "1.0.0.0",
+                            ["ismanaged"] = false
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["componenttype"] = 62,
+                            ["objectid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24"
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("sitemaps", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["sitemapid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24",
+                            ["sitemapname"] = "Codex Metadata Shell",
+                            ["sitemapnameunique"] = "codex_metadata_shell_dd96cf20",
+                            ["sitemapxml"] = $"<SiteMap><Area Id=\"area_codex_metadata_shell\" Title=\"Codex Metadata\"><Group Id=\"group_codex_metadata_shell\" Title=\"Shell\"><SubArea Id=\"subarea_codex_metadata_shell\" Title=\"Metadata Record\" Url=\"/main.aspx?appid={appId}&amp;pagetype=entityrecord&amp;etn=account&amp;id=%7B{recordId}%7D&amp;extraqs=formid%3D%7B{formId}%7D\" Client=\"Web\" PassParams=\"true\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" /></Group></Area></SiteMap>"
+                        }
+                    }
+                });
+            }
+
+            return CreateJsonResponse(new JsonObject
+            {
+                ["value"] = new JsonArray()
+            });
+        }))
+        {
+            BaseAddress = new Uri("https://example.crm.dynamics.com/")
+        };
+
+        var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            "CodexMetadataSeedAppShell",
+            [ComponentFamily.SiteMap]);
+
+        var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+        var siteMap = snapshot.Artifacts.Single(artifact =>
+            artifact.Family == ComponentFamily.SiteMap
+            && artifact.LogicalName == "codex_metadata_shell_dd96cf20");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"entity\":\"account\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"recordId\":\"{recordId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"formId\":\"{formId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("/main.aspx?appid=");
+        requests.Should().Contain(requestPath => requestPath.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        requests.Should().Contain(requestPath => requestPath.Contains("sitemaps", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_canonicalizes_unsupported_site_map_urls_and_keeps_overlap_clean()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string dashboardId = "3c5d4df8-4c0d-4d57-9e8f-6d4b3a8d5812";
+        const string contextRecordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        var expectedRawUrl = $"/main.aspx?appid={appId}&extraqs=entityName%3Daccount%26recordId%3D{contextRecordId}&id={dashboardId}&pagetype=dashboard&showWelcome=true";
+        var sourceRoot = Path.Combine(Path.GetTempPath(), $"dsc-live-site-map-raw-url-{Guid.NewGuid():N}");
+        CanonicalSolution source;
+
+        try
+        {
+            CopyDirectory(
+                Path.Combine("C:\\Git\\Dataverse-Solution-KB", "fixtures", "skill-corpus", "examples", "seed-app-shell", "unpacked"),
+                sourceRoot);
+
+            var sourceSiteMapPath = Path.Combine(sourceRoot, "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var sourceXml = File.ReadAllText(sourceSiteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?id=%7B{dashboardId}%7D&amp;appid=%7B{appId}%7D&amp;extraqs=entityName%3DAccount%26recordId%3D%7B{contextRecordId}%7D&amp;showWelcome=1&amp;pagetype=dashboard\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(sourceSiteMapPath, sourceXml);
+
+            source = new XmlSolutionReader().Read(new ReadRequest(sourceRoot)) with
+            {
+                Artifacts = new XmlSolutionReader().Read(new ReadRequest(sourceRoot)).Artifacts
+                    .Where(artifact => artifact.Family == ComponentFamily.SiteMap)
+                    .ToArray()
+            };
+
+            var requests = new List<string>();
+            static HttpResponseMessage CreateJsonResponse(JsonNode body) =>
+                new(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(body.ToJsonString())
+                    {
+                        Headers =
+                        {
+                            ContentType = new MediaTypeHeaderValue("application/json")
+                        }
+                    }
+                };
+
+            using var client = new HttpClient(new StaticResponseHandler(request =>
+            {
+                var relative = request.RequestUri?.PathAndQuery.TrimStart('/') ?? string.Empty;
+                requests.Add(relative);
+
+                if (relative.Contains("solutions?$select=", StringComparison.OrdinalIgnoreCase))
+                {
+                    return CreateJsonResponse(new JsonObject
+                    {
+                        ["value"] = new JsonArray
+                        {
+                            new JsonObject
+                            {
+                                ["solutionid"] = "49916849-57f1-ee11-9048-000d3ab5d944",
+                                ["friendlyname"] = "Codex Metadata App Shell",
+                                ["uniquename"] = "CodexMetadataSeedAppShell",
+                                ["version"] = "1.0.0.0",
+                                ["ismanaged"] = false
+                            }
+                        }
+                    });
+                }
+
+                if (relative.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase))
+                {
+                    return CreateJsonResponse(new JsonObject
+                    {
+                        ["value"] = new JsonArray
+                        {
+                            new JsonObject
+                            {
+                                ["componenttype"] = 62,
+                                ["objectid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24"
+                            }
+                        }
+                    });
+                }
+
+                if (relative.Contains("sitemaps", StringComparison.OrdinalIgnoreCase))
+                {
+                    return CreateJsonResponse(new JsonObject
+                    {
+                        ["value"] = new JsonArray
+                        {
+                            new JsonObject
+                            {
+                                ["sitemapid"] = "72b8c2f0-f2ab-4cd9-b59e-26d5139c4f24",
+                                ["sitemapname"] = "Codex Metadata Shell",
+                                ["sitemapnameunique"] = "codex_metadata_shell_dd96cf20",
+                                ["sitemapxml"] = $"<SiteMap><Area Id=\"area_codex_metadata_shell\" Title=\"Codex Metadata\"><Group Id=\"group_codex_metadata_shell\" Title=\"Shell\"><SubArea Id=\"subarea_codex_metadata_shell\" Title=\"Metadata Shell\" Url=\"/main.aspx?pagetype=dashboard&amp;showWelcome=1&amp;extraqs=recordId%3D%7B{contextRecordId}%7D%26entityName%3DAccount&amp;appid=%7B{appId}%7D&amp;id={dashboardId}\" Client=\"Web\" PassParams=\"true\" Icon=\"/WebResources/cdxmeta_/shell/icon.svg\" VectorIcon=\"/WebResources/cdxmeta_/shell/icon.svg\" /></Group></Area></SiteMap>"
+                            }
+                        }
+                    });
+                }
+
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray()
+                });
+            }))
+            {
+                BaseAddress = new Uri("https://example.crm.dynamics.com/")
+            };
+
+            var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+            var request = new ReadbackRequest(
+                new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+                "CodexMetadataSeedAppShell",
+                [ComponentFamily.SiteMap]);
+
+            var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+            var siteMap = snapshot.Artifacts.Single(artifact =>
+                artifact.Family == ComponentFamily.SiteMap
+                && artifact.LogicalName == "codex_metadata_shell_dd96cf20");
+            var subArea = JsonNode.Parse(siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson])!["areas"]![0]!["groups"]![0]!["subAreas"]![0]!;
+            subArea["url"]!.GetValue<string>().Should().Be(expectedRawUrl);
+            siteMap.Properties![ArtifactPropertyKeys.WebResourceSubAreaCount].Should().Be("0");
+            subArea["dashboard"].Should().BeNull();
+
+            var report = new StableOverlapDriftComparer().Compare(source, snapshot, new CompareRequest());
+            report.HasBlockingDrift.Should().BeFalse();
+            report.Findings.Should().BeEmpty();
+
+            requests.Should().Contain(requestPath => requestPath.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase));
+            requests.Should().Contain(requestPath => requestPath.Contains("sitemaps", StringComparison.OrdinalIgnoreCase));
+        }
+        finally
+        {
+            if (Directory.Exists(sourceRoot))
+            {
+                Directory.Delete(sourceRoot, recursive: true);
+            }
+        }
+
+        static void CopyDirectory(string sourceDirectory, string destinationDirectory)
+        {
+            Directory.CreateDirectory(destinationDirectory);
+
+            foreach (var directory in Directory.GetDirectories(sourceDirectory))
+            {
+                CopyDirectory(directory, Path.Combine(destinationDirectory, Path.GetFileName(directory)));
+            }
+
+            foreach (var file in Directory.GetFiles(sourceDirectory))
+            {
+                File.Copy(file, Path.Combine(destinationDirectory, Path.GetFileName(file)), overwrite: true);
+            }
+        }
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_standalone_custom_control_family_for_seed_advanced_ui()
+    {
+        var harness = LiveFixtureHarness.Create("seed-advanced-ui");
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.CustomControl);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.CustomControl
+            && artifact.LogicalName == "cat_powercat.customizabletextfield");
+        var artifact = snapshot.Artifacts.Single(item => item.Family == ComponentFamily.CustomControl);
+        artifact.Properties![ArtifactPropertyKeys.Version].Should().Be("0.0.2");
+        artifact.Properties![ArtifactPropertyKeys.Namespace].Should().Be("PowerCAT");
+        artifact.Properties![ArtifactPropertyKeys.ConstructorName].Should().Be("CustomizableTextField");
+        artifact.Properties![ArtifactPropertyKeys.ControlType].Should().Be("virtual");
+        artifact.Properties![ArtifactPropertyKeys.ApiVersion].Should().Be("1.3.5");
+        artifact.Properties![ArtifactPropertyKeys.PropertyCount].Should().Be("7");
+        artifact.Properties![ArtifactPropertyKeys.FeatureCount].Should().Be("1");
+        artifact.Properties![ArtifactPropertyKeys.ResourceCount].Should().Be("3");
+        artifact.Properties![ArtifactPropertyKeys.SupportedPlatformsJson].Should().Be("[\"Canvas\",\"CustomPage\",\"Model\"]");
+        artifact.Properties![ArtifactPropertyKeys.PropertyNamesJson].Should().Contain("Value");
+        artifact.Properties![ArtifactPropertyKeys.ResourcePathsJson].Should().Contain("bundle.js");
+        artifact.Properties![ArtifactPropertyKeys.PlatformLibrariesJson].Should().Contain("React:16.8.6");
+        harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/customcontrols", StringComparison.OrdinalIgnoreCase));
+        snapshot.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "live-readback-customcontrol-source-asymmetry");
     }
 
     [Fact]
@@ -335,6 +1057,102 @@ public sealed class WebApiLiveSnapshotProviderTests
     }
 
     [Fact]
+    public async Task ReadAsync_keeps_web_resource_when_content_bytes_are_not_decodable()
+    {
+        var requests = new List<string>();
+        static HttpResponseMessage CreateJsonResponse(JsonNode body) =>
+            new(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body.ToJsonString())
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
+                }
+            };
+        using var client = new HttpClient(new StaticResponseHandler(request =>
+        {
+            var relative = request.RequestUri?.PathAndQuery.TrimStart('/') ?? string.Empty;
+            requests.Add(relative);
+
+            if (relative.Contains("solutions?$select=", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["solutionid"] = "49916849-57f1-ee11-9048-000d3ab5d944",
+                            ["friendlyname"] = "Codex Metadata App Shell",
+                            ["uniquename"] = "CodexMetadataSeedAppShell",
+                            ["version"] = "1.0.0.0",
+                            ["ismanaged"] = false
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("solutioncomponents", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["componenttype"] = 61,
+                            ["objectid"] = "a0ba2262-5637-f111-88b3-0022489b9600"
+                        }
+                    }
+                });
+            }
+
+            if (relative.Contains("webresourceset", StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateJsonResponse(new JsonObject
+                {
+                    ["value"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["webresourceid"] = "a0ba2262-5637-f111-88b3-0022489b9600",
+                            ["name"] = "cdxmeta_/shell/landing.html",
+                            ["displayname"] = "Codex Metadata Shell Landing HTML",
+                            ["description"] = "Neutral HTML landing page for the app-shell seed.",
+                            ["webresourcetype"] = 1,
+                            ["content"] = "not-base64"
+                        }
+                    }
+                });
+            }
+
+            return CreateJsonResponse(new JsonObject
+            {
+                ["value"] = new JsonArray()
+            });
+        }));
+        var reader = new DataverseWebApiLiveReader(client, new FakeTokenCredential());
+        var request = new ReadbackRequest(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            "CodexMetadataSeedAppShell",
+            [ComponentFamily.WebResource]);
+
+        var snapshot = await reader.ReadAsync(request, CancellationToken.None);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.WebResource
+            && artifact.LogicalName == "cdxmeta_/shell/landing.html");
+        snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.WebResource)
+            .Properties!
+            .Should()
+            .NotContainKey(ArtifactPropertyKeys.ContentHash);
+        snapshot.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "live-readback-webresource-content-best-effort");
+        requests.Should().Contain(requestPath => requestPath.Contains("webresourceset", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task ReadAsync_retries_solution_projection_without_publisher_columns_when_the_org_rejects_them()
     {
         var requests = new List<string>();
@@ -478,10 +1296,33 @@ public sealed class WebApiLiveSnapshotProviderTests
         report.Findings.Should().BeEmpty();
     }
 
+    [Fact]
+    public async Task ReadAsync_reports_ribbon_as_unsupported_without_false_drift()
+    {
+        var source = ReadSourceFixture("seed-advanced-ui") with
+        {
+            Artifacts = ReadSourceFixture("seed-advanced-ui").Artifacts
+                .Where(artifact => artifact.Family == ComponentFamily.Ribbon)
+                .ToArray()
+        };
+        var harness = LiveFixtureHarness.Create("seed-advanced-ui", sourceScope: source);
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Ribbon);
+        var report = new StableOverlapDriftComparer().Compare(source, snapshot, new CompareRequest());
+
+        snapshot.Artifacts.Should().BeEmpty();
+        snapshot.Diagnostics.Should().Contain(diagnostic =>
+            diagnostic.Code == "live-readback-unsupported-families"
+            && diagnostic.Message.Contains("Ribbon", StringComparison.OrdinalIgnoreCase));
+        report.HasBlockingDrift.Should().BeFalse();
+        report.Findings.Should().BeEmpty();
+    }
+
     [Theory]
     [InlineData("seed-alternate-key")]
     [InlineData("seed-core")]
     [InlineData("seed-forms")]
+    [InlineData("seed-app-shell")]
     [InlineData("seed-advanced-ui")]
     [InlineData("seed-environment")]
     [InlineData("seed-entity-analytics")]
@@ -526,9 +1367,21 @@ public sealed class WebApiLiveSnapshotProviderTests
             "seed-advanced-ui" => new HashSet<ComponentFamily>
             {
                 ComponentFamily.SolutionShell,
+                ComponentFamily.Visualization,
                 ComponentFamily.AppModule,
                 ComponentFamily.AppSetting,
                 ComponentFamily.SiteMap,
+                ComponentFamily.WebResource,
+                ComponentFamily.EnvironmentVariableDefinition,
+                ComponentFamily.EnvironmentVariableValue
+            },
+            "seed-app-shell" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.AppModule,
+                ComponentFamily.AppSetting,
+                ComponentFamily.SiteMap,
+                ComponentFamily.WebResource,
                 ComponentFamily.EnvironmentVariableDefinition,
                 ComponentFamily.EnvironmentVariableValue
             },
@@ -754,6 +1607,15 @@ internal sealed class LiveFixtureHarness
             return Envelope(GetViews(query));
         }
 
+        if (path.EndsWith("/savedqueryvisualizations", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(FilterRowsBySourceScope(
+                GetArtifactArray("saved-query-visualizations.json", "saved_query_visualizations"),
+                ComponentFamily.Visualization,
+                row => row["savedqueryvisualizationid"]?.GetValue<string>(),
+                row => $"{NormalizeLogicalName(row["primaryentitytypecode"]?.GetValue<string>())}|{row["name"]?.GetValue<string>()}"));
+        }
+
         if (path.EndsWith("/appmodules", StringComparison.OrdinalIgnoreCase))
         {
             return Envelope(GetArtifactArray("app-modules.json", "app_modules"));
@@ -767,6 +1629,20 @@ internal sealed class LiveFixtureHarness
         if (path.EndsWith("/sitemaps", StringComparison.OrdinalIgnoreCase))
         {
             return Envelope(GetArtifactArray("site-maps.json", "site_maps"));
+        }
+
+        if (path.EndsWith("/webresourceset", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(FilterRowsBySourceScope(
+                GetArtifactArray("web-resources.json", "web_resources"),
+                ComponentFamily.WebResource,
+                row => row["webresourceid"]?.GetValue<string>(),
+                row => row["name"]?.GetValue<string>()));
+        }
+
+        if (path.EndsWith("/customcontrols", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("custom-controls.json", "custom_controls"));
         }
 
         if (path.EndsWith("/environmentvariabledefinitions", StringComparison.OrdinalIgnoreCase))
@@ -993,6 +1869,19 @@ internal sealed class LiveFixtureHarness
                     ["objectid"] = view["savedqueryid"]!.GetValue<string>()
                 });
             }
+
+            foreach (var visualization in FilterRowsBySourceScope(
+                         GetArtifactArray("saved-query-visualizations.json", "saved_query_visualizations"),
+                         ComponentFamily.Visualization,
+                         row => row["savedqueryvisualizationid"]?.GetValue<string>(),
+                         row => $"{NormalizeLogicalName(row["primaryentitytypecode"]?.GetValue<string>())}|{row["name"]?.GetValue<string>()}"))
+            {
+                rows.Add(new JsonObject
+                {
+                    ["componenttype"] = 59,
+                    ["objectid"] = visualization["savedqueryvisualizationid"]!.GetValue<string>()
+                });
+            }
         }
 
         foreach (var appModule in FilterRowsBySourceScope(GetArtifactArray("app-modules.json", "app_modules"), ComponentFamily.AppModule, row => row["appmoduleid"]?.GetValue<string>(), row => row["uniquename"]?.GetValue<string>()))
@@ -1010,6 +1899,29 @@ internal sealed class LiveFixtureHarness
             {
                 ["componenttype"] = 62,
                 ["objectid"] = siteMap["sitemapid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var webResource in FilterRowsBySourceScope(GetArtifactArray("web-resources.json", "web_resources"), ComponentFamily.WebResource, row => row["webresourceid"]?.GetValue<string>(), row => row["name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 61,
+                ["objectid"] = webResource["webresourceid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var customControl in GetArtifactArray("custom-controls.json", "custom_controls").OfType<JsonObject>())
+        {
+            if (customControl["customcontrolid"] is null)
+            {
+                continue;
+            }
+
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 66,
+                ["objectid"] = customControl["customcontrolid"]!.GetValue<string>()
             });
         }
 

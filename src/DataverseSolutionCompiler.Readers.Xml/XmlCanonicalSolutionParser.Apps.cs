@@ -139,7 +139,7 @@ internal sealed partial class XmlCanonicalSolutionParser
                     (ArtifactPropertyKeys.WebResourceSubAreaCount, webResourceSubAreaCount.ToString(CultureInfo.InvariantCulture)),
                     (ArtifactPropertyKeys.SiteMapDefinitionJson, siteMapDefinitionJson),
                     (ArtifactPropertyKeys.SummaryJson, summaryJson),
-                    (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+                    (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(siteMapDefinitionJson))));
         }
     }
 
@@ -361,12 +361,45 @@ internal sealed partial class XmlCanonicalSolutionParser
                         subAreas = group
                             .Elements()
                             .Where(element => element.Name.LocalName.Equals("SubArea", StringComparison.OrdinalIgnoreCase))
-                            .Select((subArea, subAreaIndex) => new
+                            .Select((subArea, subAreaIndex) =>
                             {
-                                id = subArea.AttributeValue("Id") ?? subArea.AttributeValue("id") ?? $"subarea_{subAreaIndex + 1}",
-                                title = ReadSiteMapTitle(subArea) ?? subArea.AttributeValue("Title") ?? subArea.AttributeValue("title") ?? $"Sub Area {subAreaIndex + 1}",
-                                entity = NormalizeLogicalName(subArea.AttributeValue("Entity") ?? subArea.AttributeValue("entity")),
-                                url = subArea.AttributeValue("Url") ?? subArea.AttributeValue("url")
+                                var rawUrl = subArea.AttributeValue("Url") ?? subArea.AttributeValue("url");
+                                var entityList = TryParseEntityListTarget(rawUrl);
+                                var entityRecord = TryParseEntityRecordTarget(rawUrl);
+                                var dashboard = TryParseDashboardTarget(rawUrl);
+                                var customPage = TryParseCustomPageTarget(rawUrl);
+                                return new
+                                {
+                                    id = subArea.AttributeValue("Id") ?? subArea.AttributeValue("id") ?? $"subarea_{subAreaIndex + 1}",
+                                    title = ReadSiteMapTitle(subArea) ?? subArea.AttributeValue("Title") ?? subArea.AttributeValue("title") ?? $"Sub Area {subAreaIndex + 1}",
+                                    entity = entityList?.LogicalName
+                                        ?? entityRecord?.LogicalName
+                                        ?? NormalizeLogicalName(subArea.AttributeValue("Entity") ?? subArea.AttributeValue("entity")),
+                                    viewId = entityList?.ViewId,
+                                    viewType = entityList?.ViewType,
+                                    recordId = entityRecord?.RecordId,
+                                    formId = entityRecord?.FormId,
+                                    url = rawUrl is { Length: > 0 } url && !url.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase)
+                                        && entityList is null
+                                        && entityRecord is null
+                                        && dashboard is null
+                                        && customPage is null
+                                        ? NormalizeSiteMapRawUrl(url)
+                                        : null,
+                                    webResource = rawUrl is { Length: > 0 } encodedUrl && encodedUrl.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase)
+                                        ? encodedUrl["$webresource:".Length..]
+                                        : null,
+                                    dashboard = dashboard?.DashboardId,
+                                    customPage = customPage?.LogicalName,
+                                    customPageEntityName = customPage?.ContextEntityName,
+                                    customPageRecordId = customPage?.ContextRecordId,
+                                    appId = dashboard?.AppId ?? customPage?.AppId ?? entityList?.AppId ?? entityRecord?.AppId,
+                                    client = subArea.AttributeValue("Client") ?? subArea.AttributeValue("client"),
+                                    passParams = ParseOptionalBoolean(subArea.AttributeValue("PassParams") ?? subArea.AttributeValue("passparams")),
+                                    availableOffline = ParseOptionalBoolean(subArea.AttributeValue("AvailableOffline") ?? subArea.AttributeValue("availableoffline")),
+                                    icon = subArea.AttributeValue("Icon") ?? subArea.AttributeValue("icon"),
+                                    vectorIcon = subArea.AttributeValue("VectorIcon") ?? subArea.AttributeValue("vectoricon")
+                                };
                             })
                             .ToArray()
                     })
@@ -394,4 +427,444 @@ internal sealed partial class XmlCanonicalSolutionParser
             .Elements()
             .FirstOrDefault(child => child.Name.LocalName.Equals("Title", StringComparison.OrdinalIgnoreCase))?
             .AttributeValue("title");
+
+    private static bool? ParseOptionalBoolean(string? value) =>
+        string.IsNullOrWhiteSpace(value)
+            ? null
+            : string.Equals(NormalizeBoolean(value), "true", StringComparison.OrdinalIgnoreCase);
+
+    private readonly record struct SiteMapDashboardTarget(string DashboardId, string? AppId);
+
+    private readonly record struct SiteMapEntityListTarget(string LogicalName, string ViewId, string? ViewType, string? AppId);
+
+    private readonly record struct SiteMapEntityRecordTarget(string LogicalName, string RecordId, string? FormId, string? AppId);
+
+    private readonly record struct SiteMapCustomPageTarget(string LogicalName, string? AppId, string? ContextEntityName, string? ContextRecordId);
+
+    private static SiteMapDashboardTarget? TryParseDashboardTarget(string? rawUrl)
+    {
+        if (string.IsNullOrWhiteSpace(rawUrl)
+            || rawUrl.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var query = ExtractQueryString(rawUrl);
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return null;
+        }
+
+        var parameters = ParseQueryString(query);
+        if (parameters.Keys.Any(key =>
+                !key.Equals("appid", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("pagetype", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("id", StringComparison.OrdinalIgnoreCase)))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("pagetype", out var pageType)
+            || !pageType.Equals("dashboard", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("id", out var dashboardId))
+        {
+            return null;
+        }
+
+        var normalizedDashboardId = NormalizeGuid(dashboardId);
+        if (string.IsNullOrWhiteSpace(normalizedDashboardId))
+        {
+            return null;
+        }
+
+        string? normalizedAppId = null;
+        if (parameters.TryGetValue("appid", out var appId)
+            && TryNormalizeGuid(appId) is not { Length: > 0 } parsedAppId)
+        {
+            return null;
+        }
+        else if (!string.IsNullOrWhiteSpace(appId))
+        {
+            normalizedAppId = TryNormalizeGuid(appId);
+        }
+
+        return new SiteMapDashboardTarget(normalizedDashboardId, normalizedAppId);
+    }
+
+    private static SiteMapEntityListTarget? TryParseEntityListTarget(string? rawUrl)
+    {
+        if (string.IsNullOrWhiteSpace(rawUrl)
+            || rawUrl.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var query = ExtractQueryString(rawUrl);
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return null;
+        }
+
+        var parameters = ParseQueryString(query);
+        if (parameters.Keys.Any(key =>
+                !key.Equals("appid", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("pagetype", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("etn", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("viewid", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("viewtype", StringComparison.OrdinalIgnoreCase)))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("pagetype", out var pageType)
+            || !pageType.Equals("entitylist", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("etn", out var entityLogicalName)
+            || NormalizeLogicalName(entityLogicalName) is not { Length: > 0 } normalizedEntityLogicalName)
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("viewid", out var viewId)
+            || TryNormalizeGuid(viewId) is not { Length: > 0 } normalizedViewId)
+        {
+            return null;
+        }
+
+        string? normalizedViewType = null;
+        if (parameters.TryGetValue("viewtype", out var viewType)
+            && NormalizeSiteMapViewType(viewType) is not { Length: > 0 } parsedViewType)
+        {
+            return null;
+        }
+        else if (!string.IsNullOrWhiteSpace(viewType))
+        {
+            normalizedViewType = NormalizeSiteMapViewType(viewType);
+        }
+
+        string? normalizedAppId = null;
+        if (parameters.TryGetValue("appid", out var appId)
+            && TryNormalizeGuid(appId) is not { Length: > 0 } parsedAppId)
+        {
+            return null;
+        }
+        else if (!string.IsNullOrWhiteSpace(appId))
+        {
+            normalizedAppId = TryNormalizeGuid(appId);
+        }
+
+        return new SiteMapEntityListTarget(normalizedEntityLogicalName, normalizedViewId, normalizedViewType, normalizedAppId);
+    }
+
+    private static SiteMapEntityRecordTarget? TryParseEntityRecordTarget(string? rawUrl)
+    {
+        if (string.IsNullOrWhiteSpace(rawUrl)
+            || rawUrl.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var query = ExtractQueryString(rawUrl);
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return null;
+        }
+
+        var parameters = ParseQueryString(query);
+        if (parameters.Keys.Any(key =>
+                !key.Equals("appid", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("pagetype", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("etn", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("id", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("extraqs", StringComparison.OrdinalIgnoreCase)))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("pagetype", out var pageType)
+            || !pageType.Equals("entityrecord", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("etn", out var entityLogicalName)
+            || NormalizeLogicalName(entityLogicalName) is not { Length: > 0 } normalizedEntityLogicalName)
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("id", out var recordId)
+            || TryNormalizeGuid(recordId) is not { Length: > 0 } normalizedRecordId)
+        {
+            return null;
+        }
+
+        string? normalizedFormId = null;
+        if (parameters.TryGetValue("extraqs", out var extraQueryString))
+        {
+            normalizedFormId = TryParseSiteMapFormId(extraQueryString);
+            if (string.IsNullOrWhiteSpace(normalizedFormId))
+            {
+                return null;
+            }
+        }
+
+        string? normalizedAppId = null;
+        if (parameters.TryGetValue("appid", out var appId)
+            && TryNormalizeGuid(appId) is not { Length: > 0 } parsedAppId)
+        {
+            return null;
+        }
+        else if (!string.IsNullOrWhiteSpace(appId))
+        {
+            normalizedAppId = TryNormalizeGuid(appId);
+        }
+
+        return new SiteMapEntityRecordTarget(normalizedEntityLogicalName, normalizedRecordId, normalizedFormId, normalizedAppId);
+    }
+
+    private static SiteMapCustomPageTarget? TryParseCustomPageTarget(string? rawUrl)
+    {
+        if (string.IsNullOrWhiteSpace(rawUrl)
+            || rawUrl.StartsWith("$webresource:", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var query = ExtractQueryString(rawUrl);
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return null;
+        }
+
+        var parameters = ParseQueryString(query);
+        if (parameters.Keys.Any(key =>
+                !key.Equals("appid", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("pagetype", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("name", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("entityname", StringComparison.OrdinalIgnoreCase)
+                && !key.Equals("recordid", StringComparison.OrdinalIgnoreCase)))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("pagetype", out var pageType)
+            || !pageType.Equals("custom", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        if (!parameters.TryGetValue("name", out var logicalName))
+        {
+            return null;
+        }
+
+        var normalizedLogicalName = NormalizeLogicalName(logicalName);
+        if (string.IsNullOrWhiteSpace(normalizedLogicalName))
+        {
+            return null;
+        }
+
+        string? normalizedContextEntityName = null;
+        if (parameters.TryGetValue("entityname", out var contextEntityName)
+            && NormalizeLogicalName(contextEntityName) is not { Length: > 0 } parsedContextEntityName)
+        {
+            return null;
+        }
+        else if (!string.IsNullOrWhiteSpace(contextEntityName))
+        {
+            normalizedContextEntityName = NormalizeLogicalName(contextEntityName);
+        }
+
+        string? normalizedContextRecordId = null;
+        if (parameters.TryGetValue("recordid", out var contextRecordId)
+            && TryNormalizeGuid(contextRecordId) is not { Length: > 0 } parsedContextRecordId)
+        {
+            return null;
+        }
+        else if (!string.IsNullOrWhiteSpace(contextRecordId))
+        {
+            normalizedContextRecordId = TryNormalizeGuid(contextRecordId);
+        }
+
+        if (!parameters.TryGetValue("appid", out var appId))
+        {
+            return new SiteMapCustomPageTarget(normalizedLogicalName, null, normalizedContextEntityName, normalizedContextRecordId);
+        }
+
+        var normalizedAppId = TryNormalizeGuid(appId);
+        return string.IsNullOrWhiteSpace(normalizedAppId)
+            ? null
+            : new SiteMapCustomPageTarget(normalizedLogicalName, normalizedAppId, normalizedContextEntityName, normalizedContextRecordId);
+    }
+
+    private static string? ExtractQueryString(string rawUrl)
+    {
+        var separatorIndex = rawUrl.IndexOf('?', StringComparison.Ordinal);
+        if (separatorIndex < 0 || separatorIndex == rawUrl.Length - 1)
+        {
+            return null;
+        }
+
+        return rawUrl[(separatorIndex + 1)..];
+    }
+
+    private static string NormalizeSiteMapRawUrl(string rawUrl)
+    {
+        var trimmed = rawUrl.Trim();
+        var separatorIndex = trimmed.IndexOf('?', StringComparison.Ordinal);
+        if (separatorIndex < 0 || separatorIndex == trimmed.Length - 1)
+        {
+            return trimmed;
+        }
+
+        var path = trimmed[..separatorIndex];
+        var parameters = ParseQueryString(trimmed[(separatorIndex + 1)..]);
+        if (parameters.Count == 0)
+        {
+            return path;
+        }
+
+        var normalizedQuery = string.Join("&", parameters
+            .Select(pair => new KeyValuePair<string, string>(pair.Key.Trim(), NormalizeSiteMapRawQueryValue(pair.Key, pair.Value)))
+            .OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(pair => pair.Value, StringComparer.OrdinalIgnoreCase)
+            .Select(FormatSiteMapRawQueryPair));
+
+        return $"{path}?{normalizedQuery}";
+    }
+
+    private static string NormalizeSiteMapRawQueryValue(string key, string value)
+    {
+        var trimmed = value.Trim();
+        if (string.IsNullOrWhiteSpace(trimmed))
+        {
+            return string.Empty;
+        }
+
+        return key.Trim().ToLowerInvariant() switch
+        {
+            "appid" or "id" or "recordid" or "viewid" or "formid" => TryNormalizeGuid(trimmed) ?? trimmed,
+            "etn" or "entityname" or "name" or "pagetype" => trimmed.ToLowerInvariant(),
+            "extraqs" => NormalizeSiteMapEmbeddedRawQuery(trimmed),
+            _ => NormalizeSiteMapRawBoolean(trimmed) ?? trimmed
+        };
+    }
+
+    private static string NormalizeSiteMapEmbeddedRawQuery(string value)
+    {
+        var parameters = ParseQueryString(Uri.UnescapeDataString(value));
+        if (parameters.Count == 0)
+        {
+            return value.Trim();
+        }
+
+        return string.Join("&", parameters
+            .Select(pair => new KeyValuePair<string, string>(pair.Key.Trim(), NormalizeSiteMapRawQueryValue(pair.Key, pair.Value)))
+            .OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(pair => pair.Value, StringComparer.OrdinalIgnoreCase)
+            .Select(pair => string.IsNullOrEmpty(pair.Value)
+                ? Uri.EscapeDataString(pair.Key)
+                : $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value)}"));
+    }
+
+    private static string? NormalizeSiteMapRawBoolean(string value) =>
+        value.Trim() switch
+        {
+            "1" => "true",
+            "0" => "false",
+            var text when text.Equals("true", StringComparison.OrdinalIgnoreCase) => "true",
+            var text when text.Equals("false", StringComparison.OrdinalIgnoreCase) => "false",
+            _ => null
+        };
+
+    private static string FormatSiteMapRawQueryPair(KeyValuePair<string, string> pair) =>
+        string.IsNullOrEmpty(pair.Value)
+            ? Uri.EscapeDataString(pair.Key)
+            : $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value)}";
+
+    private static Dictionary<string, string> ParseQueryString(string query)
+    {
+        var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var segment in query.Split('&', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var separatorIndex = segment.IndexOf('=', StringComparison.Ordinal);
+            var key = separatorIndex >= 0 ? segment[..separatorIndex] : segment;
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                continue;
+            }
+
+            var value = separatorIndex >= 0 ? segment[(separatorIndex + 1)..] : string.Empty;
+            values[Uri.UnescapeDataString(key)] = Uri.UnescapeDataString(value);
+        }
+
+        return values;
+    }
+
+    private static string? NormalizeSiteMapViewType(string? value) =>
+        value?.Trim().ToLowerInvariant() switch
+        {
+            "1039" => "savedquery",
+            "4230" => "userquery",
+            "savedquery" => "savedquery",
+            "userquery" => "userquery",
+            _ => null
+        };
+
+    private static string? TryParseSiteMapFormId(string? rawValue)
+    {
+        if (string.IsNullOrWhiteSpace(rawValue))
+        {
+            return null;
+        }
+
+        var extraParameters = ParseEmbeddedQueryString(Uri.UnescapeDataString(rawValue));
+        if (extraParameters.Count != 1
+            || !extraParameters.TryGetValue("formid", out var formId))
+        {
+            return null;
+        }
+
+        return TryNormalizeGuid(formId);
+    }
+
+    private static Dictionary<string, string> ParseEmbeddedQueryString(string query)
+    {
+        var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var segment in query.Split(['&', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var separatorIndex = segment.IndexOf('=', StringComparison.Ordinal);
+            var key = separatorIndex >= 0 ? segment[..separatorIndex] : segment;
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                continue;
+            }
+
+            var value = separatorIndex >= 0 ? segment[(separatorIndex + 1)..] : string.Empty;
+            values[Uri.UnescapeDataString(key)] = Uri.UnescapeDataString(value);
+        }
+
+        return values;
+    }
+
+    private static string? TryNormalizeGuid(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var trimmed = value.Trim().Trim('{', '}');
+        return Guid.TryParse(trimmed, out var guid)
+            ? guid.ToString("D")
+            : null;
+    }
 }

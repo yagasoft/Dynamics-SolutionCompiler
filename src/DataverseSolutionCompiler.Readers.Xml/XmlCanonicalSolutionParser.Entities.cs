@@ -139,6 +139,7 @@ internal sealed partial class XmlCanonicalSolutionParser
             ParseForms(entityDirectory, logicalName!);
             ParseViews(entityDirectory, logicalName!);
             ParseVisualizations(entityDirectory, logicalName!);
+            ParseRibbons(entityDirectory, logicalName!);
         }
     }
 

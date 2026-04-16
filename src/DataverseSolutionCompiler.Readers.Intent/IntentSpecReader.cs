@@ -568,6 +568,14 @@ public sealed class IntentSpecReader : ISolutionReader
             ValidateUnexpectedProperties(appModule.ExtensionData, appModulePath, sourcePath, diagnostics);
             RequireValue(appModule.UniqueName, $"{appModulePath}.uniqueName", sourcePath, diagnostics);
             RequireValue(appModule.DisplayName, $"{appModulePath}.displayName", sourcePath, diagnostics);
+            foreach (var (roleId, roleIdIndex) in Enumerate(appModule.RoleIds))
+            {
+                if (!Guid.TryParse(roleId, out _))
+                {
+                    diagnostics.Add(CreateError(sourcePath, $"{appModulePath}.roleIds[{roleIdIndex}]", "App module roleIds entries must be valid GUID values when supplied."));
+                }
+            }
+
             if (appModule.SiteMap is null)
             {
                 diagnostics.Add(CreateError(sourcePath, $"{appModulePath}.siteMap", "JSON v1 app modules require a siteMap section."));
@@ -602,29 +610,222 @@ public sealed class IntentSpecReader : ISolutionReader
                         ValidateUnexpectedProperties(subArea.ExtensionData, subAreaPath, sourcePath, diagnostics);
                         RequireValue(subArea.Id, $"{subAreaPath}.id", sourcePath, diagnostics);
                         RequireValue(subArea.Title, $"{subAreaPath}.title", sourcePath, diagnostics);
+                        var hasEntity = !string.IsNullOrWhiteSpace(subArea.Entity);
+                        var hasUrl = !string.IsNullOrWhiteSpace(subArea.Url);
+                        var hasWebResource = !string.IsNullOrWhiteSpace(subArea.WebResource);
+                        var hasDashboard = !string.IsNullOrWhiteSpace(subArea.Dashboard);
+                        var hasCustomPage = !string.IsNullOrWhiteSpace(subArea.CustomPage);
+                        var hasEntityList = hasEntity && !string.IsNullOrWhiteSpace(subArea.ViewId);
+                        var hasEntityRecord = hasEntity && !string.IsNullOrWhiteSpace(subArea.RecordId);
                         var populatedTargets = new[]
                         {
-                            !string.IsNullOrWhiteSpace(subArea.Entity),
-                            !string.IsNullOrWhiteSpace(subArea.Url),
-                            !string.IsNullOrWhiteSpace(subArea.WebResource)
+                            hasEntity,
+                            hasUrl,
+                            hasWebResource,
+                            hasDashboard,
+                            hasCustomPage
                         }.Count(value => value);
                         if (populatedTargets != 1)
                         {
                             diagnostics.Add(CreateError(
                                 sourcePath,
                                 subAreaPath,
-                                "Each site map sub-area must declare exactly one of entity, url, or webResource."));
+                                "Each site map sub-area must declare exactly one of entity, url, webResource, dashboard, or customPage."));
                             continue;
                         }
 
                         var normalizedEntity = NormalizeLogicalName(subArea.Entity);
-                        if (!string.IsNullOrWhiteSpace(normalizedEntity)
-                            && !knownTables.Contains(normalizedEntity))
+                        if (hasEntity
+                            && string.IsNullOrWhiteSpace(normalizedEntity))
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                $"{subAreaPath}.entity",
+                                $"Site map sub-area '{subArea.Id}' references entity '{subArea.Entity}', but only logical-name entity targets are supported in the current structured subset."));
+                        }
+                        else if (!string.IsNullOrWhiteSpace(normalizedEntity)
+                            && !knownTables.Contains(normalizedEntity)
+                            && !hasEntityList
+                            && !hasEntityRecord)
                         {
                             diagnostics.Add(CreateError(
                                 sourcePath,
                                 $"{subAreaPath}.entity",
                                 $"Site map sub-area '{subArea.Id}' references unknown table '{subArea.Entity}'."));
+                        }
+
+                        if (hasDashboard
+                            && NormalizeGuid(subArea.Dashboard) is null)
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                $"{subAreaPath}.dashboard",
+                                $"Site map sub-area '{subArea.Id}' references dashboard '{subArea.Dashboard}', but only GUID-backed dashboard targets are supported in the current structured subset."));
+                        }
+
+                        if (hasCustomPage
+                            && NormalizeLogicalName(subArea.CustomPage) is null)
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                $"{subAreaPath}.customPage",
+                                $"Site map sub-area '{subArea.Id}' references custom page '{subArea.CustomPage}', but only logical-name custom-page targets are supported in the current structured subset."));
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.AppId))
+                        {
+                            if (!hasCustomPage
+                                && !hasDashboard
+                                && string.IsNullOrWhiteSpace(subArea.ViewId)
+                                && string.IsNullOrWhiteSpace(subArea.RecordId))
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.appId",
+                                    "appId is supported only for app-scoped dashboard, customPage, entity-list, or entity-record deep-link targets."));
+                            }
+                            else if (NormalizeGuid(subArea.AppId) is null)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.appId",
+                                    $"Site map sub-area '{subArea.Id}' references appId '{subArea.AppId}', but only GUID-backed app-scoped dashboard, custom-page, entity-list, or entity-record targets are supported in the current structured subset."));
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.CustomPageEntityName))
+                        {
+                            if (!hasCustomPage)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.customPageEntityName",
+                                    "customPageEntityName is supported only when customPage is also supplied."));
+                            }
+                            else if (NormalizeLogicalName(subArea.CustomPageEntityName) is null)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.customPageEntityName",
+                                    $"Site map sub-area '{subArea.Id}' references customPageEntityName '{subArea.CustomPageEntityName}', but only logical-name custom-page context entities are supported in the current structured subset."));
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.CustomPageRecordId))
+                        {
+                            if (!hasCustomPage)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.customPageRecordId",
+                                    "customPageRecordId is supported only when customPage is also supplied."));
+                            }
+                            else if (NormalizeGuid(subArea.CustomPageRecordId) is null)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.customPageRecordId",
+                                    $"Site map sub-area '{subArea.Id}' references customPageRecordId '{subArea.CustomPageRecordId}', but only GUID-backed custom-page record context is supported in the current structured subset."));
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.ViewId))
+                        {
+                            if (!hasEntity)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.viewId",
+                                    "viewId is supported only when entity is also supplied."));
+                            }
+                            else if (NormalizeGuid(subArea.ViewId) is null)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.viewId",
+                                    $"Site map sub-area '{subArea.Id}' references viewId '{subArea.ViewId}', but only GUID-backed entity-list targets are supported in the current structured subset."));
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.ViewType))
+                        {
+                            if (string.IsNullOrWhiteSpace(subArea.ViewId))
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.viewType",
+                                    "viewType is supported only when viewId is also supplied."));
+                            }
+                            else if (NormalizeSiteMapViewType(subArea.ViewType) is null)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.viewType",
+                                    $"Site map sub-area '{subArea.Id}' references viewType '{subArea.ViewType}', but only savedquery or userquery entity-list targets are supported in the current structured subset."));
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.RecordId))
+                        {
+                            if (!hasEntity)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.recordId",
+                                    "recordId is supported only when entity is also supplied."));
+                            }
+                            else if (NormalizeGuid(subArea.RecordId) is null)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.recordId",
+                                    $"Site map sub-area '{subArea.Id}' references recordId '{subArea.RecordId}', but only GUID-backed entity-record targets are supported in the current structured subset."));
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.FormId))
+                        {
+                            if (string.IsNullOrWhiteSpace(subArea.RecordId))
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.formId",
+                                    "formId is supported only when recordId is also supplied."));
+                            }
+                            else if (NormalizeGuid(subArea.FormId) is null)
+                            {
+                                diagnostics.Add(CreateError(
+                                    sourcePath,
+                                    $"{subAreaPath}.formId",
+                                    $"Site map sub-area '{subArea.Id}' references formId '{subArea.FormId}', but only GUID-backed entity-record form targets are supported in the current structured subset."));
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.ViewId)
+                            && !string.IsNullOrWhiteSpace(subArea.RecordId))
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                subAreaPath,
+                                "Entity-targeted site map sub-areas can preserve either an entity-list view target or an entity-record target, but not both at the same time."));
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.FormId)
+                            && !string.IsNullOrWhiteSpace(subArea.ViewId))
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                subAreaPath,
+                                "formId is not supported on entity-list targets."));
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(subArea.ViewType)
+                            && !string.IsNullOrWhiteSpace(subArea.RecordId))
+                        {
+                            diagnostics.Add(CreateError(
+                                sourcePath,
+                                subAreaPath,
+                                "viewType is not supported on entity-record targets."));
                         }
                     }
                 }
@@ -1356,6 +1557,14 @@ public sealed class IntentSpecReader : ISolutionReader
 
         var uniqueName = NormalizeLogicalName(appModule.UniqueName)!;
         var componentTypesJson = SerializeJson(new[] { "62" });
+        var roleIds = appModule.RoleIds
+            ?.Select(NormalizeGuid)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .Cast<string>()
+            .ToArray()
+            ?? [];
         var appSettings = (appModule.AppSettings ?? [])
             .Where(setting => !string.IsNullOrWhiteSpace(setting?.DefinitionUniqueName))
             .Select(setting => setting!)
@@ -1363,8 +1572,8 @@ public sealed class IntentSpecReader : ISolutionReader
         var appModuleSummaryJson = SerializeJson(new
         {
             componentTypes = JsonNode.Parse(componentTypesJson),
-            roleIds = JsonNode.Parse("[]"),
-            roleMapCount = 0,
+            roleIds,
+            roleMapCount = roleIds.Length,
             appSettingCount = appSettings.Length
         });
 
@@ -1377,8 +1586,8 @@ public sealed class IntentSpecReader : ISolutionReader
             CreateProperties(
                 (ArtifactPropertyKeys.Description, appModule.Description),
                 (ArtifactPropertyKeys.ComponentTypesJson, componentTypesJson),
-                (ArtifactPropertyKeys.RoleIdsJson, "[]"),
-                (ArtifactPropertyKeys.RoleMapCount, "0"),
+                (ArtifactPropertyKeys.RoleIdsJson, SerializeJson(roleIds)),
+                (ArtifactPropertyKeys.RoleMapCount, roleIds.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.AppSettingCount, appSettings.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SummaryJson, appModuleSummaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(appModuleSummaryJson))));
@@ -1397,12 +1606,13 @@ public sealed class IntentSpecReader : ISolutionReader
                     (ArtifactPropertyKeys.Value, appSetting.Value)));
         }
 
-        var areaCount = appModule.SiteMap!.Areas?.Count ?? 0;
-        var groupCount = appModule.SiteMap.Areas?.Sum(area => area?.Groups?.Count ?? 0) ?? 0;
-        var subAreaCount = appModule.SiteMap.Areas?
+        var canonicalSiteMap = CanonicalizeSiteMap(appModule.SiteMap!);
+        var areaCount = canonicalSiteMap.Areas?.Count ?? 0;
+        var groupCount = canonicalSiteMap.Areas?.Sum(area => area?.Groups?.Count ?? 0) ?? 0;
+        var subAreaCount = canonicalSiteMap.Areas?
             .SelectMany(area => area?.Groups ?? [])
             .Sum(group => group?.SubAreas?.Count ?? 0) ?? 0;
-        var webResourceSubAreaCount = appModule.SiteMap.Areas?
+        var webResourceSubAreaCount = canonicalSiteMap.Areas?
             .SelectMany(area => area?.Groups ?? [])
             .SelectMany(group => group?.SubAreas ?? [])
             .Count(subArea => !string.IsNullOrWhiteSpace(subArea?.WebResource))
@@ -1414,6 +1624,7 @@ public sealed class IntentSpecReader : ISolutionReader
             subAreaCount,
             webResourceSubAreaCount
         });
+        var siteMapDefinitionJson = SerializeJson(canonicalSiteMap);
 
         yield return new FamilyArtifact(
             ComponentFamily.SiteMap,
@@ -1422,14 +1633,80 @@ public sealed class IntentSpecReader : ISolutionReader
             sourcePath,
             EvidenceKind.Derived,
             CreateProperties(
-                (ArtifactPropertyKeys.SiteMapDefinitionJson, SerializeJson(appModule.SiteMap)),
+                (ArtifactPropertyKeys.SiteMapDefinitionJson, siteMapDefinitionJson),
                 (ArtifactPropertyKeys.AreaCount, areaCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.GroupCount, groupCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SubAreaCount, subAreaCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.WebResourceSubAreaCount, webResourceSubAreaCount.ToString(System.Globalization.CultureInfo.InvariantCulture)),
                 (ArtifactPropertyKeys.SummaryJson, siteMapSummaryJson),
-                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(siteMapSummaryJson))));
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(siteMapDefinitionJson))));
     }
+
+    private static SiteMapSpec CanonicalizeSiteMap(SiteMapSpec siteMap) =>
+        new()
+        {
+            Areas = (siteMap.Areas ?? [])
+                .Select(area => new SiteMapAreaSpec
+                {
+                    Id = area.Id,
+                    Title = area.Title,
+                    Groups = (area.Groups ?? [])
+                        .Select(group => new SiteMapGroupSpec
+                        {
+                            Id = group.Id,
+                            Title = group.Title,
+                            SubAreas = (group.SubAreas ?? [])
+                                .Select(subArea =>
+                                {
+                                    var normalizedDashboard = NormalizeGuid(subArea.Dashboard);
+                                    var normalizedCustomPage = NormalizeLogicalName(subArea.CustomPage);
+                                    var normalizedCustomPageEntityName = NormalizeLogicalName(subArea.CustomPageEntityName);
+                                    var normalizedCustomPageRecordId = NormalizeGuid(subArea.CustomPageRecordId);
+                                    var normalizedEntity = NormalizeLogicalName(subArea.Entity);
+                                    var normalizedViewId = NormalizeGuid(subArea.ViewId);
+                                    var normalizedViewType = NormalizeSiteMapViewType(subArea.ViewType);
+                                    var normalizedRecordId = NormalizeGuid(subArea.RecordId);
+                                    var normalizedFormId = NormalizeGuid(subArea.FormId);
+                                    var normalizedAppId = normalizedCustomPage is not null
+                                        || normalizedDashboard is not null
+                                        || normalizedViewId is not null
+                                        || normalizedRecordId is not null
+                                        ? NormalizeGuid(subArea.AppId)
+                                        : null;
+                                    return new SiteMapSubAreaSpec
+                                    {
+                                        Id = subArea.Id,
+                                        Title = subArea.Title,
+                                        Entity = normalizedEntity,
+                                        ViewId = normalizedViewId,
+                                        ViewType = normalizedViewType,
+                                        RecordId = normalizedRecordId,
+                                        FormId = normalizedFormId,
+                                        Url = normalizedDashboard is null
+                                            && normalizedCustomPage is null
+                                            && normalizedViewId is null
+                                            && normalizedRecordId is null
+                                            ? NormalizeSiteMapRawUrl(subArea.Url)
+                                            : null,
+                                        WebResource = subArea.WebResource,
+                                        Dashboard = normalizedDashboard,
+                                        CustomPage = normalizedCustomPage,
+                                        CustomPageEntityName = normalizedCustomPage is not null ? normalizedCustomPageEntityName : null,
+                                        CustomPageRecordId = normalizedCustomPage is not null ? normalizedCustomPageRecordId : null,
+                                        AppId = normalizedAppId,
+                                        Client = subArea.Client,
+                                        PassParams = subArea.PassParams,
+                                        AvailableOffline = subArea.AvailableOffline,
+                                        Icon = subArea.Icon,
+                                        VectorIcon = subArea.VectorIcon
+                                    };
+                                })
+                                .ToArray()
+                        })
+                        .ToArray()
+                })
+                .ToArray()
+        };
 
     private static IEnumerable<FamilyArtifact> CreateEnvironmentVariableArtifacts(EnvironmentVariableSpec environmentVariable, string sourcePath)
     {
@@ -1613,6 +1890,125 @@ public sealed class IntentSpecReader : ISolutionReader
 
     private static string? NormalizeGuid(string? value) =>
         Guid.TryParse(value, out var guid) ? guid.ToString("D") : null;
+
+    private static string? TryNormalizeSiteMapRawGuid(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var trimmed = value.Trim().Trim('{', '}');
+        return Guid.TryParse(trimmed, out var guid) ? guid.ToString("D") : null;
+    }
+
+    private static string? NormalizeSiteMapRawUrl(string? rawUrl)
+    {
+        if (string.IsNullOrWhiteSpace(rawUrl))
+        {
+            return null;
+        }
+
+        var trimmed = rawUrl.Trim();
+        var separatorIndex = trimmed.IndexOf('?', StringComparison.Ordinal);
+        if (separatorIndex < 0 || separatorIndex == trimmed.Length - 1)
+        {
+            return trimmed;
+        }
+
+        var path = trimmed[..separatorIndex];
+        var parameters = ParseSiteMapRawQueryString(trimmed[(separatorIndex + 1)..]);
+        if (parameters.Count == 0)
+        {
+            return path;
+        }
+
+        var normalizedQuery = string.Join("&", parameters
+            .Select(pair => new KeyValuePair<string, string>(pair.Key.Trim(), NormalizeSiteMapRawQueryValue(pair.Key, pair.Value)))
+            .OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(pair => pair.Value, StringComparer.OrdinalIgnoreCase)
+            .Select(FormatSiteMapRawQueryPair));
+
+        return $"{path}?{normalizedQuery}";
+    }
+
+    private static string NormalizeSiteMapRawQueryValue(string key, string value)
+    {
+        var trimmed = value.Trim();
+        if (string.IsNullOrWhiteSpace(trimmed))
+        {
+            return string.Empty;
+        }
+
+        return key.Trim().ToLowerInvariant() switch
+        {
+            "appid" or "id" or "recordid" or "viewid" or "formid" => TryNormalizeSiteMapRawGuid(trimmed) ?? trimmed,
+            "etn" or "entityname" or "name" or "pagetype" => trimmed.ToLowerInvariant(),
+            "extraqs" => NormalizeSiteMapEmbeddedRawQuery(trimmed),
+            _ => NormalizeSiteMapRawBoolean(trimmed) ?? trimmed
+        };
+    }
+
+    private static string NormalizeSiteMapEmbeddedRawQuery(string value)
+    {
+        var parameters = ParseSiteMapRawQueryString(Uri.UnescapeDataString(value));
+        if (parameters.Count == 0)
+        {
+            return value.Trim();
+        }
+
+        return string.Join("&", parameters
+            .Select(pair => new KeyValuePair<string, string>(pair.Key.Trim(), NormalizeSiteMapRawQueryValue(pair.Key, pair.Value)))
+            .OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(pair => pair.Value, StringComparer.OrdinalIgnoreCase)
+            .Select(pair => string.IsNullOrEmpty(pair.Value)
+                ? Uri.EscapeDataString(pair.Key)
+                : $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value)}"));
+    }
+
+    private static string? NormalizeSiteMapRawBoolean(string value) =>
+        value.Trim() switch
+        {
+            "1" => "true",
+            "0" => "false",
+            var text when text.Equals("true", StringComparison.OrdinalIgnoreCase) => "true",
+            var text when text.Equals("false", StringComparison.OrdinalIgnoreCase) => "false",
+            _ => null
+        };
+
+    private static string FormatSiteMapRawQueryPair(KeyValuePair<string, string> pair) =>
+        string.IsNullOrEmpty(pair.Value)
+            ? Uri.EscapeDataString(pair.Key)
+            : $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value)}";
+
+    private static Dictionary<string, string> ParseSiteMapRawQueryString(string query)
+    {
+        var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var segment in query.Split('&', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var separatorIndex = segment.IndexOf('=', StringComparison.Ordinal);
+            var key = separatorIndex >= 0 ? segment[..separatorIndex] : segment;
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                continue;
+            }
+
+            var value = separatorIndex >= 0 ? segment[(separatorIndex + 1)..] : string.Empty;
+            values[Uri.UnescapeDataString(key)] = Uri.UnescapeDataString(value);
+        }
+
+        return values;
+    }
+
+    private static string? NormalizeSiteMapViewType(string? value) =>
+        value?.Trim().ToLowerInvariant() switch
+        {
+            "1039" => "savedquery",
+            "4230" => "userquery",
+            "savedquery" => "savedquery",
+            "userquery" => "userquery",
+            _ => null
+        };
 
     private static LayeringIntent ParseLayeringIntent(string value) =>
         Enum.Parse<LayeringIntent>(value, ignoreCase: true);
@@ -1975,6 +2371,9 @@ internal sealed record AppModuleSpec
     [JsonPropertyName("description")]
     public string? Description { get; init; }
 
+    [JsonPropertyName("roleIds")]
+    public IReadOnlyList<string>? RoleIds { get; init; }
+
     [JsonPropertyName("siteMap")]
     public SiteMapSpec? SiteMap { get; init; }
 
@@ -2035,11 +2434,53 @@ internal sealed record SiteMapSubAreaSpec
     [JsonPropertyName("entity")]
     public string? Entity { get; init; }
 
+    [JsonPropertyName("viewId")]
+    public string? ViewId { get; init; }
+
+    [JsonPropertyName("viewType")]
+    public string? ViewType { get; init; }
+
+    [JsonPropertyName("recordId")]
+    public string? RecordId { get; init; }
+
+    [JsonPropertyName("formId")]
+    public string? FormId { get; init; }
+
     [JsonPropertyName("url")]
     public string? Url { get; init; }
 
     [JsonPropertyName("webResource")]
     public string? WebResource { get; init; }
+
+    [JsonPropertyName("dashboard")]
+    public string? Dashboard { get; init; }
+
+    [JsonPropertyName("customPage")]
+    public string? CustomPage { get; init; }
+
+    [JsonPropertyName("customPageEntityName")]
+    public string? CustomPageEntityName { get; init; }
+
+    [JsonPropertyName("customPageRecordId")]
+    public string? CustomPageRecordId { get; init; }
+
+    [JsonPropertyName("appId")]
+    public string? AppId { get; init; }
+
+    [JsonPropertyName("client")]
+    public string? Client { get; init; }
+
+    [JsonPropertyName("passParams")]
+    public bool? PassParams { get; init; }
+
+    [JsonPropertyName("availableOffline")]
+    public bool? AvailableOffline { get; init; }
+
+    [JsonPropertyName("icon")]
+    public string? Icon { get; init; }
+
+    [JsonPropertyName("vectorIcon")]
+    public string? VectorIcon { get; init; }
 
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtensionData { get; init; }

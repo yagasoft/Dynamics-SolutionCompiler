@@ -1,8 +1,9 @@
 {
   "sourceSkill": "C:\\Users\\Ahmed Elsawalhy\\.codex\\skills\\dataverse-metadata-synthesis",
-  "capturedOn": "2026-04-14",
+  "capturedOn": "2026-04-15",
   "purpose": "Seed regression corpus and reference surface for the .NET 10 Dataverse Solution Compiler.",
   "referenceFiles": [
+    "advanced-ui-seed-plan.md",
     "app-shell-extensibility.md",
     "code-extensibility.md",
     "component-catalog.md",
@@ -37,6 +38,7 @@
     "seed-process-policy",
     "seed-process-security",
     "seed-process-security+",
+    "seed-reporting-legacy",
     "source-only-similarity-rule",
     "source-only-sla"
   ]

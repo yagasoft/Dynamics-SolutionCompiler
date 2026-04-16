@@ -94,11 +94,20 @@ internal sealed partial class DataverseWebApiLiveReader
                 case 26:
                     scope.ViewIds.AddIfNotEmpty(GetGuid(row, "objectid"));
                     break;
+                case 59:
+                    scope.VisualizationIds.AddIfNotEmpty(GetGuid(row, "objectid"));
+                    break;
                 case 60:
                     scope.FormIds.AddIfNotEmpty(GetGuid(row, "objectid"));
                     break;
+                case 66:
+                    scope.CustomControlIds.AddIfNotEmpty(GetGuid(row, "objectid"));
+                    break;
                 case 62:
                     scope.SiteMapIds.AddIfNotEmpty(GetGuid(row, "objectid"));
+                    break;
+                case 61:
+                    scope.WebResourceIds.AddIfNotEmpty(GetGuid(row, "objectid"));
                     break;
                 case 80:
                     scope.AppModuleIds.AddIfNotEmpty(GetGuid(row, "objectid"));
@@ -164,7 +173,7 @@ internal sealed partial class DataverseWebApiLiveReader
             }
         }
 
-        if (scope.EntityLogicalNames.Count == 0 && scope.EntityMetadataIds.Count > 0 && ShouldReadAny(requestedFamilies, ComponentFamily.Table, ComponentFamily.Column, ComponentFamily.Relationship, ComponentFamily.OptionSet, ComponentFamily.Key, ComponentFamily.ImageConfiguration, ComponentFamily.Form, ComponentFamily.View))
+        if (scope.EntityLogicalNames.Count == 0 && scope.EntityMetadataIds.Count > 0 && ShouldReadAny(requestedFamilies, ComponentFamily.Table, ComponentFamily.Column, ComponentFamily.Relationship, ComponentFamily.OptionSet, ComponentFamily.Key, ComponentFamily.ImageConfiguration, ComponentFamily.Form, ComponentFamily.View, ComponentFamily.Visualization))
         {
             foreach (var logicalName in await ResolveEntityLogicalNamesAsync(scope.EntityMetadataIds, cancellationToken).ConfigureAwait(false))
             {
@@ -371,6 +380,21 @@ internal sealed partial class DataverseWebApiLiveReader
                 catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
                 {
                     diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.View, entityLogicalName, exception));
+                }
+            }
+
+            if (requestedFamilies.Contains(ComponentFamily.Visualization))
+            {
+                try
+                {
+                    foreach (var visualization in await ReadVisualizationArtifactsAsync(entityLogicalName, scope.VisualizationIds, cancellationToken).ConfigureAwait(false))
+                    {
+                        artifacts.Add(visualization);
+                    }
+                }
+                catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
+                {
+                    diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.Visualization, entityLogicalName, exception));
                 }
             }
         }

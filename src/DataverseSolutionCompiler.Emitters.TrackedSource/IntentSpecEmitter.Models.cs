@@ -119,6 +119,9 @@ internal sealed record IntentAppModuleSpec
     [JsonPropertyName("description")]
     public string? Description { get; init; }
 
+    [JsonPropertyName("roleIds")]
+    public IReadOnlyList<string>? RoleIds { get; init; }
+
     [JsonPropertyName("siteMap")]
     public IntentSiteMapSpec? SiteMap { get; init; }
 
@@ -167,11 +170,53 @@ internal sealed record IntentSiteMapSubAreaSpec
     [JsonPropertyName("entity")]
     public string? Entity { get; init; }
 
+    [JsonPropertyName("viewId")]
+    public string? ViewId { get; init; }
+
+    [JsonPropertyName("viewType")]
+    public string? ViewType { get; init; }
+
+    [JsonPropertyName("recordId")]
+    public string? RecordId { get; init; }
+
+    [JsonPropertyName("formId")]
+    public string? FormId { get; init; }
+
     [JsonPropertyName("url")]
     public string? Url { get; init; }
 
     [JsonPropertyName("webResource")]
     public string? WebResource { get; init; }
+
+    [JsonPropertyName("dashboard")]
+    public string? Dashboard { get; init; }
+
+    [JsonPropertyName("customPage")]
+    public string? CustomPage { get; init; }
+
+    [JsonPropertyName("customPageEntityName")]
+    public string? CustomPageEntityName { get; init; }
+
+    [JsonPropertyName("customPageRecordId")]
+    public string? CustomPageRecordId { get; init; }
+
+    [JsonPropertyName("appId")]
+    public string? AppId { get; init; }
+
+    [JsonPropertyName("client")]
+    public string? Client { get; init; }
+
+    [JsonPropertyName("passParams")]
+    public bool? PassParams { get; init; }
+
+    [JsonPropertyName("availableOffline")]
+    public bool? AvailableOffline { get; init; }
+
+    [JsonPropertyName("icon")]
+    public string? Icon { get; init; }
+
+    [JsonPropertyName("vectorIcon")]
+    public string? VectorIcon { get; init; }
 }
 
 internal sealed record IntentTableSpec
@@ -702,9 +747,51 @@ internal sealed record SiteMapSubAreaDefinition
     [JsonPropertyName("entity")]
     public string? Entity { get; init; }
 
+    [JsonPropertyName("viewId")]
+    public string? ViewId { get; init; }
+
+    [JsonPropertyName("viewType")]
+    public string? ViewType { get; init; }
+
+    [JsonPropertyName("recordId")]
+    public string? RecordId { get; init; }
+
+    [JsonPropertyName("formId")]
+    public string? FormId { get; init; }
+
     [JsonPropertyName("url")]
     public string? Url { get; init; }
 
     [JsonPropertyName("webResource")]
     public string? WebResource { get; init; }
+
+    [JsonPropertyName("dashboard")]
+    public string? Dashboard { get; init; }
+
+    [JsonPropertyName("customPage")]
+    public string? CustomPage { get; init; }
+
+    [JsonPropertyName("customPageEntityName")]
+    public string? CustomPageEntityName { get; init; }
+
+    [JsonPropertyName("customPageRecordId")]
+    public string? CustomPageRecordId { get; init; }
+
+    [JsonPropertyName("appId")]
+    public string? AppId { get; init; }
+
+    [JsonPropertyName("client")]
+    public string? Client { get; init; }
+
+    [JsonPropertyName("passParams")]
+    public bool? PassParams { get; init; }
+
+    [JsonPropertyName("availableOffline")]
+    public bool? AvailableOffline { get; init; }
+
+    [JsonPropertyName("icon")]
+    public string? Icon { get; init; }
+
+    [JsonPropertyName("vectorIcon")]
+    public string? VectorIcon { get; init; }
 }

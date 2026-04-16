@@ -1,5 +1,6 @@
 using FluentAssertions;
 using System.Diagnostics;
+using System.Text.Json.Nodes;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Read;
 using DataverseSolutionCompiler.Readers.Xml;
@@ -90,6 +91,11 @@ public sealed class XmlSolutionReaderTests
         var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_advanced_ui_924e69cb");
         siteMap.Properties![ArtifactPropertyKeys.AreaCount].Should().Be("1");
         siteMap.Properties![ArtifactPropertyKeys.WebResourceSubAreaCount].Should().Be("1");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"webResource\":\"cdxmeta_/advancedui/landing.html\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"icon\":\"/WebResources/cdxmeta_/advancedui/icon.svg\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"passParams\":false");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"availableOffline\":false");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("$webresource:");
 
         var visualization = FindArtifact(solution, ComponentFamily.Visualization, "account|Accounts by Industry");
         visualization.Properties![ArtifactPropertyKeys.TargetEntity].Should().Be("account");
@@ -99,12 +105,229 @@ public sealed class XmlSolutionReaderTests
         webResource.Properties![ArtifactPropertyKeys.AssetSourcePath].Should().Be("WebResources/cdxmeta_/advancedui/landing.html");
         webResource.Properties![ArtifactPropertyKeys.ContentHash].Should().NotBeNullOrWhiteSpace();
 
+        var ribbon = FindArtifact(solution, ComponentFamily.Ribbon, "account");
+        ribbon.Properties![ArtifactPropertyKeys.MetadataSourcePath].Should().Be("Entities/Account/RibbonDiff.xml");
+        ribbon.Properties![ArtifactPropertyKeys.EntityLogicalName].Should().Be("account");
+        ribbon.Properties![ArtifactPropertyKeys.ContentHash].Should().NotBeNullOrWhiteSpace();
+
         var definition = FindArtifact(solution, ComponentFamily.EnvironmentVariableDefinition, "cdxmeta_AdvancedUiMode");
         definition.Properties![ArtifactPropertyKeys.DefaultValue].Should().Be("scaffold");
         definition.Properties![ArtifactPropertyKeys.ValueSchema].Should().Be("string");
 
         var value = FindArtifact(solution, ComponentFamily.EnvironmentVariableValue, "cdxmeta_AdvancedUiMode");
         value.Properties![ArtifactPropertyKeys.Value].Should().Be("seed");
+    }
+
+    [Fact]
+    public void Reader_parses_seed_app_shell_site_map_adjunct_fields()
+    {
+        var solution = ReadFixture("seed-app-shell");
+
+        var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_shell_dd96cf20");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"client\":\"Web\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"passParams\":true");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"icon\":\"/WebResources/cdxmeta_/shell/icon.svg\"");
+        siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"vectorIcon\":\"/WebResources/cdxmeta_/shell/icon.svg\"");
+    }
+
+    [Fact]
+    public void Reader_parses_supported_site_map_dashboard_targets_with_app_scope()
+    {
+        const string dashboardId = "3c5d4df8-4c0d-4d57-9e8f-6d4b3a8d5812";
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        var sourceRoot = FixtureRoot("seed-app-shell");
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-site-map-dashboard-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(sourceRoot, tempRoot);
+
+            var siteMapPath = Path.Combine(tempRoot, "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=dashboard&amp;id={dashboardId}\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var solution = new XmlSolutionReader().Read(new ReadRequest(tempRoot));
+            var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_shell_dd96cf20");
+
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"dashboard\":\"{dashboardId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"client\":\"Web\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"passParams\":true");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("/main.aspx?appid=");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("\"webResource\":\"");
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reader_parses_supported_site_map_custom_page_targets_with_record_context()
+    {
+        const string customPage = "cdxmeta_shellhome";
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string contextRecordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        var sourceRoot = FixtureRoot("seed-app-shell");
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-site-map-custom-page-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(sourceRoot, tempRoot);
+
+            var siteMapPath = Path.Combine(tempRoot, "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=custom&amp;name={customPage}&amp;entityName=account&amp;recordId=%7B{contextRecordId}%7D\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var solution = new XmlSolutionReader().Read(new ReadRequest(tempRoot));
+            var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_shell_dd96cf20");
+
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"customPage\":\"{customPage}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"customPageEntityName\":\"account\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"customPageRecordId\":\"{contextRecordId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"client\":\"Web\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("/main.aspx?appid=");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("\"webResource\":\"");
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reader_parses_supported_site_map_entity_list_targets()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string viewId = "0cc7bf59-5fb4-4f11-a3b2-9170a9d6ef42";
+        var sourceRoot = FixtureRoot("seed-app-shell");
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-site-map-entity-list-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(sourceRoot, tempRoot);
+
+            var siteMapPath = Path.Combine(tempRoot, "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=entitylist&amp;etn=account&amp;viewid=%7B{viewId}%7D&amp;viewtype=1039\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var solution = new XmlSolutionReader().Read(new ReadRequest(tempRoot));
+            var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_shell_dd96cf20");
+
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"entity\":\"account\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"viewId\":\"{viewId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"viewType\":\"savedquery\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("\"url\":\"/main.aspx?appid=");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("\"webResource\":\"");
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reader_parses_supported_site_map_entity_record_targets()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string recordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        const string formId = "a77ba3f0-df52-46a1-a0a2-2c4fd6e25cdf";
+        var sourceRoot = FixtureRoot("seed-app-shell");
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-site-map-entity-record-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(sourceRoot, tempRoot);
+
+            var siteMapPath = Path.Combine(tempRoot, "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?appid={appId}&amp;pagetype=entityrecord&amp;etn=account&amp;id=%7B{recordId}%7D&amp;extraqs=formid%3D%7B{formId}%7D\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var solution = new XmlSolutionReader().Read(new ReadRequest(tempRoot));
+            var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_shell_dd96cf20");
+
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain("\"entity\":\"account\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"recordId\":\"{recordId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"formId\":\"{formId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().Contain($"\"appId\":\"{appId}\"");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("\"url\":\"/main.aspx?appid=");
+            siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson].Should().NotContain("\"webResource\":\"");
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reader_preserves_unsupported_site_map_urls_as_canonical_raw_url_boundary()
+    {
+        const string appId = "e1d1df92-5e88-4cff-8562-3d0f3f7164d0";
+        const string dashboardId = "3c5d4df8-4c0d-4d57-9e8f-6d4b3a8d5812";
+        const string contextRecordId = "bd7616fe-3f95-4d6a-b4cb-9e788425f721";
+        var expectedRawUrl = $"/main.aspx?appid={appId}&extraqs=entityName%3Daccount%26recordId%3D{contextRecordId}&id={dashboardId}&pagetype=dashboard&showWelcome=true";
+        var sourceRoot = FixtureRoot("seed-app-shell");
+        var tempRoot = Path.Combine(Path.GetTempPath(), $"dsc-site-map-raw-url-{Guid.NewGuid():N}");
+
+        try
+        {
+            CopyDirectory(sourceRoot, tempRoot);
+
+            var siteMapPath = Path.Combine(tempRoot, "AppModuleSiteMaps", "codex_metadata_shell_dd96cf20", "AppModuleSiteMap.xml");
+            var updatedXml = File.ReadAllText(siteMapPath)
+                .Replace(
+                    "Url=\"$webresource:cdxmeta_/shell/landing.html\"",
+                    $"Url=\"/main.aspx?showWelcome=1&amp;id=%7B{dashboardId}%7D&amp;extraqs=recordId%3D%7B{contextRecordId}%7D%26entityName%3DAccount&amp;appid=%7B{appId}%7D&amp;pagetype=dashboard\"",
+                    StringComparison.Ordinal);
+            File.WriteAllText(siteMapPath, updatedXml);
+
+            var solution = new XmlSolutionReader().Read(new ReadRequest(tempRoot));
+            var siteMap = FindArtifact(solution, ComponentFamily.SiteMap, "codex_metadata_shell_dd96cf20");
+            var subArea = JsonNode.Parse(siteMap.Properties![ArtifactPropertyKeys.SiteMapDefinitionJson])!["areas"]![0]!["groups"]![0]!["subAreas"]![0]!;
+
+            subArea["url"]!.GetValue<string>().Should().Be(expectedRawUrl);
+            siteMap.Properties![ArtifactPropertyKeys.WebResourceSubAreaCount].Should().Be("0");
+            subArea["dashboard"].Should().BeNull();
+            subArea["customPage"].Should().BeNull();
+            subArea["webResource"].Should().BeNull();
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
     }
 
     [Fact]
