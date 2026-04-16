@@ -1,5 +1,6 @@
 using FluentAssertions;
 using System.Diagnostics;
+using DataverseSolutionCompiler.Apply;
 using DataverseSolutionCompiler.Cli;
 using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Domain.Abstractions;
@@ -13,6 +14,7 @@ using DataverseSolutionCompiler.Domain.Live;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Packaging;
 using DataverseSolutionCompiler.Domain.Planning;
+using DataverseSolutionCompiler.Domain.Workflows;
 using DataverseSolutionCompiler.Emitters.TrackedSource;
 using Xunit;
 
@@ -1330,6 +1332,47 @@ public sealed class CliApplicationTests
     }
 
     [Fact]
+    public void Pack_and_check_commands_route_through_the_package_build_workflow_runner()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-package-workflow-{Guid.NewGuid():N}");
+        var kernel = new StubKernel(CreateCompilationResult());
+        var packageEmitter = new RecordingEmitter((model, request) =>
+            new EmittedArtifacts(true, request.OutputRoot, [], []));
+        var packageExecutor = new RecordingPackageExecutor(new PackageResult(true, Path.Combine(outputRoot, "unused.zip"), []));
+        var workflowRunner = new StubPackageBuildWorkflowRunner(CreatePackageBuildWorkflowResult(
+            CreateCompilationResult(),
+            new EmittedArtifacts(true, outputRoot, [], []),
+            new PackageResult(true, Path.Combine(outputRoot, "workflow.zip"), []),
+            outputRoot));
+        var runtime = CreateRuntime(
+            kernel,
+            packageEmitter: packageEmitter,
+            packageExecutor: packageExecutor,
+            packageBuildWorkflowRunner: workflowRunner);
+
+        try
+        {
+            var packExitCode = CliApplication.Run(["pack", "C:\\source", "--output", outputRoot], new StringWriter(), new StringWriter(), runtime);
+            var checkExitCode = CliApplication.Run(["check", "C:\\source", "--output", outputRoot], new StringWriter(), new StringWriter(), runtime);
+
+            packExitCode.Should().Be(0);
+            checkExitCode.Should().Be(0);
+            workflowRunner.Requests.Should().HaveCount(2);
+            packageEmitter.Requests.Should().BeEmpty();
+            packageExecutor.Requests.Should().BeEmpty();
+            workflowRunner.Requests[0].RunSolutionCheck.Should().BeFalse();
+            workflowRunner.Requests[1].RunSolutionCheck.Should().BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
     public void Pack_command_accepts_json_intent_input_with_real_kernel_and_emitter()
     {
         var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-intent-pack-{Guid.NewGuid():N}");
@@ -1393,6 +1436,9 @@ public sealed class CliApplicationTests
             importExecutor.Requests.Should().ContainSingle();
             importExecutor.Requests[0].PublishAfterImport.Should().BeTrue();
             applyExecutor.Requests.Should().ContainSingle();
+            output.ToString().Should().Contain("Stages:");
+            output.ToString().Should().Contain("Import skipped: False");
+            output.ToString().Should().Contain("Applied families: 1");
         }
         finally
         {
@@ -1453,6 +1499,9 @@ public sealed class CliApplicationTests
             packageExecutor.Requests.Should().ContainSingle();
             importExecutor.Requests.Should().BeEmpty();
             applyExecutor.Requests.Should().ContainSingle();
+            output.ToString().Should().Contain("Stages:");
+            output.ToString().Should().Contain("Import: Skipped");
+            output.ToString().Should().Contain("Import skipped: True");
             output.ToString().Should().Contain("Published: False");
         }
         finally
@@ -1462,6 +1511,271 @@ public sealed class CliApplicationTests
                 Directory.Delete(outputRoot, recursive: true);
             }
         }
+    }
+
+    [Fact]
+    public void Publish_command_routes_through_the_publish_workflow_runner_and_reports_stage_summary()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-publish-workflow-{Guid.NewGuid():N}");
+        var kernel = new StubKernel(CreateCompilationResult());
+        var packageEmitter = new RecordingEmitter((model, request) => new EmittedArtifacts(true, request.OutputRoot, [], []));
+        var packageExecutor = new RecordingPackageExecutor(new PackageResult(true, Path.Combine(outputRoot, "unused.zip"), []));
+        var importExecutor = new RecordingImportExecutor(new ImportResult(true, Path.Combine(outputRoot, "unused.zip"), true, []));
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(true, ApplyMode.DevProof, [], []));
+        var workflowRunner = new StubPublishWorkflowRunner(CreatePublishWorkflowResult(
+            CreateCompilationResult(),
+            new EmittedArtifacts(true, outputRoot, [], []),
+            new PackageResult(true, Path.Combine(outputRoot, "workflow.zip"), []),
+            new ImportResult(true, Path.Combine(outputRoot, "workflow.zip"), true, []),
+            new ApplyResult(true, ApplyMode.DevProof, [ComponentFamily.ImageConfiguration.ToString()], []),
+            false,
+            outputRoot));
+        var runtime = CreateRuntime(
+            kernel,
+            packageEmitter: packageEmitter,
+            packageExecutor: packageExecutor,
+            importExecutor: importExecutor,
+            applyExecutor: applyExecutor,
+            publishWorkflowRunner: workflowRunner);
+
+        try
+        {
+            var output = new StringWriter();
+            var error = new StringWriter();
+            var exitCode = CliApplication.Run(
+                ["publish", "C:\\source", "--output", outputRoot, "--environment", "https://example.crm.dynamics.com"],
+                output,
+                error,
+                runtime);
+
+            exitCode.Should().Be(0);
+            workflowRunner.Requests.Should().ContainSingle();
+            packageEmitter.Requests.Should().BeEmpty();
+            packageExecutor.Requests.Should().BeEmpty();
+            importExecutor.Requests.Should().BeEmpty();
+            applyExecutor.Requests.Should().BeEmpty();
+            output.ToString().Should().Contain("Stages:");
+            output.ToString().Should().Contain("Applied family names: ImageConfiguration");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Publish_command_runs_the_seed_image_config_release_flow()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-publish-image-config-{Guid.NewGuid():N}");
+        var packageExecutor = new RecordingPackageExecutor(new PackageResult(true, Path.Combine(outputRoot, "seed-image-config.zip"), []));
+        var importExecutor = new RecordingImportExecutor(new ImportResult(true, Path.Combine(outputRoot, "seed-image-config.zip"), true, []));
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [ComponentFamily.ImageConfiguration.ToString()],
+            [
+                new CompilerDiagnostic("apply-image-config-applied", DiagnosticSeverity.Info, "applied")
+            ]));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new RecordingLiveSnapshotProvider(new LiveSnapshot(new EnvironmentProfile("dev"), "sample", [], [])),
+            new RecordingDriftComparer(new DriftReport(false, [], [])),
+            packageExecutor,
+            importExecutor,
+            applyExecutor,
+            new StubExplanationService());
+
+        try
+        {
+            var output = new StringWriter();
+            var error = new StringWriter();
+            var exitCode = CliApplication.Run(
+                ["publish", SeedImageConfigPath, "--output", outputRoot, "--environment", "https://example.crm.dynamics.com"],
+                output,
+                error,
+                runtime);
+
+            exitCode.Should().Be(0);
+            packageExecutor.Requests.Should().ContainSingle();
+            importExecutor.Requests.Should().ContainSingle();
+            applyExecutor.Requests.Should().ContainSingle();
+            output.ToString().Should().Contain("Stages:");
+            output.ToString().Should().Contain("Package path:");
+            output.ToString().Should().Contain("Applied family names: ImageConfiguration");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Apply_dev_command_routes_through_the_workflow_runner_and_reports_stage_summary()
+    {
+        var kernel = new StubKernel(CreateCompilationResult());
+        var liveProvider = new RecordingLiveSnapshotProvider(new LiveSnapshot(new EnvironmentProfile("dev"), "sample", [], []));
+        var driftComparer = new RecordingDriftComparer(new DriftReport(false, [], []));
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(true, ApplyMode.DevProof, [], []));
+        var workflowRunner = new StubDevApplyWorkflowRunner(CreateDevApplyWorkflowResult(
+            CreateCompilationResult(),
+            new ApplyResult(true, ApplyMode.DevProof, [ComponentFamily.ImageConfiguration.ToString()], []),
+            new LiveSnapshot(new EnvironmentProfile("dev"), "sample", [new FamilyArtifact(ComponentFamily.ImageConfiguration, "account-image")], []),
+            new DriftReport(false, [], []),
+            [ComponentFamily.ImageConfiguration]));
+        var runtime = CreateRuntime(
+            kernel,
+            liveProvider: liveProvider,
+            driftComparer: driftComparer,
+            applyExecutor: applyExecutor,
+            devApplyWorkflowRunner: workflowRunner);
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", "C:\\source", "--environment", "https://example.crm.dynamics.com"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        workflowRunner.Requests.Should().ContainSingle();
+        applyExecutor.Requests.Should().BeEmpty();
+        liveProvider.Requests.Should().BeEmpty();
+        driftComparer.Requests.Should().BeEmpty();
+        output.ToString().Should().Contain("Stages:");
+        output.ToString().Should().Contain("Apply: Succeeded");
+        output.ToString().Should().Contain("Applied families: 1");
+        output.ToString().Should().Contain("Applied family names: ImageConfiguration");
+    }
+
+    [Fact]
+    public void Apply_dev_command_returns_success_for_supported_scope_noop()
+    {
+        var workflowRunner = new StubDevApplyWorkflowRunner(CreateDevApplyWorkflowResult(
+            CreateCompilationResult(new FamilyArtifact(ComponentFamily.Table, "account")),
+            new ApplyResult(
+                true,
+                ApplyMode.DevProof,
+                [],
+                [
+                    new CompilerDiagnostic("apply-noop", DiagnosticSeverity.Info, "noop")
+                ]),
+            new LiveSnapshot(new EnvironmentProfile("dev"), "sample", [], []),
+            new DriftReport(false, [], []),
+            []));
+        var runtime = CreateRuntime(new StubKernel(CreateCompilationResult()), devApplyWorkflowRunner: workflowRunner);
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", "C:\\source", "--environment", "https://example.crm.dynamics.com"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        output.ToString().Should().Contain("Verification families: 0");
+        output.ToString().Should().Contain("Applied families: 0");
+    }
+
+    [Fact]
+    public void Apply_dev_command_returns_non_zero_on_blocking_drift()
+    {
+        var workflowRunner = new StubDevApplyWorkflowRunner(CreateDevApplyWorkflowResult(
+            CreateCompilationResult(),
+            new ApplyResult(true, ApplyMode.DevProof, [ComponentFamily.ImageConfiguration.ToString()], []),
+            new LiveSnapshot(new EnvironmentProfile("dev"), "sample", [], []),
+            new DriftReport(
+                true,
+                [new DriftFinding("Mismatch", DriftSeverity.Error, DriftCategory.Mismatch, ComponentFamily.ImageConfiguration, "blocking drift")],
+                []),
+            [ComponentFamily.ImageConfiguration]));
+        var runtime = CreateRuntime(new StubKernel(CreateCompilationResult()), devApplyWorkflowRunner: workflowRunner);
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", "C:\\source", "--environment", "https://example.crm.dynamics.com"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(1);
+        output.ToString().Should().Contain("Findings: 1");
+    }
+
+    [Fact]
+    public void Apply_dev_command_preserves_the_explicit_ai_boundary()
+    {
+        var liveProvider = new RecordingLiveSnapshotProvider(new LiveSnapshot(new EnvironmentProfile("dev"), "sample", [], []));
+        var driftComparer = new RecordingDriftComparer(new DriftReport(false, [], []));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            liveProvider,
+            driftComparer,
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            new WebApiApplyExecutor(),
+            new StubExplanationService());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedAiFamiliesPath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedAiFamilies"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(1);
+        error.ToString().Should().Contain("Compact AI families remain an explicit non-live-rebuildable boundary");
+        liveProvider.Requests.Should().BeEmpty();
+        driftComparer.Requests.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void Apply_dev_command_runs_the_seed_image_config_verification_flow()
+    {
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [ComponentFamily.ImageConfiguration.ToString()],
+            [
+                new CompilerDiagnostic("apply-image-config-applied", DiagnosticSeverity.Info, "applied")
+            ]));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new HarnessBackedLiveSnapshotProvider("seed-image-config"),
+            new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            applyExecutor,
+            new StubExplanationService());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedImageConfigPath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedImageConfig"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        applyExecutor.Requests.Should().ContainSingle();
+        output.ToString().Should().Contain("Applied family names: ImageConfiguration");
+        output.ToString().Should().Contain("Live artifacts:");
+        output.ToString().Should().Contain("Findings: 0");
     }
 
     [Fact]
@@ -1490,14 +1804,16 @@ public sealed class CliApplicationTests
         exitCode.Should().Be(1);
     }
 
-    private static CompilationResult CreateCompilationResult() =>
+    private static CompilationResult CreateCompilationResult(params FamilyArtifact[] artifacts) =>
         new(
             true,
             "compiled",
             new CanonicalSolution(
                 new SolutionIdentity("sample", "Sample", "1.0.0.0", LayeringIntent.UnmanagedDevelopment),
                 new PublisherDefinition("dsc", "dsc", "dsc", "Dataverse Solution Compiler"),
-                [new FamilyArtifact(ComponentFamily.Table, "account", "Account", "C:\\source\\Entities\\Account\\Entity.xml")],
+                artifacts.Length == 0
+                    ? [new FamilyArtifact(ComponentFamily.Table, "account", "Account", "C:\\source\\Entities\\Account\\Entity.xml")]
+                    : artifacts,
                 [],
                 [],
                 []),
@@ -1512,7 +1828,10 @@ public sealed class CliApplicationTests
         ISolutionEmitter? packageEmitter = null,
         IPackageExecutor? packageExecutor = null,
         IImportExecutor? importExecutor = null,
-        IApplyExecutor? applyExecutor = null) =>
+        IApplyExecutor? applyExecutor = null,
+        IDevApplyWorkflowRunner? devApplyWorkflowRunner = null,
+        IPackageBuildWorkflowRunner? packageBuildWorkflowRunner = null,
+        IPublishWorkflowRunner? publishWorkflowRunner = null) =>
         new(
             kernel,
             new RecordingEmitter((model, request) => new EmittedArtifacts(true, request.OutputRoot, [], [])),
@@ -1522,7 +1841,85 @@ public sealed class CliApplicationTests
             packageExecutor ?? new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "sample.zip"), [])),
             importExecutor ?? new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "sample.zip"), true, [])),
             applyExecutor ?? new StubApplyExecutor(),
-            new StubExplanationService());
+            new StubExplanationService(),
+            devApplyWorkflowRunner,
+            packageBuildWorkflowRunner,
+            publishWorkflowRunner);
+
+    private static DevApplyWorkflowResult CreateDevApplyWorkflowResult(
+        CompilationResult compilation,
+        ApplyResult apply,
+        LiveSnapshot snapshot,
+        DriftReport diff,
+        IReadOnlyList<ComponentFamily> verificationFamilies) =>
+        new(
+            compilation,
+            apply,
+            snapshot,
+            diff,
+            verificationFamilies,
+            [
+                new WorkflowStageResult(WorkflowStageKind.Compile, WorkflowStageStatus.Succeeded, "compiled", compilation.Diagnostics),
+                new WorkflowStageResult(WorkflowStageKind.Apply, WorkflowStageStatus.Succeeded, "applied", apply.Diagnostics),
+                new WorkflowStageResult(WorkflowStageKind.Readback, WorkflowStageStatus.Succeeded, "read back", snapshot.Diagnostics),
+                new WorkflowStageResult(WorkflowStageKind.Diff, diff.HasBlockingDrift ? WorkflowStageStatus.Failed : WorkflowStageStatus.Succeeded, "compared", diff.Diagnostics)
+            ],
+            compilation.Diagnostics.Concat(apply.Diagnostics).Concat(snapshot.Diagnostics).Concat(diff.Diagnostics).ToArray());
+
+    private static PackageBuildWorkflowResult CreatePackageBuildWorkflowResult(
+        CompilationResult compilation,
+        EmittedArtifacts packageInputs,
+        PackageResult package,
+        string outputRoot) =>
+        new(
+            compilation,
+            packageInputs,
+            package,
+            outputRoot,
+            Path.Combine(outputRoot, "package-inputs"),
+            [
+                new WorkflowStageResult(WorkflowStageKind.Compile, WorkflowStageStatus.Succeeded, "compiled", compilation.Diagnostics),
+                new WorkflowStageResult(WorkflowStageKind.EmitPackageInputs, WorkflowStageStatus.Succeeded, "emitted", packageInputs.Diagnostics),
+                new WorkflowStageResult(WorkflowStageKind.Pack, WorkflowStageStatus.Succeeded, "packed", package.Diagnostics)
+            ],
+            compilation.Diagnostics.Concat(packageInputs.Diagnostics).Concat(package.Diagnostics).ToArray());
+
+    private static PublishWorkflowResult CreatePublishWorkflowResult(
+        CompilationResult compilation,
+        EmittedArtifacts packageInputs,
+        PackageResult package,
+        ImportResult? import,
+        ApplyResult finalizeApply,
+        bool importSkippedBecauseApplyOnly,
+        string outputRoot) =>
+        new(
+            compilation,
+            packageInputs,
+            package,
+            import,
+            finalizeApply,
+            importSkippedBecauseApplyOnly,
+            outputRoot,
+            Path.Combine(outputRoot, "package-inputs"),
+            [
+                new WorkflowStageResult(WorkflowStageKind.Compile, WorkflowStageStatus.Succeeded, "compiled", compilation.Diagnostics),
+                new WorkflowStageResult(WorkflowStageKind.EmitPackageInputs, WorkflowStageStatus.Succeeded, "emitted", packageInputs.Diagnostics),
+                new WorkflowStageResult(WorkflowStageKind.Pack, WorkflowStageStatus.Succeeded, "packed", package.Diagnostics),
+                new WorkflowStageResult(
+                    WorkflowStageKind.Import,
+                    importSkippedBecauseApplyOnly
+                        ? WorkflowStageStatus.Skipped
+                        : WorkflowStageStatus.Succeeded,
+                    importSkippedBecauseApplyOnly ? "skipped" : "imported",
+                    import?.Diagnostics ?? []),
+                new WorkflowStageResult(WorkflowStageKind.FinalizeApply, WorkflowStageStatus.Succeeded, "applied", finalizeApply.Diagnostics)
+            ],
+            compilation.Diagnostics
+                .Concat(packageInputs.Diagnostics)
+                .Concat(package.Diagnostics)
+                .Concat(import?.Diagnostics ?? [])
+                .Concat(finalizeApply.Diagnostics)
+                .ToArray());
 }
 
 internal sealed class StubKernel(CompilationResult result) : ICompilerKernel
@@ -1621,4 +2018,37 @@ internal sealed class StubExplanationService : IExplanationService
 {
     public HumanReport Explain(object compilerResult) =>
         new("explain", ["section"], []);
+}
+
+internal sealed class StubDevApplyWorkflowRunner(DevApplyWorkflowResult result) : IDevApplyWorkflowRunner
+{
+    public List<DevApplyWorkflowRequest> Requests { get; } = [];
+
+    public DevApplyWorkflowResult RunDevApply(DevApplyWorkflowRequest request)
+    {
+        Requests.Add(request);
+        return result;
+    }
+}
+
+internal sealed class StubPackageBuildWorkflowRunner(PackageBuildWorkflowResult result) : IPackageBuildWorkflowRunner
+{
+    public List<PackageBuildWorkflowRequest> Requests { get; } = [];
+
+    public PackageBuildWorkflowResult RunPackageBuild(PackageBuildWorkflowRequest request)
+    {
+        Requests.Add(request);
+        return result;
+    }
+}
+
+internal sealed class StubPublishWorkflowRunner(PublishWorkflowResult result) : IPublishWorkflowRunner
+{
+    public List<PublishWorkflowRequest> Requests { get; } = [];
+
+    public PublishWorkflowResult RunPublish(PublishWorkflowRequest request)
+    {
+        Requests.Add(request);
+        return result;
+    }
 }

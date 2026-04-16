@@ -1,3 +1,4 @@
+using DataverseSolutionCompiler.Agent;
 using DataverseSolutionCompiler.Apply;
 using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Diff;
@@ -18,21 +19,63 @@ internal sealed record CompilerCliRuntime(
     IPackageExecutor PackageExecutor,
     IImportExecutor ImportExecutor,
     IApplyExecutor ApplyExecutor,
-    IExplanationService ExplanationService)
+    IExplanationService ExplanationService,
+    IDevApplyWorkflowRunner? DevApplyWorkflowRunner = null,
+    IPackageBuildWorkflowRunner? PackageBuildWorkflowRunner = null,
+    IPublishWorkflowRunner? PublishWorkflowRunner = null)
 {
+    public IDevApplyWorkflowRunner ResolveDevApplyWorkflowRunner() =>
+        DevApplyWorkflowRunner ?? CreateWorkflowOrchestrator();
+
+    public IPackageBuildWorkflowRunner ResolvePackageBuildWorkflowRunner() =>
+        PackageBuildWorkflowRunner ?? CreateWorkflowOrchestrator();
+
+    public IPublishWorkflowRunner ResolvePublishWorkflowRunner() =>
+        PublishWorkflowRunner ?? CreateWorkflowOrchestrator();
+
+    private AgentOrchestrator CreateWorkflowOrchestrator() =>
+        new(
+            Kernel,
+            ExplanationService,
+            ApplyExecutor,
+            LiveSnapshotProvider,
+            DriftComparer,
+            PackageEmitter,
+            PackageExecutor,
+            ImportExecutor);
+
     public static CompilerCliRuntime CreateDefault()
     {
         var pacCliExecutor = new PacCliExecutor();
+        var kernel = new CompilerKernel();
+        var trackedSourceEmitter = new TrackedSourceEmitter();
+        var packageEmitter = new PackageEmitter();
+        var liveSnapshotProvider = new WebApiLiveSnapshotProvider();
+        var driftComparer = new StableOverlapDriftComparer();
+        var applyExecutor = new WebApiApplyExecutor();
+        var explanationService = new ExplanationService();
+        var workflowOrchestrator = new AgentOrchestrator(
+            kernel,
+            explanationService,
+            applyExecutor,
+            liveSnapshotProvider,
+            driftComparer,
+            packageEmitter,
+            pacCliExecutor,
+            pacCliExecutor);
 
         return new CompilerCliRuntime(
-            new CompilerKernel(),
-            new TrackedSourceEmitter(),
-            new PackageEmitter(),
-            new WebApiLiveSnapshotProvider(),
-            new StableOverlapDriftComparer(),
+            kernel,
+            trackedSourceEmitter,
+            packageEmitter,
+            liveSnapshotProvider,
+            driftComparer,
             pacCliExecutor,
             pacCliExecutor,
-            new WebApiApplyExecutor(),
-            new ExplanationService());
+            applyExecutor,
+            explanationService,
+            workflowOrchestrator,
+            workflowOrchestrator,
+            workflowOrchestrator);
     }
 }

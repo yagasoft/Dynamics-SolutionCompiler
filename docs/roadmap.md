@@ -1,6 +1,6 @@
 # Roadmap
 
-This roadmap follows a compiler and release-pipeline-first strategy for Dataverse solution work on `.NET 10`.
+This roadmap follows a compiler-first, release-pipeline-first strategy for Dataverse solution work on `.NET 10`.
 
 ## Phase 1: Canonical Compiler Spine
 
@@ -61,7 +61,7 @@ Exit criteria:
 
 ## Phase 5: Completion Program For All Remaining Incomplete Dataverse Families
 
-This phase is now complete. While it was active, narrower execution slices were allowed to refine sequencing, but not to replace the program in the roadmap, backlog, current-thread baton, acceptance ledger, or coverage docs.
+This phase is now complete.
 
 Goal:
 - finish every still-incomplete touched family into one explicit end state:
@@ -79,68 +79,76 @@ Program-wide completion rule:
   - PAC pack
   - live `export -> reverse -> delete -> rebuild -> import/publish -> verify`
 - do not leave any currently touched family in an ambiguous middle state after this program
-- keep platform-generated system views, effective-access/runtime privilege expansion, and import-map or SLA or similarity-rule parity out of the rebuildability target unless new evidence overturns that boundary
-
-Wave order:
-1. Close schema-detail and form gaps with structured authoring.
-   - Promote image authoring, reverse `ImageConfiguration` into the owning table authoring surface, expand structured `main` / `quick` / `card` forms with supported `field` / `subgrid` / `quickView` controls, and promote supported authored-chart support.
-   - Completion target: schema-detail extension and advanced model-driven UI become `full rebuildable (structured)` for the supported subset.
-2. Finish the broader app-shell lane.
-   - Keep stable structured authoring for supported site-map subareas and `appModules[].appSettings[]`.
-   - Keep `WebResource`, ribbon payloads, and custom-control manifests/assets on the hybrid source-backed path unless a clearly safe structured shape is proven.
-   - Completion target: broader app shell becomes fully rebuildable, using structured intent where stable and hybrid source-backed intent for payload-heavy UI assets.
-3. Promote canvas, entity analytics, and AI to `full rebuildable (hybrid source-backed)`.
-4. Promote code and extensibility to `full rebuildable (hybrid source-backed)`.
-   - Keep payload-heavy pieces such as plugin binaries and connector or endpoint adjunct files source-backed.
-   - Keep code-first SDK registration ingestion out of scope.
-5. Promote process and security definitions to `full rebuildable (hybrid source-backed)`.
-   - Keep these as definition-only families, never runtime/effective-access families.
-   - Allow `RolePrivilege` to remain an explicit carve-out if export-backed live parity is not stable enough.
-6. Permanently close the families that should not be forced into full generation.
-   - `ImportMap`
-   - `DataSourceMapping`
-   - `SimilarityRule`
-   - `Sla`
-   - `SlaItem`
-   - platform-generated system/default/lookup/quick-find views
-   - effective access/runtime privilege expansion
-   - reporting/legacy as separate future work rather than hidden debt inside this program
-7. Run a program-end maximal proof.
-   - Build one compact maximal supported solution containing one representative artifact from every family promoted by Waves 1-5.
-   - Run classic export, direct reverse generation, delete, rebuild, pack, import/publish, and verify.
+- keep platform-generated system views, effective-access/runtime privilege expansion, and import-map/SLA/similarity-rule parity out of the rebuildability target unless new evidence overturns that boundary
 
 Completion outcome:
-- Wave 1 image proof, Wave 2 advanced UI / broader app-shell proof, Wave 3 `CanvasApp` plus `EntityAnalyticsConfiguration`, Wave 4 code/extensibility, Wave 5 process-policy plus security-definition, and Wave 7 maximal supported proof now all clear the required live bar.
-- Wave 6 permanent-boundary closure is complete: import-map, SLA, similarity-rule, platform-generated-view, effective-access, and reporting/legacy surfaces now have explicit non-silent boundaries instead of hidden rebuildability debt.
-- Compact AI families are now also closed as an explicit permanent boundary for the current environment: package-level reverse/rebuild remains available, but live Dataverse create rejects `AITemplate` with `OperationNotSupported`, so that lane is not treated as rebuildable.
+- Waves 1, 2, 4, 5, and 7 now clear the live export-backed rebuild bar
+- Wave 3 `CanvasApp` plus `EntityAnalyticsConfiguration` also clear it
+- Wave 6 permanent-boundary closure is complete for import-map, SLA, similarity-rule, platform-generated-view, effective-access, and reporting/legacy surfaces
+- compact AI is now an explicit permanent boundary for the current environment because Dataverse rejects `AITemplate` create with `OperationNotSupported`
 
-Next priority:
-- the post-`B-010` `B-007` breadth program is now complete from this baseline
-- the first post-`B-010` breadth slice now lands compact reporting/legacy source-first proof: typed source parsing, deterministic tracked-source summaries, reverse generation into `sourceBackedArtifacts[]`, deterministic package preservation, and an explicit PAC-pack boundary rather than silent rebuildability debt
-- the next `B-007` breadth slice now closes app-shell `WebResource` live proof: `readback` / `diff` project solution-scoped `webresourceset` rows, stable-overlap compares the same payload byte-length and hash evidence already present in typed source, and missing or undecodable content stays explicit warning-only best effort
-- the next `B-007` breadth slice now closes app-module role-map reverse/package fidelity: reverse generation carries structured `roleIds` in `appModules[]`, tracked-source summaries preserve role-map evidence, derived `AppModule.xml` rebuild writes `AppModuleRoleMaps`, and live role-map parity is now an explicit best-effort boundary because neutral `appmodules` readback underreports `role_ids`
-- the next `B-007` breadth slice now closes compact ribbon source-first proof: `RibbonDiff.xml` now parses into typed `Ribbon` artifacts, tracked-source and reverse-generation preserve that shell as `sourceBackedArtifacts[]`, package emission keeps deterministic `Entities/<entity>/RibbonDiff.xml` layout, and live parity stays an explicit unsupported-best-effort boundary instead of hidden app-shell debt
-- the next `B-007` breadth slice now closes the standalone custom-control boundary honestly: live readback projects solution-scoped component type `66` rows through `customcontrols`, stable summaries come from manifest/clientjson evidence, stable-overlap emits an explicit source-asymmetric best-effort diagnostic when unmanaged export omits a matching standalone source artifact, and `ComplexControl` plus `CustomControlDefaultConfig` remain explicit no-row boundaries in the neutral corpus
-- the next `B-007` breadth slice now closes site-map definition live proof for the current seeded navigation shapes: source, reverse-generation, and package rebuild already preserved structured site-map definitions, and live readback plus stable-overlap now preserve the same canonical `SiteMapDefinitionJson` instead of compare-unsafe counts-only summaries
-- the next `B-007` breadth slice now closes seeded site-map adjunct fidelity: source, reverse-generation, package rebuild, live readback, and stable-overlap now preserve the current seed’s explicit `Icon` / `VectorIcon` plus `Client` / `PassParams` / `AvailableOffline` subarea detail instead of silently flattening it during round-trip
-- the next `B-007` breadth slice now closes the canonical site-map dashboard-target subset: source parsing, reverse-generation, package rebuild, live readback, and stable-overlap now preserve GUID-backed dashboard subareas when the XML uses the canonical `/main.aspx?pagetype=dashboard&id=<guid>` deep-link shape instead of flattening them into generic URLs
-- the next `B-007` breadth slice now closes the canonical site-map custom-page target subset: source parsing, reverse-generation, package rebuild, live readback, and stable-overlap now preserve `/main.aspx?pagetype=custom&name=<logicalName>` subareas, with optional `appid=<guid>`, instead of flattening them into generic URLs
-- the next `B-007` breadth slice now closes the canonical site-map Dataverse entity URL subsets: source parsing, reverse-generation, package rebuild, live readback, and stable-overlap now preserve app-aware `entitylist` deep links for specific views plus `entityrecord` deep links for specific records, with optional `appid`, optional `viewtype`, and narrow `extraqs=formid=<guid>` handling, instead of flattening them into generic URLs
-- the next `B-007` breadth slice now closes app-aware dashboard URLs plus custom-page record-context URLs: source parsing, reverse-generation, package rebuild, live readback, and stable-overlap now preserve `dashboard` targets with optional `appId`, plus `customPage` targets with optional `customPageEntityName` and `customPageRecordId`, instead of flattening those app-navigation shapes into generic URLs
-- the next `B-007` breadth slice now closes the canonical raw-`url` boundary for richer unsupported app-shell links: broader `main.aspx` site-map target shapes now remain explicit raw `url` evidence, and source parsing, reverse-generation, package rebuild, live readback, and stable-overlap all canonicalize parameter order, GUID forms, nested `extraqs`, and boolean literals instead of leaving that remainder ambiguous
-- the next bundled `B-007` breadth slice now closes current non-app-shell live proof for local picklist/boolean option sets, quick/card forms, and solution-scoped saved-query visualizations: stable-overlap no longer drift-ignores those seeded shapes, strict solution-scope entity filtering keeps form, view, and visualization rows attached to the right table, and visualization overlap now compares normalized chart-definition signatures for component type `59` rows
-- the exhaustive owner-family universe pass now adds a checked-in audit inventory for the official current `solutioncomponent.componenttype` list plus the local-observed `80` `App Module` supplement, so owner-level planning is no longer limited to previously touched families
-- the final audited closure pass now converts the formerly planned owner lanes `EntityMap`, `Workflow`, `HierarchyRule`, and `ConvertRule` into explicit best-effort boundaries because the repo still lacks neutral reusable source/live/package proof for them, while `ManagedProperty`, `Organization`, `ComplexControl`, and `CustomControlDefaultConfig` remain explicit boundaries rather than silent omissions
-- richer user-owned or otherwise unsupported view/query/visualization breadth plus the remaining non-image schema-detail remainder are now explicit supported-subset boundaries rather than active backlog
-- `B-007` is now complete for the current audited universe, and future work should reopen only when new evidence overturns one of the current boundaries
-- keep future authoring expansion on the same proof bar: `export zip -> intent-spec -> package-inputs -> pack -> import/publish` plus honest omission typing
+## Phase 6: Operational Dev Apply Workflow
+
+This phase is now complete.
+
+Goal:
+- turn `apply-dev` into a real supported Dev-proof workflow instead of a thin `compile -> apply` helper
+- move that staged flow into a reusable agent or domain orchestration layer so verification is library-first, not CLI-only
+- keep the live-mutation scope frozen to the families the current `WebApiApplyExecutor` already supports
 
 Exit criteria:
-- every currently touched family lands in one explicit end state:
-  - `full rebuildable (structured)`
-  - `full rebuildable (hybrid source-backed)`
-  - `source-first / permanent best-effort`
-- the program-end maximal proof succeeds for one compact supported solution
-- coverage docs no longer imply hidden rebuildability debt for the permanently bounded families
+- `apply-dev` runs one fixed staged flow: `compile -> apply -> readback -> diff`
+- `apply-dev` reports stage outcomes plus aggregated diagnostics
+- `apply-dev` exits non-zero on apply failure, readback failure, or blocking drift after verification
+- `apply-dev` succeeds explicitly on supported-scope no-op instead of treating that case as an error
+- broader agent autonomy, publish unification, and new live-mutable families remain future work rather than being implied by this phase
 
-Those exit criteria are now met.
+Completion outcome:
+- `apply-dev` now requires `--environment` and performs mandatory verification against the same environment and solution scope through the reusable `AgentOrchestrator` workflow runner
+- the workflow runner now has domain request/result contracts, per-stage outcomes, aggregated diagnostics, and supported-scope verification filtering
+- v1 live mutation remains intentionally frozen to `ImageConfiguration`, `EntityAnalyticsConfiguration`, `PluginAssembly`, `PluginType`, `PluginStep`, `PluginStepImage`, `ServiceEndpoint`, `Connector`, `MobileOfflineProfile`, `MobileOfflineProfileItem`, and `ConnectionRole`
+
+## Phase 7: Release Workflow Hardening
+
+This phase is now complete.
+
+Goal:
+- harden the release-side workflow around the new orchestration layer instead of leaving `pack`, `check`, and `publish` as CLI-only wiring
+- make stage outcomes plus aggregated diagnostics first-class for release operations the same way `apply-dev` now does for Dev proof
+- preserve current `publish` semantics exactly, especially the explicit apply-only empty-package branch
+
+Exit criteria:
+- `pack` and `check` route through a reusable `compile -> emit package-inputs -> pack` workflow
+- `publish` routes through a reusable `compile -> emit package-inputs -> pack -> import? -> finalize apply` workflow
+- the empty-package branch remains explicit through an import-skipped state instead of hidden CLI branching
+- `publish` is not widened into a broader verification command in this phase
+
+Completion outcome:
+- the domain workflow layer now carries package-build and publish request/result contracts in addition to Dev apply
+- `AgentOrchestrator` now owns `RunDevApply`, `RunPackageBuild`, and `RunPublish`, while `Analyze(...)` remains intact
+- `CompilerCliRuntime` now resolves package-build and publish workflow runners the same way it already resolved Dev apply
+- the live finalize-apply scope remains intentionally frozen to the current `WebApiApplyExecutor` family set
+
+## Phase 8: Public Repository Onboarding
+
+This phase is now complete.
+
+Goal:
+- make the top-level repository entrypoint usable for GitHub visitors without relying on workspace-specific paths or thread-handoff context
+- keep the public README aligned with the audited backlog, coverage, and workflow state
+
+Exit criteria:
+- `README.md` is a concise public-facing entrypoint with relative links, current status, quick-start workflows, repo map, and explicit proof/boundary summary
+- planning and acceptance docs record the same completed state
+- regression tests guard the public README against workspace-specific absolute paths
+
+Completion outcome:
+- `README.md` now uses relative links, public-facing workflow examples, a concise repo map, and explicit current boundary language
+- the planning and acceptance docs now record the documentation slice as complete instead of leaving it as untracked polish
+- a unit test now protects the public README from drifting back to workspace-specific absolute paths
+
+## Next Priority
+
+- no active backlog items remain after Phases 5 through 8
+- future work should reopen only when new evidence overturns one of the current explicit boundaries or a new operational program is approved
+- keep future authoring expansion on the same proof bar: `export zip -> intent-spec -> package-inputs -> pack -> import/publish`, plus honest omission typing and explicit boundary classification

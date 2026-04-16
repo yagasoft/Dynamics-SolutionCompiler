@@ -8,6 +8,7 @@ using DataverseSolutionCompiler.Domain.Live;
 using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Packaging;
 using DataverseSolutionCompiler.Domain.Planning;
+using DataverseSolutionCompiler.Domain.Workflows;
 using DataverseSolutionCompiler.Emitters.TrackedSource;
 using System.Xml.Linq;
 
@@ -137,21 +138,21 @@ public static class CliApplication
 
     private static int RunApplyDev(CliCommandOptions options, TextWriter output, TextWriter error, CompilerCliRuntime runtime)
     {
-        var result = CompileSource(options, runtime, enableDevApply: true);
-        if (!result.Success)
+        output.WriteLine("Apply-dev");
+        var workflow = runtime.ResolveDevApplyWorkflowRunner().RunDevApply(CreateDevApplyWorkflowRequest(options));
+        WriteWorkflowStages(output, workflow.Stages);
+        output.WriteLine($"Verification families: {workflow.VerificationFamilies.Count}");
+        output.WriteLine($"Applied families: {workflow.Apply?.AppliedFamilies.Count ?? 0}");
+        if (workflow.Apply is not null && workflow.Apply.AppliedFamilies.Count > 0)
         {
-            WriteDiagnostics(output, error, result.Diagnostics);
-            return 1;
+            output.WriteLine($"Applied family names: {string.Join(", ", workflow.Apply.AppliedFamilies)}");
         }
 
-        var applyResult = runtime.ApplyExecutor.Apply(
-            result.Solution,
-            new ApplyRequest(CreateEnvironmentProfile(options, requireUrl: false, "apply-dev", isDevelopment: true)));
-
-        output.WriteLine("Apply-dev");
-        output.WriteLine($"Applied families: {applyResult.AppliedFamilies.Count}");
-        WriteDiagnostics(output, error, result.Diagnostics.Concat(applyResult.Diagnostics));
-        return applyResult.Success && !HasErrors(applyResult.Diagnostics) ? 0 : 1;
+        output.WriteLine($"Live artifacts: {workflow.Snapshot?.Artifacts.Count ?? 0}");
+        output.WriteLine($"Findings: {workflow.Diff?.Findings.Count ?? 0}");
+        WriteDriftFindings(output, workflow.Diff);
+        WriteDiagnostics(output, error, workflow.Diagnostics);
+        return workflow.Success ? 0 : 1;
     }
 
     private static int RunReadback(CliCommandOptions options, TextWriter output, TextWriter error, CompilerCliRuntime runtime)
@@ -185,10 +186,7 @@ public static class CliApplication
 
         output.WriteLine("Diff");
         output.WriteLine($"Findings: {report.Findings.Count}");
-        foreach (var finding in report.Findings)
-        {
-            output.WriteLine($"- {finding.Severity} [{finding.Category}] {finding.Family}: {finding.Description}");
-        }
+        WriteDriftFindings(output, report);
 
         WriteDiagnostics(output, error, result.Diagnostics.Concat(snapshot.Diagnostics).Concat(report.Diagnostics));
         return HasErrors(snapshot.Diagnostics) || report.HasBlockingDrift ? 1 : 0;
@@ -196,32 +194,22 @@ public static class CliApplication
 
     private static int RunPack(CliCommandOptions options, TextWriter output, TextWriter error, CompilerCliRuntime runtime, bool forceSolutionCheck)
     {
-        var result = CompileSource(options, runtime);
-        if (!result.Success)
+        var workflow = runtime.ResolvePackageBuildWorkflowRunner().RunPackageBuild(CreatePackageBuildWorkflowRequest(options, forceSolutionCheck));
+        if (!workflow.Compilation.Success
+            || HasErrors(workflow.Compilation.Diagnostics)
+            || workflow.PackageInputs is null
+            || !workflow.PackageInputs.Success
+            || HasErrors(workflow.PackageInputs.Diagnostics))
         {
-            WriteDiagnostics(output, error, result.Diagnostics);
+            WriteDiagnostics(output, error, workflow.Diagnostics);
             return 1;
         }
-
-        var outputRoot = ResolveOutputRoot(options);
-        var emitted = runtime.PackageEmitter.Emit(result.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
-        if (!emitted.Success || HasErrors(emitted.Diagnostics))
-        {
-            WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics));
-            return 1;
-        }
-
-        var packageResult = runtime.PackageExecutor.Pack(new PackageRequest(
-            Path.Combine(outputRoot, "package-inputs"),
-            outputRoot,
-            options.Flavor,
-            forceSolutionCheck || options.RunSolutionCheck));
 
         output.WriteLine(forceSolutionCheck ? "Check" : "Pack");
-        output.WriteLine($"Package root: {Path.GetFullPath(Path.Combine(outputRoot, "package-inputs"))}");
-        output.WriteLine($"Package path: {packageResult.PackagePath ?? "(not created)"}");
-        WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics));
-        return packageResult.Success && !HasErrors(packageResult.Diagnostics) ? 0 : 1;
+        output.WriteLine($"Package root: {Path.GetFullPath(workflow.PackageInputRoot)}");
+        output.WriteLine($"Package path: {workflow.Package?.PackagePath ?? "(not created)"}");
+        WriteDiagnostics(output, error, workflow.Diagnostics);
+        return workflow.Success ? 0 : 1;
     }
 
     private static int RunImport(CliCommandOptions options, TextWriter output, TextWriter error, CompilerCliRuntime runtime)
@@ -241,76 +229,20 @@ public static class CliApplication
 
     private static int RunPublish(CliCommandOptions options, TextWriter output, TextWriter error, CompilerCliRuntime runtime)
     {
-        var result = CompileSource(options, runtime, enableDevApply: true);
-        if (!result.Success)
-        {
-            WriteDiagnostics(output, error, result.Diagnostics);
-            return 1;
-        }
-
-        var outputRoot = ResolveOutputRoot(options);
-        var emitted = runtime.PackageEmitter.Emit(result.Solution, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
-        if (!emitted.Success || HasErrors(emitted.Diagnostics))
-        {
-            WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics));
-            return 1;
-        }
-
-        var packageResult = runtime.PackageExecutor.Pack(new PackageRequest(
-            Path.Combine(outputRoot, "package-inputs"),
-            outputRoot,
-            options.Flavor,
-            options.RunSolutionCheck));
-        if (!packageResult.Success || HasErrors(packageResult.Diagnostics) || string.IsNullOrWhiteSpace(packageResult.PackagePath))
-        {
-            WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics));
-            return 1;
-        }
-
-        if (ShouldSkipImportForApplyOnlyPackage(Path.Combine(outputRoot, "package-inputs")))
-        {
-            var applyOnlyDiagnostics = new[]
-            {
-                new CompilerDiagnostic(
-                    "publish-skip-empty-package-import",
-                    DiagnosticSeverity.Info,
-                    "Skipped PAC import because the rebuilt package contains no packageable root components. Live apply will create or update the solution shell and finalize apply-only hybrid families directly.",
-                    Path.Combine(outputRoot, "package-inputs", "Other", "Solution.xml"))
-            };
-
-            var applyOnlyResult = runtime.ApplyExecutor.Apply(
-                result.Solution,
-                new ApplyRequest(CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: true)));
-
-            output.WriteLine("Publish");
-            output.WriteLine($"Package path: {packageResult.PackagePath}");
-            output.WriteLine("Published: False");
-            WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics).Concat(applyOnlyDiagnostics).Concat(applyOnlyResult.Diagnostics));
-            return applyOnlyResult.Success && !HasErrors(applyOnlyResult.Diagnostics) ? 0 : 1;
-        }
-
-        var importResult = runtime.ImportExecutor.Import(new ImportRequest(
-            CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: false),
-            packageResult.PackagePath,
-            PublishAfterImport: true));
-        if (!importResult.Success || HasErrors(importResult.Diagnostics))
-        {
-            output.WriteLine("Publish");
-            output.WriteLine($"Package path: {packageResult.PackagePath}");
-            output.WriteLine($"Published: {importResult.Published}");
-            WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics).Concat(importResult.Diagnostics));
-            return 1;
-        }
-
-        var applyResult = runtime.ApplyExecutor.Apply(
-            result.Solution,
-            new ApplyRequest(CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: true)));
-
+        var workflow = runtime.ResolvePublishWorkflowRunner().RunPublish(CreatePublishWorkflowRequest(options));
         output.WriteLine("Publish");
-        output.WriteLine($"Package path: {packageResult.PackagePath}");
-        output.WriteLine($"Published: {importResult.Published}");
-        WriteDiagnostics(output, error, result.Diagnostics.Concat(emitted.Diagnostics).Concat(packageResult.Diagnostics).Concat(importResult.Diagnostics).Concat(applyResult.Diagnostics));
-        return applyResult.Success && !HasErrors(importResult.Diagnostics) && !HasErrors(applyResult.Diagnostics) ? 0 : 1;
+        WriteWorkflowStages(output, workflow.Stages);
+        output.WriteLine($"Package path: {workflow.Package?.PackagePath ?? "(not created)"}");
+        output.WriteLine($"Import skipped: {workflow.ImportSkippedBecauseApplyOnly}");
+        output.WriteLine($"Published: {workflow.Import?.Published ?? false}");
+        output.WriteLine($"Applied families: {workflow.FinalizeApply?.AppliedFamilies.Count ?? 0}");
+        if (workflow.FinalizeApply is not null && workflow.FinalizeApply.AppliedFamilies.Count > 0)
+        {
+            output.WriteLine($"Applied family names: {string.Join(", ", workflow.FinalizeApply.AppliedFamilies)}");
+        }
+
+        WriteDiagnostics(output, error, workflow.Diagnostics);
+        return workflow.Success ? 0 : 1;
     }
 
     private static int RunDoctor(CliCommandOptions options, TextWriter output, TextWriter error, CompilerCliRuntime runtime)
@@ -339,14 +271,44 @@ public static class CliApplication
     }
 
     private static CompilationResult CompileSource(CliCommandOptions options, CompilerCliRuntime runtime, bool enableDevApply = false) =>
-        runtime.Kernel.Compile(new CompilationRequest(
+        runtime.Kernel.Compile(CreateCompilationRequest(options, enableDevApply));
+
+    private static CompilationRequest CreateCompilationRequest(
+        CliCommandOptions options,
+        bool enableDevApply = false,
+        bool requireEnvironmentUrl = false) =>
+        new(
             options.TargetPath,
             options.RequestedCapabilities,
             new CompilationContext(
-                CreateEnvironmentProfile(options, requireUrl: false, "cli", enableDevApply),
+                CreateEnvironmentProfile(options, requireUrl: requireEnvironmentUrl, options.Command, enableDevApply),
                 EnablePackaging: true,
                 EnableDevApply: enableDevApply,
-                IncludeBestEffortFamilies: options.IncludeBestEffortFamilies)));
+                IncludeBestEffortFamilies: options.IncludeBestEffortFamilies));
+
+    private static DevApplyWorkflowRequest CreateDevApplyWorkflowRequest(CliCommandOptions options) =>
+        new(
+            CreateCompilationRequest(options, enableDevApply: true, requireEnvironmentUrl: true),
+            options.SolutionUniqueName,
+            new CompareRequest(options.IncludeBestEffortFamilies));
+
+    private static PackageBuildWorkflowRequest CreatePackageBuildWorkflowRequest(
+        CliCommandOptions options,
+        bool forceSolutionCheck) =>
+        new(
+            CreateCompilationRequest(options),
+            ResolveOutputRoot(options),
+            options.Flavor,
+            forceSolutionCheck || options.RunSolutionCheck);
+
+    private static PublishWorkflowRequest CreatePublishWorkflowRequest(CliCommandOptions options) =>
+        new(
+            CreateCompilationRequest(options, enableDevApply: true, requireEnvironmentUrl: true),
+            ResolveOutputRoot(options),
+            CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: false),
+            CreateEnvironmentProfile(options, requireUrl: true, "publish", isDevelopment: true),
+            options.Flavor,
+            options.RunSolutionCheck);
 
     private static ReadbackRequest CreateReadbackRequest(CliCommandOptions options, CanonicalSolution solution)
     {
@@ -386,21 +348,26 @@ public static class CliApplication
     private static bool HasErrors(IEnumerable<CompilerDiagnostic> diagnostics) =>
         diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
 
-    private static bool ShouldSkipImportForApplyOnlyPackage(string packageInputRoot)
+    private static void WriteWorkflowStages(TextWriter output, IEnumerable<WorkflowStageResult> stages)
     {
-        var solutionManifestPath = Path.Combine(packageInputRoot, "Other", "Solution.xml");
-        if (!File.Exists(solutionManifestPath))
+        output.WriteLine("Stages:");
+        foreach (var stage in stages)
         {
-            return false;
+            output.WriteLine($"- {stage.Stage}: {stage.Status} - {stage.Summary}");
+        }
+    }
+
+    private static void WriteDriftFindings(TextWriter output, DriftReport? report)
+    {
+        if (report is null)
+        {
+            return;
         }
 
-        var document = XDocument.Load(solutionManifestPath, LoadOptions.PreserveWhitespace);
-        var rootComponents = document
-            .Descendants()
-            .FirstOrDefault(element => string.Equals(element.Name.LocalName, "RootComponents", StringComparison.OrdinalIgnoreCase));
-
-        return rootComponents is not null
-            && !rootComponents.Elements().Any();
+        foreach (var finding in report.Findings)
+        {
+            output.WriteLine($"- {finding.Severity} [{finding.Category}] {finding.Family}: {finding.Description}");
+        }
     }
 
     private static string ResolveOutputRoot(CliCommandOptions options) =>

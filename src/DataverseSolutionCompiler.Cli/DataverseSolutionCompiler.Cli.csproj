@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataverseSolutionCompiler.Agent\DataverseSolutionCompiler.Agent.csproj" />
     <ProjectReference Include="..\DataverseSolutionCompiler.Domain\DataverseSolutionCompiler.Domain.csproj" />
     <ProjectReference Include="..\DataverseSolutionCompiler.Compiler\DataverseSolutionCompiler.Compiler.csproj" />
     <ProjectReference Include="..\DataverseSolutionCompiler.Apply\DataverseSolutionCompiler.Apply.csproj" />

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Agent\DataverseSolutionCompiler.Agent.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Domain\DataverseSolutionCompiler.Domain.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Compiler\DataverseSolutionCompiler.Compiler.csproj" />
     <ProjectReference Include="..\..\src\DataverseSolutionCompiler.Cli\DataverseSolutionCompiler.Cli.csproj" />

@@ -19,6 +19,20 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
     {
         WriteIndented = false
     };
+    private static readonly ComponentFamily[] DevApplySupportedFamilies =
+    [
+        ComponentFamily.ImageConfiguration,
+        ComponentFamily.EntityAnalyticsConfiguration,
+        ComponentFamily.PluginAssembly,
+        ComponentFamily.PluginType,
+        ComponentFamily.PluginStep,
+        ComponentFamily.PluginStepImage,
+        ComponentFamily.ServiceEndpoint,
+        ComponentFamily.Connector,
+        ComponentFamily.MobileOfflineProfile,
+        ComponentFamily.MobileOfflineProfileItem,
+        ComponentFamily.ConnectionRole
+    ];
 
     private readonly HttpClient? _httpClientOverride;
     private readonly TokenCredential? _credentialOverride;
@@ -34,6 +48,8 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
         _httpClientOverride = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _credentialOverride = credential ?? throw new ArgumentNullException(nameof(credential));
     }
+
+    public static IReadOnlyList<ComponentFamily> SupportedDevApplyFamilies => DevApplySupportedFamilies;
 
     public ApplyResult Apply(CanonicalSolution model, ApplyRequest request)
     {

@@ -2,7 +2,7 @@
 
 ## Thread State
 
-- Purpose: preserve the approved `.NET 10` compiler roadmap baseline after completing both `B-010` and `B-007`, and reopen work only when new evidence overturns one of the current explicit boundaries.
+- Purpose: preserve the approved `.NET 10` compiler roadmap baseline after completing `B-010`, `B-007`, `B-011`, `B-012`, and `B-013`, and reopen work only when new evidence overturns one of the current explicit boundaries or a new operational program is approved.
 - Scope: source/readback canonicalization, generator breadth, release-path operation, docs, and tests.
 - Roadmap boundary: approved `.NET 10` direction.
 
@@ -76,7 +76,9 @@
   - the next post-`B-010` `B-007` breadth slice now closes the canonical raw-`url` boundary for richer unsupported app-shell links: broader `main.aspx` site-map target shapes now stay explicit raw `url` evidence, and source parsing, reverse-generation, package rebuild, live readback, and stable-overlap all canonicalize parameter order, GUID forms, nested `extraqs`, and boolean literals instead of leaving that remainder ambiguous
   - the next post-`B-010` `B-007` breadth slice now closes the current non-app-shell live/drift gaps: local picklist and boolean option sets now compare through fixture-backed live readback while system `state` / `status` remain intentionally ignored, quick/card forms now compare cleanly after strict solution-scope entity filtering of `systemforms`, and solution-scoped saved-query visualizations now read back through component type `59` with normalized chart-definition signatures
   - the exhaustive owner-family universe pass now adds a checked-in audit inventory for the official current `solutioncomponent.componenttype` list plus the local-observed `80` `App Module` supplement, and the coverage docs now account for every owner family explicitly instead of only previously touched lanes
-  - bootstrap apply and agent orchestration adapters
+  - an operational Dev-proof workflow layer: `apply-dev` now runs `compile -> apply -> readback -> diff` against the supported live-mutation family set, reports per-stage outcomes plus aggregated diagnostics, and routes through the reusable `AgentOrchestrator` workflow runner instead of bespoke CLI glue
+  - a hardened release workflow layer: `pack` and `check` now route through a reusable package-build workflow, `publish` now routes through a reusable publish workflow, and the explicit apply-only empty-package branch remains a first-class release state instead of hidden CLI branching
+  - a public-facing repository entrypoint: `README.md` now uses relative links, GitHub-friendly onboarding language, quick-start workflow examples, and an explicit proof/boundary summary instead of workspace-specific pathing and thread-style narration
   - the final audited closure pass now converts `Workflow`, `EntityMap`, `HierarchyRule`, and `ConvertRule` into explicit best-effort owner-level boundaries because the repo still lacks neutral reusable source/live/package proof for those lanes, and it also closes richer user-owned visualization breadth plus the remaining non-image schema-detail remainder as supported-subset boundaries rather than active backlog
 - The copied `dataverse-metadata-synthesis` corpus lives under `fixtures/skill-corpus`, and dedicated generator fixtures now live under `fixtures/intent-specs`.
 
@@ -89,10 +91,16 @@
   - compact AI is now a documented permanent boundary rather than a hidden partial
 - Active execution focus:
   - `B-007` is complete.
-  - no active backlog items remain in the current audited owner-family universe
+  - `B-011` is complete.
+  - `B-012` is complete.
+  - `B-013` is complete.
+  - no active backlog items remain in the current audited owner-family universe, the current operational workflow lanes, or the current public-onboarding slice
   - keep reporting/legacy closed as an explicit source-first boundary, not as hidden future debt
   - keep the former site-map target-shape remainder closed as an explicit canonical raw-`url` boundary: broader app-shell links now preserve raw `url` evidence instead of pretending structured parity
-  - keep future authoring expansion on the same export-backed rebuild bar already proven for the supported subset, and reopen only if new evidence genuinely overturns one of the current explicit boundaries
+  - keep the `B-011` apply-dev v1 scope frozen to `ImageConfiguration`, `EntityAnalyticsConfiguration`, `PluginAssembly`, `PluginType`, `PluginStep`, `PluginStepImage`, `ServiceEndpoint`, `Connector`, `MobileOfflineProfile`, `MobileOfflineProfileItem`, and `ConnectionRole`
+  - keep the `B-012` release workflow scope frozen too: `publish` is still not a broader verification command, `import` remains standalone, and finalize apply still uses the same current `WebApiApplyExecutor` family set
+  - keep future authoring expansion on the same export-backed rebuild bar already proven for the supported subset, and reopen only if new evidence genuinely overturns one of the current explicit boundaries or a new workflow program is intentionally approved
+  - keep the public README portable: relative links only, concise GitHub-facing status, and no regression back to workspace-specific absolute paths
 - Permanent-boundary targets unless new evidence overturns them:
   - `ManagedProperty` as a standalone family beyond the current narrow owner-metadata `IsCustomizable` boundary
   - `Organization` as a standalone compiler family beyond the current solution-shell-adjacent boundary

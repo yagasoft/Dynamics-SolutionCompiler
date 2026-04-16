@@ -7,6 +7,7 @@ using DataverseSolutionCompiler.Domain.Model;
 using DataverseSolutionCompiler.Domain.Packaging;
 using DataverseSolutionCompiler.Domain.Planning;
 using DataverseSolutionCompiler.Domain.Read;
+using DataverseSolutionCompiler.Domain.Workflows;
 
 namespace DataverseSolutionCompiler.Domain.Abstractions;
 
@@ -53,4 +54,19 @@ public interface IImportExecutor
 public interface IExplanationService
 {
     HumanReport Explain(object compilerResult);
+}
+
+public interface IDevApplyWorkflowRunner
+{
+    DevApplyWorkflowResult RunDevApply(DevApplyWorkflowRequest request);
+}
+
+public interface IPackageBuildWorkflowRunner
+{
+    PackageBuildWorkflowResult RunPackageBuild(PackageBuildWorkflowRequest request);
+}
+
+public interface IPublishWorkflowRunner
+{
+    PublishWorkflowResult RunPublish(PublishWorkflowRequest request);
 }
