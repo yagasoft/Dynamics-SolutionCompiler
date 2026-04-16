@@ -36,6 +36,35 @@ Common examples:
 
 Treat these as evidence of a broader component family. Usually you should change the owning table, view, form, app, process, or plugin registration and let Dataverse materialize the subordinate components.
 
+## Authoritative Component Universe Accounting
+
+The repo now keeps one checked-in authoritative inventory for `solutioncomponent.componenttype` at [solutioncomponent-componenttype-inventory.json](C:\Git\Dataverse-Solution-KB\fixtures\skill-corpus\references\solutioncomponent-componenttype-inventory.json).
+
+That inventory is the source of truth for exhaustive coverage accounting. It is built from:
+- the official current Microsoft Learn `solutioncomponent.componenttype` choice list
+- a local-observed supplement when the official list is incomplete
+
+Current important exception:
+- the official current Learn page still omits component type `80` `App Module`
+- the repo counts `80` explicitly from local observed exports instead of pretending the official list is exhaustive on its own
+
+Classification rules used by the inventory:
+- `owner`: owner-level family that must appear in the coverage matrix and must either be planned under `B-007` or closed as an explicit boundary
+- `subordinate`: dependent companion or child type that rides with an owning family and is not backlog-tracked separately by default
+- `internal-only`: lookup context, platform catalog, or bookkeeping surface that is intentionally not treated as a standalone authoring lane
+- `unknown`: unresolved only until there is enough evidence to classify it honestly; do not silently omit it
+
+## Current Exhaustive Outcomes
+
+The exhaustive owner-family pass now makes these outcomes explicit:
+- Still planned under `B-007`: `Entity map`, `Workflow`, `Hierarchy rule`, and `Convert rule`
+- Explicit owner-level boundaries rather than silent omissions: `Managed property`, `Organization settings`, `Complex control`, and `Custom control default config`
+- Internal-only or lookup-context surfaces rather than standalone backlog work: `Privilege`, `PrivilegeObjectTypeCode`, localized labels, report/display-string companions, duplicate or routing or SLA or convert or mobile-offline child items, and the `SdkMessage*` request or response context family
+
+Practical rule:
+- plan backlog work from owner families, not from raw component numbers
+- keep subordinate and internal-only rows documented in the inventory, but do not promote them into standalone compiler slices unless new source, live, or package evidence proves they deserve that treatment
+
 ## Schema And Metadata
 
 Typical types:

@@ -58,3 +58,71 @@ Execution order:
 Wave 7 maximal supported proof is now complete, compact AI has been closed as a permanent boundary, the first post-`B-010` `B-007` slice now lands reporting/legacy as an explicit source-first boundary with real parse/track/reverse/package evidence, the next `B-007` slice closes app-shell `WebResource` live proof without reopening broader app-shell scope, the following slice closes app-module role-map reverse/package fidelity while keeping live role-map parity explicit best effort, the next slice closes compact ribbon shell proof as a source-first boundary instead of leaving it as ambiguous app-shell debt, the later slices close the canonical site-map dashboard, custom-page, Dataverse entity URL, app-aware dashboard, custom-page record-context, and richer raw-`url` site-map boundaries without overclaiming unsupported deep-link parity, and the latest bundled slice closes current local picklist/boolean option-set, quick/card form, and solution-scoped saved-query visualization live proof without overclaiming the broader remaining schema-detail or visualization remainder. `B-007` remains the active breadth item from this baseline.
 
 Do not retroactively reopen `B-010` in the planning docs unless new evidence genuinely overturns one of these explicit end states.
+
+## Exhaustive Owner-Family Universe
+
+The checked-in [solutioncomponent-componenttype-inventory.json](C:\Git\Dataverse-Solution-KB\fixtures\skill-corpus\references\solutioncomponent-componenttype-inventory.json) is now the audit source for exhaustive owner-family accounting.
+
+Scope rule:
+- rows below track owner families only
+- subordinate and internal-only component types stay in the inventory, but they are not backlog-tracked as standalone lanes by default
+- official current Learn omits component type `80` `App Module`, so the owner matrix includes that one local-observed supplement explicitly
+
+| Owner family | Component types | Runtime family | Status | Notes |
+| --- | --- | --- | --- | --- |
+| Table | `1` | `Table` | done | Strongest end-to-end structured authoring lane. |
+| Column | `2` | `Column` | done | Strong structured authoring lane with live proof. |
+| Relationship | `3` | `Relationship` | done | Strong structured authoring lane with live proof. |
+| Option set | `9` | `OptionSet` | done | Supported local, boolean, and shared global choices are evidence-backed; system `state` / `status` stay outside the owner lane. |
+| Managed property | `13` | none | best-effort | Explicit owner-metadata boundary: only narrow stable `IsCustomizable` proof is tracked today, not a standalone compiler authoring lane. |
+| Key | `14` | `Key` | done | Alternate-key owner lane is fully evidence-backed for the supported subset. |
+| Role | `20` | `Role` | done | Supported security-definition owner lane. |
+| Display string | `22` | `DisplayString` | best-effort | Source-first reporting or legacy boundary, not rebuildable parity. |
+| Form | `24`, `60` | `Form` | done | Main plus supported quick/card form subsets now clear the current proof bar. |
+| Organization settings | `25` | none | best-effort | Explicit solution-shell-adjacent boundary rather than a silent omission. |
+| View | `26` | `View` | done | Supported authored savedquery lane is evidence-backed; platform-generated system or lookup or quick-find views remain an explicit boundary. |
+| Workflow | `29` | `Workflow` | planned | Official owner family already exists in the runtime model, but the repo still lacks an explicit workflow proof or permanent-boundary decision. |
+| Report | `31` | `Report` | best-effort | Source-first reporting boundary. |
+| Attachment | `35` | `Attachment` | best-effort | Source-first reporting or legacy boundary. |
+| Template | `36`, `37`, `38`, `39` | `Template` | best-effort | Source-first reporting or legacy boundary across the current template classes. |
+| Duplicate rule | `44` | `DuplicateRule` | done | Supported process-policy owner lane. |
+| Entity map | `46` | `EntityMap` | planned | Official owner family exists in the runtime model but still lacks explicit parser or readback or drift or package closure. |
+| Ribbon | `55` | `Ribbon` | best-effort | Closed honestly as source-first / unsupported-live unless new neutral evidence overturns that boundary. |
+| Visualization | `59` | `Visualization` | partial | Supported saved-query visualizations are proven; richer or user-owned visualization breadth remains active. |
+| Web resource | `61` | `WebResource` | done | Source, solution-scoped live readback, and stable-overlap proof are explicit. |
+| Site map | `62` | `SiteMap` | done | Structured site-map definition plus explicit canonical raw-`url` boundary are both closed. |
+| Connection role | `63` | `ConnectionRole` | done | Supported security-definition owner lane. |
+| Complex control | `64` | none | best-effort | Explicit no-row boundary in the neutral corpus. |
+| Hierarchy rule | `65` | none | planned | Official owner family is now tracked explicitly instead of being silently omitted. |
+| Custom control | `66` | `CustomControl` | best-effort | Standalone custom-control live readback exists, but unmanaged export still omits matching source artifacts in the neutral corpus. |
+| Custom control default config | `68` | none | best-effort | Explicit no-row boundary in the neutral corpus. |
+| Field security profile | `70` | `FieldSecurityProfile` | done | Supported security-definition owner lane. |
+| Field permission | `71` | `FieldPermission` | done | Supported security-definition owner lane. |
+| App module | `80` local observed | `AppModule` | best-effort | Local-observed owner family omitted from current Learn choices; source and rebuild are strong, but neutral live role-map parity still underreports `role_ids`. |
+| Plugin type | `90` | `PluginType` | done | Supported code and extensibility owner lane. |
+| Plugin assembly | `91` | `PluginAssembly` | done | Supported code and extensibility owner lane. |
+| Plugin step | `92` | `PluginStep` | done | Supported plug-in registration owner lane. |
+| Plugin step image | `93` | `PluginStepImage` | done | Supported plug-in registration owner lane. |
+| Service endpoint | `95` | `ServiceEndpoint` | done | Supported integration-endpoint owner lane. |
+| Routing rule | `150` | `RoutingRule` | done | Supported process-policy owner lane. |
+| SLA | `152` | `Sla` | best-effort | Explicit source-first boundary in the current neutral environment. |
+| Convert rule | `154` | none | planned | Official owner family is now tracked explicitly instead of being silently omitted. |
+| Mobile offline profile | `161` | `MobileOfflineProfile` | done | Supported process-policy owner lane. |
+| Similarity rule | `165` | `SimilarityRule` | best-effort | Explicit source-first boundary in the current neutral environment. |
+| Data source mapping | `166` | `DataSourceMapping` | best-effort | Explicit permanent source-first boundary. |
+| Import map | `208` | `ImportMap` | best-effort | Explicit permanent source-first boundary. |
+| Legacy asset | `210` | `LegacyAsset` | best-effort | Source-first reporting or legacy boundary. |
+| Canvas app | `300` | `CanvasApp` | done | Hybrid source-backed live rebuild proof is complete. |
+| Connector | `371`, `372` | `Connector` | done | Supported integration-endpoint owner lane across the currently observed connector component types. |
+| Environment variable definition | `380` | `EnvironmentVariableDefinition` | done | Supported app-shell and configuration owner lane. |
+| Environment variable value | `381` | `EnvironmentVariableValue` | done | Supported app-shell and configuration owner lane. |
+| AI project type | `400` | `AiProjectType` | best-effort | Explicit permanent boundary in the current neutral environment. |
+| AI project | `401` | `AiProject` | best-effort | Explicit permanent boundary in the current neutral environment. |
+| AI configuration | `402` | `AiConfiguration` | best-effort | Explicit permanent boundary in the current neutral environment. |
+| Entity analytics configuration | `430` | `EntityAnalyticsConfiguration` | done | Hybrid source-backed live rebuild proof is complete. |
+| Image configuration | `431`, `432` | `ImageConfiguration` | done | Supported image-configuration owner lane across attribute-image and entity-image shapes. |
+
+Current explicit owner-family remainder after the exhaustive pass:
+- still planned under `B-007`: `Entity map`, `Workflow`, `Hierarchy rule`, and `Convert rule`
+- explicit owner-level boundaries, not silent omissions: `Managed property`, `Organization settings`, `Complex control`, and `Custom control default config`
+- subordinate and internal-only types still remain fully accounted for in the inventory even when they do not get standalone matrix rows
