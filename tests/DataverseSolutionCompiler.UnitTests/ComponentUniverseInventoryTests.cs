@@ -87,6 +87,18 @@ public sealed class ComponentUniverseInventoryTests
         }
     }
 
+    [Fact]
+    public void Inventory_has_no_planned_owner_rows_after_backlog_closure()
+    {
+        var plannedOwnerRows = LoadEntries()
+            .Where(entry => string.Equals(entry["classification"]!.GetValue<string>(), "owner", StringComparison.Ordinal))
+            .Where(entry => string.Equals(entry["coverageStatus"]?.GetValue<string>(), "planned", StringComparison.Ordinal))
+            .Select(entry => $"{entry["componentType"]!.GetValue<int>()}:{entry["mappedOwnerFamily"]!.GetValue<string>()}")
+            .ToArray();
+
+        plannedOwnerRows.Should().BeEmpty("the audited owner-family universe is now fully closed into support or explicit boundaries");
+    }
+
     private static JsonObject LoadInventory() =>
         JsonNode.Parse(File.ReadAllText(InventoryPath))?.AsObject()
         ?? throw new InvalidOperationException("Component universe inventory could not be parsed.");

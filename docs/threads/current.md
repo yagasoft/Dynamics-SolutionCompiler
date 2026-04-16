@@ -2,7 +2,7 @@
 
 ## Thread State
 
-- Purpose: continue the approved `.NET 10` compiler roadmap after completing `B-010`, with `B-007` now resuming as the active breadth item from the explicit rebuildability baseline.
+- Purpose: preserve the approved `.NET 10` compiler roadmap baseline after completing both `B-010` and `B-007`, and reopen work only when new evidence overturns one of the current explicit boundaries.
 - Scope: source/readback canonicalization, generator breadth, release-path operation, docs, and tests.
 - Roadmap boundary: approved `.NET 10` direction.
 
@@ -77,6 +77,7 @@
   - the next post-`B-010` `B-007` breadth slice now closes the current non-app-shell live/drift gaps: local picklist and boolean option sets now compare through fixture-backed live readback while system `state` / `status` remain intentionally ignored, quick/card forms now compare cleanly after strict solution-scope entity filtering of `systemforms`, and solution-scoped saved-query visualizations now read back through component type `59` with normalized chart-definition signatures
   - the exhaustive owner-family universe pass now adds a checked-in audit inventory for the official current `solutioncomponent.componenttype` list plus the local-observed `80` `App Module` supplement, and the coverage docs now account for every owner family explicitly instead of only previously touched lanes
   - bootstrap apply and agent orchestration adapters
+  - the final audited closure pass now converts `Workflow`, `EntityMap`, `HierarchyRule`, and `ConvertRule` into explicit best-effort owner-level boundaries because the repo still lacks neutral reusable source/live/package proof for those lanes, and it also closes richer user-owned visualization breadth plus the remaining non-image schema-detail remainder as supported-subset boundaries rather than active backlog
 - The copied `dataverse-metadata-synthesis` corpus lives under `fixtures/skill-corpus`, and dedicated generator fixtures now live under `fixtures/intent-specs`.
 
 ## What Still Needs Attention
@@ -87,15 +88,18 @@
   - Wave 7 maximal supported proof is green
   - compact AI is now a documented permanent boundary rather than a hidden partial
 - Active execution focus:
-  - resume `B-007` breadth-first work from the completed `B-010` baseline
+  - `B-007` is complete.
+  - no active backlog items remain in the current audited owner-family universe
   - keep reporting/legacy closed as an explicit source-first boundary, not as hidden future debt
   - keep the former site-map target-shape remainder closed as an explicit canonical raw-`url` boundary: broader app-shell links now preserve raw `url` evidence instead of pretending structured parity
-  - keep the new owner-family audit result explicit: `EntityMap`, `Workflow`, `HierarchyRule`, and `ConvertRule` are now the still-open owner lanes that need either honest proof or an explicit permanent boundary
-  - continue `B-007` beyond the current local option-set, quick/card form, and solution-scoped saved-query visualization proof, especially the four owner lanes above, the remaining non-image schema-detail gaps, and richer user-owned or otherwise unsupported view/query/visualization breadth
-  - keep future authoring expansion on the same export-backed rebuild bar already proven for the supported subset
+  - keep future authoring expansion on the same export-backed rebuild bar already proven for the supported subset, and reopen only if new evidence genuinely overturns one of the current explicit boundaries
 - Permanent-boundary targets unless new evidence overturns them:
   - `ManagedProperty` as a standalone family beyond the current narrow owner-metadata `IsCustomizable` boundary
   - `Organization` as a standalone compiler family beyond the current solution-shell-adjacent boundary
+  - `Workflow`
+  - `EntityMap`
+  - `HierarchyRule`
+  - `ConvertRule`
   - `ImportMap`
   - `DataSourceMapping`
   - compact AI families in the current environment because live Dataverse create rejects `AITemplate` with `OperationNotSupported`
@@ -104,6 +108,8 @@
   - `SlaItem`
   - `ComplexControl`
   - `CustomControlDefaultConfig`
+  - richer user-owned or otherwise unsupported visualization breadth beyond the proven solution-scoped saved-query subset
+  - remaining non-image schema-detail remainder beyond supported options, keys, images, and narrow owner-metadata `IsCustomizable`
   - platform-generated system/default/lookup/quick-find views
   - effective access/runtime privilege expansion
   - reporting/legacy live rebuild parity beyond the current compact source-first slice, because the synthetic seed still fails PAC root-component validation

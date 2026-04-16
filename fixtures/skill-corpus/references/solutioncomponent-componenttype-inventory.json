@@ -9,7 +9,7 @@
     "notes": "Current official Microsoft Learn choice list for solutioncomponent.componenttype. The current page omits component type 80 App Module, so the repo supplements that one case from local observed exports."
   },
   "classificationRules": {
-    "owner": "Standalone owner-level family worth explicit coverage accounting. It must appear in the coverage matrix and either be planned under B-007 or closed as an explicit boundary.",
+    "owner": "Standalone owner-level family worth explicit coverage accounting. It must appear in the coverage matrix and land as either evidence-backed support or an explicit boundary.",
     "subordinate": "Dependent companion or child type that rides with an owner family and is not backlog-tracked separately unless a future proof point demonstrates an independent source, live, or package surface.",
     "internal-only": "Lookup context, platform catalog, or bookkeeping surface that is intentionally not treated as a standalone authoring lane.",
     "unknown": "Unresolved classification kept explicit until evidence is strong enough to promote it to owner, subordinate, or internal-only."
@@ -306,9 +306,9 @@
       "classification": "owner",
       "mappedOwnerFamily": "Workflow",
       "coverageRow": "Workflow",
-      "coverageStatus": "planned",
+      "coverageStatus": "best-effort",
       "runtimeComponentFamily": "Workflow",
-      "notes": "Official owner family already present in the runtime model but still missing an explicit proof lane or permanent boundary."
+      "notes": "Explicit owner-level boundary. The runtime family exists, but the repo still lacks neutral reusable source, live, and package proof for this lane."
     },
     {
       "componentType": 31,
@@ -438,9 +438,9 @@
       "classification": "owner",
       "mappedOwnerFamily": "Entity map",
       "coverageRow": "Entity map",
-      "coverageStatus": "planned",
+      "coverageStatus": "best-effort",
       "runtimeComponentFamily": "EntityMap",
-      "notes": "Official owner family present in the runtime model but still missing an explicit proof lane or permanent boundary."
+      "notes": "Explicit owner-level boundary. The runtime family exists, but the repo still lacks neutral reusable source, live, and package proof for entity and attribute map artifacts."
     },
     {
       "componentType": 47,
@@ -526,9 +526,9 @@
       "classification": "owner",
       "mappedOwnerFamily": "Visualization",
       "coverageRow": "Visualization",
-      "coverageStatus": "partial",
+      "coverageStatus": "best-effort",
       "runtimeComponentFamily": "Visualization",
-      "notes": "Supported authored saved-query visualizations are proven, while richer or user-owned visualization breadth remains open."
+      "notes": "Supported authored saved-query visualizations are proven. Richer chart authoring and user-owned visualization breadth are now an explicit supported-subset boundary."
     },
     {
       "componentType": 60,
@@ -592,9 +592,9 @@
       "classification": "owner",
       "mappedOwnerFamily": "Hierarchy rule",
       "coverageRow": "Hierarchy rule",
-      "coverageStatus": "planned",
+      "coverageStatus": "best-effort",
       "runtimeComponentFamily": null,
-      "notes": "Now tracked explicitly after the universe pass instead of being silently omitted."
+      "notes": "Explicit owner-level boundary. The official owner family is tracked, but the repo still lacks a neutral reusable seed or proof surface."
     },
     {
       "componentType": 66,
@@ -757,9 +757,9 @@
       "classification": "owner",
       "mappedOwnerFamily": "Convert rule",
       "coverageRow": "Convert rule",
-      "coverageStatus": "planned",
+      "coverageStatus": "best-effort",
       "runtimeComponentFamily": null,
-      "notes": "Now tracked explicitly after the universe pass instead of being silently omitted."
+      "notes": "Explicit owner-level boundary. The official owner family is tracked, but the repo still lacks a neutral reusable seed or proof surface."
     },
     {
       "componentType": 155,
