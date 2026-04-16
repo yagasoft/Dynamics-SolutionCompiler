@@ -13,6 +13,12 @@ namespace DataverseSolutionCompiler.UnitTests;
 
 public sealed class PackageEmitterTests
 {
+    private static readonly string ExamplesRoot = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples");
+
     [Fact]
     public void Emit_materializes_a_deterministic_package_input_tree()
     {
@@ -572,6 +578,102 @@ public sealed class PackageEmitterTests
         }
     }
 
+    [Theory]
+    [InlineData("seed-code-plugin-classic", "plugins/Codex.Metadata.CodeFirst.Classic/Codex.Metadata.CodeFirst.Classic.csproj", "plugins/Codex.Metadata.CodeFirst.Classic/AccountCreateDescriptionPlugin.cs")]
+    [InlineData("seed-code-plugin-package", "plugins/Codex.Metadata.CodeFirst.Package/Codex.Metadata.CodeFirst.Package.csproj", "plugins/Codex.Metadata.CodeFirst.Package.Dependency/ProofMarkerProvider.cs")]
+    [InlineData("seed-code-plugin-imperative", "plugins/Codex.Metadata.CodeFirst.Imperative/Codex.Metadata.CodeFirst.Imperative.csproj", "plugins/Codex.Metadata.CodeFirst.Imperative/AccountCreateDescriptionPlugin.cs")]
+    [InlineData("seed-code-plugin-helper", "plugins/Codex.Metadata.CodeFirst.Helper/Codex.Metadata.CodeFirst.Helper.csproj", "plugins/Codex.Metadata.CodeFirst.Helper/AccountDescriptionActivity.cs")]
+    [InlineData("seed-code-plugin-imperative-service", "plugins/Codex.Metadata.CodeFirst.Imperative.Service/Codex.Metadata.CodeFirst.Imperative.Service.csproj", "plugins/Codex.Metadata.CodeFirst.Imperative.Service/AccountCreateDescriptionPlugin.cs")]
+    public void Emit_preserves_code_first_plugin_registration_as_apply_only_source_backed_layout(
+        string fixtureName,
+        string expectedProjectPath,
+        string expectedExtraAssetPath)
+    {
+        var reverseOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-reverse-{fixtureName}-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-package-{fixtureName}-{Guid.NewGuid():N}");
+
+        try
+        {
+            var sourceModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(
+                Path.Combine(ExamplesRoot, fixtureName),
+                Array.Empty<string>())).Solution;
+            var reverseEmit = new IntentSpecEmitter().Emit(sourceModel, new EmitRequest(reverseOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reverseIntentPath = Path.Combine(reverseOutputRoot, "intent-spec", "intent-spec.json");
+            var hybridModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(reverseIntentPath, Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(hybridModel, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+
+            emitted.Success.Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", expectedProjectPath.Replace('/', Path.DirectorySeparatorChar))).Should().BeFalse();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", expectedExtraAssetPath.Replace('/', Path.DirectorySeparatorChar))).Should().BeFalse();
+            Directory.Exists(Path.Combine(packageOutputRoot, "package-inputs", "PluginAssemblies")).Should().BeFalse();
+            var solutionXml = File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml"));
+            solutionXml.Should().NotContain("type=\"91\"");
+            solutionXml.Should().NotContain("type=\"90\"");
+            solutionXml.Should().NotContain("type=\"92\"");
+            solutionXml.Should().NotContain("type=\"93\"");
+            var manifestJson = File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "manifest.json"));
+            manifestJson.Should().NotContain(expectedProjectPath.Replace('\\', '/'));
+            manifestJson.Should().NotContain(expectedExtraAssetPath.Replace('\\', '/'));
+            emitted.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "package-emitter-hybrid-apply-only");
+        }
+        finally
+        {
+            if (Directory.Exists(reverseOutputRoot))
+            {
+                Directory.Delete(reverseOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emit_preserves_custom_workflow_activity_code_first_registration_as_apply_only_source_backed_layout()
+    {
+        var reverseOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-reverse-workflow-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-package-workflow-{Guid.NewGuid():N}");
+
+        try
+        {
+            var sourceModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(
+                Path.Combine(ExamplesRoot, "seed-code-workflow-activity-classic"),
+                Array.Empty<string>())).Solution;
+            var reverseEmit = new IntentSpecEmitter().Emit(sourceModel, new EmitRequest(reverseOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reverseIntentPath = Path.Combine(reverseOutputRoot, "intent-spec", "intent-spec.json");
+            var hybridModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(reverseIntentPath, Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(hybridModel, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+
+            emitted.Success.Should().BeTrue();
+            Directory.Exists(Path.Combine(packageOutputRoot, "package-inputs", "PluginAssemblies")).Should().BeFalse();
+            Directory.Exists(Path.Combine(packageOutputRoot, "package-inputs", "PluginTypes")).Should().BeFalse();
+            var solutionXml = File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml"));
+            solutionXml.Should().NotContain("type=\"91\"");
+            solutionXml.Should().NotContain("type=\"90\"");
+            emitted.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "package-emitter-hybrid-apply-only");
+        }
+        finally
+        {
+            if (Directory.Exists(reverseOutputRoot))
+            {
+                Directory.Delete(reverseOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
     [Fact]
     public void Emit_preserves_source_backed_service_endpoint_connector_layout()
     {
@@ -709,6 +811,123 @@ public sealed class PackageEmitterTests
             if (Directory.Exists(slaOutputRoot))
             {
                 Directory.Delete(slaOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("seed-workflow-classic", "cdxmeta_AccountStampWorkflow")]
+    [InlineData("seed-workflow-action", "cdxmeta_AccountStampAction")]
+    public void Emit_preserves_source_backed_workflow_layout(
+        string fixtureName,
+        string expectedFileStem)
+    {
+        var model = ReadFixture(fixtureName);
+        var emitter = new PackageEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-package-workflow-{fixtureName}-{Guid.NewGuid():N}");
+
+        try
+        {
+            var first = emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            var firstSnapshot = SnapshotPackageInputs(outputRoot);
+            var second = emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.PackageInputs));
+            var secondSnapshot = SnapshotPackageInputs(outputRoot);
+
+            first.Success.Should().BeTrue();
+            second.Success.Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Workflows", $"{expectedFileStem}.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Workflows", $"{expectedFileStem}.xaml")).Should().BeTrue();
+            File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Solution.xml")).Should().Contain("type=\"29\"");
+
+            firstSnapshot.Keys.Should().BeEquivalentTo(secondSnapshot.Keys);
+            foreach (var path in firstSnapshot.Keys)
+            {
+                secondSnapshot[path].Should().Equal(firstSnapshot[path]);
+            }
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("seed-workflow-classic", "Workflows/cdxmeta_AccountStampWorkflow.json", "Workflows/cdxmeta_AccountStampWorkflow.xaml")]
+    [InlineData("seed-workflow-action", "Workflows/cdxmeta_AccountStampAction.json", "Workflows/cdxmeta_AccountStampAction.xaml")]
+    public void Emit_preserves_reverse_generated_workflow_source_backed_layout(
+        string fixtureName,
+        string expectedMetadataPath,
+        string expectedAssetPath)
+    {
+        var reverseOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-workflow-reverse-{fixtureName}-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-workflow-package-{fixtureName}-{Guid.NewGuid():N}");
+
+        try
+        {
+            var sourceModel = ReadFixture(fixtureName);
+            var reverseEmit = new IntentSpecEmitter().Emit(sourceModel, new EmitRequest(reverseOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reverseIntentPath = Path.Combine(reverseOutputRoot, "intent-spec", "intent-spec.json");
+            var hybridModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(reverseIntentPath, Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(hybridModel, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+
+            emitted.Success.Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", expectedMetadataPath.Replace('/', Path.DirectorySeparatorChar))).Should().BeTrue();
+            File.Exists(Path.Combine(packageOutputRoot, "package-inputs", expectedAssetPath.Replace('/', Path.DirectorySeparatorChar))).Should().BeTrue();
+            File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Solution.xml")).Should().Contain("type=\"29\"");
+            File.ReadAllText(Path.Combine(packageOutputRoot, "package-inputs", "Other", "Customizations.xml")).Should().Contain("<Workflows");
+        }
+        finally
+        {
+            if (Directory.Exists(reverseOutputRoot))
+            {
+                Directory.Delete(reverseOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emit_reports_plugin_package_solution_zip_parity_as_live_boundary()
+    {
+        var reverseOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-package-boundary-{Guid.NewGuid():N}");
+        var packageOutputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-package-boundary-package-{Guid.NewGuid():N}");
+
+        try
+        {
+            var sourceModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(
+                Path.Combine(ExamplesRoot, "seed-code-plugin-package"),
+                Array.Empty<string>())).Solution;
+            var reverseEmit = new IntentSpecEmitter().Emit(sourceModel, new EmitRequest(reverseOutputRoot, EmitLayout.IntentSpec));
+            reverseEmit.Success.Should().BeTrue();
+
+            var reverseIntentPath = Path.Combine(reverseOutputRoot, "intent-spec", "intent-spec.json");
+            var hybridModel = new CompilerKernel().Compile(new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(reverseIntentPath, Array.Empty<string>())).Solution;
+
+            var emitted = new PackageEmitter().Emit(hybridModel, new EmitRequest(packageOutputRoot, EmitLayout.PackageInputs));
+
+            emitted.Success.Should().BeTrue();
+            emitted.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "package-emitter-plugin-package-live-boundary");
+        }
+        finally
+        {
+            if (Directory.Exists(reverseOutputRoot))
+            {
+                Directory.Delete(reverseOutputRoot, recursive: true);
+            }
+
+            if (Directory.Exists(packageOutputRoot))
+            {
+                Directory.Delete(packageOutputRoot, recursive: true);
             }
         }
     }

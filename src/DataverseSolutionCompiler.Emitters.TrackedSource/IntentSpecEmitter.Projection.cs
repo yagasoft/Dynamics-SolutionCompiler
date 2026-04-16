@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Emission;
 using DataverseSolutionCompiler.Domain.Model;
@@ -21,6 +22,7 @@ public sealed partial class IntentSpecEmitter
         ComponentFamily.PluginStepImage,
         ComponentFamily.ServiceEndpoint,
         ComponentFamily.Connector,
+        ComponentFamily.Workflow,
         ComponentFamily.DuplicateRule,
         ComponentFamily.DuplicateRuleCondition,
         ComponentFamily.RoutingRule,
@@ -1274,12 +1276,25 @@ public sealed partial class IntentSpecEmitter
         var assetMapJson = GetProperty(artifact, ArtifactPropertyKeys.AssetSourceMapJson);
         if (!string.IsNullOrWhiteSpace(assetMapJson))
         {
-            var stringArray = Deserialize<List<string>>(assetMapJson);
-            if (stringArray is { Count: > 0 })
+            if (JsonNode.Parse(assetMapJson) is JsonArray assetArray)
             {
-                return stringArray
+                var stringPaths = assetArray
+                    .Where(node => node is JsonValue)
+                    .Select(node => node?.GetValue<string>())
                     .Where(path => !string.IsNullOrWhiteSpace(path))
-                    .Select(path => NormalizeTrackedSourceRelativePath(path))
+                    .Select(path => NormalizeTrackedSourceRelativePath(path!))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+                if (stringPaths.Length > 0)
+                {
+                    return stringPaths;
+                }
+
+                return assetArray
+                    .Select(node => node?["packageRelativePath"]?.GetValue<string>() ?? node?["PackageRelativePath"]?.GetValue<string>())
+                    .Where(path => !string.IsNullOrWhiteSpace(path))
+                    .Select(path => NormalizeTrackedSourceRelativePath(path!))
                     .Distinct(StringComparer.OrdinalIgnoreCase)
                     .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
                     .ToArray();
@@ -1301,6 +1316,8 @@ public sealed partial class IntentSpecEmitter
             .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
             .ToArray();
     }
+
+    private sealed record SourceBackedAssetPathEntry(string? SourcePath, string? PackageRelativePath);
 
     private static string ResolveSourceBackedMaterializedPath(FamilyArtifact artifact, string relativePath)
     {

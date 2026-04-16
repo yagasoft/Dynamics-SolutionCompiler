@@ -292,6 +292,7 @@ internal sealed partial class DataverseWebApiLiveReader
             CreateProperties(
                 (ArtifactPropertyKeys.AssemblyFullName, assemblyFullName),
                 (ArtifactPropertyKeys.AssemblyQualifiedName, assemblyQualifiedName),
+                (ArtifactPropertyKeys.PluginTypeKind, string.IsNullOrWhiteSpace(GetString(row, "workflowactivitygroupname")) ? "plugin" : "customWorkflowActivity"),
                 (ArtifactPropertyKeys.FriendlyName, GetString(row, "friendlyname")),
                 (ArtifactPropertyKeys.WorkflowActivityGroupName, GetString(row, "workflowactivitygroupname")),
                 (ArtifactPropertyKeys.Description, GetString(row, "description")),

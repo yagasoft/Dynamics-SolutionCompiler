@@ -2,7 +2,7 @@
 
 ## Thread State
 
-- Purpose: preserve the approved `.NET 10` compiler roadmap baseline after completing `B-010`, `B-007`, `B-011`, `B-012`, and `B-013`, and reopen work only when new evidence overturns one of the current explicit boundaries or a new operational program is approved.
+- Purpose: preserve the approved `.NET 10` compiler roadmap baseline after completing `B-010`, `B-007`, `B-011`, `B-012`, `B-013`, `B-014`, `B-015`, `B-016`, and `B-017`, and reopen work only when new evidence overturns one of the current explicit boundaries or a new operational program is approved.
 - Scope: source/readback canonicalization, generator breadth, release-path operation, docs, and tests.
 - Roadmap boundary: approved `.NET 10` direction.
 
@@ -37,7 +37,19 @@
   - process-policy proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `DuplicateRule`, `DuplicateRuleCondition`, `RoutingRule`, `RoutingRuleItem`, `MobileOfflineProfile`, and `MobileOfflineProfileItem`, with workflow and queue links kept as best-effort associations
   - security-definition proof through typed XML parsing, deterministic tracked/package emission, live readback, and stable-overlap drift for `Role`, `RolePrivilege`, `FieldSecurityProfile`, `FieldPermission`, and `ConnectionRole`, with effective access intentionally out of scope
   - source-first service-policy adjunct support for `SimilarityRule`, `Sla`, and `SlaItem`, with parser, tracked-source, and package-input coverage plus explicit unsupported-live or non-blocking diff behavior rather than overclaimed neutral live parity
-  - code-first SDK registration ingestion still left as explicit follow-up work rather than a neutral runtime path
+  - a narrow code-first SDK registration path now exists for the supported DBM-style raw C# pattern: `ReadSourceKind.CodeFirstSdkRegistration` detects buildable C# roots only after stronger source kinds lose, the Roslyn-backed reader projects code-first registrations into the existing `PluginAssembly`, `PluginType`, `PluginStep`, and `PluginStepImage` families, and unsupported code shapes stay explicit diagnostics with file/line provenance instead of inferred behavior
+  - code-first plugin registrations now survive tracked-source summaries plus reverse-generated `sourceBackedArtifacts[]`, including source project path, deployment flavor, staged asset maps, and package identity metadata when the deployment flavor is `PluginPackage`
+  - the new code-asset staging layer now builds signed classic `.dll` and plug-in package `.nupkg` outputs under a compiler-managed staging root outside the source tree, and the staged asset path plus content hash now flow back into the canonical plug-in assembly artifact
+  - `apply-dev` and `publish` now build staged code-first plug-in assets before deploy, then hand the resulting `.dll` or `.nupkg` to the existing plug-in apply path; classic assemblies push through `pac plugin push --type Assembly`, plug-in packages push through `pac plugin push --type Nuget`, and package deployment remains explicit live finalize apply rather than fake `solution.zip` parity
+  - the neutral `seed-code-plugin-classic` and `seed-code-plugin-package` fixtures now cover the supported code-first parser, tracked-source, reverse-generation, staged-build, workflow, live readback, and stable-overlap path through the existing plug-in families, and the end-to-end suite now includes an environment-gated proof harness that can create and clean up proof `account` rows when a real Dataverse URL is configured
+  - the code-first lane now also supports the seeded imperative DBM helper registration shape, so `seed-code-plugin-imperative` can read, reverse-generate, stage, apply, read back, and diff through the same `PluginAssembly`, `PluginType`, `PluginStep`, and `PluginStepImage` families instead of staying outside the runtime parser scope
+  - custom workflow activities now flow through the existing code and extensibility lane as `PluginType` subtype `customWorkflowActivity`: tracked-source, reverse generation, live readback, and stable-overlap now preserve `pluginTypeKind` plus `workflowActivityGroupName`, and `seed-code-workflow-activity-classic` proves the classic assembly staging or deployment path without reopening the owner-level `Workflow` family
+  - plug-in package deployment for custom workflow activities is now an explicit boundary instead of a silent miss: `seed-code-workflow-activity-package` fails before deploy with a clear compiler diagnostic, and `publish` now stops before finalize apply when the staged code-first build hits that classic-only boundary
+  - the code-first lane now also supports helper-returned registration collections and the more realistic DBM `GetMessage(service, entity, message, handler)` imperative lookup shape: `seed-code-plugin-helper` proves helper-returned `Types`, `Steps`, and `Images` collections plus a mixed normal plug-in and `customWorkflowActivity` type catalog in one classic assembly, while `seed-code-plugin-imperative-service` proves the service-aware imperative lookup shape without widening into arbitrary helper frameworks
+  - the code-first lane now also supports a broader bounded common-idiom static-analysis surface: reducible member or local indirection, `const`, `static readonly`, `nameof`, simple interpolation, switch or ternary reductions, reducible helper methods, direct collection builders, and simple `yield return` aggregators now survive into the same `PluginAssembly`, `PluginType`, `PluginStep`, and `PluginStepImage` families, while reflection, dynamic dispatch, external files, non-reducible helper frameworks, and other arbitrary code paths remain explicit `unsupportedShape` diagnostics
+  - regular code-first plug-in packages now stay honest as a permanent live finalize-apply boundary rather than fake solution-zip parity: staged `.nupkg` assets still deploy through `pac plugin push --type Nuget`, but package-input emission now reports that the NuGet payload is not rebuilt into `solution.zip` until a stable package-bearing exported source shape is proven
+  - custom workflow activity package deployment is now a cited permanent classic-only boundary across build, `apply-dev`, and `publish`, aligned with current Microsoft guidance that workflow extensions are not supported in plug-in packages
+  - the owner `Workflow` lane is now reopened for a curated source-backed subset: `seed-workflow-classic` and `seed-workflow-action` parse `Workflows/*.json` plus `.xaml`, preserve workflow shell metadata plus XAML/client-data fidelity and optional action metadata, emit tracked-source summaries, reverse-generate into `sourceBackedArtifacts[]`, rebuild package-inputs with root component `29`, read back from the live `workflows` surface, and compare on stable shell plus hash overlap without widening direct live mutation
   - family-semantic stable-overlap drift for the same first-family slice, exercised against fixture-backed live snapshots and generated round-trip package rereads with non-blocking warning surfaces preserved
   - real library-first Dataverse Web API readback in `Readers.Live` using `DefaultAzureCredential` + raw `HttpClient`, with solution-aware discovery, OData paging, app-setting rejoin, and entity-scoped form/view fallback, now wired into CLI `readback` / `diff`
   - deterministic package-input materialization in two modes:
@@ -79,7 +91,7 @@
   - an operational Dev-proof workflow layer: `apply-dev` now runs `compile -> apply -> readback -> diff` against the supported live-mutation family set, reports per-stage outcomes plus aggregated diagnostics, and routes through the reusable `AgentOrchestrator` workflow runner instead of bespoke CLI glue
   - a hardened release workflow layer: `pack` and `check` now route through a reusable package-build workflow, `publish` now routes through a reusable publish workflow, and the explicit apply-only empty-package branch remains a first-class release state instead of hidden CLI branching
   - a public-facing repository entrypoint: `README.md` now uses relative links, GitHub-friendly onboarding language, quick-start workflow examples, and an explicit proof/boundary summary instead of workspace-specific pathing and thread-style narration
-  - the final audited closure pass now converts `Workflow`, `EntityMap`, `HierarchyRule`, and `ConvertRule` into explicit best-effort owner-level boundaries because the repo still lacks neutral reusable source/live/package proof for those lanes, and it also closes richer user-owned visualization breadth plus the remaining non-image schema-detail remainder as supported-subset boundaries rather than active backlog
+  - the final audited closure pass converted `EntityMap`, `HierarchyRule`, and `ConvertRule` into explicit best-effort owner-level boundaries because the repo still lacks neutral reusable source/live/package proof for those lanes, and it also closed richer user-owned visualization breadth plus the remaining non-image schema-detail remainder as supported-subset boundaries rather than active backlog
 - The copied `dataverse-metadata-synthesis` corpus lives under `fixtures/skill-corpus`, and dedicated generator fixtures now live under `fixtures/intent-specs`.
 
 ## What Still Needs Attention
@@ -94,7 +106,11 @@
   - `B-011` is complete.
   - `B-012` is complete.
   - `B-013` is complete.
-  - no active backlog items remain in the current audited owner-family universe, the current operational workflow lanes, or the current public-onboarding slice
+  - `B-014` is complete.
+  - `B-015` is complete.
+  - `B-016` is complete.
+  - `B-017` is complete.
+  - no active backlog items remain in the current audited owner-family universe, the current operational workflow lanes, the current public-onboarding slice, the supported code-first plug-in lane, or the current reopened workflow source-backed subset after `B-017`
   - keep reporting/legacy closed as an explicit source-first boundary, not as hidden future debt
   - keep the former site-map target-shape remainder closed as an explicit canonical raw-`url` boundary: broader app-shell links now preserve raw `url` evidence instead of pretending structured parity
   - keep the `B-011` apply-dev v1 scope frozen to `ImageConfiguration`, `EntityAnalyticsConfiguration`, `PluginAssembly`, `PluginType`, `PluginStep`, `PluginStepImage`, `ServiceEndpoint`, `Connector`, `MobileOfflineProfile`, `MobileOfflineProfileItem`, and `ConnectionRole`
@@ -104,7 +120,6 @@
 - Permanent-boundary targets unless new evidence overturns them:
   - `ManagedProperty` as a standalone family beyond the current narrow owner-metadata `IsCustomizable` boundary
   - `Organization` as a standalone compiler family beyond the current solution-shell-adjacent boundary
-  - `Workflow`
   - `EntityMap`
   - `HierarchyRule`
   - `ConvertRule`
@@ -117,6 +132,7 @@
   - `ComplexControl`
   - `CustomControlDefaultConfig`
   - richer user-owned or otherwise unsupported visualization breadth beyond the proven solution-scoped saved-query subset
+  - broader workflow families or execution parity beyond the current curated classic workflow and custom-action source-backed subset
   - remaining non-image schema-detail remainder beyond supported options, keys, images, and narrow owner-metadata `IsCustomizable`
   - platform-generated system/default/lookup/quick-find views
   - effective access/runtime privilege expansion

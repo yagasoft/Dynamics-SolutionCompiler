@@ -22,7 +22,8 @@ internal sealed record CompilerCliRuntime(
     IExplanationService ExplanationService,
     IDevApplyWorkflowRunner? DevApplyWorkflowRunner = null,
     IPackageBuildWorkflowRunner? PackageBuildWorkflowRunner = null,
-    IPublishWorkflowRunner? PublishWorkflowRunner = null)
+    IPublishWorkflowRunner? PublishWorkflowRunner = null,
+    ICodeAssetBuilder? CodeAssetBuilder = null)
 {
     public IDevApplyWorkflowRunner ResolveDevApplyWorkflowRunner() =>
         DevApplyWorkflowRunner ?? CreateWorkflowOrchestrator();
@@ -42,7 +43,8 @@ internal sealed record CompilerCliRuntime(
             DriftComparer,
             PackageEmitter,
             PackageExecutor,
-            ImportExecutor);
+            ImportExecutor,
+            CodeAssetBuilder ?? new DotNetCodeAssetBuilder());
 
     public static CompilerCliRuntime CreateDefault()
     {
@@ -53,6 +55,7 @@ internal sealed record CompilerCliRuntime(
         var liveSnapshotProvider = new WebApiLiveSnapshotProvider();
         var driftComparer = new StableOverlapDriftComparer();
         var applyExecutor = new WebApiApplyExecutor();
+        var codeAssetBuilder = new DotNetCodeAssetBuilder();
         var explanationService = new ExplanationService();
         var workflowOrchestrator = new AgentOrchestrator(
             kernel,
@@ -62,7 +65,8 @@ internal sealed record CompilerCliRuntime(
             driftComparer,
             packageEmitter,
             pacCliExecutor,
-            pacCliExecutor);
+            pacCliExecutor,
+            codeAssetBuilder);
 
         return new CompilerCliRuntime(
             kernel,
@@ -76,6 +80,7 @@ internal sealed record CompilerCliRuntime(
             explanationService,
             workflowOrchestrator,
             workflowOrchestrator,
-            workflowOrchestrator);
+            workflowOrchestrator,
+            codeAssetBuilder);
     }
 }

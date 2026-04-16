@@ -147,8 +147,96 @@ Completion outcome:
 - the planning and acceptance docs now record the documentation slice as complete instead of leaving it as untracked polish
 - a unit test now protects the public README from drifting back to workspace-specific absolute paths
 
+## Phase 9: Code-First Plugin Registration And Deployment
+
+This phase is now complete.
+
+Goal:
+- add a narrow code-first input path for the known DBM-style raw C# plug-in registration pattern
+- stage deployable classic `.dll` or plug-in package `.nupkg` assets outside the source tree
+- wire that path into the existing `apply-dev` and `publish` workflows without widening the supported family set or pretending solution-zip parity for plug-in packages
+
+Exit criteria:
+- the compiler can detect and read the supported `CodeFirstSdkRegistration` source kind after stronger source kinds lose
+- tracked-source and reverse-generated intent preserve the code-first registration metadata and staged source evidence
+- `apply-dev` builds staged code assets before deploy, and `publish` keeps code-first plug-in deployment in finalize apply
+- classic and package proof seeds cover the supported parser, build, workflow, readback, and drift path
+- broader arbitrary C# registration patterns remain explicit unsupported-shape diagnostics instead of silent inference
+
+Completion outcome:
+- the compiler now reads the supported DBM-style registration shape directly from raw C# projects into the existing `PluginAssembly`, `PluginType`, `PluginStep`, and `PluginStepImage` families
+- the new code-asset builder stages signed `.dll` or `.nupkg` outputs under a compiler-managed staging root outside the source tree
+- tracked-source, reverse-generated `sourceBackedArtifacts[]`, `apply-dev`, and `publish` now all preserve the same code-first plug-in evidence without adding a new component family
+- the neutral `seed-code-plugin-classic` and `seed-code-plugin-package` fixtures now prove the supported path, while plug-in package deployment remains explicit live finalize apply rather than a claim that `.nupkg` payloads live inside `solution.zip`
+
+## Phase 10: Wider Code-First Registration And Custom Workflow Activity Phase A
+
+This phase is now complete.
+
+Goal:
+- widen the supported code-first plug-in registration parser beyond the first object-initializer-only DBM shape
+- add custom workflow activity support under the existing `PluginAssembly` and `PluginType` families without reopening the owner-level `Workflow` family
+- keep workflow-activity deployment honest by supporting only the classic assembly lane
+
+Exit criteria:
+- the compiler reads the seeded imperative DBM helper registration shape into the existing plug-in families
+- tracked-source and reverse-generated `sourceBackedArtifacts[]` preserve that wider code-first registration evidence
+- custom workflow activities read, reverse, drift, and read back as a `PluginType` subtype instead of reopening `Workflow`
+- classic custom workflow activity deployment works, and plug-in package deployment stops with an explicit diagnostic
+
+Completion outcome:
+- the code-first reader now supports the seeded imperative DBM helper shape in addition to the first supported object-initializer shape
+- `PluginType` artifacts now preserve `pluginTypeKind`, including `customWorkflowActivity`, while `workflowActivityGroupName` remains part of the stable overlap
+- the new `seed-code-plugin-imperative`, `seed-code-workflow-activity-classic`, and `seed-code-workflow-activity-package` fixtures now cover the widened parser, classic workflow-activity path, and explicit package boundary
+- custom workflow activities now flow through tracked-source, reverse generation, live readback, drift, `apply-dev`, and `publish` under the existing plug-in families, while the owner-level `Workflow` lane stays closed as a separate explicit boundary
+- plug-in package deployment for workflow activities is now an explicit classic-only boundary with a clear compiler diagnostic rather than a silent fallback
+
+## Phase 11: Helper-Based Code-First Registration And Custom Workflow Activity Phase B
+
+This phase is now complete.
+
+Goal:
+- cover one more real DBM-style code-first registration shape without widening into arbitrary helper frameworks or reopening the owner-level `Workflow` family
+- support helper-returned registration collections where the code still stays direct and inspectable
+- support the more realistic DBM `GetMessage(service, entity, message, handler)` imperative lookup shape
+
+Exit criteria:
+- the compiler can resolve zero-argument helper-returned registration collections for the supported `Types`, `Steps`, and `Images` object-array shapes
+- the compiler can still read the imperative DBM helper lane when `GetMessage(...)` carries a leading service or context argument before the stable `entity`, `message`, and `handler` strings
+- helper-backed mixed plug-in plus custom workflow activity assemblies survive tracked-source, reverse generation, live readback, and stable-overlap under the existing plug-in families
+- no new `ComponentFamily` values are introduced, and the owner-level `Workflow` boundary remains unchanged
+
+Completion outcome:
+- the code-first reader now resolves zero-argument helper-returned registration collections through direct helper return expressions or local variables initialized from them
+- the helper-backed `seed-code-plugin-helper` fixture now proves mixed `PluginType` catalogs containing both a normal plug-in type and a `customWorkflowActivity` subtype, plus helper-returned structured `Steps` and `Images`
+- the new `seed-code-plugin-imperative-service` fixture now proves the service-aware DBM-style imperative `GetMessage(service, entity, message, handler)` lookup shape without broadening into arbitrary control-flow inference
+- the same helper and service-aware shapes now survive tracked-source, reverse-generated `sourceBackedArtifacts[]`, classic staged build, `apply-dev`, live readback, and stable-overlap while broader helper-heavy or control-flow-heavy code shapes remain explicit unsupported boundaries
+
+## Phase 12: Code-Extensibility And Workflow Closure
+
+This phase is now complete.
+
+Goal:
+- widen the code-first C# registration parser from the earlier narrow DBM lane into a broader but still bounded common-idiom static-analysis lane
+- close regular plug-in package solution-zip parity honestly instead of implying that staged `.nupkg` payloads are already part of exported or rebuilt solution zips
+- close custom workflow activity package deployment as a permanent classic-only product boundary
+- reopen the owner `Workflow` lane only for the supported classic workflow and custom-action source-backed subset that the current neutral source, readback, reverse, and package evidence can actually support
+
+Exit criteria:
+- the code-first reader supports reducible common idioms such as member or local indirection, `const`, `static readonly`, `nameof`, simple interpolation, switch or ternary reductions, reducible helpers, direct collection builders, and simple `yield return` aggregators without crossing into arbitrary program execution
+- unsupported dynamic or non-reducible registration shapes still emit explicit file or line `unsupportedShape` diagnostics
+- regular plug-in packages remain explicit live finalize-apply through `pac plugin push --type Nuget`, and the repo no longer implies solution-zip parity without captured neutral export evidence
+- custom workflow activity package deployment fails with the same explicit product-boundary diagnostic across build, `apply-dev`, and `publish`
+- supported workflow and custom-action source-backed seeds survive source parse, tracked-source emission, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live readback, and stable-overlap drift
+
+Completion outcome:
+- the code-first reader now evaluates a bounded common-idiom lane instead of only the earlier seed-shaped DBM forms, while reflection, dynamic dispatch, non-reducible helper frameworks, external data, and other arbitrary code paths stay explicit unsupported boundaries
+- regular plug-in packages now stay documented as a permanent live finalize-apply boundary until a stable package-bearing solution export shape is captured and proven end to end
+- custom workflow activity package deployment is now a cited permanent classic-only boundary, aligned with current Microsoft guidance for workflow extensions
+- the owner `Workflow` lane is reopened for the current curated classic workflow and custom-action subset through source-backed `Workflows/*.json` plus `.xaml` parsing, live `workflow` readback, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission, and stable-overlap drift without widening direct live mutation or claiming broader workflow-family parity
+
 ## Next Priority
 
-- no active backlog items remain after Phases 5 through 8
+- no active backlog items remain after Phases 5 through 12
 - future work should reopen only when new evidence overturns one of the current explicit boundaries or a new operational program is approved
 - keep future authoring expansion on the same proof bar: `export zip -> intent-spec -> package-inputs -> pack -> import/publish`, plus honest omission typing and explicit boundary classification

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>Codex.Metadata.CodeFirst.Imperative.Service</AssemblyName>
+    <RootNamespace>Codex.Metadata.CodeFirst.Imperative.Service</RootNamespace>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Codex.Metadata.CodeFirst.Imperative.Service.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageId>Codex.Metadata.CodeFirst.Imperative.Service</PackageId>
+    <Version>1.0.0.0</Version>
+    <Authors>Dataverse Solution Compiler</Authors>
+    <Description>Neutral signed imperative service-aware code-first plug-in proof seed.</Description>
+    <DataversePluginDeploymentFlavor>ClassicAssembly</DataversePluginDeploymentFlavor>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.*" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.*" PrivateAssets="All" />
+  </ItemGroup>
+</Project>

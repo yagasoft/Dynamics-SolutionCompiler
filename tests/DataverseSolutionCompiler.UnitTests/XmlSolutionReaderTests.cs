@@ -657,6 +657,37 @@ public sealed class XmlSolutionReaderTests
     }
 
     [Fact]
+    public void Reader_parses_classic_workflow_source_backed_artifact()
+    {
+        var solution = ReadFixture("seed-workflow-classic");
+
+        var workflow = FindArtifact(solution, ComponentFamily.Workflow, "cdxmeta_accountstampworkflow");
+        workflow.DisplayName.Should().Be("Codex Metadata Account Stamp Workflow");
+        workflow.Properties![ArtifactPropertyKeys.WorkflowId].Should().Be("11111111-1111-1111-1111-111111111111");
+        workflow.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be("workflow");
+        workflow.Properties![ArtifactPropertyKeys.PrimaryEntity].Should().Be("account");
+        workflow.Properties![ArtifactPropertyKeys.TriggerMessageName].Should().Be("Create");
+        workflow.Properties![ArtifactPropertyKeys.PackageRelativePath].Should().Be("Workflows/cdxmeta_AccountStampWorkflow.json");
+        workflow.Properties![ArtifactPropertyKeys.AssetSourceMapJson].Should().Contain("Workflows/cdxmeta_AccountStampWorkflow.xaml");
+        workflow.Properties![ArtifactPropertyKeys.XamlHash].Should().NotBeNullOrWhiteSpace();
+        workflow.Properties![ArtifactPropertyKeys.ClientDataHash].Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Fact]
+    public void Reader_parses_custom_action_source_backed_artifact_with_action_metadata()
+    {
+        var solution = ReadFixture("seed-workflow-action");
+
+        var workflow = FindArtifact(solution, ComponentFamily.Workflow, "cdxmeta_accountstampaction");
+        workflow.DisplayName.Should().Be("Codex Metadata Account Stamp Action");
+        workflow.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be("customAction");
+        workflow.Properties![ArtifactPropertyKeys.PrimaryEntity].Should().Be("account");
+        workflow.Properties![ArtifactPropertyKeys.TriggerMessageName].Should().Be("cdxmeta_AccountStampAction");
+        workflow.Properties![ArtifactPropertyKeys.WorkflowActionMetadataJson].Should().Contain("\"uniqueName\":\"cdxmeta_AccountStampAction\"");
+        workflow.Properties![ArtifactPropertyKeys.WorkflowActionMetadataJson].Should().Contain("\"direction\":\"Out\"");
+    }
+
+    [Fact]
     public void Zip_reader_delegates_to_the_same_typed_parser()
     {
         var sourceRoot = FixtureRoot("seed-core");

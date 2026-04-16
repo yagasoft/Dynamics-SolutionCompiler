@@ -585,6 +585,7 @@ public sealed class TrackedSourceReader : ISolutionReader
             ["plugin-step-images"] = ComponentFamily.PluginStepImage,
             ["service-endpoints"] = ComponentFamily.ServiceEndpoint,
             ["connectors"] = ComponentFamily.Connector,
+            ["workflows"] = ComponentFamily.Workflow,
             ["duplicate-rules"] = ComponentFamily.DuplicateRule,
             ["duplicate-rule-conditions"] = ComponentFamily.DuplicateRuleCondition,
             ["routing-rules"] = ComponentFamily.RoutingRule,

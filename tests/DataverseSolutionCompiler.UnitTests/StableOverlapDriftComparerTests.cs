@@ -2,7 +2,9 @@ using FluentAssertions;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Diff;
+using DataverseSolutionCompiler.Domain.Compilation;
 using DataverseSolutionCompiler.Domain.Diff;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Live;
@@ -29,6 +31,14 @@ public sealed class StableOverlapDriftComparerTests
     [InlineData("seed-image-config")]
     [InlineData("seed-ai-families")]
     [InlineData("seed-plugin-registration")]
+    [InlineData("seed-code-plugin-classic")]
+    [InlineData("seed-code-plugin-package")]
+    [InlineData("seed-code-plugin-imperative")]
+    [InlineData("seed-code-plugin-helper")]
+    [InlineData("seed-code-plugin-imperative-service")]
+    [InlineData("seed-code-workflow-activity-classic")]
+    [InlineData("seed-workflow-classic")]
+    [InlineData("seed-workflow-action")]
     [InlineData("seed-process-policy")]
     [InlineData("seed-process-security")]
     [InlineData("seed-service-endpoint-connector")]
@@ -1070,8 +1080,104 @@ public sealed class StableOverlapDriftComparerTests
         report.Findings.Should().BeEmpty();
     }
 
+    [Fact]
+    public void Compare_reports_plugin_type_workflow_activity_group_mismatch()
+    {
+        var sourceArtifact = new FamilyArtifact(
+            ComponentFamily.PluginType,
+            "Codex.Metadata.CodeFirst.WorkflowActivity.Classic.AccountDescriptionActivity",
+            "Account Description Activity",
+            Evidence: EvidenceKind.Source,
+            Properties: new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [ArtifactPropertyKeys.AssemblyFullName] = "Codex.Metadata.CodeFirst.WorkflowActivity.Classic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+                [ArtifactPropertyKeys.AssemblyQualifiedName] = "Codex.Metadata.CodeFirst.WorkflowActivity.Classic.AccountDescriptionActivity, Codex.Metadata.CodeFirst.WorkflowActivity.Classic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+                [ArtifactPropertyKeys.WorkflowActivityGroupName] = "Codex.Metadata.CodeFirst.WorkflowActivity.Classic (1.0.0.0)"
+            });
+        var source = new CanonicalSolution(
+            new SolutionIdentity("workflow", "Workflow", "1.0.0.0", LayeringIntent.Hybrid),
+            new PublisherDefinition("dsc", "dsc", "dsc", "Dataverse Solution Compiler"),
+            [sourceArtifact],
+            [],
+            [],
+            []);
+
+        var live = MatchingSnapshot(source) with
+        {
+            Artifacts =
+            [
+                sourceArtifact with
+                {
+                    Evidence = EvidenceKind.Readback,
+                    Properties = new Dictionary<string, string>(StringComparer.Ordinal)
+                    {
+                        [ArtifactPropertyKeys.AssemblyFullName] = "Codex.Metadata.CodeFirst.WorkflowActivity.Classic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+                        [ArtifactPropertyKeys.AssemblyQualifiedName] = "Codex.Metadata.CodeFirst.WorkflowActivity.Classic.AccountDescriptionActivity, Codex.Metadata.CodeFirst.WorkflowActivity.Classic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d006cbbfeff5098",
+                        [ArtifactPropertyKeys.WorkflowActivityGroupName] = "Codex.Metadata.CodeFirst.WorkflowActivity.Classic (2.0.0.0)"
+                    }
+                }
+            ]
+        };
+
+        var report = new StableOverlapDriftComparer().Compare(source, live, new CompareRequest());
+
+        report.Findings.Should().ContainSingle(finding =>
+            finding.Category == DriftCategory.Mismatch
+            && finding.Description.Contains(ArtifactPropertyKeys.WorkflowActivityGroupName, StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Compare_reports_workflow_xaml_hash_mismatch()
+    {
+        var sourceArtifact = ReadFixture("seed-workflow-classic").Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
+        var source = new CanonicalSolution(
+            new SolutionIdentity("workflow", "Workflow", "1.0.0.0", LayeringIntent.Hybrid),
+            new PublisherDefinition("dsc", "dsc", "dsc", "Dataverse Solution Compiler"),
+            [sourceArtifact],
+            [],
+            [],
+            []);
+        var live = MatchingSnapshot(source) with
+        {
+            Artifacts =
+            [
+                sourceArtifact with
+                {
+                    Evidence = EvidenceKind.Readback,
+                    Properties = new Dictionary<string, string>(sourceArtifact.Properties!, StringComparer.Ordinal)
+                    {
+                        [ArtifactPropertyKeys.XamlHash] = "deadbeef"
+                    }
+                }
+            ]
+        };
+
+        var report = new StableOverlapDriftComparer().Compare(source, live, new CompareRequest());
+
+        report.Findings.Should().ContainSingle(finding =>
+            finding.Category == DriftCategory.Mismatch
+            && finding.Description.Contains(ArtifactPropertyKeys.XamlHash, StringComparison.Ordinal));
+    }
+
     private static CanonicalSolution ReadFixture(string fixtureName)
     {
+        if (string.Equals(fixtureName, "seed-code-plugin-classic", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-package", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-imperative", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-helper", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-imperative-service", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-workflow-activity-classic", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-workflow-activity-package", StringComparison.OrdinalIgnoreCase))
+        {
+            return new CompilerKernel().Compile(new CompilationRequest(Path.Combine(
+                "C:\\Git\\Dataverse-Solution-KB",
+                "fixtures",
+                "skill-corpus",
+                "examples",
+                fixtureName),
+                Array.Empty<string>())).Solution;
+        }
+
         var reader = new XmlSolutionReader();
         return reader.Read(new ReadRequest(Path.Combine(
             "C:\\Git\\Dataverse-Solution-KB",

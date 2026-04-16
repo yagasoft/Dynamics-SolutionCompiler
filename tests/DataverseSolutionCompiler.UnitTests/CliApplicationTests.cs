@@ -5,6 +5,7 @@ using DataverseSolutionCompiler.Cli;
 using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Domain.Abstractions;
 using DataverseSolutionCompiler.Domain.Apply;
+using DataverseSolutionCompiler.Domain.Build;
 using DataverseSolutionCompiler.Domain.Compilation;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Diff;
@@ -92,6 +93,50 @@ public sealed class CliApplicationTests
         "examples",
         "seed-plugin-registration",
         "unpacked");
+
+    private static readonly string SeedCodePluginClassicPath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-code-plugin-classic");
+
+    private static readonly string SeedCodePluginPackagePath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-code-plugin-package");
+    private static readonly string SeedCodePluginImperativePath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-code-plugin-imperative");
+    private static readonly string SeedCodePluginHelperPath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-code-plugin-helper");
+    private static readonly string SeedCodePluginImperativeServicePath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-code-plugin-imperative-service");
+    private static readonly string SeedCodeWorkflowActivityClassicPath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-code-workflow-activity-classic");
+    private static readonly string SeedCodeWorkflowActivityPackagePath = Path.Combine(
+        "C:\\Git\\Dataverse-Solution-KB",
+        "fixtures",
+        "skill-corpus",
+        "examples",
+        "seed-code-workflow-activity-package");
 
     private static readonly string SeedServiceEndpointConnectorPath = Path.Combine(
         "C:\\Git\\Dataverse-Solution-KB",
@@ -1779,6 +1824,248 @@ public sealed class CliApplicationTests
     }
 
     [Fact]
+    public void Apply_dev_command_builds_and_verifies_code_first_classic_plugin_seed()
+    {
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [
+                ComponentFamily.PluginAssembly.ToString(),
+                ComponentFamily.PluginType.ToString(),
+                ComponentFamily.PluginStep.ToString(),
+                ComponentFamily.PluginStepImage.ToString()
+            ],
+            [
+                new CompilerDiagnostic("apply-plugin-classic", DiagnosticSeverity.Info, "applied")
+            ]));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new HarnessBackedLiveSnapshotProvider("seed-code-plugin-classic"),
+            new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            applyExecutor,
+            new StubExplanationService(),
+            CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedCodePluginClassicPath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodePluginClassic"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        applyExecutor.Models.Should().ContainSingle();
+        var pluginAssembly = applyExecutor.Models.Single().Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginAssembly);
+        pluginAssembly.Properties![ArtifactPropertyKeys.StagedBuildOutputPath].Should().EndWith(".dll");
+        File.Exists(pluginAssembly.Properties![ArtifactPropertyKeys.StagedBuildOutputPath]).Should().BeTrue();
+        output.ToString().Should().Contain("Stages:");
+        output.ToString().Should().Contain("Applied family names: PluginAssembly, PluginType, PluginStep, PluginStepImage");
+        output.ToString().Should().Contain("Findings: 0");
+    }
+
+    [Fact]
+    public void Apply_dev_command_builds_and_verifies_imperative_code_first_plugin_seed()
+    {
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [
+                ComponentFamily.PluginAssembly.ToString(),
+                ComponentFamily.PluginType.ToString(),
+                ComponentFamily.PluginStep.ToString(),
+                ComponentFamily.PluginStepImage.ToString()
+            ],
+            [
+                new CompilerDiagnostic("apply-plugin-imperative", DiagnosticSeverity.Info, "applied")
+            ]));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new HarnessBackedLiveSnapshotProvider("seed-code-plugin-imperative"),
+            new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            applyExecutor,
+            new StubExplanationService(),
+            CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedCodePluginImperativePath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodePluginImperative"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        applyExecutor.Models.Should().ContainSingle();
+        var pluginAssembly = applyExecutor.Models.Single().Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginAssembly);
+        pluginAssembly.Properties![ArtifactPropertyKeys.StagedBuildOutputPath].Should().EndWith(".dll");
+        output.ToString().Should().Contain("Applied family names: PluginAssembly, PluginType, PluginStep, PluginStepImage");
+        output.ToString().Should().Contain("Findings: 0");
+    }
+
+    [Fact]
+    public void Apply_dev_command_builds_and_verifies_helper_based_code_first_plugin_seed()
+    {
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [
+                ComponentFamily.PluginAssembly.ToString(),
+                ComponentFamily.PluginType.ToString(),
+                ComponentFamily.PluginStep.ToString(),
+                ComponentFamily.PluginStepImage.ToString()
+            ],
+            [
+                new CompilerDiagnostic("apply-plugin-helper", DiagnosticSeverity.Info, "applied")
+            ]));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new HarnessBackedLiveSnapshotProvider("seed-code-plugin-helper"),
+            new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            applyExecutor,
+            new StubExplanationService(),
+            CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedCodePluginHelperPath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodePluginHelper"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        applyExecutor.Models.Should().ContainSingle();
+        var pluginTypes = applyExecutor.Models.Single().Artifacts.Where(artifact => artifact.Family == ComponentFamily.PluginType).ToArray();
+        pluginTypes.Should().HaveCount(2);
+        pluginTypes.Should().Contain(artifact => artifact.Properties![ArtifactPropertyKeys.PluginTypeKind] == "customWorkflowActivity");
+        pluginTypes.Should().Contain(artifact => artifact.Properties![ArtifactPropertyKeys.PluginTypeKind] == "plugin");
+        output.ToString().Should().Contain("Applied family names: PluginAssembly, PluginType, PluginStep, PluginStepImage");
+        output.ToString().Should().Contain("Findings: 0");
+    }
+
+    [Fact]
+    public void Apply_dev_command_builds_and_verifies_service_aware_imperative_code_first_plugin_seed()
+    {
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [
+                ComponentFamily.PluginAssembly.ToString(),
+                ComponentFamily.PluginType.ToString(),
+                ComponentFamily.PluginStep.ToString(),
+                ComponentFamily.PluginStepImage.ToString()
+            ],
+            [
+                new CompilerDiagnostic("apply-plugin-imperative-service", DiagnosticSeverity.Info, "applied")
+            ]));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new HarnessBackedLiveSnapshotProvider("seed-code-plugin-imperative-service"),
+            new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            applyExecutor,
+            new StubExplanationService(),
+            CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedCodePluginImperativeServicePath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodePluginImperativeService"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        applyExecutor.Models.Should().ContainSingle();
+        output.ToString().Should().Contain("Applied family names: PluginAssembly, PluginType, PluginStep, PluginStepImage");
+        output.ToString().Should().Contain("Findings: 0");
+    }
+
+    [Fact]
+    public void Apply_dev_command_builds_and_verifies_custom_workflow_activity_seed()
+    {
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [
+                ComponentFamily.PluginAssembly.ToString(),
+                ComponentFamily.PluginType.ToString()
+            ],
+            [
+                new CompilerDiagnostic("apply-workflow-activity", DiagnosticSeverity.Info, "applied")
+            ]));
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new HarnessBackedLiveSnapshotProvider("seed-code-workflow-activity-classic"),
+            new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            applyExecutor,
+            new StubExplanationService(),
+            CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedCodeWorkflowActivityClassicPath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodeWorkflowActivityClassic"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(0);
+        applyExecutor.Models.Should().ContainSingle();
+        var pluginType = applyExecutor.Models.Single().Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginType);
+        pluginType.Properties![ArtifactPropertyKeys.PluginTypeKind].Should().Be("customWorkflowActivity");
+        output.ToString().Should().Contain("Applied family names: PluginAssembly, PluginType");
+        output.ToString().Should().Contain("Findings: 0");
+    }
+
+    [Fact]
+    public void Apply_dev_command_fails_explicitly_for_custom_workflow_activity_plugin_package_boundary()
+    {
+        var runtime = new CompilerCliRuntime(
+            new CompilerKernel(),
+            new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+            new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+            new HarnessBackedLiveSnapshotProvider("seed-code-workflow-activity-classic"),
+            new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+            new RecordingPackageExecutor(new PackageResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), [])),
+            new RecordingImportExecutor(new ImportResult(true, Path.Combine(Path.GetTempPath(), "unused.zip"), true, [])),
+            new RecordingApplyExecutor(new ApplyResult(true, ApplyMode.DevProof, [], [])),
+            new StubExplanationService(),
+            CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+        var output = new StringWriter();
+        var error = new StringWriter();
+        var exitCode = CliApplication.Run(
+            ["apply-dev", SeedCodeWorkflowActivityPackagePath, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodeWorkflowActivityPackage"],
+            output,
+            error,
+            runtime);
+
+        exitCode.Should().Be(1);
+        output.ToString().Should().ContainEquivalentOf("custom workflow activity");
+    }
+
+    [Fact]
     public void Diff_returns_non_zero_when_blocking_drift_exists()
     {
         var kernel = new StubKernel(CreateCompilationResult());
@@ -1802,6 +2089,114 @@ public sealed class CliApplicationTests
             runtime);
 
         exitCode.Should().Be(1);
+    }
+
+    [Fact]
+    public void Publish_command_builds_and_finalizes_code_first_plugin_package_seed()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-code-first-publish-{Guid.NewGuid():N}");
+        var packagePath = Path.Combine(outputRoot, "code-first-package.zip");
+
+        Directory.CreateDirectory(outputRoot);
+        File.WriteAllText(packagePath, "fixture");
+
+        try
+        {
+            var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+                true,
+                ApplyMode.DevProof,
+                [
+                    ComponentFamily.PluginAssembly.ToString(),
+                    ComponentFamily.PluginType.ToString(),
+                    ComponentFamily.PluginStep.ToString(),
+                    ComponentFamily.PluginStepImage.ToString()
+                ],
+                [
+                    new CompilerDiagnostic("apply-plugin-package", DiagnosticSeverity.Info, "applied")
+                ]));
+            var importExecutor = new RecordingImportExecutor(new ImportResult(true, packagePath, true, []));
+            var runtime = new CompilerCliRuntime(
+                new CompilerKernel(),
+                new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+                new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+                new HarnessBackedLiveSnapshotProvider("seed-code-plugin-package"),
+                new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+                new RecordingPackageExecutor(new PackageResult(true, packagePath, [])),
+                importExecutor,
+                applyExecutor,
+                new StubExplanationService(),
+                CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+            var output = new StringWriter();
+            var error = new StringWriter();
+            var exitCode = CliApplication.Run(
+                ["publish", SeedCodePluginPackagePath, "--output", outputRoot, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodePluginPackage"],
+                output,
+                error,
+                runtime);
+
+            exitCode.Should().Be(0);
+            importExecutor.Requests.Should().BeEmpty();
+            applyExecutor.Models.Should().ContainSingle();
+            var pluginAssembly = applyExecutor.Models.Single().Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginAssembly);
+            pluginAssembly.Properties![ArtifactPropertyKeys.StagedBuildOutputPath].Should().EndWith(".nupkg");
+            File.Exists(pluginAssembly.Properties![ArtifactPropertyKeys.StagedBuildOutputPath]).Should().BeTrue();
+            output.ToString().Should().Contain("Stages:");
+            output.ToString().Should().Contain("Import skipped: True");
+            output.ToString().Should().Contain("Applied family names: PluginAssembly, PluginType, PluginStep, PluginStepImage");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Publish_command_fails_explicitly_for_custom_workflow_activity_plugin_package_boundary()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-cli-code-first-workflow-package-{Guid.NewGuid():N}");
+        var packagePath = Path.Combine(outputRoot, "workflow-package.zip");
+
+        Directory.CreateDirectory(outputRoot);
+        File.WriteAllText(packagePath, "fixture");
+
+        try
+        {
+            var applyExecutor = new RecordingApplyExecutor(new ApplyResult(true, ApplyMode.DevProof, [], []));
+            var runtime = new CompilerCliRuntime(
+                new CompilerKernel(),
+                new DataverseSolutionCompiler.Emitters.TrackedSource.TrackedSourceEmitter(),
+                new DataverseSolutionCompiler.Emitters.Package.PackageEmitter(),
+                new HarnessBackedLiveSnapshotProvider("seed-code-workflow-activity-classic"),
+                new DataverseSolutionCompiler.Diff.StableOverlapDriftComparer(),
+                new RecordingPackageExecutor(new PackageResult(true, packagePath, [])),
+                new RecordingImportExecutor(new ImportResult(true, packagePath, true, [])),
+                applyExecutor,
+                new StubExplanationService(),
+                CodeAssetBuilder: new DotNetCodeAssetBuilder());
+
+            var output = new StringWriter();
+            var error = new StringWriter();
+            var exitCode = CliApplication.Run(
+                ["publish", SeedCodeWorkflowActivityPackagePath, "--output", outputRoot, "--environment", "https://example.crm.dynamics.com", "--solution", "CodexMetadataSeedCodeWorkflowActivityPackage"],
+                output,
+                error,
+                runtime);
+
+            exitCode.Should().Be(1);
+            applyExecutor.Models.Should().BeEmpty();
+            output.ToString().Should().ContainEquivalentOf("custom workflow activity");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
     }
 
     private static CompilationResult CreateCompilationResult(params FamilyArtifact[] artifacts) =>
@@ -1831,7 +2226,8 @@ public sealed class CliApplicationTests
         IApplyExecutor? applyExecutor = null,
         IDevApplyWorkflowRunner? devApplyWorkflowRunner = null,
         IPackageBuildWorkflowRunner? packageBuildWorkflowRunner = null,
-        IPublishWorkflowRunner? publishWorkflowRunner = null) =>
+        IPublishWorkflowRunner? publishWorkflowRunner = null,
+        ICodeAssetBuilder? codeAssetBuilder = null) =>
         new(
             kernel,
             new RecordingEmitter((model, request) => new EmittedArtifacts(true, request.OutputRoot, [], [])),
@@ -1844,7 +2240,8 @@ public sealed class CliApplicationTests
             new StubExplanationService(),
             devApplyWorkflowRunner,
             packageBuildWorkflowRunner,
-            publishWorkflowRunner);
+            publishWorkflowRunner,
+            codeAssetBuilder);
 
     private static DevApplyWorkflowResult CreateDevApplyWorkflowResult(
         CompilationResult compilation,
@@ -2000,9 +2397,11 @@ internal sealed class RecordingImportExecutor(ImportResult result) : IImportExec
 internal sealed class RecordingApplyExecutor(ApplyResult result) : IApplyExecutor
 {
     public List<ApplyRequest> Requests { get; } = [];
+    public List<CanonicalSolution> Models { get; } = [];
 
     public ApplyResult Apply(CanonicalSolution model, ApplyRequest request)
     {
+        Models.Add(model);
         Requests.Add(request);
         return result;
     }
@@ -2012,6 +2411,17 @@ internal sealed class StubApplyExecutor : IApplyExecutor
 {
     public ApplyResult Apply(CanonicalSolution model, ApplyRequest request) =>
         new(true, request.Mode, [], []);
+}
+
+internal sealed class RecordingCodeAssetBuilder(CodeAssetBuildResult result) : ICodeAssetBuilder
+{
+    public List<CodeAssetBuildRequest> Requests { get; } = [];
+
+    public CodeAssetBuildResult Build(CodeAssetBuildRequest request)
+    {
+        Requests.Add(request);
+        return result;
+    }
 }
 
 internal sealed class StubExplanationService : IExplanationService

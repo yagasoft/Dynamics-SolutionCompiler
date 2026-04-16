@@ -65,6 +65,7 @@ public sealed record DevApplyWorkflowResult(
 {
     public bool Success =>
         Compilation.Success
+        && !HasErrors(Diagnostics)
         && !HasErrors(Compilation.Diagnostics)
         && Apply is not null
         && Apply.Success
@@ -95,6 +96,7 @@ public sealed record PackageBuildWorkflowResult(
 {
     public bool Success =>
         Compilation.Success
+        && !HasErrors(Diagnostics)
         && !HasErrors(Compilation.Diagnostics)
         && PackageInputs is not null
         && PackageInputs.Success
@@ -122,6 +124,7 @@ public sealed record PublishWorkflowResult(
 {
     public bool Success =>
         Compilation.Success
+        && !HasErrors(Diagnostics)
         && !HasErrors(Compilation.Diagnostics)
         && PackageInputs is not null
         && PackageInputs.Success

@@ -20,6 +20,7 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
         ArtifactPropertyKeys.HandlerPluginTypeName,
         ArtifactPropertyKeys.MessageName,
         ArtifactPropertyKeys.MessagePropertyName,
+        ArtifactPropertyKeys.TriggerMessageName,
         ArtifactPropertyKeys.ParentEntityLogicalName,
         ArtifactPropertyKeys.ParentAiProjectLogicalName,
         ArtifactPropertyKeys.ParentAiProjectTypeLogicalName,
@@ -255,7 +256,9 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
             [ComponentFamily.PluginType] =
             [
                 ArtifactPropertyKeys.AssemblyFullName,
-                ArtifactPropertyKeys.AssemblyQualifiedName
+                ArtifactPropertyKeys.AssemblyQualifiedName,
+                ArtifactPropertyKeys.PluginTypeKind,
+                ArtifactPropertyKeys.WorkflowActivityGroupName
             ],
             [ComponentFamily.PluginStep] =
             [
@@ -389,6 +392,20 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
             [
                 ArtifactPropertyKeys.Category,
                 ArtifactPropertyKeys.Description
+            ],
+            [ComponentFamily.Workflow] =
+            [
+                ArtifactPropertyKeys.WorkflowId,
+                ArtifactPropertyKeys.WorkflowKind,
+                ArtifactPropertyKeys.Category,
+                ArtifactPropertyKeys.Mode,
+                ArtifactPropertyKeys.WorkflowScope,
+                ArtifactPropertyKeys.OnDemand,
+                ArtifactPropertyKeys.PrimaryEntity,
+                ArtifactPropertyKeys.TriggerMessageName,
+                ArtifactPropertyKeys.XamlHash,
+                ArtifactPropertyKeys.ClientDataHash,
+                ArtifactPropertyKeys.WorkflowActionMetadataJson
             ],
             [ComponentFamily.CanvasApp] =
             [
@@ -596,8 +613,23 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
     private static string KeyFor(FamilyArtifact artifact) =>
         $"{artifact.Family}:{artifact.LogicalName}".ToLowerInvariant();
 
-    private static string? GetProperty(FamilyArtifact artifact, string key) =>
-        artifact.Properties is not null && artifact.Properties.TryGetValue(key, out var value) ? value : null;
+    private static string? GetProperty(FamilyArtifact artifact, string key)
+    {
+        if (artifact.Properties is not null && artifact.Properties.TryGetValue(key, out var value))
+        {
+            return value;
+        }
+
+        if (artifact.Family == ComponentFamily.PluginType
+            && string.Equals(key, ArtifactPropertyKeys.PluginTypeKind, StringComparison.Ordinal))
+        {
+            return string.IsNullOrWhiteSpace(GetProperty(artifact, ArtifactPropertyKeys.WorkflowActivityGroupName))
+                ? "plugin"
+                : "customWorkflowActivity";
+        }
+
+        return null;
+    }
 
     private static bool PropertyValuesEqual(FamilyArtifact artifact, string key, string? sourceValue, string? liveValue)
     {

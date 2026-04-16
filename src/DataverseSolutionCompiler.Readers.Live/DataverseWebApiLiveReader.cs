@@ -42,6 +42,7 @@ internal sealed partial class DataverseWebApiLiveReader
         ComponentFamily.PluginStepImage,
         ComponentFamily.ServiceEndpoint,
         ComponentFamily.Connector,
+        ComponentFamily.Workflow,
         ComponentFamily.DuplicateRule,
         ComponentFamily.DuplicateRuleCondition,
         ComponentFamily.RoutingRule,
@@ -174,7 +175,7 @@ internal sealed partial class DataverseWebApiLiveReader
             await ReadCodeExtensibilityFamiliesAsync(scope, requestedFamilies, artifacts, diagnostics, cancellationToken).ConfigureAwait(false);
         }
 
-        if (ShouldReadAny(requestedFamilies, ComponentFamily.DuplicateRule, ComponentFamily.DuplicateRuleCondition, ComponentFamily.RoutingRule, ComponentFamily.RoutingRuleItem, ComponentFamily.MobileOfflineProfile, ComponentFamily.MobileOfflineProfileItem))
+        if (ShouldReadAny(requestedFamilies, ComponentFamily.Workflow, ComponentFamily.DuplicateRule, ComponentFamily.DuplicateRuleCondition, ComponentFamily.RoutingRule, ComponentFamily.RoutingRuleItem, ComponentFamily.MobileOfflineProfile, ComponentFamily.MobileOfflineProfileItem))
         {
             await ReadProcessPolicyFamiliesAsync(scope, requestedFamilies, artifacts, diagnostics, cancellationToken).ConfigureAwait(false);
         }
@@ -339,6 +340,7 @@ internal sealed partial class DataverseWebApiLiveReader
         public HashSet<Guid> ServiceEndpointIds { get; } = [];
         public HashSet<Guid> ConnectorIds { get; } = [];
         public HashSet<Guid> DuplicateRuleIds { get; } = [];
+        public HashSet<Guid> WorkflowIds { get; } = [];
         public HashSet<Guid> RoutingRuleIds { get; } = [];
         public HashSet<Guid> MobileOfflineProfileIds { get; } = [];
         public HashSet<Guid> RoleIds { get; } = [];

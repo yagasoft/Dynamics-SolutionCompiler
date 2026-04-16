@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>Codex.Metadata.CodeFirst.Package</AssemblyName>
+    <RootNamespace>Codex.Metadata.CodeFirst.Package</RootNamespace>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageId>Codex.Metadata.CodeFirst.Package</PackageId>
+    <Version>1.0.0.0</Version>
+    <Authors>Dataverse Solution Compiler</Authors>
+    <Description>Neutral Dataverse plug-in package proof seed with a dependent assembly.</Description>
+    <DataversePluginDeploymentFlavor>PluginPackage</DataversePluginDeploymentFlavor>
+    <DataversePluginPackageUniqueName>codex_codefirst_package</DataversePluginPackageUniqueName>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeProjectReferenceBuildOutputInPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\\Codex.Metadata.CodeFirst.Package.Dependency\\Codex.Metadata.CodeFirst.Package.Dependency.csproj" />
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.*" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.*" PrivateAssets="All" />
+  </ItemGroup>
+
+  <Target Name="IncludeProjectReferenceBuildOutputInPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget','ProjectReference'))" />
+    </ItemGroup>
+  </Target>
+</Project>

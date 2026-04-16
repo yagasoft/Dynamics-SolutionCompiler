@@ -1,0 +1,10 @@
+{
+  "capture_mode": "web-api",
+  "warnings": [],
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Code Plugin Imperative Service",
+    "uniquename": "CodexMetadataSeedCodePluginImperativeService",
+    "version": "1.0.0.0",
+    "solutionid": "7f89d12a-9d47-49b9-8a76-33b8a89bb9ce"
+  }
+}

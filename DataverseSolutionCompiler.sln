@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataverseSolutionCompiler.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataverseSolutionCompiler.UnitTests", "tests\DataverseSolutionCompiler.UnitTests\DataverseSolutionCompiler.UnitTests.csproj", "{B3A30607-53DB-46DD-B927-60BD5A35F068}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataverseSolutionCompiler.Readers.Code", "src\DataverseSolutionCompiler.Readers.Code\DataverseSolutionCompiler.Readers.Code.csproj", "{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -241,6 +243,18 @@ Global
 		{B3A30607-53DB-46DD-B927-60BD5A35F068}.Release|x64.Build.0 = Release|Any CPU
 		{B3A30607-53DB-46DD-B927-60BD5A35F068}.Release|x86.ActiveCfg = Release|Any CPU
 		{B3A30607-53DB-46DD-B927-60BD5A35F068}.Release|x86.Build.0 = Release|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Debug|x64.Build.0 = Debug|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Debug|x86.Build.0 = Debug|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Release|x64.ActiveCfg = Release|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Release|x64.Build.0 = Release|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Release|x86.ActiveCfg = Release|Any CPU
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -262,5 +276,6 @@ Global
 		{4D19BBFD-3FC3-4C0C-A239-FF465ED2BCF0} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{99BC5CB2-BA24-477C-8A31-998B5BA99B61} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{B3A30607-53DB-46DD-B927-60BD5A35F068} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{3787A0E0-A5FA-4DC3-8C17-C85A0D4DC832} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

@@ -43,6 +43,7 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         WriteImportMaps(model, trackedSourceRoot, emittedFiles);
         WriteIntegrationEndpointFamilies(model, trackedSourceRoot, emittedFiles);
         WritePluginRegistrationFamilies(model, trackedSourceRoot, emittedFiles);
+        WriteWorkflows(model, trackedSourceRoot, emittedFiles);
         WriteProcessPolicyFamilies(model, trackedSourceRoot, emittedFiles);
         WriteSecurityFamilies(model, trackedSourceRoot, emittedFiles);
         WriteAiFamilies(model, trackedSourceRoot, emittedFiles);
@@ -546,7 +547,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                     introducedVersion = GetProperty(artifact, ArtifactPropertyKeys.IntroducedVersion),
                     byteLength = GetIntProperty(artifact, ArtifactPropertyKeys.ByteLength),
                     contentHash = GetProperty(artifact, ArtifactPropertyKeys.ContentHash),
-                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature)
+                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature),
+                    properties = BuildTrackedArtifactProperties(artifact)
                 },
                 emittedFiles,
                 $"Tracked plugin assembly for {artifact.LogicalName}.");
@@ -565,10 +567,12 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                     assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
                     assemblyFullName = GetProperty(artifact, ArtifactPropertyKeys.AssemblyFullName),
                     assemblyQualifiedName = GetProperty(artifact, ArtifactPropertyKeys.AssemblyQualifiedName),
+                    pluginTypeKind = GetProperty(artifact, ArtifactPropertyKeys.PluginTypeKind),
                     friendlyName = GetProperty(artifact, ArtifactPropertyKeys.FriendlyName),
                     workflowActivityGroupName = GetProperty(artifact, ArtifactPropertyKeys.WorkflowActivityGroupName),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
-                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature)
+                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature),
+                    properties = BuildTrackedArtifactProperties(artifact)
                 },
                 emittedFiles,
                 $"Tracked plugin type for {artifact.LogicalName}.");
@@ -594,7 +598,8 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                     handlerPluginTypeName = GetProperty(artifact, ArtifactPropertyKeys.HandlerPluginTypeName),
                     filteringAttributes = GetProperty(artifact, ArtifactPropertyKeys.FilteringAttributes),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
-                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature)
+                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature),
+                    properties = BuildTrackedArtifactProperties(artifact)
                 },
                 emittedFiles,
                 $"Tracked plugin step for {artifact.LogicalName}.");
@@ -617,10 +622,24 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                     messagePropertyName = GetProperty(artifact, ArtifactPropertyKeys.MessagePropertyName),
                     selectedAttributes = GetProperty(artifact, ArtifactPropertyKeys.SelectedAttributes),
                     description = GetProperty(artifact, ArtifactPropertyKeys.Description),
-                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature)
+                    comparisonSignature = GetProperty(artifact, ArtifactPropertyKeys.ComparisonSignature),
+                    properties = BuildTrackedArtifactProperties(artifact)
                 },
                 emittedFiles,
                 $"Tracked plugin step image for {artifact.LogicalName}.");
+        }
+    }
+
+    private static void WriteWorkflows(CanonicalSolution model, string trackedSourceRoot, List<EmittedArtifact> emittedFiles)
+    {
+        foreach (var workflow in model.Artifacts.Where(artifact => artifact.Family == ComponentFamily.Workflow))
+        {
+            WriteJson(
+                trackedSourceRoot,
+                $"workflows/{SafeSegment(workflow.LogicalName)}.json",
+                BuildSummaryArtifactJson(workflow),
+                emittedFiles,
+                $"Tracked workflow summary for {workflow.LogicalName}.");
         }
     }
 
@@ -1067,13 +1086,9 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
 
             foreach (var assetRelativePath in GetSourceBackedAssetRelativePaths(artifact))
             {
-                var propertyKey = FindSourcePathPropertyKey(artifact, assetRelativePath);
-                if (propertyKey is null)
-                {
-                    continue;
-                }
-
-                var assetSourcePath = ResolveArtifactSourcePath(artifact, propertyKey);
+                var assetSourcePath = TryResolveSourceBackedAssetMapSourcePath(artifact, assetRelativePath, out var mappedSourcePath)
+                    ? mappedSourcePath
+                    : ResolveArtifactSourcePath(artifact, FindSourcePathPropertyKey(artifact, assetRelativePath) ?? string.Empty);
                 if (string.IsNullOrWhiteSpace(assetSourcePath) || !File.Exists(assetSourcePath))
                 {
                     continue;
@@ -1113,11 +1128,14 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         artifact.DisplayName,
         metadataSourcePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath),
         assetSourcePaths = GetSourceBackedAssetRelativePaths(artifact),
-        properties = artifact.Properties?
+        properties = BuildTrackedArtifactProperties(artifact)
+    };
+
+    private static IReadOnlyDictionary<string, object?>? BuildTrackedArtifactProperties(FamilyArtifact artifact) =>
+        artifact.Properties?
             .Where(pair => !pair.Key.EndsWith("SourcePath", StringComparison.Ordinal))
             .OrderBy(pair => pair.Key, StringComparer.Ordinal)
-            .ToDictionary(pair => pair.Key, pair => ConvertPropertyValue(pair.Key, pair.Value), StringComparer.Ordinal)
-    };
+            .ToDictionary(pair => pair.Key, pair => ConvertPropertyValue(pair.Key, pair.Value), StringComparer.Ordinal);
 
     private static object? ConvertPropertyValue(string key, string value) =>
         key.EndsWith("Json", StringComparison.Ordinal)
@@ -1137,18 +1155,55 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
         int.TryParse(GetProperty(artifact, key), out var value) ? value : null;
 
     private static IReadOnlyList<string> GetSourceBackedAssetRelativePaths(FamilyArtifact artifact) =>
-        artifact.Properties is null
-            ? []
-            : artifact.Properties
-                .Where(pair =>
-                    pair.Key.EndsWith("SourcePath", StringComparison.Ordinal)
-                    && !string.Equals(pair.Key, ArtifactPropertyKeys.MetadataSourcePath, StringComparison.Ordinal)
-                    && !string.IsNullOrWhiteSpace(pair.Value)
-                    && !Path.IsPathRooted(pair.Value))
-                .Select(pair => NormalizeTrackedSourceRelativePath(pair.Value))
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
-                .ToArray();
+        ReadSourceBackedAssetRelativePathsFromMap(artifact) is { Count: > 0 } mappedPaths
+            ? mappedPaths
+            : artifact.Properties is null
+                ? []
+                : artifact.Properties
+                    .Where(pair =>
+                        pair.Key.EndsWith("SourcePath", StringComparison.Ordinal)
+                        && !string.Equals(pair.Key, ArtifactPropertyKeys.MetadataSourcePath, StringComparison.Ordinal)
+                        && !string.IsNullOrWhiteSpace(pair.Value)
+                        && !Path.IsPathRooted(pair.Value))
+                    .Select(pair => NormalizeTrackedSourceRelativePath(pair.Value))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+    private static IReadOnlyList<string> ReadSourceBackedAssetRelativePathsFromMap(FamilyArtifact artifact)
+    {
+        var assetMapJson = GetProperty(artifact, ArtifactPropertyKeys.AssetSourceMapJson);
+        if (string.IsNullOrWhiteSpace(assetMapJson))
+        {
+            return [];
+        }
+
+        if (ParseJsonNode(assetMapJson) is not JsonArray assetArray)
+        {
+            return [];
+        }
+
+        var stringPaths = assetArray
+            .Where(node => node is JsonValue)
+            .Select(node => node?.GetValue<string>())
+            .Where(path => !string.IsNullOrWhiteSpace(path))
+            .Select(path => NormalizeTrackedSourceRelativePath(path!))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (stringPaths.Length > 0)
+        {
+            return stringPaths;
+        }
+
+        return assetArray
+            .Select(node => ReadJsonPropertyString(node as JsonObject, "packageRelativePath", "PackageRelativePath"))
+            .Where(path => !string.IsNullOrWhiteSpace(path))
+            .Select(path => NormalizeTrackedSourceRelativePath(path!))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
 
     private static string? FindSourcePathPropertyKey(FamilyArtifact artifact, string relativePath) =>
         artifact.Properties?
@@ -1158,6 +1213,53 @@ public sealed class TrackedSourceEmitter : ISolutionEmitter
                 && string.Equals(NormalizeTrackedSourceRelativePath(pair.Value), relativePath, StringComparison.OrdinalIgnoreCase))
             .Select(pair => pair.Key)
             .FirstOrDefault();
+
+    private static bool TryResolveSourceBackedAssetMapSourcePath(FamilyArtifact artifact, string relativePath, out string sourcePath)
+    {
+        sourcePath = string.Empty;
+        var assetMapJson = GetProperty(artifact, ArtifactPropertyKeys.AssetSourceMapJson);
+        if (string.IsNullOrWhiteSpace(assetMapJson) || ParseJsonNode(assetMapJson) is not JsonArray assetArray)
+        {
+            return false;
+        }
+
+        var match = assetArray
+            .Select(node => node as JsonObject)
+            .FirstOrDefault(node =>
+                node is not null
+                && string.Equals(
+                    NormalizeTrackedSourceRelativePath(ReadJsonPropertyString(node, "packageRelativePath", "PackageRelativePath") ?? string.Empty),
+                    relativePath,
+                    StringComparison.OrdinalIgnoreCase));
+        var mappedSourcePath = ReadJsonPropertyString(match, "sourcePath", "SourcePath");
+        if (string.IsNullOrWhiteSpace(mappedSourcePath))
+        {
+            return false;
+        }
+
+        sourcePath = Path.IsPathRooted(mappedSourcePath)
+            ? Path.GetFullPath(mappedSourcePath)
+            : ResolveArtifactSourcePath(artifact, ArtifactPropertyKeys.MetadataSourcePath);
+        return true;
+    }
+
+    private static string? ReadJsonPropertyString(JsonObject? node, params string[] propertyNames)
+    {
+        if (node is null)
+        {
+            return null;
+        }
+
+        foreach (var propertyName in propertyNames)
+        {
+            if (node.TryGetPropertyValue(propertyName, out var value) && value is not null)
+            {
+                return value.GetValue<string>();
+            }
+        }
+
+        return null;
+    }
 
     private static string ResolveArtifactSourcePath(FamilyArtifact artifact, string propertyKey)
     {

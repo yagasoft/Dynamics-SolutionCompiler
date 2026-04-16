@@ -9,6 +9,7 @@ internal sealed partial class XmlCanonicalSolutionParser
 {
     private void ParseProcessPolicyFamilies()
     {
+        ParseWorkflows();
         ParseDuplicateRules();
         ParseRoutingRules();
         ParseMobileOfflineProfiles();

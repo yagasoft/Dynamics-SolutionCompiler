@@ -53,6 +53,7 @@ public sealed partial class PackageEmitter : ISolutionEmitter
         "RoutingRules",
         "ServiceEndpoints",
         "Templates",
+        "Workflows",
         "WebWizard",
         "WebWizards",
         "WebResources"
@@ -123,6 +124,16 @@ public sealed partial class PackageEmitter : ISolutionEmitter
                     DiagnosticSeverity.Info,
                     $"Hybrid rebuild staged {applyOnlyArtifacts.Length} apply-only source-backed artifact(s) outside the package payload. These families will be finalized by live apply after solution import: {string.Join(", ", applyOnlyArtifacts.Select(artifact => artifact.Family.ToString()).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(value => value, StringComparer.OrdinalIgnoreCase))}.",
                     packageRoot));
+                if (applyOnlyArtifacts.Any(artifact =>
+                        artifact.Family == ComponentFamily.PluginAssembly
+                        && string.Equals(GetProperty(artifact, ArtifactPropertyKeys.DeploymentFlavor), "PluginPackage", StringComparison.OrdinalIgnoreCase)))
+                {
+                    diagnostics.Add(new CompilerDiagnostic(
+                        "package-emitter-plugin-package-live-boundary",
+                        DiagnosticSeverity.Info,
+                        "Code-first plug-in packages remain a live finalize-apply boundary. The compiler preserves their registration evidence, but the NuGet payload itself is not rebuilt into the solution ZIP package inputs.",
+                        packageRoot));
+                }
             }
 
             var copiedDirectories = emittedFiles
@@ -554,7 +565,31 @@ public sealed partial class PackageEmitter : ISolutionEmitter
         var json = GetProperty(artifact, ArtifactPropertyKeys.AssetSourceMapJson);
         if (!string.IsNullOrWhiteSpace(json))
         {
-            return JsonSerializer.Deserialize<List<SourceBackedAssetMapEntry>>(json, JsonOptions) ?? [];
+            var structuredEntries = JsonSerializer.Deserialize<List<SourceBackedAssetMapEntry>>(json, JsonOptions);
+            if (structuredEntries is { Count: > 0 })
+            {
+                return structuredEntries
+                    .Where(entry =>
+                        !string.IsNullOrWhiteSpace(entry.SourcePath)
+                        && !string.IsNullOrWhiteSpace(entry.PackageRelativePath))
+                    .Select(entry => new SourceBackedAssetMapEntry(
+                        ResolveAssetSourcePath(artifact, entry.SourcePath),
+                        DeriveSourceBackedAssetPackageRelativePath(entry.PackageRelativePath)))
+                    .Distinct()
+                    .ToArray();
+            }
+
+            var relativePaths = JsonSerializer.Deserialize<List<string>>(json, JsonOptions);
+            if (relativePaths is { Count: > 0 })
+            {
+                return relativePaths
+                    .Where(path => !string.IsNullOrWhiteSpace(path))
+                    .Select(path => new SourceBackedAssetMapEntry(
+                        ResolveAssetSourcePath(artifact, path!),
+                        DeriveSourceBackedAssetPackageRelativePath(path!)))
+                    .Distinct()
+                    .ToArray();
+            }
         }
 
         if (artifact.Properties is null)
@@ -574,12 +609,44 @@ public sealed partial class PackageEmitter : ISolutionEmitter
             .ToArray();
     }
 
-    private static string ResolveAssetSourcePath(FamilyArtifact artifact, string path) =>
-        Path.IsPathRooted(path)
-            ? Path.GetFullPath(path)
-            : !string.IsNullOrWhiteSpace(artifact.SourcePath) && File.Exists(artifact.SourcePath)
-                ? Path.GetFullPath(Path.Combine(Path.GetDirectoryName(artifact.SourcePath) ?? string.Empty, "..", path.Replace('/', Path.DirectorySeparatorChar)))
-                : path;
+    private static string ResolveAssetSourcePath(FamilyArtifact artifact, string path)
+    {
+        if (Path.IsPathRooted(path))
+        {
+            return Path.GetFullPath(path);
+        }
+
+        if (!string.IsNullOrWhiteSpace(artifact.SourcePath)
+            && artifact.SourcePath.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+        {
+            var trackedSourceRoot = ResolveTrackedSourceRoot(artifact.SourcePath);
+            var trackedCandidate = Path.Combine(trackedSourceRoot, "source-backed", path.Replace('/', Path.DirectorySeparatorChar));
+            if (File.Exists(trackedCandidate))
+            {
+                return trackedCandidate;
+            }
+        }
+
+        return !string.IsNullOrWhiteSpace(artifact.SourcePath) && File.Exists(artifact.SourcePath)
+            ? Path.GetFullPath(Path.Combine(Path.GetDirectoryName(artifact.SourcePath) ?? string.Empty, "..", path.Replace('/', Path.DirectorySeparatorChar)))
+            : path;
+    }
+
+    private static string ResolveTrackedSourceRoot(string summaryPath)
+    {
+        var directory = Path.GetDirectoryName(Path.GetFullPath(summaryPath)) ?? string.Empty;
+        while (!string.IsNullOrWhiteSpace(directory))
+        {
+            if (File.Exists(Path.Combine(directory, "manifest.json")) && File.Exists(Path.Combine(directory, "solution", "manifest.json")))
+            {
+                return directory;
+            }
+
+            directory = Path.GetDirectoryName(directory) ?? string.Empty;
+        }
+
+        return Path.GetDirectoryName(Path.GetFullPath(summaryPath)) ?? string.Empty;
+    }
 
     private static string DeriveSourceBackedAssetPackageRelativePath(string assetSourcePath)
     {
@@ -831,6 +898,9 @@ public sealed partial class PackageEmitter : ISolutionEmitter
             case ComponentFamily.MobileOfflineProfileItem:
                 yield return "MobileOfflineProfiles";
                 yield break;
+            case ComponentFamily.Workflow:
+                yield return "Workflows";
+                yield break;
             case ComponentFamily.Report:
                 yield return "Reports";
                 yield break;
@@ -956,6 +1026,16 @@ public sealed partial class PackageEmitter : ISolutionEmitter
                 }
 
                 yield break;
+            case ComponentFamily.Workflow:
+            {
+                var workflowId = NormalizeGuid(GetProperty(artifact, ArtifactPropertyKeys.WorkflowId));
+                if (!string.IsNullOrWhiteSpace(workflowId))
+                {
+                    yield return new RootComponentDescriptor(29, null, workflowId, "0");
+                }
+
+                yield break;
+            }
             case ComponentFamily.Role:
             {
                 var roleId = TryReadRoleId(packageRoot, artifact);

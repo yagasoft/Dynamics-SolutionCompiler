@@ -1,0 +1,10 @@
+{
+  "capture_mode": "web-api",
+  "warnings": [],
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Code Workflow Activity Classic",
+    "uniquename": "CodexMetadataSeedCodeWorkflowActivityClassic",
+    "version": "1.0.0.0",
+    "solutionid": "a20d4881-f3bf-44be-8504-b6f3fc8f4dd1"
+  }
+}

@@ -8,6 +8,7 @@ using DataverseSolutionCompiler.Domain.Packaging;
 using DataverseSolutionCompiler.Domain.Planning;
 using DataverseSolutionCompiler.Domain.Read;
 using DataverseSolutionCompiler.Domain.Workflows;
+using DataverseSolutionCompiler.Domain.Build;
 
 namespace DataverseSolutionCompiler.Domain.Abstractions;
 
@@ -29,6 +30,11 @@ public interface ISolutionEmitter
 public interface IApplyExecutor
 {
     ApplyResult Apply(CanonicalSolution model, ApplyRequest request);
+}
+
+public interface ICodeAssetBuilder
+{
+    CodeAssetBuildResult Build(CodeAssetBuildRequest request);
 }
 
 public interface ILiveSnapshotProvider

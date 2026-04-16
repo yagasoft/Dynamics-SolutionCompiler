@@ -7,6 +7,7 @@ using DataverseSolutionCompiler.Readers.Intent;
 using DataverseSolutionCompiler.Domain.Planning;
 using DataverseSolutionCompiler.Domain.Read;
 using DataverseSolutionCompiler.Readers.TrackedSource;
+using DataverseSolutionCompiler.Readers.Code;
 using DataverseSolutionCompiler.Readers.Xml;
 
 namespace DataverseSolutionCompiler.Compiler;
@@ -17,6 +18,7 @@ public sealed class CompilerKernel : ICompilerKernel
     private readonly ICompilationPlanner _planner;
     private readonly ISolutionReader _intentReader;
     private readonly ISolutionReader _trackedSourceReader;
+    private readonly ISolutionReader _codeReader;
     private readonly ISolutionReader _xmlReader;
 
     public CompilerKernel(
@@ -24,13 +26,15 @@ public sealed class CompilerKernel : ICompilerKernel
         ICompilationPlanner? planner = null,
         ISolutionReader? intentReader = null,
         ISolutionReader? xmlReader = null,
-        ISolutionReader? trackedSourceReader = null)
+        ISolutionReader? trackedSourceReader = null,
+        ISolutionReader? codeReader = null)
     {
         _capabilityRegistry = capabilityRegistry ?? new CapabilityRegistry();
         _planner = planner ?? new CompilationPlanner();
         _intentReader = intentReader ?? new IntentSpecReader();
         _xmlReader = xmlReader ?? new XmlSolutionReader();
         _trackedSourceReader = trackedSourceReader ?? new TrackedSourceReader();
+        _codeReader = codeReader ?? new CodeFirstSdkRegistrationReader();
     }
 
     public CompilationResult Compile(CompilationRequest request)
@@ -105,6 +109,7 @@ public sealed class CompilerKernel : ICompilerKernel
         {
             ReadSourceKind.IntentSpecJson => _intentReader,
             ReadSourceKind.TrackedSource => _trackedSourceReader,
+            ReadSourceKind.CodeFirstSdkRegistration => _codeReader,
             ReadSourceKind.UnpackedXmlFolder or ReadSourceKind.PackedZip or ReadSourceKind.Auto => _xmlReader,
             _ => _xmlReader
         };
@@ -121,6 +126,14 @@ public sealed class CompilerKernel : ICompilerKernel
             return ReadSourceKind.PackedZip;
         }
 
+        if (File.Exists(inputPath)
+            && (string.Equals(Path.GetExtension(inputPath), ".csproj", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(Path.GetExtension(inputPath), ".cs", StringComparison.OrdinalIgnoreCase))
+            && CodeFirstSdkRegistrationReader.IsProbableCodeFirstRegistrationRoot(inputPath))
+        {
+            return ReadSourceKind.CodeFirstSdkRegistration;
+        }
+
         if (!Directory.Exists(inputPath))
         {
             return ReadSourceKind.Auto;
@@ -130,6 +143,11 @@ public sealed class CompilerKernel : ICompilerKernel
             && File.Exists(Path.Combine(inputPath, "solution", "manifest.json")))
         {
             return ReadSourceKind.TrackedSource;
+        }
+
+        if (CodeFirstSdkRegistrationReader.IsProbableCodeFirstRegistrationRoot(inputPath))
+        {
+            return ReadSourceKind.CodeFirstSdkRegistration;
         }
 
         return ReadSourceKind.UnpackedXmlFolder;

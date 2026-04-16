@@ -13,6 +13,29 @@ internal sealed partial class DataverseWebApiLiveReader
         ICollection<CompilerDiagnostic> diagnostics,
         CancellationToken cancellationToken)
     {
+        if (requestedFamilies.Contains(ComponentFamily.Workflow) && scope.WorkflowIds.Count > 0)
+        {
+            try
+            {
+                var rows = await GetCollectionAsync(
+                    $"workflows?$select=workflowid,uniquename,name,description,category,mode,scope,ondemand,primaryentity,primaryentitylogicalname,trigger_message,messagename,workflowkind,clientdata,xaml,actionmetadata&$filter={BuildGuidFilter("workflowid", scope.WorkflowIds)}",
+                    cancellationToken).ConfigureAwait(false);
+
+                foreach (var row in rows.OfType<JsonObject>())
+                {
+                    var artifact = CreateWorkflowArtifact(row);
+                    if (artifact is not null)
+                    {
+                        artifacts.Add(artifact);
+                    }
+                }
+            }
+            catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
+            {
+                diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.Workflow, "workflows", exception));
+            }
+        }
+
         var duplicateRulesById = new Dictionary<Guid, DuplicateRuleContext>();
         if (ShouldReadAny(requestedFamilies, ComponentFamily.DuplicateRule, ComponentFamily.DuplicateRuleCondition)
             && scope.DuplicateRuleIds.Count > 0)
@@ -718,6 +741,117 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.SummaryJson, summaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
+
+    private static FamilyArtifact? CreateWorkflowArtifact(JsonObject row)
+    {
+        var workflowId = NormalizeGuid(GetString(row, "workflowid"));
+        var displayName = GetString(row, "name");
+        var logicalName = NormalizeLogicalName(GetString(row, "uniquename"))
+            ?? NormalizeLogicalName(displayName)
+            ?? workflowId;
+        if (string.IsNullOrWhiteSpace(logicalName))
+        {
+            return null;
+        }
+
+        var workflowKind = NormalizeLiveWorkflowKind(row);
+        var primaryEntity = NormalizeLogicalName(GetString(row, "primaryentity", "primaryentitylogicalname", "primaryentitytypecode"));
+        var triggerMessageName = GetString(row, "trigger_message", "messagename");
+        var clientData = NormalizeWorkflowJson(ReadWorkflowJsonValue(row, "clientdata"));
+        var actionMetadataJson = NormalizeWorkflowJson(ReadWorkflowJsonValue(row, "actionmetadata"));
+        var xamlHash = NormalizeWorkflowHash(GetString(row, "xamlhash"))
+            ?? ComputeOptionalSignature(GetString(row, "xaml"));
+        var clientDataHash = NormalizeWorkflowHash(GetString(row, "clientdatahash"))
+            ?? ComputeOptionalSignature(clientData);
+        var summaryJson = SerializeJson(new
+        {
+            logicalName,
+            workflowId,
+            workflowKind,
+            category = GetString(row, "category"),
+            mode = GetString(row, "mode"),
+            scope = GetString(row, "scope"),
+            onDemand = NormalizeBoolean(GetString(row, "ondemand")),
+            primaryEntity,
+            triggerMessageName,
+            xamlHash,
+            clientDataHash,
+            actionMetadata = actionMetadataJson is null ? null : JsonNode.Parse(actionMetadataJson)
+        });
+
+        return new FamilyArtifact(
+            ComponentFamily.Workflow,
+            logicalName!,
+            displayName ?? logicalName,
+            $"workflows/{logicalName}",
+            EvidenceKind.Readback,
+            CreateProperties(
+                (ArtifactPropertyKeys.WorkflowId, workflowId),
+                (ArtifactPropertyKeys.WorkflowKind, workflowKind),
+                (ArtifactPropertyKeys.Description, GetString(row, "description")),
+                (ArtifactPropertyKeys.Category, GetString(row, "category")),
+                (ArtifactPropertyKeys.Mode, GetString(row, "mode")),
+                (ArtifactPropertyKeys.WorkflowScope, GetString(row, "scope")),
+                (ArtifactPropertyKeys.OnDemand, NormalizeBoolean(GetString(row, "ondemand"))),
+                (ArtifactPropertyKeys.PrimaryEntity, primaryEntity),
+                (ArtifactPropertyKeys.TriggerMessageName, triggerMessageName),
+                (ArtifactPropertyKeys.XamlHash, xamlHash),
+                (ArtifactPropertyKeys.ClientDataHash, clientDataHash),
+                (ArtifactPropertyKeys.WorkflowActionMetadataJson, actionMetadataJson),
+                (ArtifactPropertyKeys.SummaryJson, summaryJson),
+                (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
+    }
+
+    private static string NormalizeLiveWorkflowKind(JsonObject row)
+    {
+        var raw = GetString(row, "workflowkind", "workflow_kind", "kind");
+        if (!string.IsNullOrWhiteSpace(raw))
+        {
+            return raw.Trim() switch
+            {
+                var value when value.Equals("customAction", StringComparison.OrdinalIgnoreCase) => "customAction",
+                var value when value.Equals("action", StringComparison.OrdinalIgnoreCase) => "customAction",
+                _ => "workflow"
+            };
+        }
+
+        return !string.IsNullOrWhiteSpace(ReadWorkflowJsonValue(row, "actionmetadata"))
+            ? "customAction"
+            : "workflow";
+    }
+
+    private static string? ReadWorkflowJsonValue(JsonObject row, params string[] names)
+    {
+        var node = GetProperty(row, names);
+        return node switch
+        {
+            JsonObject or JsonArray => node.ToJsonString(),
+            _ => StringValue(node)
+        };
+    }
+
+    private static string? NormalizeWorkflowJson(string? raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonNode.Parse(raw)?.ToJsonString();
+        }
+        catch
+        {
+            return raw.Trim();
+        }
+    }
+
+    private static string? NormalizeWorkflowHash(string? raw) =>
+        string.IsNullOrWhiteSpace(raw) ? null : raw.Trim().ToLowerInvariant();
+
+    private static string? ComputeOptionalSignature(string? raw) =>
+        string.IsNullOrWhiteSpace(raw) ? null : ComputeSignature(raw.Replace("\r\n", "\n", StringComparison.Ordinal));
 
     private static string? NormalizeConditionXml(string? xml)
     {

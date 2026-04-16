@@ -1,4 +1,6 @@
 using FluentAssertions;
+using DataverseSolutionCompiler.Compiler;
+using DataverseSolutionCompiler.Domain.Compilation;
 using DataverseSolutionCompiler.Emitters.TrackedSource;
 using DataverseSolutionCompiler.Domain.Emission;
 using DataverseSolutionCompiler.Domain.Model;
@@ -252,6 +254,150 @@ public sealed class TrackedSourceEmitterIntegrationTests
         }
     }
 
+    [Theory]
+    [InlineData("seed-code-plugin-classic", "Codex.Metadata.CodeFirst.Classic", "ClassicAssembly", "plugins/Codex.Metadata.CodeFirst.Classic/AccountCreateDescriptionPlugin.cs")]
+    [InlineData("seed-code-plugin-package", "Codex.Metadata.CodeFirst.Package", "PluginPackage", "plugins/Codex.Metadata.CodeFirst.Package.Dependency/ProofMarkerProvider.cs")]
+    [InlineData("seed-code-plugin-imperative", "Codex.Metadata.CodeFirst.Imperative", "ClassicAssembly", "plugins/Codex.Metadata.CodeFirst.Imperative/AccountCreateDescriptionPlugin.cs")]
+    [InlineData("seed-code-plugin-helper", "Codex.Metadata.CodeFirst.Helper", "ClassicAssembly", "plugins/Codex.Metadata.CodeFirst.Helper/AccountDescriptionActivity.cs")]
+    [InlineData("seed-code-plugin-imperative-service", "Codex.Metadata.CodeFirst.Imperative.Service", "ClassicAssembly", "plugins/Codex.Metadata.CodeFirst.Imperative.Service/AccountCreateDescriptionPlugin.cs")]
+    public void Emitter_materializes_code_first_plugin_registration_tracked_source_files(
+        string fixtureName,
+        string projectName,
+        string deploymentFlavor,
+        string expectedAssetPath)
+    {
+        var model = ReadCompiledFixture(fixtureName);
+        var emitter = new TrackedSourceEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-tracked-{fixtureName}-{Guid.NewGuid():N}");
+
+        try
+        {
+            emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.TrackedSource));
+
+            Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-assemblies"), "*.json")
+                .Should().ContainSingle();
+            if (string.Equals(fixtureName, "seed-code-plugin-helper", StringComparison.OrdinalIgnoreCase))
+            {
+                Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-types"), "*.json")
+                    .Should().HaveCount(2);
+            }
+            else
+            {
+                Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-types"), "*.json")
+                    .Should().ContainSingle();
+            }
+            Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-steps"), "*.json")
+                .Should().ContainSingle();
+            Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-step-images"), "*.json")
+                .Should().ContainSingle();
+
+            var pluginAssemblyJson = File.ReadAllText(Directory.EnumerateFiles(
+                Path.Combine(outputRoot, "tracked-source", "plugin-assemblies"),
+                "*.json").Single());
+            pluginAssemblyJson.Should().Contain($"\"deploymentFlavor\": \"{deploymentFlavor}\"");
+            pluginAssemblyJson.Should().Contain($"\"codeProjectPath\": \"plugins/{projectName}/{projectName}.csproj\"");
+
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "plugins", projectName, $"{projectName}.csproj")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", expectedAssetPath.Replace('/', Path.DirectorySeparatorChar))).Should().BeTrue();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emitter_materializes_helper_based_custom_workflow_activity_and_plugin_type_side_by_side()
+    {
+        var model = ReadCompiledFixture("seed-code-plugin-helper");
+        var emitter = new TrackedSourceEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-tracked-helper-{Guid.NewGuid():N}");
+
+        try
+        {
+            emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.TrackedSource));
+
+            var pluginTypeFiles = Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-types"), "*.json").ToArray();
+            pluginTypeFiles.Should().HaveCount(2);
+            File.ReadAllText(pluginTypeFiles.Single(path => Path.GetFileName(path).Contains("AccountDescriptionActivity", StringComparison.OrdinalIgnoreCase)))
+                .Should().Contain("\"pluginTypeKind\": \"customWorkflowActivity\"");
+            File.ReadAllText(pluginTypeFiles.Single(path => Path.GetFileName(path).Contains("AccountCreateDescriptionPlugin", StringComparison.OrdinalIgnoreCase)))
+                .Should().Contain("\"pluginTypeKind\": \"plugin\"");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Emitter_materializes_custom_workflow_activity_tracked_source_files_without_step_artifacts()
+    {
+        var model = ReadCompiledFixture("seed-code-workflow-activity-classic");
+        var emitter = new TrackedSourceEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-tracked-workflow-{Guid.NewGuid():N}");
+
+        try
+        {
+            emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.TrackedSource));
+
+            Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-assemblies"), "*.json")
+                .Should().ContainSingle();
+            Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "plugin-types"), "*.json")
+                .Should().ContainSingle();
+            Directory.Exists(Path.Combine(outputRoot, "tracked-source", "plugin-steps")).Should().BeFalse();
+            Directory.Exists(Path.Combine(outputRoot, "tracked-source", "plugin-step-images")).Should().BeFalse();
+
+            var pluginTypeJson = File.ReadAllText(Directory.EnumerateFiles(
+                Path.Combine(outputRoot, "tracked-source", "plugin-types"),
+                "*.json").Single());
+            pluginTypeJson.Should().Contain("\"pluginTypeKind\": \"customWorkflowActivity\"");
+            pluginTypeJson.Should().Contain("\"workflowActivityGroupName\": \"Codex.Metadata.CodeFirst.WorkflowActivity.Classic (1.0.0.0)\"");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("seed-workflow-classic", "cdxmeta_accountstampworkflow")]
+    [InlineData("seed-workflow-action", "cdxmeta_accountstampaction")]
+    public void Emitter_materializes_workflow_tracked_source_files(
+        string fixtureName,
+        string expectedSlug)
+    {
+        var model = ReadFixture(fixtureName);
+        var emitter = new TrackedSourceEmitter();
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-tracked-workflow-{fixtureName}-{Guid.NewGuid():N}");
+
+        try
+        {
+            emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.TrackedSource));
+
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "workflows", $"{expectedSlug}.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "Workflows", $"{expectedSlug}.json")).Should().BeTrue();
+            Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "source-backed", "Workflows"), "*.xaml", SearchOption.TopDirectoryOnly)
+                .Should().ContainSingle();
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
     [Fact]
     public void Emitter_materializes_service_endpoint_connector_tracked_source_files()
     {
@@ -396,6 +542,15 @@ public sealed class TrackedSourceEmitterIntegrationTests
             fixtureName,
             "unpacked")));
     }
+
+    private static CanonicalSolution ReadCompiledFixture(string fixtureName) =>
+        new CompilerKernel().Compile(new CompilationRequest(Path.Combine(
+            "C:\\Git\\Dataverse-Solution-KB",
+            "fixtures",
+            "skill-corpus",
+            "examples",
+            fixtureName),
+            Array.Empty<string>())).Solution;
 
     private static IReadOnlyDictionary<string, byte[]> SnapshotTrackedSource(string outputRoot) =>
         Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source"), "*", SearchOption.AllDirectories)

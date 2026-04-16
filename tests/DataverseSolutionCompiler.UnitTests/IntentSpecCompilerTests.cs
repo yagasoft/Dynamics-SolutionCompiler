@@ -39,6 +39,26 @@ public sealed class IntentSpecCompilerTests
         "skill-corpus",
         "examples");
 
+    private static readonly string SeedCodePluginClassicPath = Path.Combine(
+        ExamplesRoot,
+        "seed-code-plugin-classic");
+
+    private static readonly string SeedCodePluginPackagePath = Path.Combine(
+        ExamplesRoot,
+        "seed-code-plugin-package");
+    private static readonly string SeedCodePluginImperativePath = Path.Combine(
+        ExamplesRoot,
+        "seed-code-plugin-imperative");
+    private static readonly string SeedCodePluginHelperPath = Path.Combine(
+        ExamplesRoot,
+        "seed-code-plugin-helper");
+    private static readonly string SeedCodePluginImperativeServicePath = Path.Combine(
+        ExamplesRoot,
+        "seed-code-plugin-imperative-service");
+    private static readonly string SeedCodeWorkflowActivityClassicPath = Path.Combine(
+        ExamplesRoot,
+        "seed-code-workflow-activity-classic");
+
     private static readonly string SeedAlternateKeyEntityPath = Path.Combine(
         "C:\\Git\\Dataverse-Solution-KB",
         "fixtures",
@@ -1993,6 +2013,217 @@ public sealed class IntentSpecCompilerTests
             if (Directory.Exists(packageOutputRoot))
             {
                 Directory.Delete(packageOutputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("classic", "plugins/Codex.Metadata.CodeFirst.Classic/Codex.Metadata.CodeFirst.Classic.csproj", "ClassicAssembly", null, "plugins/Codex.Metadata.CodeFirst.Classic/AccountCreateDescriptionPlugin.cs")]
+    [InlineData("package", "plugins/Codex.Metadata.CodeFirst.Package/Codex.Metadata.CodeFirst.Package.csproj", "PluginPackage", "codex_codefirst_package", "plugins/Codex.Metadata.CodeFirst.Package.Dependency/ProofMarkerProvider.cs")]
+    [InlineData("imperative", "plugins/Codex.Metadata.CodeFirst.Imperative/Codex.Metadata.CodeFirst.Imperative.csproj", "ClassicAssembly", null, "plugins/Codex.Metadata.CodeFirst.Imperative/AccountCreateDescriptionPlugin.cs")]
+    [InlineData("helper", "plugins/Codex.Metadata.CodeFirst.Helper/Codex.Metadata.CodeFirst.Helper.csproj", "ClassicAssembly", null, "plugins/Codex.Metadata.CodeFirst.Helper/AccountDescriptionActivity.cs")]
+    [InlineData("imperative-service", "plugins/Codex.Metadata.CodeFirst.Imperative.Service/Codex.Metadata.CodeFirst.Imperative.Service.csproj", "ClassicAssembly", null, "plugins/Codex.Metadata.CodeFirst.Imperative.Service/AccountCreateDescriptionPlugin.cs")]
+    public void Reverse_generation_preserves_code_first_plugin_registration_source_backed_metadata(
+        string seedKind,
+        string expectedProjectPath,
+        string expectedDeploymentFlavor,
+        string? expectedPackageUniqueName,
+        string expectedExtraAssetPath)
+    {
+        var seedPath = string.Equals(seedKind, "package", StringComparison.OrdinalIgnoreCase)
+            ? SeedCodePluginPackagePath
+            : string.Equals(seedKind, "imperative", StringComparison.OrdinalIgnoreCase)
+                ? SeedCodePluginImperativePath
+            : string.Equals(seedKind, "helper", StringComparison.OrdinalIgnoreCase)
+                ? SeedCodePluginHelperPath
+            : string.Equals(seedKind, "imperative-service", StringComparison.OrdinalIgnoreCase)
+                ? SeedCodePluginImperativeServicePath
+            : SeedCodePluginClassicPath;
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-intent-{seedKind}-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(seedPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.IntentSpec));
+            emitted.Success.Should().BeTrue();
+
+            var report = JsonNode.Parse(File.ReadAllText(Path.Combine(outputRoot, "intent-spec", "reverse-generation-report.json")))!.AsObject();
+            var includedJson = report["sourceBackedArtifactsIncluded"]!.ToJsonString();
+            includedJson.Should().Contain("\"family\":\"PluginAssembly\"");
+            includedJson.Should().Contain("\"family\":\"PluginType\"");
+            includedJson.Should().Contain("\"family\":\"PluginStep\"");
+            includedJson.Should().Contain("\"family\":\"PluginStepImage\"");
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(outputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            var sourceBackedArtifacts = intent["sourceBackedArtifacts"]!.AsArray()
+                .Where(node =>
+                {
+                    var family = node?["family"]?.GetValue<string>();
+                    return string.Equals(family, "PluginAssembly", StringComparison.Ordinal)
+                        || string.Equals(family, "PluginType", StringComparison.Ordinal)
+                        || string.Equals(family, "PluginStep", StringComparison.Ordinal)
+                        || string.Equals(family, "PluginStepImage", StringComparison.Ordinal);
+                })
+                .ToArray();
+            if (string.Equals(seedKind, "helper", StringComparison.OrdinalIgnoreCase))
+            {
+                sourceBackedArtifacts.Should().HaveCount(5);
+            }
+            else
+            {
+                sourceBackedArtifacts.Should().HaveCount(4);
+            }
+
+            var pluginAssembly = sourceBackedArtifacts.Single(node => string.Equals(node!["family"]!.GetValue<string>(), "PluginAssembly", StringComparison.Ordinal))!;
+            pluginAssembly["metadataSourcePath"]!.GetValue<string>().Should().Contain("source-backed/plugins/");
+            pluginAssembly["packageRelativePath"]!.GetValue<string>().Should().EndWith("PluginRegistration.cs");
+            pluginAssembly["assetSourcePaths"]!.ToJsonString().Should().Contain(expectedProjectPath.Replace('\\', '/'));
+            pluginAssembly["assetSourcePaths"]!.ToJsonString().Should().Contain(expectedExtraAssetPath.Replace('\\', '/'));
+
+            var stableProperties = pluginAssembly["stableProperties"]!.AsObject();
+            stableProperties["deploymentFlavor"]!.GetValue<string>().Should().Be(expectedDeploymentFlavor);
+            stableProperties["codeProjectPath"]!.GetValue<string>().Should().Be(expectedProjectPath.Replace('\\', '/'));
+            if (!string.IsNullOrWhiteSpace(expectedPackageUniqueName))
+            {
+                stableProperties["packageUniqueName"]!.GetValue<string>().Should().Be(expectedPackageUniqueName);
+            }
+
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(
+                Path.Combine(outputRoot, "intent-spec", "intent-spec.json"),
+                Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var reversedAssembly = reversed.Solution.Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginAssembly);
+            reversedAssembly.Properties![ArtifactPropertyKeys.DeploymentFlavor].Should().Be(expectedDeploymentFlavor);
+            reversedAssembly.Properties![ArtifactPropertyKeys.CodeProjectPath].Should().Be(expectedProjectPath.Replace('\\', '/'));
+            reversedAssembly.Properties![ArtifactPropertyKeys.AssetSourceMapJson].Should().Contain(expectedExtraAssetPath.Replace('\\', '/'));
+            if (!string.IsNullOrWhiteSpace(expectedPackageUniqueName))
+            {
+                reversedAssembly.Properties![ArtifactPropertyKeys.PackageUniqueName].Should().Be(expectedPackageUniqueName);
+            }
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_preserves_custom_workflow_activity_plugin_type_metadata()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-intent-workflow-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(SeedCodeWorkflowActivityClassicPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.IntentSpec));
+            emitted.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(outputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            var sourceBackedArtifacts = intent["sourceBackedArtifacts"]!.AsArray()
+                .Where(node =>
+                {
+                    var family = node?["family"]?.GetValue<string>();
+                    return string.Equals(family, "PluginAssembly", StringComparison.Ordinal)
+                        || string.Equals(family, "PluginType", StringComparison.Ordinal);
+                })
+                .ToArray();
+            sourceBackedArtifacts.Should().HaveCount(2);
+
+            var pluginType = sourceBackedArtifacts.Single(node => string.Equals(node!["family"]!.GetValue<string>(), "PluginType", StringComparison.Ordinal))!;
+            var stableProperties = pluginType["stableProperties"]!.AsObject();
+            stableProperties["pluginTypeKind"]!.GetValue<string>().Should().Be("customWorkflowActivity");
+            stableProperties["workflowActivityGroupName"]!.GetValue<string>().Should().Be("Codex.Metadata.CodeFirst.WorkflowActivity.Classic (1.0.0.0)");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void Reverse_generation_preserves_helper_based_mixed_plugin_and_custom_workflow_activity_metadata()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-code-first-intent-helper-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(SeedCodePluginHelperPath, Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.IntentSpec));
+            emitted.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(outputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            var pluginTypes = intent["sourceBackedArtifacts"]!.AsArray()
+                .Where(node => string.Equals(node?["family"]?.GetValue<string>(), "PluginType", StringComparison.Ordinal))
+                .ToArray();
+            pluginTypes.Should().HaveCount(2);
+            pluginTypes.Should().Contain(node =>
+                string.Equals(node!["logicalName"]!.GetValue<string>(), "Codex.Metadata.CodeFirst.Helper.AccountDescriptionActivity", StringComparison.Ordinal)
+                && string.Equals(node["stableProperties"]!["pluginTypeKind"]!.GetValue<string>(), "customWorkflowActivity", StringComparison.Ordinal));
+            pluginTypes.Should().Contain(node =>
+                string.Equals(node!["logicalName"]!.GetValue<string>(), "Codex.Metadata.CodeFirst.Helper.AccountCreateDescriptionPlugin", StringComparison.Ordinal)
+                && string.Equals(node["stableProperties"]!["pluginTypeKind"]!.GetValue<string>(), "plugin", StringComparison.Ordinal));
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("seed-workflow-classic", "workflow", "Workflows/cdxmeta_AccountStampWorkflow.json", "Workflows/cdxmeta_AccountStampWorkflow.xaml")]
+    [InlineData("seed-workflow-action", "customAction", "Workflows/cdxmeta_AccountStampAction.json", "Workflows/cdxmeta_AccountStampAction.xaml")]
+    public void Reverse_generation_preserves_workflow_source_backed_artifacts(
+        string fixtureName,
+        string expectedKind,
+        string expectedMetadataPath,
+        string expectedAssetPath)
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-workflow-intent-{fixtureName}-{Guid.NewGuid():N}");
+
+        try
+        {
+            var compiled = new CompilerKernel().Compile(new CompilationRequest(Path.Combine(ExamplesRoot, fixtureName, "unpacked"), Array.Empty<string>()));
+            compiled.Success.Should().BeTrue();
+
+            var emitted = new IntentSpecEmitter().Emit(compiled.Solution, new EmitRequest(outputRoot, EmitLayout.IntentSpec));
+            emitted.Success.Should().BeTrue();
+
+            var intent = JsonNode.Parse(File.ReadAllText(Path.Combine(outputRoot, "intent-spec", "intent-spec.json")))!.AsObject();
+            var workflow = intent["sourceBackedArtifacts"]!.AsArray()
+                .Single(node => string.Equals(node?["family"]?.GetValue<string>(), "Workflow", StringComparison.Ordinal))!;
+            workflow["packageRelativePath"]!.GetValue<string>().Should().Be(expectedMetadataPath);
+            workflow["assetSourcePaths"]!.ToJsonString().Should().Contain(expectedAssetPath.Replace('\\', '/'));
+            workflow["stableProperties"]!["workflowKind"]!.GetValue<string>().Should().Be(expectedKind);
+            var reversed = new CompilerKernel().Compile(new CompilationRequest(
+                Path.Combine(outputRoot, "intent-spec", "intent-spec.json"),
+                Array.Empty<string>()));
+            reversed.Success.Should().BeTrue();
+
+            var reversedWorkflow = reversed.Solution.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
+            reversedWorkflow.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be(expectedKind);
+            reversedWorkflow.Properties![ArtifactPropertyKeys.AssetSourceMapJson].Should().Contain(expectedAssetPath.Replace('\\', '/'));
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
             }
         }
     }

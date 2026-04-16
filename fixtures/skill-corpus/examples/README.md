@@ -181,7 +181,167 @@ Key files and folders:
 Notes:
 - this seed proves typed source parsing from `Other/Customizations.xml` plus packaged assembly payload preservation under `PluginAssemblies/`
 - it also proves deterministic tracked-source emission, source-backed package-input copying, live Web API readback, and stable-overlap drift for the four neutral plugin-registration families
-- code-first SDK registration ingestion remains follow-up work outside this neutral seed
+- the newer code-first plug-in seeds prove the supported raw C# ingestion path separately, so this seed stays focused on solution-row plugin metadata rather than source code
+
+## Seed Code Plugin Classic
+
+Path:
+- `references/examples/seed-code-plugin-classic/`
+
+Purpose:
+- compact neutral code-first seed for the supported DBM-style raw C# registration pattern
+- useful for read, tracked-source, reverse-generation, staged-build, and `apply-dev` proof for a signed classic plug-in assembly
+
+Key files and folders:
+- `plugins/`
+- `readback/`
+
+Notes:
+- this seed proves the narrow `CodeFirstSdkRegistration` reader for `PluginAssembly`, `PluginType`, `PluginStep`, and `PluginStepImage`
+- it also proves staged `.dll` build output outside the source tree and deployment through the existing plug-in apply path
+- the proof contract is a `PreOperation Create` step on `account` that stamps `description` with the deterministic marker `B014-CLASSIC-PROOF`
+
+## Seed Code Plugin Package
+
+Path:
+- `references/examples/seed-code-plugin-package/`
+
+Purpose:
+- compact neutral code-first seed for the supported DBM-style raw C# registration pattern with plug-in package deployment
+- useful for read, tracked-source, reverse-generation, staged-build, and `publish` finalize-apply proof for a `.nupkg` plus dependent assembly
+
+Key files and folders:
+- `plugins/`
+- `readback/`
+
+Notes:
+- this seed proves staged `.nupkg` build output outside the source tree and live deployment through `pac plugin push --type Nuget`
+- the dependent assembly stays explicit package content, and the final proof marker comes from that dependency
+- the proof contract is a `PreOperation Create` step on `account` that stamps `description` with the deterministic marker `B014-PACKAGE-PROOF-FROM-DEPENDENCY`
+- this seed does not claim that `.nupkg` payloads are embedded in `solution.zip`; plug-in package deployment stays a live finalize-apply step until a stable package-bearing solution export shape is proven
+
+## Seed Code Plugin Imperative
+
+Path:
+- `references/examples/seed-code-plugin-imperative/`
+
+Purpose:
+- compact neutral code-first seed for the supported imperative DBM helper registration shape
+- useful for proving the widened parser without leaving the existing plug-in families
+
+Key files and folders:
+- `plugins/`
+- `readback/`
+
+Notes:
+- this seed proves `new Entity("sdkmessageprocessingstep")` and `new Entity("sdkmessageprocessingstepimage")` payload construction through the supported helper pattern
+- it also proves nearby constants, enum casts, and the current narrow ternary handling inside that imperative registration shape
+- the proof contract is a `PreOperation Create` step on `account` that stamps `description` with the deterministic marker `B015-IMPERATIVE-PROOF`
+
+## Seed Code Plugin Helper
+
+Path:
+- `references/examples/seed-code-plugin-helper/`
+
+Purpose:
+- compact neutral code-first seed for helper-returned registration collections
+- useful for proving zero-argument helper methods for `Types`, `Steps`, and `Images` without leaving the existing plug-in families
+
+Key files and folders:
+- `plugins/`
+- `readback/`
+
+Notes:
+- this seed proves helper-returned registration collections for the supported direct helper shape
+- it also proves a mixed plug-in plus custom workflow activity type catalog in one classic assembly without reopening the owner-level `Workflow` family
+- the proof contract is a `PreOperation Create` step on `account` that stamps `description` with the deterministic marker `B016-HELPER-PROOF`
+
+## Seed Code Plugin Imperative Service
+
+Path:
+- `references/examples/seed-code-plugin-imperative-service/`
+
+Purpose:
+- compact neutral code-first seed for the more realistic DBM service-aware imperative lookup shape
+- useful for proving `GetMessage(service, entity, message, handler)` without broadening into arbitrary helper or control-flow inference
+
+Key files and folders:
+- `plugins/`
+- `readback/`
+
+Notes:
+- this seed keeps the imperative `sdkmessageprocessingstep` and `sdkmessageprocessingstepimage` entity payload pattern from phase A
+- it widens only the message-context lookup to the supported service-leading DBM shape
+- the proof contract is a `PreOperation Create` step on `account` that stamps `description` with the deterministic marker `B016-IMPERATIVE-SERVICE-PROOF`
+
+## Seed Code Workflow Activity Classic
+
+Path:
+- `references/examples/seed-code-workflow-activity-classic/`
+
+Purpose:
+- compact neutral code-first seed for custom workflow activity registration through the existing code and extensibility lane
+- useful for proving classic assembly staging, deploy, readback, reverse generation, and drift for `pluginTypeKind=customWorkflowActivity`
+
+Key files and folders:
+- `plugins/`
+- `readback/`
+
+Notes:
+- this seed keeps custom workflow activities under `PluginAssembly` and `PluginType`; it does not reopen the owner-level `Workflow` family
+- the proof in this phase is registration and readback proof, not workflow-definition or runtime execution proof
+
+## Seed Code Workflow Activity Package
+
+Path:
+- `references/examples/seed-code-workflow-activity-package/`
+
+Purpose:
+- compact neutral negative seed for the custom workflow activity package boundary
+- useful for proving that workflow activities stay classic-assembly only in the current code-first lane
+
+Key files and folders:
+- `plugins/`
+
+Notes:
+- this seed is expected to fail before deploy with an explicit compiler diagnostic
+- it exists to prove that the compiler does not silently downgrade or overclaim plug-in package support for workflow activities
+
+## Seed Workflow Classic
+
+Path:
+- `references/examples/seed-workflow-classic/`
+
+Purpose:
+- compact neutral source-backed seed for the reopened owner `Workflow` lane
+- useful for classic workflow shell metadata, XAML fidelity, live readback, reverse generation, package-input emission, and stable-overlap on the current curated subset
+
+Key files and folders:
+- `unpacked/`
+- `readback/`
+
+Notes:
+- this seed keeps the workflow lane source-backed: the workflow shell lives in `Workflows/*.json` and the payload lives in the paired `.xaml`
+- it proves source parsing, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live workflow readback, and stable-overlap for a deterministic classic workflow shell
+- direct live mutation still stays on the package or import path; this seed does not reopen broader workflow execution parity by itself
+
+## Seed Workflow Action
+
+Path:
+- `references/examples/seed-workflow-action/`
+
+Purpose:
+- compact neutral source-backed seed for the reopened owner `Workflow` lane
+- useful for custom process action shell metadata, explicit action argument metadata, live readback, reverse generation, package-input emission, and stable-overlap on the current curated subset
+
+Key files and folders:
+- `unpacked/`
+- `readback/`
+
+Notes:
+- this seed keeps custom actions under the owner `Workflow` lane, not under code-extensibility
+- it proves action shell metadata, argument metadata, XAML fidelity, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live workflow readback, and stable-overlap for a deterministic custom action shell
+- broader workflow families such as business process flows, dialogs, and cloud flows remain outside the current reopened subset
 
 ## Seed Service Endpoint Connector
 
@@ -199,7 +359,7 @@ Key files and folders:
 Notes:
 - this seed proves typed source parsing, deterministic tracked-source emission, source-backed package-input copying, live Web API readback, and stable-overlap drift for both families
 - drift intentionally compares only durable overlap fields such as contract, connection mode, auth type, namespace/path/url, connector internal id, normalized capabilities, introduced version, and stable `isCustomizable`
-- connection references, custom-code payloads, secret-bearing values, and code-first registration ingestion remain outside this neutral seed
+- connection references, custom-code payloads, and secret-bearing values remain outside this neutral seed
 
 ## Seed Alternate Key
 
@@ -362,7 +522,8 @@ Key files:
 
 Important:
 - this is a project-specific example, not a neutral seed
-- use it to understand source-first registration patterns, not to import DBM assumptions into general Dataverse guidance
+- use it to understand source-first registration patterns and unsupported local variants, not to import DBM assumptions into general Dataverse guidance
+- the neutral `seed-code-plugin-classic` and `seed-code-plugin-package` fixtures now cover the supported runtime compiler path for the narrow DBM-style registration shape
 
 ## DBM Baseline
 

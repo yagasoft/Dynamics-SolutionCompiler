@@ -912,6 +912,124 @@ public sealed class WebApiLiveSnapshotProviderTests
         harness.Requests.Should().Contain(request => request.Contains("/sdkmessagefilters", StringComparison.OrdinalIgnoreCase));
     }
 
+    [Theory]
+    [InlineData("seed-code-plugin-classic")]
+    [InlineData("seed-code-plugin-package")]
+    [InlineData("seed-code-plugin-imperative")]
+    [InlineData("seed-code-plugin-helper")]
+    [InlineData("seed-code-plugin-imperative-service")]
+    public async Task ReadAsync_projects_code_first_plugin_registration_families(string fixtureName)
+    {
+        var harness = LiveFixtureHarness.Create(fixtureName);
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.PluginAssembly,
+            ComponentFamily.PluginType,
+            ComponentFamily.PluginStep,
+            ComponentFamily.PluginStepImage);
+        var source = ReadSourceFixture(fixtureName);
+
+        var expected = source.Artifacts
+            .Where(artifact => artifact.Family is ComponentFamily.PluginAssembly or ComponentFamily.PluginType or ComponentFamily.PluginStep or ComponentFamily.PluginStepImage)
+            .OrderBy(artifact => artifact.Family)
+            .ThenBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var actual = snapshot.Artifacts
+            .Where(artifact => artifact.Family is ComponentFamily.PluginAssembly or ComponentFamily.PluginType or ComponentFamily.PluginStep or ComponentFamily.PluginStepImage)
+            .OrderBy(artifact => artifact.Family)
+            .ThenBy(artifact => artifact.LogicalName, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        actual.Select(artifact => (artifact.Family, artifact.LogicalName))
+            .Should()
+            .Equal(expected.Select(artifact => (artifact.Family, artifact.LogicalName)));
+        harness.Requests.Should().Contain(request => request.Contains("/pluginassemblies", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/plugintypes", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/sdkmessageprocessingsteps", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/sdkmessageprocessingstepimages", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_helper_based_custom_workflow_activity_and_plugin_type_side_by_side()
+    {
+        var harness = LiveFixtureHarness.Create("seed-code-plugin-helper");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.PluginAssembly,
+            ComponentFamily.PluginType,
+            ComponentFamily.PluginStep,
+            ComponentFamily.PluginStepImage);
+
+        snapshot.Artifacts.Count(artifact => artifact.Family == ComponentFamily.PluginType).Should().Be(2);
+        snapshot.Artifacts.Should().Contain(artifact =>
+            artifact.Family == ComponentFamily.PluginType
+            && artifact.LogicalName == "Codex.Metadata.CodeFirst.Helper.AccountDescriptionActivity"
+            && artifact.Properties![ArtifactPropertyKeys.WorkflowActivityGroupName] == "Codex.Metadata.CodeFirst.Helper (1.0.0.0)");
+        snapshot.Artifacts.Should().Contain(artifact =>
+            artifact.Family == ComponentFamily.PluginType
+            && artifact.LogicalName == "Codex.Metadata.CodeFirst.Helper.AccountCreateDescriptionPlugin");
+        snapshot.Artifacts.Should().ContainSingle(artifact =>
+            artifact.Family == ComponentFamily.PluginStep
+            && artifact.LogicalName == "Codex.Metadata.CodeFirst.Helper.AccountCreateDescriptionPlugin|Create|account|20|0|Account Create Description Helper Stamp");
+    }
+
+    [Fact]
+    public async Task ReadAsync_projects_custom_workflow_activity_plugin_families()
+    {
+        var harness = LiveFixtureHarness.Create("seed-code-workflow-activity-classic");
+
+        var snapshot = await harness.ReadAsync(
+            ComponentFamily.PluginAssembly,
+            ComponentFamily.PluginType);
+
+        snapshot.Artifacts.Should().ContainSingle(artifact => artifact.Family == ComponentFamily.PluginAssembly);
+        var pluginType = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginType);
+        pluginType.LogicalName.Should().Be("Codex.Metadata.CodeFirst.WorkflowActivity.Classic.AccountDescriptionActivity");
+        pluginType.Properties![ArtifactPropertyKeys.WorkflowActivityGroupName].Should().Be("Codex.Metadata.CodeFirst.WorkflowActivity.Classic (1.0.0.0)");
+        snapshot.Artifacts.Should().NotContain(artifact => artifact.Family == ComponentFamily.PluginStep);
+        harness.Requests.Should().Contain(request => request.Contains("/pluginassemblies", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/plugintypes", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Theory]
+    [InlineData("seed-workflow-classic", "workflow", "Create")]
+    [InlineData("seed-workflow-action", "customAction", "cdxmeta_AccountStampAction")]
+    public async Task ReadAsync_projects_workflow_family_for_supported_workflow_seeds(
+        string fixtureName,
+        string expectedWorkflowKind,
+        string expectedTriggerMessage)
+    {
+        var harness = LiveFixtureHarness.Create(fixtureName);
+
+        var snapshot = await harness.ReadAsync(ComponentFamily.Workflow);
+        var source = ReadSourceFixture(fixtureName);
+        var expected = source.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
+        var actual = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
+
+        actual.LogicalName.Should().Be(expected.LogicalName);
+        actual.DisplayName.Should().Be(expected.DisplayName);
+        actual.Properties![ArtifactPropertyKeys.WorkflowId].Should().Be(expected.Properties![ArtifactPropertyKeys.WorkflowId]);
+        actual.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be(expectedWorkflowKind);
+        actual.Properties![ArtifactPropertyKeys.TriggerMessageName].Should().Be(expectedTriggerMessage);
+        actual.Properties![ArtifactPropertyKeys.XamlHash].Should().Be(expected.Properties![ArtifactPropertyKeys.XamlHash]);
+        (actual.Properties!.TryGetValue(ArtifactPropertyKeys.ClientDataHash, out var actualClientDataHash) ? actualClientDataHash : null)
+            .Should().Be(expected.Properties!.GetValueOrDefault(ArtifactPropertyKeys.ClientDataHash));
+        var expectedActionMetadata = expected.Properties!.GetValueOrDefault(ArtifactPropertyKeys.WorkflowActionMetadataJson);
+        var actualActionMetadata = actual.Properties!.TryGetValue(ArtifactPropertyKeys.WorkflowActionMetadataJson, out var actualWorkflowActionMetadata)
+            ? actualWorkflowActionMetadata
+            : null;
+        if (string.IsNullOrWhiteSpace(expectedActionMetadata))
+        {
+            actualActionMetadata.Should().BeNull();
+        }
+        else
+        {
+            JsonNode.DeepEquals(JsonNode.Parse(actualActionMetadata!), JsonNode.Parse(expectedActionMetadata!)).Should().BeTrue();
+        }
+        harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
+        harness.Requests.Should().Contain(request => request.Contains("/workflows", StringComparison.OrdinalIgnoreCase));
+    }
+
     [Fact]
     public async Task ReadAsync_projects_service_endpoint_and_connector_families()
     {
@@ -1329,6 +1447,14 @@ public sealed class WebApiLiveSnapshotProviderTests
     [InlineData("seed-ai-families")]
     [InlineData("seed-image-config")]
     [InlineData("seed-plugin-registration")]
+    [InlineData("seed-code-plugin-classic")]
+    [InlineData("seed-code-plugin-package")]
+    [InlineData("seed-code-plugin-imperative")]
+    [InlineData("seed-code-plugin-helper")]
+    [InlineData("seed-code-plugin-imperative-service")]
+    [InlineData("seed-code-workflow-activity-classic")]
+    [InlineData("seed-workflow-classic")]
+    [InlineData("seed-workflow-action")]
     [InlineData("seed-process-policy")]
     [InlineData("seed-process-security")]
     [InlineData("seed-service-endpoint-connector")]
@@ -1350,6 +1476,25 @@ public sealed class WebApiLiveSnapshotProviderTests
 
     private static CanonicalSolution ReadSourceFixture(string fixtureName)
     {
+        if (string.Equals(fixtureName, "seed-code-plugin-classic", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-package", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-imperative", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-helper", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-plugin-imperative-service", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-workflow-activity-classic", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fixtureName, "seed-code-workflow-activity-package", StringComparison.OrdinalIgnoreCase))
+        {
+            return new DataverseSolutionCompiler.Compiler.CompilerKernel().Compile(
+                new DataverseSolutionCompiler.Domain.Compilation.CompilationRequest(
+                    Path.Combine(
+                        "C:\\Git\\Dataverse-Solution-KB",
+                        "fixtures",
+                        "skill-corpus",
+                        "examples",
+                        fixtureName),
+                    Array.Empty<string>())).Solution;
+        }
+
         var reader = new XmlSolutionReader();
         return reader.Read(new ReadRequest(Path.Combine(
             "C:\\Git\\Dataverse-Solution-KB",
@@ -1423,6 +1568,30 @@ public sealed class WebApiLiveSnapshotProviderTests
                 ComponentFamily.PluginType,
                 ComponentFamily.PluginStep,
                 ComponentFamily.PluginStepImage
+            },
+            "seed-code-plugin-classic" or "seed-code-plugin-package" or "seed-code-plugin-imperative" or "seed-code-plugin-helper" or "seed-code-plugin-imperative-service" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.PluginAssembly,
+                ComponentFamily.PluginType,
+                ComponentFamily.PluginStep,
+                ComponentFamily.PluginStepImage
+            },
+            "seed-code-workflow-activity-classic" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.PluginAssembly,
+                ComponentFamily.PluginType
+            },
+            "seed-workflow-classic" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.Workflow
+            },
+            "seed-workflow-action" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.Workflow
             },
             "seed-process-policy" => new HashSet<ComponentFamily>
             {
@@ -1770,6 +1939,11 @@ internal sealed class LiveFixtureHarness
             return Envelope(GetArtifactArray("connection-roles.json", "connection_roles"));
         }
 
+        if (path.EndsWith("/workflows", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("workflows.json", "workflows"));
+        }
+
         return JsonResponse(HttpStatusCode.NotFound, new JsonObject
         {
             ["error"] = new JsonObject
@@ -1908,6 +2082,19 @@ internal sealed class LiveFixtureHarness
             {
                 ["componenttype"] = 61,
                 ["objectid"] = webResource["webresourceid"]!.GetValue<string>()
+            });
+        }
+
+        foreach (var workflow in FilterRowsBySourceScope(
+                     GetArtifactArray("workflows.json", "workflows"),
+                     ComponentFamily.Workflow,
+                     row => row["workflowid"]?.GetValue<string>(),
+                     row => row["uniquename"]?.GetValue<string>() ?? row["name"]?.GetValue<string>()))
+        {
+            rows.Add(new JsonObject
+            {
+                ["componenttype"] = 29,
+                ["objectid"] = workflow["workflowid"]!.GetValue<string>()
             });
         }
 

@@ -73,6 +73,9 @@ internal sealed partial class DataverseWebApiLiveReader
                 case 14:
                     scope.KeyMetadataIds.AddIfNotEmpty(GetGuid(row, "objectid"));
                     break;
+                case 29:
+                    scope.WorkflowIds.AddIfNotEmpty(GetGuid(row, "objectid"));
+                    break;
                 case 431:
                     scope.AttributeImageConfigurationIds.AddIfNotEmpty(GetGuid(row, "objectid"));
                     scope.AttributeImageConfigurationLogicalNames.AddIfNotEmpty(

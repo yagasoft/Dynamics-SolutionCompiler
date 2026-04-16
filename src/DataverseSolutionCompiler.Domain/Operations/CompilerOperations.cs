@@ -11,6 +11,7 @@ namespace DataverseSolutionCompiler.Domain.Read
         UnpackedXmlFolder,
         PackedZip,
         TrackedSource,
+        CodeFirstSdkRegistration,
         LiveSnapshot
     }
 

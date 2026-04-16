@@ -1,5 +1,6 @@
 using DataverseSolutionCompiler.Agent;
 using DataverseSolutionCompiler.Domain.Apply;
+using DataverseSolutionCompiler.Domain.Build;
 using DataverseSolutionCompiler.Domain.Compilation;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Diff;
@@ -157,6 +158,58 @@ public sealed class AgentOrchestratorTests
 
         result.Success.Should().BeFalse();
         result.Stages.Should().ContainSingle(stage => stage.Stage == WorkflowStageKind.Diff && stage.Status == WorkflowStageStatus.Failed);
+    }
+
+    [Fact]
+    public void Dev_apply_workflow_passes_built_code_first_plugin_assets_to_apply()
+    {
+        var stagedDllPath = Path.Combine(Path.GetTempPath(), $"dsc-code-first-{Guid.NewGuid():N}.dll");
+        var compilation = CreateCompilationResult(CreateCodeFirstPluginArtifacts(nameof(CodeAssetDeploymentFlavor.ClassicAssembly)));
+        var builtSolution = compilation.Solution with
+        {
+            Artifacts = compilation.Solution.Artifacts.Select(artifact =>
+                artifact.Family == ComponentFamily.PluginAssembly
+                    ? artifact with
+                    {
+                        Properties = artifact.Properties!
+                            .Concat([new KeyValuePair<string, string>(ArtifactPropertyKeys.StagedBuildOutputPath, stagedDllPath)])
+                            .ToDictionary(
+                                pair => pair.Key,
+                                pair => pair.Value,
+                                StringComparer.Ordinal)
+                    }
+                    : artifact).ToArray()
+        };
+        var builder = new RecordingCodeAssetBuilder(new CodeAssetBuildResult(
+            builtSolution,
+            [
+                new CompilerDiagnostic("code-asset-build-complete", DiagnosticSeverity.Info, "built")
+            ]));
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [ComponentFamily.PluginAssembly.ToString(), ComponentFamily.PluginType.ToString(), ComponentFamily.PluginStep.ToString(), ComponentFamily.PluginStepImage.ToString()],
+            []));
+        var liveProvider = new RecordingLiveSnapshotProvider(CreateMatchingPluginSnapshot(builtSolution));
+        var driftComparer = new RecordingDriftComparer(new DriftReport(false, [], []));
+        var orchestrator = new AgentOrchestrator(
+            new StubKernel(compilation),
+            new StubExplanationService(),
+            applyExecutor,
+            liveProvider,
+            driftComparer,
+            codeAssetBuilder: builder);
+
+        var result = orchestrator.RunDevApply(CreateDevApplyWorkflowRequest());
+
+        result.Success.Should().BeTrue();
+        builder.Requests.Should().ContainSingle();
+        applyExecutor.Models.Should().ContainSingle();
+        applyExecutor.Models.Single().Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginAssembly)
+            .Properties![ArtifactPropertyKeys.StagedBuildOutputPath]
+            .Should()
+            .Be(stagedDllPath);
+        result.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "code-asset-build-complete");
     }
 
     [Fact]
@@ -463,6 +516,95 @@ public sealed class AgentOrchestratorTests
         }
     }
 
+    [Fact]
+    public void Publish_workflow_passes_built_plugin_package_assets_to_finalize_apply()
+    {
+        var outputRoot = Path.Combine(Path.GetTempPath(), $"dsc-agent-publish-code-first-{Guid.NewGuid():N}");
+        var stagedPackagePath = Path.Combine(outputRoot, "code-assets", "sample.nupkg");
+        var compilation = CreateCompilationResult(CreateCodeFirstPluginArtifacts(nameof(CodeAssetDeploymentFlavor.PluginPackage)));
+        var builtSolution = compilation.Solution with
+        {
+            Artifacts = compilation.Solution.Artifacts.Select(artifact =>
+                artifact.Family == ComponentFamily.PluginAssembly
+                    ? artifact with
+                    {
+                        Properties = artifact.Properties!
+                            .Concat([new KeyValuePair<string, string>(ArtifactPropertyKeys.StagedBuildOutputPath, stagedPackagePath)])
+                            .ToDictionary(
+                                pair => pair.Key,
+                                pair => pair.Value,
+                                StringComparer.Ordinal)
+                    }
+                    : artifact).ToArray()
+        };
+        var builder = new RecordingCodeAssetBuilder(new CodeAssetBuildResult(
+            builtSolution,
+            [
+                new CompilerDiagnostic("code-asset-build-complete", DiagnosticSeverity.Info, "built")
+            ]));
+        var kernel = new StubKernel(compilation);
+        var packageEmitter = new RecordingEmitter((model, request) =>
+        {
+            var otherRoot = Path.Combine(request.OutputRoot, "package-inputs", "Other");
+            Directory.CreateDirectory(otherRoot);
+            File.WriteAllText(
+                Path.Combine(otherRoot, "Solution.xml"),
+                """
+                <ImportExportXml>
+                  <SolutionManifest>
+                    <RootComponents>
+                    </RootComponents>
+                  </SolutionManifest>
+                </ImportExportXml>
+                """);
+
+            return new EmittedArtifacts(
+                true,
+                request.OutputRoot,
+                [new EmittedArtifact("package-inputs/Other/Solution.xml", EmittedArtifactRole.PackageInput, "fixture")],
+                []);
+        });
+        var packageExecutor = new RecordingPackageExecutor(new PackageResult(true, Path.Combine(outputRoot, "sample.zip"), []));
+        var importExecutor = new RecordingImportExecutor(new ImportResult(true, Path.Combine(outputRoot, "sample.zip"), true, []));
+        var applyExecutor = new RecordingApplyExecutor(new ApplyResult(
+            true,
+            ApplyMode.DevProof,
+            [ComponentFamily.PluginAssembly.ToString(), ComponentFamily.PluginType.ToString(), ComponentFamily.PluginStep.ToString(), ComponentFamily.PluginStepImage.ToString()],
+            []));
+        var orchestrator = new AgentOrchestrator(
+            kernel,
+            new StubExplanationService(),
+            applyExecutor,
+            new RecordingLiveSnapshotProvider(new LiveSnapshot(new EnvironmentProfile("dev"), "sample", [], [])),
+            new RecordingDriftComparer(new DriftReport(false, [], [])),
+            packageEmitter,
+            packageExecutor,
+            importExecutor,
+            builder);
+
+        try
+        {
+            var result = orchestrator.RunPublish(CreatePublishWorkflowRequest(outputRoot));
+
+            result.Success.Should().BeTrue();
+            result.ImportSkippedBecauseApplyOnly.Should().BeTrue();
+            builder.Requests.Should().ContainSingle();
+            applyExecutor.Models.Should().ContainSingle();
+            applyExecutor.Models.Single().Artifacts.Single(artifact => artifact.Family == ComponentFamily.PluginAssembly)
+                .Properties![ArtifactPropertyKeys.StagedBuildOutputPath]
+                .Should()
+                .Be(stagedPackagePath);
+            result.Diagnostics.Should().Contain(diagnostic => diagnostic.Code == "code-asset-build-complete");
+        }
+        finally
+        {
+            if (Directory.Exists(outputRoot))
+            {
+                Directory.Delete(outputRoot, recursive: true);
+            }
+        }
+    }
+
     private static DevApplyWorkflowRequest CreateDevApplyWorkflowRequest() =>
         new(new CompilationRequest(
             "C:\\source",
@@ -512,4 +654,89 @@ public sealed class AgentOrchestratorTests
             new("plan", [], []),
             [],
             diagnostics);
+
+    private static FamilyArtifact[] CreateCodeFirstPluginArtifacts(string deploymentFlavor) =>
+    [
+        new FamilyArtifact(
+            ComponentFamily.PluginAssembly,
+            "Codex.Metadata.CodeFirst.Sample, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Codex.Metadata.CodeFirst.Sample",
+            "C:\\source\\plugins\\Codex.Metadata.CodeFirst.Sample\\PluginRegistration.cs",
+            EvidenceKind.Source,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [ArtifactPropertyKeys.MetadataSourcePath] = "plugins/Codex.Metadata.CodeFirst.Sample/PluginRegistration.cs",
+                [ArtifactPropertyKeys.PackageRelativePath] = "plugins/Codex.Metadata.CodeFirst.Sample/PluginRegistration.cs",
+                [ArtifactPropertyKeys.AssetSourceMapJson] = "[{\"sourcePath\":\"C:\\\\source\\\\plugins\\\\Codex.Metadata.CodeFirst.Sample\\\\PluginRegistration.cs\",\"packageRelativePath\":\"plugins/Codex.Metadata.CodeFirst.Sample/PluginRegistration.cs\"}]",
+                [ArtifactPropertyKeys.CodeProjectPath] = "plugins/Codex.Metadata.CodeFirst.Sample/Codex.Metadata.CodeFirst.Sample.csproj",
+                [ArtifactPropertyKeys.DeploymentFlavor] = deploymentFlavor,
+                [ArtifactPropertyKeys.PackageId] = "Codex.Metadata.CodeFirst.Sample",
+                [ArtifactPropertyKeys.PackageUniqueName] = "codex_metadata_codefirst_sample",
+                [ArtifactPropertyKeys.PackageVersion] = "1.0.0",
+                [ArtifactPropertyKeys.AssemblyFileName] = deploymentFlavor == nameof(CodeAssetDeploymentFlavor.PluginPackage)
+                    ? "Codex.Metadata.CodeFirst.Sample.1.0.0.nupkg"
+                    : "Codex.Metadata.CodeFirst.Sample.dll",
+                [ArtifactPropertyKeys.IsolationMode] = "2",
+                [ArtifactPropertyKeys.SourceType] = "0",
+                [ArtifactPropertyKeys.IntroducedVersion] = "1.0"
+            }),
+        new FamilyArtifact(
+            ComponentFamily.PluginType,
+            "Codex.Metadata.CodeFirst.Sample.AccountCreatePlugin",
+            "Codex.Metadata.CodeFirst.Sample.AccountCreatePlugin",
+            "C:\\source\\plugins\\Codex.Metadata.CodeFirst.Sample\\PluginRegistration.cs",
+            EvidenceKind.Source,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [ArtifactPropertyKeys.AssemblyFullName] = "Codex.Metadata.CodeFirst.Sample, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                [ArtifactPropertyKeys.AssemblyQualifiedName] = "Codex.Metadata.CodeFirst.Sample.AccountCreatePlugin, Codex.Metadata.CodeFirst.Sample, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+            }),
+        new FamilyArtifact(
+            ComponentFamily.PluginStep,
+            "Codex.Metadata.CodeFirst.Sample.AccountCreatePlugin-Create-account-20-0-Code First Account Create Step",
+            "Code First Account Create Step",
+            "C:\\source\\plugins\\Codex.Metadata.CodeFirst.Sample\\PluginRegistration.cs",
+            EvidenceKind.Source,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [ArtifactPropertyKeys.Stage] = "20",
+                [ArtifactPropertyKeys.Mode] = "0",
+                [ArtifactPropertyKeys.Rank] = "1",
+                [ArtifactPropertyKeys.SupportedDeployment] = "0",
+                [ArtifactPropertyKeys.MessageName] = "Create",
+                [ArtifactPropertyKeys.PrimaryEntity] = "account",
+                [ArtifactPropertyKeys.HandlerPluginTypeName] = "Codex.Metadata.CodeFirst.Sample.AccountCreatePlugin",
+                [ArtifactPropertyKeys.FilteringAttributes] = string.Empty
+            }),
+        new FamilyArtifact(
+            ComponentFamily.PluginStepImage,
+            "Codex.Metadata.CodeFirst.Sample.AccountCreatePlugin-Create-account-20-0-Code First Account Create Step-Account PreImage-preimage-0",
+            "Account PreImage",
+            "C:\\source\\plugins\\Codex.Metadata.CodeFirst.Sample\\PluginRegistration.cs",
+            EvidenceKind.Source,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [ArtifactPropertyKeys.ParentPluginStepLogicalName] = "Codex.Metadata.CodeFirst.Sample.AccountCreatePlugin-Create-account-20-0-Code First Account Create Step",
+                [ArtifactPropertyKeys.EntityAlias] = "preimage",
+                [ArtifactPropertyKeys.ImageType] = "0",
+                [ArtifactPropertyKeys.MessagePropertyName] = "Target",
+                [ArtifactPropertyKeys.SelectedAttributes] = "name,description"
+            })
+    ];
+
+    private static LiveSnapshot CreateMatchingPluginSnapshot(CanonicalSolution source) =>
+        new(
+            new EnvironmentProfile("dev", new Uri("https://example.crm.dynamics.com")),
+            source.Identity.UniqueName,
+            source.Artifacts.Select(artifact =>
+                artifact with
+                {
+                    Evidence = EvidenceKind.Readback,
+                    Properties = artifact.Properties is null
+                        ? null
+                        : artifact.Properties
+                            .Where(pair => !string.Equals(pair.Key, ArtifactPropertyKeys.StagedBuildOutputPath, StringComparison.Ordinal))
+                            .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal)
+                }).ToArray(),
+            []);
 }

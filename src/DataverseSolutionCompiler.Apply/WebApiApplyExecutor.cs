@@ -1503,13 +1503,25 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
 
             var identity = ParseAssemblyIdentity(fullName);
             var assemblyName = identity.Name ?? assembly.DisplayName ?? fullName;
-            var assemblyBinaryPath = ResolvePluginAssemblyBinaryPath(assembly);
-            if (string.IsNullOrWhiteSpace(assemblyBinaryPath) || !File.Exists(assemblyBinaryPath))
+            var payloadPath = ResolvePluginAssemblyBinaryPath(assembly);
+            if (string.IsNullOrWhiteSpace(payloadPath) || !File.Exists(payloadPath))
             {
                 diagnostics.Add(new CompilerDiagnostic(
                     "apply-plugin-assembly-missing-binary",
                     DiagnosticSeverity.Warning,
-                    $"Skipped plug-in assembly '{assemblyName}' because no assembly binary could be materialized for live apply.",
+                    $"Skipped plug-in assembly '{assemblyName}' because no staged deployment payload could be materialized for live apply.",
+                    assembly.SourcePath));
+                continue;
+            }
+
+            var deploymentFlavor = ParseDeploymentFlavor(GetArtifactProperty(assembly, ArtifactPropertyKeys.DeploymentFlavor));
+            if (deploymentFlavor == PluginDeploymentFlavor.PluginPackage
+                && PluginAssemblyContainsCustomWorkflowActivity(fullName, pluginTypes))
+            {
+                diagnostics.Add(new CompilerDiagnostic(
+                    "apply-plugin-package-workflow-activity-unsupported",
+                    DiagnosticSeverity.Error,
+                    $"Skipped plug-in package '{assemblyName}' because custom workflow activity types are supported only through the classic assembly lane.",
                     assembly.SourcePath));
                 continue;
             }
@@ -1520,54 +1532,121 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
                 BuildPluginAssemblyLookupQuery(identity, assemblyName),
                 cancellationToken).ConfigureAwait(false);
 
-            var payload = new JsonObject
-            {
-                ["name"] = assemblyName,
-                ["content"] = Convert.ToBase64String(File.ReadAllBytes(assemblyBinaryPath)),
-                ["path"] = Path.GetFileName(assemblyBinaryPath),
-                ["culture"] = identity.Culture ?? "neutral",
-                ["publickeytoken"] = identity.PublicKeyToken ?? "null",
-                ["version"] = identity.Version ?? "1.0.0.0"
-            };
-            AddIntegerProperty(payload, "isolationmode", GetArtifactProperty(assembly, ArtifactPropertyKeys.IsolationMode), 2);
-            AddIntegerProperty(payload, "sourcetype", GetArtifactProperty(assembly, ArtifactPropertyKeys.SourceType), 0);
-            AddStringProperty(payload, "introducedversion", GetArtifactProperty(assembly, ArtifactPropertyKeys.IntroducedVersion));
-
-            var needsUpdate = current is null
-                || !string.Equals(GetString(current, "name") ?? string.Empty, assemblyName, StringComparison.Ordinal)
-                || !string.Equals(GetString(current, "path") ?? string.Empty, Path.GetFileName(assemblyBinaryPath), StringComparison.Ordinal)
-                || !string.Equals(GetString(current, "isolationmode") ?? string.Empty, GetArtifactProperty(assembly, ArtifactPropertyKeys.IsolationMode) ?? "2", StringComparison.OrdinalIgnoreCase)
-                || !string.Equals(GetString(current, "sourcetype") ?? string.Empty, GetArtifactProperty(assembly, ArtifactPropertyKeys.SourceType) ?? "0", StringComparison.OrdinalIgnoreCase)
-                || !string.Equals(GetString(current, "introducedversion") ?? string.Empty, GetArtifactProperty(assembly, ArtifactPropertyKeys.IntroducedVersion) ?? string.Empty, StringComparison.Ordinal)
-                || !string.Equals(GetString(current, "version") ?? string.Empty, identity.Version ?? "1.0.0.0", StringComparison.Ordinal)
-                || !string.Equals(GetString(current, "culture") ?? string.Empty, identity.Culture ?? "neutral", StringComparison.OrdinalIgnoreCase)
-                || !string.Equals(GetString(current, "publickeytoken") ?? string.Empty, identity.PublicKeyToken ?? "null", StringComparison.OrdinalIgnoreCase);
-
             var assemblyCreated = false;
             Guid? currentAssemblyId = GetGuid(current, "pluginassemblyid");
-            if (needsUpdate)
+            var needsUpdate = false;
+            if (deploymentFlavor == PluginDeploymentFlavor.ClassicAssembly)
             {
-                if (currentAssemblyId is Guid pluginAssemblyId)
+                var payload = new JsonObject
                 {
-                    await SendJsonAsync(httpClient, credential, HttpMethod.Patch, $"pluginassemblies({pluginAssemblyId:D})", payload, cancellationToken).ConfigureAwait(false);
+                    ["name"] = assemblyName,
+                    ["content"] = Convert.ToBase64String(File.ReadAllBytes(payloadPath)),
+                    ["path"] = Path.GetFileName(payloadPath),
+                    ["culture"] = identity.Culture ?? "neutral",
+                    ["publickeytoken"] = identity.PublicKeyToken ?? "null",
+                    ["version"] = identity.Version ?? "1.0.0.0"
+                };
+                AddIntegerProperty(payload, "isolationmode", GetArtifactProperty(assembly, ArtifactPropertyKeys.IsolationMode), 2);
+                AddIntegerProperty(payload, "sourcetype", GetArtifactProperty(assembly, ArtifactPropertyKeys.SourceType), 0);
+                AddStringProperty(payload, "introducedversion", GetArtifactProperty(assembly, ArtifactPropertyKeys.IntroducedVersion));
+
+                needsUpdate = current is null
+                    || !string.Equals(GetString(current, "name") ?? string.Empty, assemblyName, StringComparison.Ordinal)
+                    || !string.Equals(GetString(current, "path") ?? string.Empty, Path.GetFileName(payloadPath), StringComparison.Ordinal)
+                    || !string.Equals(GetString(current, "isolationmode") ?? string.Empty, GetArtifactProperty(assembly, ArtifactPropertyKeys.IsolationMode) ?? "2", StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(GetString(current, "sourcetype") ?? string.Empty, GetArtifactProperty(assembly, ArtifactPropertyKeys.SourceType) ?? "0", StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(GetString(current, "introducedversion") ?? string.Empty, GetArtifactProperty(assembly, ArtifactPropertyKeys.IntroducedVersion) ?? string.Empty, StringComparison.Ordinal)
+                    || !string.Equals(GetString(current, "version") ?? string.Empty, identity.Version ?? "1.0.0.0", StringComparison.Ordinal)
+                    || !string.Equals(GetString(current, "culture") ?? string.Empty, identity.Culture ?? "neutral", StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(GetString(current, "publickeytoken") ?? string.Empty, identity.PublicKeyToken ?? "null", StringComparison.OrdinalIgnoreCase);
+
+                if (needsUpdate)
+                {
+                    if (currentAssemblyId is Guid pluginAssemblyId)
+                    {
+                        await SendJsonAsync(httpClient, credential, HttpMethod.Patch, $"pluginassemblies({pluginAssemblyId:D})", payload, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        currentAssemblyId = await SendCreateJsonAsync(httpClient, credential, "pluginassemblies", payload, cancellationToken).ConfigureAwait(false);
+                        assemblyCreated = true;
+                    }
+
+                    current = currentAssemblyId.HasValue
+                        ? await FindSingleAsync(
+                            httpClient,
+                            credential,
+                            $"pluginassemblies({currentAssemblyId.Value:D})?$select=pluginassemblyid,name,path,isolationmode,sourcetype,introducedversion,version,culture,publickeytoken",
+                            cancellationToken).ConfigureAwait(false)
+                        : await FindSingleAsync(
+                            httpClient,
+                            credential,
+                            BuildPluginAssemblyLookupQuery(identity, assemblyName),
+                            cancellationToken).ConfigureAwait(false);
                 }
-                else
+            }
+            else
+            {
+                var pluginPackageId = await EnsurePluginPackageAsync(
+                    httpClient,
+                    credential,
+                    assembly,
+                    assemblyName,
+                    diagnostics,
+                    cancellationToken).ConfigureAwait(false);
+                if (!pluginPackageId.HasValue)
                 {
-                    currentAssemblyId = await SendCreateJsonAsync(httpClient, credential, "pluginassemblies", payload, cancellationToken).ConfigureAwait(false);
-                    assemblyCreated = true;
+                    diagnostics.Add(new CompilerDiagnostic(
+                        "apply-plugin-package-missing-id",
+                        DiagnosticSeverity.Warning,
+                        $"Skipped plug-in package deployment for '{assemblyName}' because Dataverse did not return a pluginpackageid.",
+                        assembly.SourcePath));
+                    continue;
                 }
 
-                current = currentAssemblyId.HasValue
-                    ? await FindSingleAsync(
-                        httpClient,
-                        credential,
-                        $"pluginassemblies({currentAssemblyId.Value:D})?$select=pluginassemblyid,name,path,isolationmode,sourcetype,introducedversion,version,culture,publickeytoken",
-                        cancellationToken).ConfigureAwait(false)
-                    : await FindSingleAsync(
-                        httpClient,
-                        credential,
-                        BuildPluginAssemblyLookupQuery(identity, assemblyName),
-                        cancellationToken).ConfigureAwait(false);
+                var packageExpectedTypeNames = pluginTypes
+                    .Where(artifact => string.Equals(GetArtifactProperty(artifact, ArtifactPropertyKeys.AssemblyFullName), fullName, StringComparison.OrdinalIgnoreCase))
+                    .Select(artifact => NormalizeLogicalName(artifact.LogicalName))
+                    .Where(logicalName => !string.IsNullOrWhiteSpace(logicalName))
+                    .Cast<string>()
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                var packageExistingTypeNames = currentAssemblyId.HasValue
+                    ? await GetPluginTypeNamesAsync(httpClient, credential, currentAssemblyId.Value, cancellationToken).ConfigureAwait(false)
+                    : [];
+                var packageMissingExpectedTypes = packageExpectedTypeNames
+                    .Where(typeName => !packageExistingTypeNames.Contains(typeName, StringComparer.OrdinalIgnoreCase))
+                    .ToArray();
+                needsUpdate = currentAssemblyId is null || packageMissingExpectedTypes.Length > 0;
+
+                if (needsUpdate)
+                {
+                    var environmentUrl = BuildEnvironmentUrl();
+                    if (!TryRunPacPluginPush(
+                            pluginPackageId.Value,
+                            payloadPath,
+                            environmentUrl,
+                            ResolvePluginPushType(GetArtifactProperty(assembly, ArtifactPropertyKeys.DeploymentFlavor)),
+                            diagnostics))
+                    {
+                        diagnostics.Add(new CompilerDiagnostic(
+                            "apply-plugin-assembly-push-failed",
+                            DiagnosticSeverity.Error,
+                            $"Skipped plug-in package '{assemblyName}' because PAC plug-in push failed.",
+                            payloadPath));
+                        continue;
+                    }
+
+                    changeCount++;
+                }
+
+                current = await FindSingleAsync(
+                    httpClient,
+                    credential,
+                    BuildPluginAssemblyLookupQuery(identity, assemblyName),
+                    cancellationToken).ConfigureAwait(false);
+                currentAssemblyId = GetGuid(current, "pluginassemblyid");
             }
 
             currentAssemblyId ??= GetGuid(current, "pluginassemblyid");
@@ -1593,18 +1672,24 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
             var missingExpectedTypes = expectedTypeNames
                 .Where(typeName => !existingTypeNames.Contains(typeName, StringComparer.OrdinalIgnoreCase))
                 .ToArray();
-            var needsBinaryPush = assemblyCreated || missingExpectedTypes.Length > 0;
+            var needsBinaryPush = deploymentFlavor == PluginDeploymentFlavor.ClassicAssembly
+                && (assemblyCreated || missingExpectedTypes.Length > 0);
 
             if (needsBinaryPush)
             {
                 var environmentUrl = BuildEnvironmentUrl();
-                if (!TryRunPacPluginPush(resolvedAssemblyId, assemblyBinaryPath, environmentUrl, diagnostics))
+                if (!TryRunPacPluginPush(
+                        resolvedAssemblyId,
+                        payloadPath,
+                        environmentUrl,
+                        ResolvePluginPushType(GetArtifactProperty(assembly, ArtifactPropertyKeys.DeploymentFlavor)),
+                        diagnostics))
                 {
                     diagnostics.Add(new CompilerDiagnostic(
                         "apply-plugin-assembly-push-failed",
                         DiagnosticSeverity.Error,
                         $"Skipped plug-in assembly '{assemblyName}' because PAC plug-in push failed.",
-                        assemblyBinaryPath));
+                        payloadPath));
                     continue;
                 }
 
@@ -1620,6 +1705,16 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
                         diagnostics,
                         cancellationToken).ConfigureAwait(false);
                 }
+            }
+            else if (expectedTypeNames.Length > 0 && deploymentFlavor == PluginDeploymentFlavor.PluginPackage)
+            {
+                await WaitForPluginTypesAsync(
+                    httpClient,
+                    credential,
+                    resolvedAssemblyId,
+                    expectedTypeNames,
+                    diagnostics,
+                    cancellationToken).ConfigureAwait(false);
             }
             else if (needsUpdate)
             {
@@ -2213,6 +2308,9 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
         return $"pluginassemblies?$select=pluginassemblyid,name,path,isolationmode,sourcetype,introducedversion,version,culture,publickeytoken&$filter={string.Join(" and ", filters)}";
     }
 
+    private static string BuildPluginPackageLookupQuery(string uniqueName, string packageName) =>
+        $"pluginpackages?$select=pluginpackageid,name,uniquename,version&$filter=uniquename eq '{EscapeODataLiteral(uniqueName)}' or name eq '{EscapeODataLiteral(packageName)}'";
+
     private static string? ResolveConnectorCapabilitiesPayload(string? capabilitiesJson)
     {
         var normalized = NormalizeCapabilitiesComparisonJson(capabilitiesJson);
@@ -2322,6 +2420,70 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
         };
     }
 
+    private async Task<Guid?> EnsurePluginPackageAsync(
+        HttpClient httpClient,
+        TokenCredential credential,
+        FamilyArtifact assembly,
+        string assemblyName,
+        ICollection<CompilerDiagnostic> diagnostics,
+        CancellationToken cancellationToken)
+    {
+        var packageUniqueName = NormalizeLogicalName(GetArtifactProperty(assembly, ArtifactPropertyKeys.PackageUniqueName))
+            ?? NormalizeLogicalName(GetArtifactProperty(assembly, ArtifactPropertyKeys.PackageId))
+            ?? NormalizeLogicalName(assemblyName)
+            ?? "pluginpackage";
+        var packageName = GetArtifactProperty(assembly, ArtifactPropertyKeys.PackageId)
+            ?? assemblyName;
+        var packageVersion = GetArtifactProperty(assembly, ArtifactPropertyKeys.PackageVersion)
+            ?? "1.0.0";
+
+        var current = await FindSingleAsync(
+            httpClient,
+            credential,
+            BuildPluginPackageLookupQuery(packageUniqueName, packageName),
+            cancellationToken).ConfigureAwait(false);
+        var payload = new JsonObject
+        {
+            ["name"] = packageName,
+            ["uniquename"] = packageUniqueName,
+            ["version"] = packageVersion
+        };
+
+        var needsUpdate = current is null
+            || !string.Equals(GetString(current, "name") ?? string.Empty, packageName, StringComparison.Ordinal)
+            || !string.Equals(NormalizeLogicalName(GetString(current, "uniquename")) ?? string.Empty, packageUniqueName ?? string.Empty, StringComparison.OrdinalIgnoreCase)
+            || !string.Equals(GetString(current, "version") ?? string.Empty, packageVersion, StringComparison.Ordinal);
+        if (needsUpdate)
+        {
+            if (GetGuid(current, "pluginpackageid") is Guid pluginPackageId)
+            {
+                await SendJsonAsync(httpClient, credential, HttpMethod.Patch, $"pluginpackages({pluginPackageId:D})", payload, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                await SendJsonAsync(httpClient, credential, HttpMethod.Post, "pluginpackages", payload, cancellationToken).ConfigureAwait(false);
+            }
+
+            current = await FindSingleAsync(
+                httpClient,
+                credential,
+                BuildPluginPackageLookupQuery(packageUniqueName, packageName),
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        var resolvedId = GetGuid(current, "pluginpackageid");
+        if (resolvedId.HasValue)
+        {
+            diagnostics.Add(new CompilerDiagnostic(
+                "apply-plugin-package-resolved",
+                DiagnosticSeverity.Info,
+                $"Resolved plug-in package '{packageUniqueName}' for staged NuGet deployment.",
+                packageUniqueName));
+        }
+
+        return resolvedId;
+    }
+
     private static PluginAssemblyIdentity ParseAssemblyIdentity(string fullName)
     {
         var identity = new PluginAssemblyIdentity();
@@ -2354,12 +2516,39 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
         return identity;
     }
 
+    internal static string ResolvePluginPushType(string? deploymentFlavor) =>
+        ParseDeploymentFlavor(deploymentFlavor) == PluginDeploymentFlavor.PluginPackage
+            ? "Nuget"
+            : "Assembly";
+
+    private static bool PluginAssemblyContainsCustomWorkflowActivity(
+        string assemblyFullName,
+        IReadOnlyCollection<FamilyArtifact> pluginTypes) =>
+        pluginTypes.Any(artifact =>
+            string.Equals(GetArtifactProperty(artifact, ArtifactPropertyKeys.AssemblyFullName), assemblyFullName, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(GetArtifactProperty(artifact, ArtifactPropertyKeys.PluginTypeKind), "customWorkflowActivity", StringComparison.OrdinalIgnoreCase));
+
+    private static PluginDeploymentFlavor ParseDeploymentFlavor(string? value) =>
+        value?.Trim() switch
+        {
+            var text when string.Equals(text, nameof(PluginDeploymentFlavor.PluginPackage), StringComparison.OrdinalIgnoreCase) => PluginDeploymentFlavor.PluginPackage,
+            _ => PluginDeploymentFlavor.ClassicAssembly
+        };
+
     private static string? ResolvePluginAssemblyBinaryPath(FamilyArtifact artifact)
     {
+        var stagedBuildOutputPath = GetArtifactProperty(artifact, ArtifactPropertyKeys.StagedBuildOutputPath);
+        if (!string.IsNullOrWhiteSpace(stagedBuildOutputPath) && File.Exists(stagedBuildOutputPath))
+        {
+            return Path.GetFullPath(stagedBuildOutputPath);
+        }
+
         foreach (var relativePath in ReadArtifactAssetSourcePaths(artifact))
         {
             var materializedPath = ResolveArtifactMaterializedPath(artifact, relativePath);
-            if (materializedPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) && File.Exists(materializedPath))
+            if ((materializedPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase)
+                    || materializedPath.EndsWith(".nupkg", StringComparison.OrdinalIgnoreCase))
+                && File.Exists(materializedPath))
             {
                 return materializedPath;
             }
@@ -2369,9 +2558,10 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
     }
 
     private bool TryRunPacPluginPush(
-        Guid pluginAssemblyId,
-        string assemblyBinaryPath,
+        Guid pluginId,
+        string pluginPayloadPath,
         Uri environmentUrl,
+        string pushType,
         ICollection<CompilerDiagnostic> diagnostics)
     {
         var request = new ProcessStartInfo
@@ -2381,7 +2571,7 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
             RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true,
-            WorkingDirectory = Path.GetDirectoryName(Path.GetFullPath(assemblyBinaryPath)) ?? Environment.CurrentDirectory
+            WorkingDirectory = Path.GetDirectoryName(Path.GetFullPath(pluginPayloadPath)) ?? Environment.CurrentDirectory
         };
 
         foreach (var argument in new[]
@@ -2391,11 +2581,11 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
                      "--environment",
                      environmentUrl.ToString(),
                      "--pluginId",
-                     pluginAssemblyId.ToString("D", CultureInfo.InvariantCulture),
+                     pluginId.ToString("D", CultureInfo.InvariantCulture),
                      "--pluginFile",
-                     Path.GetFullPath(assemblyBinaryPath),
+                     Path.GetFullPath(pluginPayloadPath),
                      "--type",
-                     "Assembly"
+                     pushType
                  })
         {
             request.ArgumentList.Add(argument);
@@ -2412,8 +2602,8 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
             diagnostics.Add(new CompilerDiagnostic(
                 "apply-plugin-assembly-pac-push",
                 DiagnosticSeverity.Info,
-                $"Ran PAC plug-in push for assembly {pluginAssemblyId:D}. Command: pac plugin push --environment {environmentUrl} --pluginId {pluginAssemblyId:D} --pluginFile {Path.GetFullPath(assemblyBinaryPath)} --type Assembly",
-                assemblyBinaryPath));
+                $"Ran PAC plug-in push for plug-in id {pluginId:D}. Command: pac plugin push --environment {environmentUrl} --pluginId {pluginId:D} --pluginFile {Path.GetFullPath(pluginPayloadPath)} --type {pushType}",
+                pluginPayloadPath));
 
             if (!string.IsNullOrWhiteSpace(standardOutput))
             {
@@ -2421,7 +2611,7 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
                     "apply-plugin-assembly-pac-push-stdout",
                     DiagnosticSeverity.Info,
                     standardOutput.Trim(),
-                    assemblyBinaryPath));
+                    pluginPayloadPath));
             }
 
             if (!string.IsNullOrWhiteSpace(standardError))
@@ -2430,7 +2620,7 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
                     "apply-plugin-assembly-pac-push-stderr",
                     process.ExitCode == 0 ? DiagnosticSeverity.Warning : DiagnosticSeverity.Error,
                     standardError.Trim(),
-                    assemblyBinaryPath));
+                    pluginPayloadPath));
             }
 
             if (process.ExitCode == 0)
@@ -2442,7 +2632,7 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
                 "apply-plugin-assembly-pac-push-failed",
                 DiagnosticSeverity.Error,
                 $"PAC plug-in push exited with code {process.ExitCode}.",
-                assemblyBinaryPath));
+                pluginPayloadPath));
             return false;
         }
         catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception)
@@ -2451,7 +2641,7 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
                 "apply-plugin-assembly-pac-push-start-failed",
                 DiagnosticSeverity.Error,
                 $"PAC plug-in push could not start: {exception.Message}",
-                assemblyBinaryPath));
+                pluginPayloadPath));
             return false;
         }
     }
@@ -2965,6 +3155,12 @@ public sealed class WebApiApplyExecutor : IApplyExecutor
 
     private static string FormatGuid(Guid value) =>
         value.ToString("D");
+
+    private enum PluginDeploymentFlavor
+    {
+        ClassicAssembly,
+        PluginPackage
+    }
 
     private sealed class PluginAssemblyIdentity
     {

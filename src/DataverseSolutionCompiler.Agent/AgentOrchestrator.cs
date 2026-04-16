@@ -3,6 +3,7 @@ using DataverseSolutionCompiler.Compiler;
 using DataverseSolutionCompiler.Diff;
 using DataverseSolutionCompiler.Domain.Abstractions;
 using DataverseSolutionCompiler.Domain.Apply;
+using DataverseSolutionCompiler.Domain.Build;
 using DataverseSolutionCompiler.Domain.Compilation;
 using DataverseSolutionCompiler.Domain.Diagnostics;
 using DataverseSolutionCompiler.Domain.Diff;
@@ -23,6 +24,7 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
     private readonly ICompilerKernel _kernel;
     private readonly IExplanationService _explanationService;
     private readonly IApplyExecutor _applyExecutor;
+    private readonly ICodeAssetBuilder _codeAssetBuilder;
     private readonly ILiveSnapshotProvider _liveSnapshotProvider;
     private readonly IDriftComparer _driftComparer;
     private readonly ISolutionEmitter? _packageEmitter;
@@ -37,11 +39,13 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
         IDriftComparer? driftComparer = null,
         ISolutionEmitter? packageEmitter = null,
         IPackageExecutor? packageExecutor = null,
-        IImportExecutor? importExecutor = null)
+        IImportExecutor? importExecutor = null,
+        ICodeAssetBuilder? codeAssetBuilder = null)
     {
         _kernel = kernel ?? new CompilerKernel();
         _explanationService = explanationService ?? new ExplanationService();
         _applyExecutor = applyExecutor ?? new WebApiApplyExecutor();
+        _codeAssetBuilder = codeAssetBuilder ?? new DotNetCodeAssetBuilder();
         _liveSnapshotProvider = liveSnapshotProvider ?? new WebApiLiveSnapshotProvider();
         _driftComparer = driftComparer ?? new StableOverlapDriftComparer();
         _packageEmitter = packageEmitter;
@@ -87,19 +91,67 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
         }
 
         var environment = request.Compilation.Context?.Environment ?? CompilationContext.Default.Environment;
-        var applyResult = _applyExecutor.Apply(
+        var codeAssetBuild = _codeAssetBuilder.Build(new CodeAssetBuildRequest(
             compilation.Solution,
+            Path.Combine(Path.GetTempPath(), $"dsc-code-assets-{Guid.NewGuid():N}")));
+        aggregatedDiagnostics.AddRange(codeAssetBuild.Diagnostics);
+        if (HasErrors(codeAssetBuild.Diagnostics))
+        {
+            var boundaryDiagnostic = codeAssetBuild.Diagnostics.FirstOrDefault(diagnostic =>
+                diagnostic.Code == "code-asset-build-workflow-activity-package-unsupported");
+            stages.Add(new WorkflowStageResult(
+                WorkflowStageKind.Apply,
+                WorkflowStageStatus.Failed,
+                boundaryDiagnostic?.Message ?? "Code asset build failed before live metadata apply.",
+                codeAssetBuild.Diagnostics));
+            AddSkippedStages(stages, WorkflowStageKind.Readback, WorkflowStageKind.Diff);
+            return new DevApplyWorkflowResult(
+                compilation,
+                new ApplyResult(false, ApplyMode.DevProof, [], codeAssetBuild.Diagnostics),
+                null,
+                null,
+                [],
+                stages,
+                aggregatedDiagnostics);
+        }
+
+        if (!codeAssetBuild.Diagnostics.Any(diagnostic => diagnostic.Code == "code-asset-build-workflow-activity-package-unsupported")
+            && ContainsUnsupportedWorkflowActivityPluginPackage(codeAssetBuild.Solution))
+        {
+            var boundaryDiagnostic = new CompilerDiagnostic(
+                "code-asset-build-workflow-activity-package-unsupported",
+                DiagnosticSeverity.Error,
+                "Code-first plug-in packages that include custom workflow activity types are supported only through the classic assembly lane; apply-dev does not downgrade or silently skip that boundary.");
+            aggregatedDiagnostics.Add(boundaryDiagnostic);
+            stages.Add(new WorkflowStageResult(
+                WorkflowStageKind.Apply,
+                WorkflowStageStatus.Failed,
+                "Custom workflow activity plug-in packages are supported only through the classic assembly lane.",
+                [boundaryDiagnostic]));
+            AddSkippedStages(stages, WorkflowStageKind.Readback, WorkflowStageKind.Diff);
+            return new DevApplyWorkflowResult(
+                compilation,
+                new ApplyResult(false, ApplyMode.DevProof, [], [boundaryDiagnostic]),
+                null,
+                null,
+                [],
+                stages,
+                aggregatedDiagnostics);
+        }
+
+        var applyResult = _applyExecutor.Apply(
+            codeAssetBuild.Solution,
             new ApplyRequest(environment, ApplyMode.DevProof));
         stages.Add(CreateStage(
             WorkflowStageKind.Apply,
-            applyResult.Success && !HasErrors(applyResult.Diagnostics),
+            applyResult.Success && !HasErrors(applyResult.Diagnostics) && !HasErrors(codeAssetBuild.Diagnostics),
             applyResult.AppliedFamilies.Count == 0
                 ? "No live metadata apply steps were required for the supported scope."
                 : $"Applied {applyResult.AppliedFamilies.Count} supported family update(s).",
-            applyResult.Diagnostics));
+            codeAssetBuild.Diagnostics.Concat(applyResult.Diagnostics).ToArray()));
         aggregatedDiagnostics.AddRange(applyResult.Diagnostics);
 
-        if (!applyResult.Success || HasErrors(applyResult.Diagnostics))
+        if (!applyResult.Success || HasErrors(applyResult.Diagnostics) || HasErrors(codeAssetBuild.Diagnostics))
         {
             AddSkippedStages(stages, WorkflowStageKind.Readback, WorkflowStageKind.Diff);
             return new DevApplyWorkflowResult(
@@ -112,7 +164,7 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
                 aggregatedDiagnostics);
         }
 
-        var verificationFamilies = compilation.Solution.Artifacts
+        var verificationFamilies = codeAssetBuild.Solution.Artifacts
             .Select(artifact => artifact.Family)
             .Where(family => WebApiApplyExecutor.SupportedDevApplyFamilies.Contains(family))
             .Distinct()
@@ -143,9 +195,9 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
                 aggregatedDiagnostics);
         }
 
-        var verificationSolution = compilation.Solution with
+        var verificationSolution = codeAssetBuild.Solution with
         {
-            Artifacts = compilation.Solution.Artifacts
+            Artifacts = codeAssetBuild.Solution.Artifacts
                 .Where(artifact => verificationFamilies.Contains(artifact.Family))
                 .ToArray()
         };
@@ -318,16 +370,45 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
                 applyOnlyDiagnostics));
             aggregatedDiagnostics.AddRange(applyOnlyDiagnostics);
 
-            var finalizeApply = _applyExecutor.Apply(
+            var builtFinalizeSolution = _codeAssetBuilder.Build(new CodeAssetBuildRequest(
                 packageBuild.Compilation.Solution,
+                Path.Combine(request.OutputRoot, "code-assets"),
+                "Release"));
+            aggregatedDiagnostics.AddRange(builtFinalizeSolution.Diagnostics);
+            if (HasErrors(builtFinalizeSolution.Diagnostics))
+            {
+                var summary = builtFinalizeSolution.Diagnostics
+                    .FirstOrDefault(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error)?.Message
+                    ?? "Skipped live finalize-apply because staged code-first build failed.";
+                stages.Add(new WorkflowStageResult(
+                    WorkflowStageKind.FinalizeApply,
+                    WorkflowStageStatus.Failed,
+                    summary,
+                    builtFinalizeSolution.Diagnostics));
+
+                return new PublishWorkflowResult(
+                    packageBuild.Compilation,
+                    packageBuild.PackageInputs,
+                    packageBuild.Package,
+                    null,
+                    null,
+                    true,
+                    request.OutputRoot,
+                    packageBuild.PackageInputRoot,
+                    stages,
+                    aggregatedDiagnostics);
+            }
+
+            var finalizeApply = _applyExecutor.Apply(
+                builtFinalizeSolution.Solution,
                 new ApplyRequest(request.FinalizeApplyEnvironment, ApplyMode.DevProof));
             stages.Add(CreateStage(
                 WorkflowStageKind.FinalizeApply,
-                finalizeApply.Success && !HasErrors(finalizeApply.Diagnostics),
+                finalizeApply.Success && !HasErrors(finalizeApply.Diagnostics) && !HasErrors(builtFinalizeSolution.Diagnostics),
                 finalizeApply.AppliedFamilies.Count == 0
                     ? "No live finalize-apply steps were required after skipping import."
                     : $"Finalized {finalizeApply.AppliedFamilies.Count} supported family update(s) after skipping import.",
-                finalizeApply.Diagnostics));
+                builtFinalizeSolution.Diagnostics.Concat(finalizeApply.Diagnostics).ToArray()));
             aggregatedDiagnostics.AddRange(finalizeApply.Diagnostics);
 
             return new PublishWorkflowResult(
@@ -370,16 +451,45 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
                 aggregatedDiagnostics);
         }
 
-        var applyResult = _applyExecutor.Apply(
+        var builtImportSolution = _codeAssetBuilder.Build(new CodeAssetBuildRequest(
             packageBuild.Compilation.Solution,
+            Path.Combine(request.OutputRoot, "code-assets"),
+            "Release"));
+        aggregatedDiagnostics.AddRange(builtImportSolution.Diagnostics);
+        if (HasErrors(builtImportSolution.Diagnostics))
+        {
+            var summary = builtImportSolution.Diagnostics
+                .FirstOrDefault(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error)?.Message
+                ?? "Skipped live finalize-apply because staged code-first build failed.";
+            stages.Add(new WorkflowStageResult(
+                WorkflowStageKind.FinalizeApply,
+                WorkflowStageStatus.Failed,
+                summary,
+                builtImportSolution.Diagnostics));
+
+            return new PublishWorkflowResult(
+                packageBuild.Compilation,
+                packageBuild.PackageInputs,
+                packageBuild.Package,
+                importResult,
+                null,
+                false,
+                request.OutputRoot,
+                packageBuild.PackageInputRoot,
+                stages,
+                aggregatedDiagnostics);
+        }
+
+        var applyResult = _applyExecutor.Apply(
+            builtImportSolution.Solution,
             new ApplyRequest(request.FinalizeApplyEnvironment, ApplyMode.DevProof));
         stages.Add(CreateStage(
             WorkflowStageKind.FinalizeApply,
-            applyResult.Success && !HasErrors(applyResult.Diagnostics),
+            applyResult.Success && !HasErrors(applyResult.Diagnostics) && !HasErrors(builtImportSolution.Diagnostics),
             applyResult.AppliedFamilies.Count == 0
                 ? "No live finalize-apply steps were required after import."
                 : $"Finalized {applyResult.AppliedFamilies.Count} supported family update(s) after import.",
-            applyResult.Diagnostics));
+            builtImportSolution.Diagnostics.Concat(applyResult.Diagnostics).ToArray()));
         aggregatedDiagnostics.AddRange(applyResult.Diagnostics);
 
         return new PublishWorkflowResult(
@@ -430,6 +540,69 @@ public sealed class AgentOrchestrator : IDevApplyWorkflowRunner, IPackageBuildWo
                 $"Skipped {kind.ToString().ToLowerInvariant()} because an earlier stage failed.",
                 []));
         }
+    }
+
+    private static bool ContainsUnsupportedWorkflowActivityPluginPackage(CanonicalSolution solution)
+    {
+        var packageAssemblies = solution.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.PluginAssembly)
+            .Where(artifact =>
+            {
+                var deploymentFlavor = artifact.Properties is not null
+                    && artifact.Properties.TryGetValue(ArtifactPropertyKeys.DeploymentFlavor, out var flavor)
+                    ? flavor
+                    : null;
+                return string.Equals(deploymentFlavor, nameof(CodeAssetDeploymentFlavor.PluginPackage), StringComparison.OrdinalIgnoreCase);
+            })
+            .ToArray();
+        if (packageAssemblies.Length == 0)
+        {
+            return false;
+        }
+
+        var customWorkflowActivityTypes = solution.Artifacts
+            .Where(artifact => artifact.Family == ComponentFamily.PluginType)
+            .Where(artifact => string.Equals(
+                artifact.Properties is not null && artifact.Properties.TryGetValue(ArtifactPropertyKeys.PluginTypeKind, out var pluginTypeKind)
+                    ? pluginTypeKind
+                    : null,
+                "customWorkflowActivity",
+                StringComparison.OrdinalIgnoreCase))
+            .ToArray();
+        if (customWorkflowActivityTypes.Length == 0)
+        {
+            return false;
+        }
+
+        if (packageAssemblies.Length == 1)
+        {
+            return true;
+        }
+
+        foreach (var assemblyArtifact in packageAssemblies)
+        {
+            var assemblyFullName = assemblyArtifact.Properties is not null
+                && assemblyArtifact.Properties.TryGetValue(ArtifactPropertyKeys.AssemblyFullName, out var fullName)
+                    ? fullName
+                    : assemblyArtifact.LogicalName;
+            if (string.IsNullOrWhiteSpace(assemblyFullName))
+            {
+                return true;
+            }
+
+            if (customWorkflowActivityTypes.Any(artifact =>
+                    string.Equals(
+                        artifact.Properties is not null && artifact.Properties.TryGetValue(ArtifactPropertyKeys.AssemblyFullName, out var pluginAssemblyFullName)
+                            ? pluginAssemblyFullName
+                            : null,
+                        assemblyFullName,
+                        StringComparison.OrdinalIgnoreCase)))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static bool ShouldSkipImportForApplyOnlyPackage(string packageInputRoot)
