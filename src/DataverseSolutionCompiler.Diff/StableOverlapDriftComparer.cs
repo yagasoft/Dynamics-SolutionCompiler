@@ -405,7 +405,10 @@ public sealed class StableOverlapDriftComparer : IDriftComparer
                 ArtifactPropertyKeys.TriggerMessageName,
                 ArtifactPropertyKeys.XamlHash,
                 ArtifactPropertyKeys.ClientDataHash,
-                ArtifactPropertyKeys.WorkflowActionMetadataJson
+                ArtifactPropertyKeys.WorkflowActionMetadataJson,
+                ArtifactPropertyKeys.BusinessProcessType,
+                ArtifactPropertyKeys.ProcessOrder,
+                ArtifactPropertyKeys.ProcessStagesJson
             ],
             [ComponentFamily.CanvasApp] =
             [

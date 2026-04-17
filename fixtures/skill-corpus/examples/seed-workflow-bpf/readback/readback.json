@@ -1,0 +1,63 @@
+{
+  "capture_mode": "web-api",
+  "warnings": [],
+  "solution": {
+    "friendlyname": "Codex Metadata Seed Workflow BPF",
+    "uniquename": "CodexMetadataSeedWorkflowBpf",
+    "version": "1.0.0.0",
+    "solutionid": "73333333-3333-3333-3333-333333333333"
+  },
+  "workflows": [
+    {
+      "workflowid": "33333333-3333-3333-3333-333333333333",
+      "uniquename": "cdxmeta_AccountSalesFlow",
+      "name": "Codex Metadata Account Sales Flow",
+      "description": "Deterministic single-table business process flow seed for account.",
+      "workflowkind": "businessProcessFlow",
+      "category": "4",
+      "mode": "1",
+      "scope": "1",
+      "ondemand": "0",
+      "primaryentity": "account",
+      "businessprocesstype": "0",
+      "processorder": "1",
+      "clientdata": {
+        "designer": "bpf",
+        "stages": [
+          {
+            "id": "44444444-4444-4444-4444-444444444444",
+            "name": "Qualify"
+          },
+          {
+            "id": "55555555-5555-5555-5555-555555555555",
+            "name": "Develop"
+          },
+          {
+            "id": "66666666-6666-6666-6666-666666666666",
+            "name": "Close"
+          }
+        ]
+      },
+      "clientdatahash": "870df3db76587a8c1536e00cd64967a6c9b3c1f5646ba1bbf2cb15b7d19ce25c",
+      "xamlhash": "5c34436103fd2ab48d4284f0f7a6437b40ce81f43f630d9aaf676cb762fc2e68",
+      "xaml": "<Activity x:Class=\"CdxmetaAccountSalesFlow\" xmlns=\"http://schemas.microsoft.com/netfx/2009/xaml/activities\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"><x:Members><x:Property Name=\"Target\" Type=\"InArgument(x:String)\" /></x:Members></Activity>"
+    }
+  ],
+  "process_stages": [
+    {
+      "processstageid": "44444444-4444-4444-4444-444444444444",
+      "stagename": "Qualify",
+      "_processid_value": "33333333-3333-3333-3333-333333333333"
+    },
+    {
+      "processstageid": "55555555-5555-5555-5555-555555555555",
+      "stagename": "Develop",
+      "_processid_value": "33333333-3333-3333-3333-333333333333"
+    },
+    {
+      "processstageid": "66666666-6666-6666-6666-666666666666",
+      "stagename": "Close",
+      "_processid_value": "33333333-3333-3333-3333-333333333333"
+    }
+  ]
+}

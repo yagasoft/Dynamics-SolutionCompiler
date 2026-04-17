@@ -370,11 +370,13 @@ public sealed class TrackedSourceEmitterIntegrationTests
     }
 
     [Theory]
-    [InlineData("seed-workflow-classic", "cdxmeta_accountstampworkflow")]
-    [InlineData("seed-workflow-action", "cdxmeta_accountstampaction")]
+    [InlineData("seed-workflow-classic", "cdxmeta_accountstampworkflow", "cdxmeta_AccountStampWorkflow")]
+    [InlineData("seed-workflow-action", "cdxmeta_accountstampaction", "cdxmeta_AccountStampAction")]
+    [InlineData("seed-workflow-bpf", "cdxmeta_accountsalesflow", "cdxmeta_AccountSalesFlow")]
     public void Emitter_materializes_workflow_tracked_source_files(
         string fixtureName,
-        string expectedSlug)
+        string expectedSlug,
+        string expectedMetadataStem)
     {
         var model = ReadFixture(fixtureName);
         var emitter = new TrackedSourceEmitter();
@@ -385,9 +387,8 @@ public sealed class TrackedSourceEmitterIntegrationTests
             emitter.Emit(model, new EmitRequest(outputRoot, EmitLayout.TrackedSource));
 
             File.Exists(Path.Combine(outputRoot, "tracked-source", "workflows", $"{expectedSlug}.json")).Should().BeTrue();
-            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "Workflows", $"{expectedSlug}.json")).Should().BeTrue();
-            Directory.EnumerateFiles(Path.Combine(outputRoot, "tracked-source", "source-backed", "Workflows"), "*.xaml", SearchOption.TopDirectoryOnly)
-                .Should().ContainSingle();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "Workflows", $"{expectedMetadataStem}.xaml.data.xml")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "tracked-source", "source-backed", "Workflows", $"{expectedMetadataStem}.xaml")).Should().BeTrue();
         }
         finally
         {

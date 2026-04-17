@@ -1195,6 +1195,11 @@ public sealed partial class IntentSpecEmitter
         out IntentSourceBackedArtifactSpec? spec,
         out string? reason)
     {
+        if (artifact.Family == ComponentFamily.Workflow)
+        {
+            return TryBuildWorkflowSourceBackedArtifactSpec(artifact, intentRoot, emittedFiles, out spec, out reason);
+        }
+
         spec = null;
         reason = null;
 
@@ -1234,6 +1239,64 @@ public sealed partial class IntentSpecEmitter
             MetadataSourcePath = stagedMetadataPath,
             AssetSourcePaths = stagedAssetPaths.Count == 0 ? null : stagedAssetPaths,
             PackageRelativePath = packageRelativePath,
+            StableProperties = BuildStablePropertyMap(artifact)
+        };
+
+        return true;
+    }
+
+    private static bool TryBuildWorkflowSourceBackedArtifactSpec(
+        FamilyArtifact artifact,
+        string intentRoot,
+        ICollection<EmittedArtifact> emittedFiles,
+        out IntentSourceBackedArtifactSpec? spec,
+        out string? reason)
+    {
+        spec = null;
+        reason = null;
+
+        var metadataRelativePath = GetProperty(artifact, ArtifactPropertyKeys.MetadataSourcePath);
+        var packageRelativePath = GetProperty(artifact, ArtifactPropertyKeys.PackageRelativePath)
+            ?? NormalizeTrackedSourceRelativePath(metadataRelativePath);
+        if (string.IsNullOrWhiteSpace(metadataRelativePath) || string.IsNullOrWhiteSpace(packageRelativePath))
+        {
+            reason = "Workflow metadata source path is missing.";
+            return false;
+        }
+
+        var fileStem = GetWorkflowSourceBackedFileStem(metadataRelativePath, packageRelativePath, artifact.LogicalName);
+        if (string.IsNullOrWhiteSpace(fileStem))
+        {
+            reason = "Workflow metadata file stem could not be determined.";
+            return false;
+        }
+
+        var stagedMetadataPath = StageGeneratedSourceBackedText(
+            intentRoot,
+            $"Workflows/{fileStem}.json",
+            BuildWorkflowReverseSourceMetadata(artifact),
+            emittedFiles);
+
+        var stagedAssetPaths = new List<string>();
+        foreach (var assetRelativePath in ReadSourceBackedAssetRelativePaths(artifact))
+        {
+            var assetFullPath = ResolveSourceBackedMaterializedPath(artifact, assetRelativePath);
+            if (string.IsNullOrWhiteSpace(assetFullPath) || !File.Exists(assetFullPath))
+            {
+                continue;
+            }
+
+            stagedAssetPaths.Add(StageSourceBackedFile(intentRoot, assetFullPath, NormalizeTrackedSourceRelativePath(assetRelativePath), emittedFiles));
+        }
+
+        spec = new IntentSourceBackedArtifactSpec
+        {
+            Family = artifact.Family.ToString(),
+            LogicalName = artifact.LogicalName,
+            DisplayName = artifact.DisplayName,
+            MetadataSourcePath = stagedMetadataPath,
+            AssetSourcePaths = stagedAssetPaths.Count == 0 ? null : stagedAssetPaths,
+            PackageRelativePath = NormalizeTrackedSourceRelativePath(packageRelativePath),
             StableProperties = BuildStablePropertyMap(artifact)
         };
 
@@ -1390,6 +1453,89 @@ public sealed partial class IntentSpecEmitter
             emittedFiles.Add(new EmittedArtifact($"intent-spec/{relativePath.Replace('\\', '/')}", EmittedArtifactRole.IntentSpec, $"Staged source-backed artifact evidence for {packageRelativePath}."));
         }
         return relativePath.Replace('\\', '/');
+    }
+
+    private static string StageGeneratedSourceBackedText(string intentRoot, string packageRelativePath, string contents, ICollection<EmittedArtifact> emittedFiles)
+    {
+        var relativePath = $"source-backed/{NormalizeTrackedSourceRelativePath(packageRelativePath)}";
+        var fullPath = GetContainedPath(intentRoot, relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+        File.WriteAllText(fullPath, contents.Replace("\r\n", "\n", StringComparison.Ordinal) + "\n");
+        emittedFiles.Add(new EmittedArtifact(
+            $"intent-spec/{relativePath.Replace('\\', '/')}",
+            EmittedArtifactRole.IntentSpec,
+            $"Staged generated source-backed artifact evidence for {packageRelativePath}."));
+        return relativePath.Replace('\\', '/');
+    }
+
+    private static string GetWorkflowSourceBackedFileStem(string? metadataRelativePath, string? packageRelativePath, string logicalName)
+    {
+        foreach (var candidate in new[] { metadataRelativePath, packageRelativePath, logicalName })
+        {
+            if (string.IsNullOrWhiteSpace(candidate))
+            {
+                continue;
+            }
+
+            var fileName = Path.GetFileName(candidate.Replace('/', Path.DirectorySeparatorChar));
+            if (fileName.EndsWith(".xaml.data.xml", StringComparison.OrdinalIgnoreCase))
+            {
+                return fileName[..^".xaml.data.xml".Length];
+            }
+
+            if (fileName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+            {
+                return fileName[..^".json".Length];
+            }
+        }
+
+        return logicalName;
+    }
+
+    private static string BuildWorkflowReverseSourceMetadata(FamilyArtifact artifact)
+    {
+        var xamlFileName = ReadSourceBackedAssetRelativePaths(artifact)
+            .Select(path => Path.GetFileName(path.Replace('/', Path.DirectorySeparatorChar)))
+            .FirstOrDefault(fileName => fileName.EndsWith(".xaml", StringComparison.OrdinalIgnoreCase));
+
+        JsonNode? ParseJsonProperty(string key)
+        {
+            var raw = GetProperty(artifact, key);
+            return string.IsNullOrWhiteSpace(raw) ? null : JsonNode.Parse(raw);
+        }
+
+        var document = new JsonObject
+        {
+            ["id"] = GetProperty(artifact, ArtifactPropertyKeys.WorkflowId),
+            ["name"] = artifact.DisplayName ?? artifact.LogicalName,
+            ["unique_name"] = artifact.LogicalName,
+            ["workflow_kind"] = GetProperty(artifact, ArtifactPropertyKeys.WorkflowKind),
+            ["description"] = GetProperty(artifact, ArtifactPropertyKeys.Description),
+            ["category"] = GetProperty(artifact, ArtifactPropertyKeys.Category),
+            ["mode"] = GetProperty(artifact, ArtifactPropertyKeys.Mode),
+            ["scope"] = GetProperty(artifact, ArtifactPropertyKeys.WorkflowScope),
+            ["on_demand"] = GetProperty(artifact, ArtifactPropertyKeys.OnDemand),
+            ["primary_entity"] = GetProperty(artifact, ArtifactPropertyKeys.PrimaryEntity),
+            ["trigger_message"] = GetProperty(artifact, ArtifactPropertyKeys.TriggerMessageName),
+            ["business_process_type"] = GetProperty(artifact, ArtifactPropertyKeys.BusinessProcessType),
+            ["process_order"] = GetProperty(artifact, ArtifactPropertyKeys.ProcessOrder),
+            ["xaml_file_name"] = xamlFileName is null ? null : $"Workflows/{xamlFileName}",
+            ["package_relative_path"] = GetProperty(artifact, ArtifactPropertyKeys.PackageRelativePath)
+        };
+
+        var actionMetadata = ParseJsonProperty(ArtifactPropertyKeys.WorkflowActionMetadataJson);
+        if (actionMetadata is not null)
+        {
+            document["action_metadata"] = actionMetadata;
+        }
+
+        var processStages = ParseJsonProperty(ArtifactPropertyKeys.ProcessStagesJson);
+        if (processStages is not null)
+        {
+            document["process_stages"] = processStages;
+        }
+
+        return document.ToJsonString(new JsonSerializerOptions { WriteIndented = true });
     }
 
     private static string BuildArtifactKey(FamilyArtifact artifact) =>

@@ -994,26 +994,38 @@ public sealed class WebApiLiveSnapshotProviderTests
     [Theory]
     [InlineData("seed-workflow-classic", "workflow", "Create")]
     [InlineData("seed-workflow-action", "customAction", "cdxmeta_AccountStampAction")]
+    [InlineData("seed-workflow-bpf", "businessProcessFlow", null)]
     public async Task ReadAsync_projects_workflow_family_for_supported_workflow_seeds(
         string fixtureName,
         string expectedWorkflowKind,
-        string expectedTriggerMessage)
+        string? expectedTriggerMessage)
     {
         var harness = LiveFixtureHarness.Create(fixtureName);
 
         var snapshot = await harness.ReadAsync(ComponentFamily.Workflow);
         var source = ReadSourceFixture(fixtureName);
         var expected = source.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
+        if (!snapshot.Artifacts.Any(artifact => artifact.Family == ComponentFamily.Workflow))
+        {
+            throw new Xunit.Sdk.XunitException(
+                $"Workflow artifact missing for {fixtureName}. Diagnostics: {string.Join(" || ", snapshot.Diagnostics.Select(d => $"{d.Code}:{d.Message}"))}. Requests: {string.Join(" || ", harness.Requests)}");
+        }
         var actual = snapshot.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
 
         actual.LogicalName.Should().Be(expected.LogicalName);
         actual.DisplayName.Should().Be(expected.DisplayName);
         actual.Properties![ArtifactPropertyKeys.WorkflowId].Should().Be(expected.Properties![ArtifactPropertyKeys.WorkflowId]);
         actual.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be(expectedWorkflowKind);
-        actual.Properties![ArtifactPropertyKeys.TriggerMessageName].Should().Be(expectedTriggerMessage);
+        actual.Properties!.GetValueOrDefault(ArtifactPropertyKeys.TriggerMessageName).Should().Be(expectedTriggerMessage);
         actual.Properties![ArtifactPropertyKeys.XamlHash].Should().Be(expected.Properties![ArtifactPropertyKeys.XamlHash]);
         (actual.Properties!.TryGetValue(ArtifactPropertyKeys.ClientDataHash, out var actualClientDataHash) ? actualClientDataHash : null)
             .Should().Be(expected.Properties!.GetValueOrDefault(ArtifactPropertyKeys.ClientDataHash));
+        actual.Properties!.GetValueOrDefault(ArtifactPropertyKeys.BusinessProcessType)
+            .Should().Be(expected.Properties!.GetValueOrDefault(ArtifactPropertyKeys.BusinessProcessType));
+        actual.Properties!.GetValueOrDefault(ArtifactPropertyKeys.ProcessOrder)
+            .Should().Be(expected.Properties!.GetValueOrDefault(ArtifactPropertyKeys.ProcessOrder));
+        actual.Properties!.GetValueOrDefault(ArtifactPropertyKeys.ProcessStagesJson)
+            .Should().Be(expected.Properties!.GetValueOrDefault(ArtifactPropertyKeys.ProcessStagesJson));
         var expectedActionMetadata = expected.Properties!.GetValueOrDefault(ArtifactPropertyKeys.WorkflowActionMetadataJson);
         var actualActionMetadata = actual.Properties!.TryGetValue(ArtifactPropertyKeys.WorkflowActionMetadataJson, out var actualWorkflowActionMetadata)
             ? actualWorkflowActionMetadata
@@ -1028,6 +1040,10 @@ public sealed class WebApiLiveSnapshotProviderTests
         }
         harness.Requests.Should().Contain(request => request.Contains("/solutioncomponents", StringComparison.OrdinalIgnoreCase));
         harness.Requests.Should().Contain(request => request.Contains("/workflows", StringComparison.OrdinalIgnoreCase));
+        if (string.Equals(expectedWorkflowKind, "businessProcessFlow", StringComparison.OrdinalIgnoreCase))
+        {
+            harness.Requests.Should().Contain(request => request.Contains("/processstages", StringComparison.OrdinalIgnoreCase));
+        }
     }
 
     [Fact]
@@ -1455,6 +1471,7 @@ public sealed class WebApiLiveSnapshotProviderTests
     [InlineData("seed-code-workflow-activity-classic")]
     [InlineData("seed-workflow-classic")]
     [InlineData("seed-workflow-action")]
+    [InlineData("seed-workflow-bpf")]
     [InlineData("seed-process-policy")]
     [InlineData("seed-process-security")]
     [InlineData("seed-service-endpoint-connector")]
@@ -1589,6 +1606,11 @@ public sealed class WebApiLiveSnapshotProviderTests
                 ComponentFamily.Workflow
             },
             "seed-workflow-action" => new HashSet<ComponentFamily>
+            {
+                ComponentFamily.SolutionShell,
+                ComponentFamily.Workflow
+            },
+            "seed-workflow-bpf" => new HashSet<ComponentFamily>
             {
                 ComponentFamily.SolutionShell,
                 ComponentFamily.Workflow
@@ -1944,6 +1966,11 @@ internal sealed class LiveFixtureHarness
             return Envelope(GetArtifactArray("workflows.json", "workflows"));
         }
 
+        if (path.EndsWith("/processstages", StringComparison.OrdinalIgnoreCase))
+        {
+            return Envelope(GetArtifactArray("process-stages.json", "process_stages"));
+        }
+
         return JsonResponse(HttpStatusCode.NotFound, new JsonObject
         {
             ["error"] = new JsonObject
@@ -2089,7 +2116,7 @@ internal sealed class LiveFixtureHarness
                      GetArtifactArray("workflows.json", "workflows"),
                      ComponentFamily.Workflow,
                      row => row["workflowid"]?.GetValue<string>(),
-                     row => row["uniquename"]?.GetValue<string>() ?? row["name"]?.GetValue<string>()))
+                     row => NormalizeLogicalName(row["uniquename"]?.GetValue<string>() ?? row["name"]?.GetValue<string>())))
         {
             rows.Add(new JsonObject
             {

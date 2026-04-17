@@ -2,7 +2,7 @@
 
 ## Thread State
 
-- Purpose: preserve the approved `.NET 10` compiler roadmap baseline after completing `B-010`, `B-007`, `B-011`, `B-012`, `B-013`, `B-014`, `B-015`, `B-016`, and `B-017`, and reopen work only when new evidence overturns one of the current explicit boundaries or a new operational program is approved.
+- Purpose: preserve the approved `.NET 10` compiler roadmap baseline after completing `B-010`, `B-007`, `B-011`, `B-012`, `B-013`, `B-014`, `B-015`, `B-016`, and `B-017`, and carry the new active `B-018` workflow or BPF program without widening claims past current evidence.
 - Scope: source/readback canonicalization, generator breadth, release-path operation, docs, and tests.
 - Roadmap boundary: approved `.NET 10` direction.
 
@@ -49,7 +49,9 @@
   - the code-first lane now also supports a broader bounded common-idiom static-analysis surface: reducible member or local indirection, `const`, `static readonly`, `nameof`, simple interpolation, switch or ternary reductions, reducible helper methods, direct collection builders, and simple `yield return` aggregators now survive into the same `PluginAssembly`, `PluginType`, `PluginStep`, and `PluginStepImage` families, while reflection, dynamic dispatch, external files, non-reducible helper frameworks, and other arbitrary code paths remain explicit `unsupportedShape` diagnostics
   - regular code-first plug-in packages now stay honest as a permanent live finalize-apply boundary rather than fake solution-zip parity: staged `.nupkg` assets still deploy through `pac plugin push --type Nuget`, but package-input emission now reports that the NuGet payload is not rebuilt into `solution.zip` until a stable package-bearing exported source shape is proven
   - custom workflow activity package deployment is now a cited permanent classic-only boundary across build, `apply-dev`, and `publish`, aligned with current Microsoft guidance that workflow extensions are not supported in plug-in packages
-  - the owner `Workflow` lane is now reopened for a curated source-backed subset: `seed-workflow-classic` and `seed-workflow-action` parse `Workflows/*.json` plus `.xaml`, preserve workflow shell metadata plus XAML/client-data fidelity and optional action metadata, emit tracked-source summaries, reverse-generate into `sourceBackedArtifacts[]`, rebuild package-inputs with root component `29`, read back from the live `workflows` surface, and compare on stable shell plus hash overlap without widening direct live mutation
+  - the owner `Workflow` lane now also reads export-backed `Workflows/*.xaml.data.xml` plus `.xaml` source instead of relying only on the earlier synthetic JSON shell format, and the current supported subset now includes classic workflows, custom actions, and a single-table `businessProcessFlow` slice under the same owner family
+  - `seed-workflow-classic`, `seed-workflow-action`, and the new `seed-workflow-bpf` now preserve workflow shell metadata, XAML/client-data fidelity, optional action metadata, and normalized BPF stage metadata through source parsing, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live `workflow` plus `processstage` readback, and stable-overlap drift without widening direct live mutation
+  - environment-gated publish or execution proof scaffolding now exists for classic workflow execution, custom-action invocation, and single-table BPF runtime stage navigation, but those runtime proofs have not been exercised in this thread because no Dataverse environment URL was configured for them
   - family-semantic stable-overlap drift for the same first-family slice, exercised against fixture-backed live snapshots and generated round-trip package rereads with non-blocking warning surfaces preserved
   - real library-first Dataverse Web API readback in `Readers.Live` using `DefaultAzureCredential` + raw `HttpClient`, with solution-aware discovery, OData paging, app-setting rejoin, and entity-scoped form/view fallback, now wired into CLI `readback` / `diff`
   - deterministic package-input materialization in two modes:
@@ -110,7 +112,8 @@
   - `B-015` is complete.
   - `B-016` is complete.
   - `B-017` is complete.
-  - no active backlog items remain in the current audited owner-family universe, the current operational workflow lanes, the current public-onboarding slice, the supported code-first plug-in lane, or the current reopened workflow source-backed subset after `B-017`
+  - `B-018` is active.
+  - the current open gap is workflow and BPF runtime execution evidence, not source, reverse, package, or live readback shape for the supported classic workflow, custom-action, and single-table BPF subset
   - keep reporting/legacy closed as an explicit source-first boundary, not as hidden future debt
   - keep the former site-map target-shape remainder closed as an explicit canonical raw-`url` boundary: broader app-shell links now preserve raw `url` evidence instead of pretending structured parity
   - keep the `B-011` apply-dev v1 scope frozen to `ImageConfiguration`, `EntityAnalyticsConfiguration`, `PluginAssembly`, `PluginType`, `PluginStep`, `PluginStepImage`, `ServiceEndpoint`, `Connector`, `MobileOfflineProfile`, `MobileOfflineProfileItem`, and `ConnectionRole`
@@ -132,7 +135,7 @@
   - `ComplexControl`
   - `CustomControlDefaultConfig`
   - richer user-owned or otherwise unsupported visualization breadth beyond the proven solution-scoped saved-query subset
-  - broader workflow families or execution parity beyond the current curated classic workflow and custom-action source-backed subset
+  - broader workflow families or execution parity beyond the current curated classic workflow, custom-action, and single-table BPF source-backed subset
   - remaining non-image schema-detail remainder beyond supported options, keys, images, and narrow owner-metadata `IsCustomizable`
   - platform-generated system/default/lookup/quick-find views
   - effective access/runtime privilege expansion

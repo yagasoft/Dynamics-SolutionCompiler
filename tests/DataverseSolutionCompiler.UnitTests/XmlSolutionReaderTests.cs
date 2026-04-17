@@ -667,7 +667,7 @@ public sealed class XmlSolutionReaderTests
         workflow.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be("workflow");
         workflow.Properties![ArtifactPropertyKeys.PrimaryEntity].Should().Be("account");
         workflow.Properties![ArtifactPropertyKeys.TriggerMessageName].Should().Be("Create");
-        workflow.Properties![ArtifactPropertyKeys.PackageRelativePath].Should().Be("Workflows/cdxmeta_AccountStampWorkflow.json");
+        workflow.Properties![ArtifactPropertyKeys.PackageRelativePath].Should().Be("Workflows/cdxmeta_AccountStampWorkflow.xaml.data.xml");
         workflow.Properties![ArtifactPropertyKeys.AssetSourceMapJson].Should().Contain("Workflows/cdxmeta_AccountStampWorkflow.xaml");
         workflow.Properties![ArtifactPropertyKeys.XamlHash].Should().NotBeNullOrWhiteSpace();
         workflow.Properties![ArtifactPropertyKeys.ClientDataHash].Should().NotBeNullOrWhiteSpace();
@@ -685,6 +685,23 @@ public sealed class XmlSolutionReaderTests
         workflow.Properties![ArtifactPropertyKeys.TriggerMessageName].Should().Be("cdxmeta_AccountStampAction");
         workflow.Properties![ArtifactPropertyKeys.WorkflowActionMetadataJson].Should().Contain("\"uniqueName\":\"cdxmeta_AccountStampAction\"");
         workflow.Properties![ArtifactPropertyKeys.WorkflowActionMetadataJson].Should().Contain("\"direction\":\"Out\"");
+    }
+
+    [Fact]
+    public void Reader_parses_business_process_flow_source_backed_artifact_with_stage_metadata()
+    {
+        var solution = ReadFixture("seed-workflow-bpf");
+
+        var workflow = FindArtifact(solution, ComponentFamily.Workflow, "cdxmeta_accountsalesflow");
+        workflow.DisplayName.Should().Be("Codex Metadata Account Sales Flow");
+        workflow.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be("businessProcessFlow");
+        workflow.Properties![ArtifactPropertyKeys.Category].Should().Be("4");
+        workflow.Properties![ArtifactPropertyKeys.BusinessProcessType].Should().Be("0");
+        workflow.Properties![ArtifactPropertyKeys.ProcessOrder].Should().Be("1");
+        workflow.Properties![ArtifactPropertyKeys.ProcessStagesJson].Should().Contain("Qualify");
+        workflow.Properties![ArtifactPropertyKeys.ProcessStagesJson].Should().Contain("Develop");
+        workflow.Properties![ArtifactPropertyKeys.ProcessStagesJson].Should().Contain("Close");
+        workflow.Properties![ArtifactPropertyKeys.PackageRelativePath].Should().Be("Workflows/cdxmeta_AccountSalesFlow.xaml.data.xml");
     }
 
     [Fact]

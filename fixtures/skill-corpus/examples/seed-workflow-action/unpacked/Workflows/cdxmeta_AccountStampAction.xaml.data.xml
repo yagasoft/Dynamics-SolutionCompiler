@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Workflow Name="Codex Metadata Account Stamp Action" Description="Deterministic custom action seed with explicit argument metadata." WorkflowId="{22222222-2222-2222-2222-222222222222}">
+  <XamlFileName>cdxmeta_AccountStampAction.xaml</XamlFileName>
+  <Category>3</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>1</OnDemand>
+  <UniqueName>cdxmeta_AccountStampAction</UniqueName>
+  <PrimaryEntity>account</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName description="Codex Metadata Account Stamp Action" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Deterministic custom action seed with explicit argument metadata." languagecode="1033" />
+  </Descriptions>
+</Workflow>

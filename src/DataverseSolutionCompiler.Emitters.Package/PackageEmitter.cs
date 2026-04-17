@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Xml.Linq;
 using DataverseSolutionCompiler.Domain.Abstractions;
 using DataverseSolutionCompiler.Domain.Diagnostics;
@@ -468,8 +469,9 @@ public sealed partial class PackageEmitter : ISolutionEmitter
         if (ShouldNormalizeAsText(sourcePath))
         {
             var normalizedText = ReadNormalizedText(sourcePath);
+            var normalizedWorkflowXml = TryNormalizeSourceBackedWorkflowMetadata(artifact, packageRelativePath, normalizedText, diagnostics);
             var normalizedEntityXml = TryNormalizeSourceBackedTableEntityXml(artifact, packageRelativePath, normalizedText, diagnostics);
-            File.WriteAllText(destinationPath, normalizedEntityXml ?? normalizedText, Utf8NoBom);
+            File.WriteAllText(destinationPath, normalizedWorkflowXml ?? normalizedEntityXml ?? normalizedText, Utf8NoBom);
         }
         else
         {
@@ -480,6 +482,28 @@ public sealed partial class PackageEmitter : ISolutionEmitter
             $"package-inputs/{packageRelativePath.Replace('\\', '/')}",
             EmittedArtifactRole.PackageInput,
             $"Package input copied from staged source-backed artifact evidence for {artifact.LogicalName}."));
+    }
+
+    private static string? TryNormalizeSourceBackedWorkflowMetadata(
+        FamilyArtifact artifact,
+        string packageRelativePath,
+        string normalizedText,
+        ICollection<CompilerDiagnostic> diagnostics)
+    {
+        if (artifact.Family != ComponentFamily.Workflow
+            || !packageRelativePath.Replace('\\', '/').EndsWith(".xaml.data.xml", StringComparison.OrdinalIgnoreCase)
+            || !artifact.SourcePath!.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var xml = BuildWorkflowMetadataXml(artifact);
+        diagnostics.Add(new CompilerDiagnostic(
+            "package-emitter-normalized-source-backed-workflow-metadata",
+            DiagnosticSeverity.Info,
+            $"Normalized staged source-backed workflow metadata for '{artifact.LogicalName}' into export-backed XAML data XML layout.",
+            artifact.SourcePath!));
+        return xml;
     }
 
     private static void CopyFileToPackage(string packageRoot, string sourcePath, string packageRelativePath, List<EmittedArtifact> emittedFiles, string logicalName)
@@ -507,6 +531,178 @@ public sealed partial class PackageEmitter : ISolutionEmitter
         File.ReadAllText(sourcePath)
             .Replace("\r\n", "\n", StringComparison.Ordinal)
             .Replace("\r", "\n", StringComparison.Ordinal);
+
+    private static string BuildWorkflowMetadataXml(FamilyArtifact artifact)
+    {
+        var workflowId = NormalizeGuid(GetProperty(artifact, ArtifactPropertyKeys.WorkflowId)) ?? Guid.Empty.ToString("D");
+        var workflowKind = GetProperty(artifact, ArtifactPropertyKeys.WorkflowKind);
+        var displayName = artifact.DisplayName ?? artifact.LogicalName;
+        var description = GetProperty(artifact, ArtifactPropertyKeys.Description);
+        var uniqueName = artifact.LogicalName;
+        var xamlFileName = ReadSourceBackedAssetMap(artifact)
+            .Select(asset => asset.PackageRelativePath)
+            .FirstOrDefault(path => path.EndsWith(".xaml", StringComparison.OrdinalIgnoreCase));
+        xamlFileName = string.IsNullOrWhiteSpace(xamlFileName)
+            ? $"{artifact.LogicalName}.xaml"
+            : Path.GetFileName(xamlFileName.Replace('/', Path.DirectorySeparatorChar));
+        var category = GetProperty(artifact, ArtifactPropertyKeys.Category)
+            ?? workflowKind switch
+            {
+                "customAction" => "3",
+                "businessProcessFlow" => "4",
+                _ => "0"
+            };
+
+        var workflow = new XElement("Workflow",
+            new XAttribute("Name", displayName),
+            new XAttribute("WorkflowId", FormatRootComponentId(workflowId).Trim('{', '}')));
+
+        if (!string.IsNullOrWhiteSpace(description))
+        {
+            workflow.SetAttributeValue("Description", description);
+        }
+
+        workflow.Add(new XElement("XamlFileName", xamlFileName));
+        workflow.Add(new XElement("Category", category));
+
+        AddWorkflowElementIfPresent(workflow, "Mode", GetProperty(artifact, ArtifactPropertyKeys.Mode));
+        AddWorkflowElementIfPresent(workflow, "Scope", GetProperty(artifact, ArtifactPropertyKeys.WorkflowScope));
+        AddWorkflowElementIfPresent(workflow, "OnDemand", NormalizeWorkflowBoolean01(GetProperty(artifact, ArtifactPropertyKeys.OnDemand)));
+        AddWorkflowElementIfPresent(workflow, "UniqueName", uniqueName);
+        AddWorkflowElementIfPresent(workflow, "BusinessProcessType", GetProperty(artifact, ArtifactPropertyKeys.BusinessProcessType));
+        AddWorkflowElementIfPresent(workflow, "processorder", GetProperty(artifact, ArtifactPropertyKeys.ProcessOrder));
+        AddWorkflowElementIfPresent(workflow, "PrimaryEntity", GetProperty(artifact, ArtifactPropertyKeys.PrimaryEntity));
+        AddWorkflowElementIfPresent(workflow, "IntroducedVersion", GetProperty(artifact, ArtifactPropertyKeys.IntroducedVersion));
+
+        var localizedNames = BuildWorkflowLocalizedNames(displayName);
+        if (localizedNames is not null)
+        {
+            workflow.Add(localizedNames);
+        }
+
+        var descriptions = BuildWorkflowDescriptions(description);
+        if (descriptions is not null)
+        {
+            workflow.Add(descriptions);
+        }
+
+        var processTriggers = BuildWorkflowProcessTriggers(artifact);
+        if (processTriggers is not null)
+        {
+            workflow.Add(processTriggers);
+        }
+
+        var labels = BuildWorkflowLabels(GetProperty(artifact, ArtifactPropertyKeys.ProcessStagesJson));
+        if (labels is not null)
+        {
+            workflow.Add(labels);
+        }
+
+        return workflow.ToString(SaveOptions.DisableFormatting).Replace("\r\n", "\n", StringComparison.Ordinal);
+    }
+
+    private static void AddWorkflowElementIfPresent(XElement workflow, string elementName, string? value)
+    {
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            workflow.Add(new XElement(elementName, value));
+        }
+    }
+
+    private static string? NormalizeWorkflowBoolean01(string? value) =>
+        string.IsNullOrWhiteSpace(value)
+            ? null
+            : string.Equals(value, "true", StringComparison.OrdinalIgnoreCase)
+                ? "1"
+                : string.Equals(value, "false", StringComparison.OrdinalIgnoreCase)
+                    ? "0"
+                    : value;
+
+    private static XElement? BuildWorkflowLocalizedNames(string? displayName)
+    {
+        if (string.IsNullOrWhiteSpace(displayName))
+        {
+            return null;
+        }
+
+        return new XElement("LocalizedNames",
+            new XElement("LocalizedName",
+                new XAttribute("description", displayName),
+                new XAttribute("languagecode", "1033")));
+    }
+
+    private static XElement? BuildWorkflowDescriptions(string? description)
+    {
+        if (string.IsNullOrWhiteSpace(description))
+        {
+            return null;
+        }
+
+        return new XElement("Descriptions",
+            new XElement("Description",
+                new XAttribute("description", description),
+                new XAttribute("languagecode", "1033")));
+    }
+
+    private static XElement? BuildWorkflowProcessTriggers(FamilyArtifact artifact)
+    {
+        var workflowKind = GetProperty(artifact, ArtifactPropertyKeys.WorkflowKind);
+        if (string.Equals(workflowKind, "customAction", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(workflowKind, "businessProcessFlow", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var triggerMessageName = GetProperty(artifact, ArtifactPropertyKeys.TriggerMessageName);
+        var primaryEntity = GetProperty(artifact, ArtifactPropertyKeys.PrimaryEntity);
+        if (string.IsNullOrWhiteSpace(triggerMessageName) || string.IsNullOrWhiteSpace(primaryEntity))
+        {
+            return null;
+        }
+
+        return new XElement("ProcessTriggers",
+            new XElement("ProcessTrigger",
+                new XElement("event", triggerMessageName),
+                new XElement("primaryentitytypecode", primaryEntity)));
+    }
+
+    private static XElement? BuildWorkflowLabels(string? processStagesJson)
+    {
+        if (string.IsNullOrWhiteSpace(processStagesJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            if (JsonNode.Parse(processStagesJson) is not JsonArray stages)
+            {
+                return null;
+            }
+
+            var steplabels = stages
+                .Select(stage => stage as JsonObject)
+                .Where(stage => stage is not null)
+                .Select(stage => new
+                {
+                    Id = NormalizeGuid(stage!["id"]?.GetValue<string>()),
+                    Name = stage!["name"]?.GetValue<string>()
+                })
+                .Where(stage => !string.IsNullOrWhiteSpace(stage.Id) && !string.IsNullOrWhiteSpace(stage.Name))
+                .Select(stage => new XElement("steplabels",
+                    new XAttribute("id", stage.Id!),
+                    new XElement("label",
+                        new XAttribute("languagecode", "1033"),
+                        new XAttribute("description", stage.Name!))))
+                .ToArray();
+
+            return steplabels.Length == 0 ? null : new XElement("labels", steplabels);
+        }
+        catch
+        {
+            return null;
+        }
+    }
 
     private static string? TryNormalizeSourceBackedTableEntityXml(
         FamilyArtifact artifact,

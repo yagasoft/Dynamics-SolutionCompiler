@@ -18,12 +18,59 @@ internal sealed partial class DataverseWebApiLiveReader
             try
             {
                 var rows = await GetCollectionAsync(
-                    $"workflows?$select=workflowid,uniquename,name,description,category,mode,scope,ondemand,primaryentity,primaryentitylogicalname,trigger_message,messagename,workflowkind,clientdata,xaml,actionmetadata&$filter={BuildGuidFilter("workflowid", scope.WorkflowIds)}",
+                    $"workflows?$select=workflowid,uniquename,name,description,category,mode,scope,ondemand,primaryentity,primaryentitylogicalname,trigger_message,messagename,workflowkind,clientdata,xaml,actionmetadata,businessprocesstype,processorder&$filter={BuildGuidFilter("workflowid", scope.WorkflowIds)}",
                     cancellationToken).ConfigureAwait(false);
 
-                foreach (var row in rows.OfType<JsonObject>())
+                var workflowRows = rows.OfType<JsonObject>().ToArray();
+                var stageRowsByWorkflowId = new Dictionary<Guid, List<JsonObject>>();
+                var businessProcessFlowIds = workflowRows
+                    .Where(IsLiveBusinessProcessFlowRow)
+                    .Select(row => GetGuid(row, "workflowid"))
+                    .Where(id => id.HasValue)
+                    .Select(id => id!.Value)
+                    .Distinct()
+                    .ToArray();
+                if (businessProcessFlowIds.Length > 0)
                 {
-                    var artifact = CreateWorkflowArtifact(row);
+                    try
+                    {
+                        var processStageFilter = string.Join(
+                            " or ",
+                            businessProcessFlowIds.Select(id => $"processid/workflowid eq {FormatGuid(id)}"));
+                        var stageRows = await GetCollectionAsync(
+                            $"processstages?$select=processstageid,stagename,_processid_value&$filter={processStageFilter}",
+                            cancellationToken).ConfigureAwait(false);
+                        foreach (var stageRow in stageRows.OfType<JsonObject>())
+                        {
+                            var workflowId = GetGuid(stageRow, "_processid_value", "processid");
+                            if (!workflowId.HasValue)
+                            {
+                                continue;
+                            }
+
+                            if (!stageRowsByWorkflowId.TryGetValue(workflowId.Value, out var entries))
+                            {
+                                entries = [];
+                                stageRowsByWorkflowId[workflowId.Value] = entries;
+                            }
+
+                            entries.Add(stageRow);
+                        }
+                    }
+                    catch (Exception exception) when (exception is DataverseWebApiException or Azure.Identity.AuthenticationFailedException)
+                    {
+                        diagnostics.Add(CreateFamilyFailureDiagnostic(ComponentFamily.Workflow, "processstages", exception));
+                    }
+                }
+
+                foreach (var row in workflowRows)
+                {
+                    var workflowId = GetGuid(row, "workflowid");
+                    var artifact = CreateWorkflowArtifact(
+                        row,
+                        workflowId.HasValue && stageRowsByWorkflowId.TryGetValue(workflowId.Value, out var stageRows)
+                            ? stageRows
+                            : null);
                     if (artifact is not null)
                     {
                         artifacts.Add(artifact);
@@ -742,7 +789,7 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
 
-    private static FamilyArtifact? CreateWorkflowArtifact(JsonObject row)
+    private static FamilyArtifact? CreateWorkflowArtifact(JsonObject row, IReadOnlyCollection<JsonObject>? processStageRows = null)
     {
         var workflowId = NormalizeGuid(GetString(row, "workflowid"));
         var displayName = GetString(row, "name");
@@ -756,13 +803,18 @@ internal sealed partial class DataverseWebApiLiveReader
 
         var workflowKind = NormalizeLiveWorkflowKind(row);
         var primaryEntity = NormalizeLogicalName(GetString(row, "primaryentity", "primaryentitylogicalname", "primaryentitytypecode"));
-        var triggerMessageName = GetString(row, "trigger_message", "messagename");
+        var triggerMessageName = string.Equals(workflowKind, "businessProcessFlow", StringComparison.OrdinalIgnoreCase)
+            ? null
+            : GetString(row, "trigger_message", "messagename");
         var clientData = NormalizeWorkflowJson(ReadWorkflowJsonValue(row, "clientdata"));
         var actionMetadataJson = NormalizeWorkflowJson(ReadWorkflowJsonValue(row, "actionmetadata"));
         var xamlHash = NormalizeWorkflowHash(GetString(row, "xamlhash"))
             ?? ComputeOptionalSignature(GetString(row, "xaml"));
         var clientDataHash = NormalizeWorkflowHash(GetString(row, "clientdatahash"))
             ?? ComputeOptionalSignature(clientData);
+        var businessProcessType = GetString(row, "businessprocesstype");
+        var processOrder = GetString(row, "processorder");
+        var processStagesJson = BuildProcessStagesJson(processStageRows);
         var summaryJson = SerializeJson(new
         {
             logicalName,
@@ -776,7 +828,10 @@ internal sealed partial class DataverseWebApiLiveReader
             triggerMessageName,
             xamlHash,
             clientDataHash,
-            actionMetadata = actionMetadataJson is null ? null : JsonNode.Parse(actionMetadataJson)
+            actionMetadata = actionMetadataJson is null ? null : JsonNode.Parse(actionMetadataJson),
+            businessProcessType,
+            processOrder,
+            processStages = processStagesJson is null ? null : JsonNode.Parse(processStagesJson)
         });
 
         return new FamilyArtifact(
@@ -798,17 +853,29 @@ internal sealed partial class DataverseWebApiLiveReader
                 (ArtifactPropertyKeys.XamlHash, xamlHash),
                 (ArtifactPropertyKeys.ClientDataHash, clientDataHash),
                 (ArtifactPropertyKeys.WorkflowActionMetadataJson, actionMetadataJson),
+                (ArtifactPropertyKeys.BusinessProcessType, businessProcessType),
+                (ArtifactPropertyKeys.ProcessOrder, processOrder),
+                (ArtifactPropertyKeys.ProcessStagesJson, processStagesJson),
                 (ArtifactPropertyKeys.SummaryJson, summaryJson),
                 (ArtifactPropertyKeys.ComparisonSignature, ComputeSignature(summaryJson))));
     }
 
     private static string NormalizeLiveWorkflowKind(JsonObject row)
     {
+        var category = GetString(row, "category");
+        if (string.Equals(category, "4", StringComparison.OrdinalIgnoreCase)
+            || !string.IsNullOrWhiteSpace(GetString(row, "businessprocesstype")))
+        {
+            return "businessProcessFlow";
+        }
+
         var raw = GetString(row, "workflowkind", "workflow_kind", "kind");
         if (!string.IsNullOrWhiteSpace(raw))
         {
             return raw.Trim() switch
             {
+                var value when value.Equals("businessProcessFlow", StringComparison.OrdinalIgnoreCase) => "businessProcessFlow",
+                var value when value.Equals("bpf", StringComparison.OrdinalIgnoreCase) => "businessProcessFlow",
                 var value when value.Equals("customAction", StringComparison.OrdinalIgnoreCase) => "customAction",
                 var value when value.Equals("action", StringComparison.OrdinalIgnoreCase) => "customAction",
                 _ => "workflow"
@@ -852,6 +919,30 @@ internal sealed partial class DataverseWebApiLiveReader
 
     private static string? ComputeOptionalSignature(string? raw) =>
         string.IsNullOrWhiteSpace(raw) ? null : ComputeSignature(raw.Replace("\r\n", "\n", StringComparison.Ordinal));
+
+    private static bool IsLiveBusinessProcessFlowRow(JsonObject row) =>
+        string.Equals(NormalizeLiveWorkflowKind(row), "businessProcessFlow", StringComparison.OrdinalIgnoreCase);
+
+    private static string? BuildProcessStagesJson(IReadOnlyCollection<JsonObject>? processStageRows)
+    {
+        if (processStageRows is null || processStageRows.Count == 0)
+        {
+            return null;
+        }
+
+        var stages = processStageRows
+            .Select(row => new
+            {
+                id = NormalizeGuid(GetString(row, "processstageid")),
+                name = GetString(row, "stagename")
+            })
+            .Where(stage => !string.IsNullOrWhiteSpace(stage.id) || !string.IsNullOrWhiteSpace(stage.name))
+            .OrderBy(stage => stage.name ?? string.Empty, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(stage => stage.id ?? string.Empty, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        return stages.Length == 0 ? null : SerializeJson(stages);
+    }
 
     private static string? NormalizeConditionXml(string? xml)
     {

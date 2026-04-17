@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Workflow Name="Codex Metadata Account Stamp Workflow" Description="Deterministic real-time workflow seed that stamps account description." WorkflowId="{11111111-1111-1111-1111-111111111111}">
+  <XamlFileName>cdxmeta_AccountStampWorkflow.xaml</XamlFileName>
+  <Category>0</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>1</OnDemand>
+  <UniqueName>cdxmeta_AccountStampWorkflow</UniqueName>
+  <PrimaryEntity>account</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName description="Codex Metadata Account Stamp Workflow" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Deterministic real-time workflow seed that stamps account description." languagecode="1033" />
+  </Descriptions>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{aaaa1111-1111-1111-1111-111111111111}">
+      <event>Create</event>
+      <primaryentitytypecode>account</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

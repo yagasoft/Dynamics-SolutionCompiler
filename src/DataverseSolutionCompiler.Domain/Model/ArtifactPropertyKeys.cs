@@ -155,6 +155,9 @@ public static class ArtifactPropertyKeys
     public const string XamlHash = "xamlHash";
     public const string ClientDataHash = "clientDataHash";
     public const string WorkflowActionMetadataJson = "workflowActionMetadataJson";
+    public const string BusinessProcessType = "businessProcessType";
+    public const string ProcessOrder = "processOrder";
+    public const string ProcessStagesJson = "processStagesJson";
     public const string RoutedQueueId = "routedQueueId";
     public const string AssignObjectId = "assignObjectId";
     public const string SequenceNumber = "sequenceNumber";

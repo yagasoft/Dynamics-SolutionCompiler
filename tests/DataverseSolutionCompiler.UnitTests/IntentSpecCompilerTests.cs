@@ -2186,8 +2186,9 @@ public sealed class IntentSpecCompilerTests
     }
 
     [Theory]
-    [InlineData("seed-workflow-classic", "workflow", "Workflows/cdxmeta_AccountStampWorkflow.json", "Workflows/cdxmeta_AccountStampWorkflow.xaml")]
-    [InlineData("seed-workflow-action", "customAction", "Workflows/cdxmeta_AccountStampAction.json", "Workflows/cdxmeta_AccountStampAction.xaml")]
+    [InlineData("seed-workflow-classic", "workflow", "Workflows/cdxmeta_AccountStampWorkflow.xaml.data.xml", "Workflows/cdxmeta_AccountStampWorkflow.xaml")]
+    [InlineData("seed-workflow-action", "customAction", "Workflows/cdxmeta_AccountStampAction.xaml.data.xml", "Workflows/cdxmeta_AccountStampAction.xaml")]
+    [InlineData("seed-workflow-bpf", "businessProcessFlow", "Workflows/cdxmeta_AccountSalesFlow.xaml.data.xml", "Workflows/cdxmeta_AccountSalesFlow.xaml")]
     public void Reverse_generation_preserves_workflow_source_backed_artifacts(
         string fixtureName,
         string expectedKind,
@@ -2217,6 +2218,7 @@ public sealed class IntentSpecCompilerTests
 
             var reversedWorkflow = reversed.Solution.Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
             reversedWorkflow.Properties![ArtifactPropertyKeys.WorkflowKind].Should().Be(expectedKind);
+            reversedWorkflow.SourcePath.Should().EndWith(".json");
             reversedWorkflow.Properties![ArtifactPropertyKeys.AssetSourceMapJson].Should().Contain(expectedAssetPath.Replace('\\', '/'));
         }
         finally

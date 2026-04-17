@@ -28,8 +28,9 @@ This repo keeps those paths separate on purpose. It tries to be clear about what
 - Helper-based mixed assemblies are now supported too, as long as they stay in the proven lane above. A code-first project can carry both a normal plug-in type and a custom workflow activity type without reopening the owner-level `Workflow` family.
 - Plug-in package deployment stays supported for regular plug-ins, but solution ZIP parity for those `.nupkg` payloads is still not claimed. The package payload remains a live finalize-apply boundary until a stable exported solution shape is proven.
 - Custom workflow activities are an explicit classic-only boundary. The compiler now fails with the same clear diagnostic across build, `apply-dev`, and `publish` instead of pretending NuGet package deployment works for them.
-- The owner `Workflow` lane is now reopened for a curated classic workflow and custom-action subset. The compiler can read source-backed workflow shells, keep XAML and client-data fidelity, reverse-generate them into `sourceBackedArtifacts[]`, rebuild package inputs with root component `29`, read them back live, and compare stable overlap. Direct live mutation still stays on the package or import path, and broader workflow families remain outside the current scope.
-- Best-effort or source-first boundaries still include compact AI live create, import maps and data-source mappings, reporting/legacy rebuild parity, entity-map or hierarchy-rule or convert-rule owner lanes, platform-generated views, richer user-owned visualizations, broader workflow execution parity, and effective-access expansion.
+- The owner `Workflow` lane now uses export-backed `Workflows/*.xaml.data.xml` plus `.xaml` source for the current supported subset. That subset now covers classic workflows, custom actions, and one single-table BPF definition lane, with XAML/client-data fidelity, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live `workflow` plus `processstage` readback, and stable-overlap drift.
+- The repo now has environment-gated proof scaffolding for classic workflow execution, custom-action invocation, and single-table BPF stage navigation. Those proofs need a real Dataverse environment and are not part of the default local test run yet.
+- Best-effort or source-first boundaries still include compact AI live create, import maps and data-source mappings, reporting/legacy rebuild parity, entity-map or hierarchy-rule or convert-rule owner lanes, platform-generated views, richer user-owned visualizations, broader workflow execution parity beyond the current env-gated harness, and effective-access expansion.
 
 For the detailed breakdown, start with the [Acceptance Ledger](docs/acceptance/ledger.md) and the [Coverage Matrix](fixtures/skill-corpus/references/component-coverage-matrix.md).
 
@@ -58,6 +59,7 @@ dotnet run --project .\src\DataverseSolutionCompiler.Cli -- emit .\fixtures\skil
 dotnet run --project .\src\DataverseSolutionCompiler.Cli -- read .\fixtures\skill-corpus\examples\seed-code-plugin-classic
 dotnet run --project .\src\DataverseSolutionCompiler.Cli -- read .\fixtures\skill-corpus\examples\seed-code-plugin-imperative
 dotnet run --project .\src\DataverseSolutionCompiler.Cli -- read .\fixtures\skill-corpus\examples\seed-code-plugin-helper
+dotnet run --project .\src\DataverseSolutionCompiler.Cli -- read .\fixtures\skill-corpus\examples\seed-workflow-bpf\unpacked
 dotnet run --project .\src\DataverseSolutionCompiler.Cli -- emit .\fixtures\skill-corpus\examples\seed-code-plugin-classic --layout intent-spec --output .\artifacts\seed-code-plugin-classic
 ```
 
@@ -100,11 +102,12 @@ Run the release path:
 dotnet run --project .\src\DataverseSolutionCompiler.Cli -- pack .\fixtures\skill-corpus\examples\seed-service-endpoint-connector --output .\artifacts\publish
 dotnet run --project .\src\DataverseSolutionCompiler.Cli -- publish .\fixtures\skill-corpus\examples\seed-service-endpoint-connector --environment https://org.crm.dynamics.com --solution CodexEndpointSeed --output .\artifacts\publish
 dotnet run --project .\src\DataverseSolutionCompiler.Cli -- publish .\fixtures\skill-corpus\examples\seed-code-plugin-package --environment https://org.crm.dynamics.com --solution CodexMetadataSeedCodePluginPackage --output .\artifacts\publish
+dotnet run --project .\src\DataverseSolutionCompiler.Cli -- publish .\fixtures\skill-corpus\examples\seed-workflow-bpf --environment https://org.crm.dynamics.com --solution CodexMetadataSeedWorkflowBpf --output .\artifacts\publish
 ```
 
 `publish` keeps the current release behavior: compile with dev-apply enabled, emit package inputs, pack, import when packageable root components exist, and run finalize apply for the currently supported live-mutation families.
 For code-first plug-in packages, the staged `.nupkg` is pushed live in finalize apply. It is not written into `solution.zip`. Custom workflow activity package deployment is an explicit unsupported boundary and stops before finalize apply.
-For the reopened workflow subset, workflow definitions still ship through package import rather than direct `apply-dev` mutation.
+For the reopened workflow subset, classic workflows, custom actions, and the current single-table BPF definition lane still ship through package import rather than direct `apply-dev` mutation.
 
 It is not a post-publish verification command.
 

@@ -1,0 +1,15 @@
+{
+  "uniqueName": "cdxmeta_AccountStampAction",
+  "arguments": [
+    {
+      "name": "TargetName",
+      "type": "String",
+      "direction": "In"
+    },
+    {
+      "name": "StampedDescription",
+      "type": "String",
+      "direction": "Out"
+    }
+  ]
+}

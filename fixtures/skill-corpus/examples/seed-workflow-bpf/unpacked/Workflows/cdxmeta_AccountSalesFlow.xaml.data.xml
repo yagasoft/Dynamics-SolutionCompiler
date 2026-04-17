@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Workflow Name="Codex Metadata Account Sales Flow" Description="Deterministic single-table business process flow seed for account." WorkflowId="{33333333-3333-3333-3333-333333333333}">
+  <XamlFileName>cdxmeta_AccountSalesFlow.xaml</XamlFileName>
+  <Category>4</Category>
+  <Mode>1</Mode>
+  <Scope>1</Scope>
+  <OnDemand>0</OnDemand>
+  <UniqueName>cdxmeta_AccountSalesFlow</UniqueName>
+  <BusinessProcessType>0</BusinessProcessType>
+  <processorder>1</processorder>
+  <PrimaryEntity>account</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName description="Codex Metadata Account Sales Flow" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Deterministic single-table business process flow seed for account." languagecode="1033" />
+  </Descriptions>
+  <labels>
+    <steplabels id="{44444444-4444-4444-4444-444444444444}">
+      <label languagecode="1033" description="Qualify" />
+    </steplabels>
+    <steplabels id="{55555555-5555-5555-5555-555555555555}">
+      <label languagecode="1033" description="Develop" />
+    </steplabels>
+    <steplabels id="{66666666-6666-6666-6666-666666666666}">
+      <label languagecode="1033" description="Close" />
+    </steplabels>
+  </labels>
+</Workflow>

@@ -233,10 +233,32 @@ Completion outcome:
 - the code-first reader now evaluates a bounded common-idiom lane instead of only the earlier seed-shaped DBM forms, while reflection, dynamic dispatch, non-reducible helper frameworks, external data, and other arbitrary code paths stay explicit unsupported boundaries
 - regular plug-in packages now stay documented as a permanent live finalize-apply boundary until a stable package-bearing solution export shape is captured and proven end to end
 - custom workflow activity package deployment is now a cited permanent classic-only boundary, aligned with current Microsoft guidance for workflow extensions
-- the owner `Workflow` lane is reopened for the current curated classic workflow and custom-action subset through source-backed `Workflows/*.json` plus `.xaml` parsing, live `workflow` readback, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission, and stable-overlap drift without widening direct live mutation or claiming broader workflow-family parity
+- the owner `Workflow` lane is reopened for the current curated classic workflow and custom-action subset through source-backed workflow metadata plus `.xaml` parsing, live `workflow` readback, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission, and stable-overlap drift without widening direct live mutation or claiming broader workflow-family parity
+
+## Phase 13: Workflow XAML And Business Process Flow Closure
+
+This phase is now active.
+
+Goal:
+- move the reopened owner `Workflow` lane from mostly synthetic shell proof to export-backed source truth
+- add business process flow definition support first under `Workflow` category `4`, not as a new owner family
+- keep direct live mutation frozen while finishing source, reverse, package, live readback, and drift support for the supported workflow subset
+
+Exit criteria:
+- exported `Workflows/*.xaml.data.xml` plus `.xaml` source is parsed for classic workflows, custom actions, and a single-table BPF subset
+- tracked-source, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live readback, and stable-overlap all preserve workflow shell metadata plus XAML/client-data fidelity
+- BPF readback also expands `processstage` rows into one stable stage-definition payload
+- environment-gated runtime proof exists for classic workflow execution, custom action invocation, and single-table BPF stage navigation
+- broader workflow execution parity, cross-table BPF breadth, dialogs, business rules, and cloud-flow families still stay explicit boundaries unless new evidence clears them
+
+Current outcome:
+- the workflow source lane now reads export-backed `*.xaml.data.xml` metadata instead of only the earlier synthetic `Workflows/*.json` shell format
+- the supported subset now covers three workflow kinds under the same owner family: `workflow`, `customAction`, and `businessProcessFlow`
+- single-table BPF definitions now survive source parsing, tracked-source, reverse-generated `sourceBackedArtifacts[]`, package-input emission, live `workflow` plus `processstage` readback, and stable-overlap drift through the new `seed-workflow-bpf` fixture
+- environment-gated publish or execution proof scaffolding now exists for classic workflow, custom action, and BPF runtime navigation, but real Dataverse execution evidence is still pending and therefore broader workflow runtime parity is not yet claimed
 
 ## Next Priority
 
-- no active backlog items remain after Phases 5 through 12
-- future work should reopen only when new evidence overturns one of the current explicit boundaries or a new operational program is approved
+- finish `B-018` by running the new environment-gated workflow, custom-action, and BPF proof harness against a real Dataverse environment
 - keep future authoring expansion on the same proof bar: `export zip -> intent-spec -> package-inputs -> pack -> import/publish`, plus honest omission typing and explicit boundary classification
+- reopen broader workflow or BPF scope only when new neutral evidence clears the same bar

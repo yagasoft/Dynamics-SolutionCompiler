@@ -818,6 +818,7 @@ public sealed class PackageEmitterTests
     [Theory]
     [InlineData("seed-workflow-classic", "cdxmeta_AccountStampWorkflow")]
     [InlineData("seed-workflow-action", "cdxmeta_AccountStampAction")]
+    [InlineData("seed-workflow-bpf", "cdxmeta_AccountSalesFlow")]
     public void Emit_preserves_source_backed_workflow_layout(
         string fixtureName,
         string expectedFileStem)
@@ -835,7 +836,7 @@ public sealed class PackageEmitterTests
 
             first.Success.Should().BeTrue();
             second.Success.Should().BeTrue();
-            File.Exists(Path.Combine(outputRoot, "package-inputs", "Workflows", $"{expectedFileStem}.json")).Should().BeTrue();
+            File.Exists(Path.Combine(outputRoot, "package-inputs", "Workflows", $"{expectedFileStem}.xaml.data.xml")).Should().BeTrue();
             File.Exists(Path.Combine(outputRoot, "package-inputs", "Workflows", $"{expectedFileStem}.xaml")).Should().BeTrue();
             File.ReadAllText(Path.Combine(outputRoot, "package-inputs", "Other", "Solution.xml")).Should().Contain("type=\"29\"");
 
@@ -855,8 +856,9 @@ public sealed class PackageEmitterTests
     }
 
     [Theory]
-    [InlineData("seed-workflow-classic", "Workflows/cdxmeta_AccountStampWorkflow.json", "Workflows/cdxmeta_AccountStampWorkflow.xaml")]
-    [InlineData("seed-workflow-action", "Workflows/cdxmeta_AccountStampAction.json", "Workflows/cdxmeta_AccountStampAction.xaml")]
+    [InlineData("seed-workflow-classic", "Workflows/cdxmeta_AccountStampWorkflow.xaml.data.xml", "Workflows/cdxmeta_AccountStampWorkflow.xaml")]
+    [InlineData("seed-workflow-action", "Workflows/cdxmeta_AccountStampAction.xaml.data.xml", "Workflows/cdxmeta_AccountStampAction.xaml")]
+    [InlineData("seed-workflow-bpf", "Workflows/cdxmeta_AccountSalesFlow.xaml.data.xml", "Workflows/cdxmeta_AccountSalesFlow.xaml")]
     public void Emit_preserves_reverse_generated_workflow_source_backed_layout(
         string fixtureName,
         string expectedMetadataPath,

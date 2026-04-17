@@ -321,7 +321,7 @@ Key files and folders:
 - `readback/`
 
 Notes:
-- this seed keeps the workflow lane source-backed: the workflow shell lives in `Workflows/*.json` and the payload lives in the paired `.xaml`
+- this seed keeps the workflow lane source-backed through export-backed `Workflows/*.xaml.data.xml` plus the paired `.xaml`
 - it proves source parsing, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live workflow readback, and stable-overlap for a deterministic classic workflow shell
 - direct live mutation still stays on the package or import path; this seed does not reopen broader workflow execution parity by itself
 
@@ -341,7 +341,26 @@ Key files and folders:
 Notes:
 - this seed keeps custom actions under the owner `Workflow` lane, not under code-extensibility
 - it proves action shell metadata, argument metadata, XAML fidelity, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live workflow readback, and stable-overlap for a deterministic custom action shell
-- broader workflow families such as business process flows, dialogs, and cloud flows remain outside the current reopened subset
+- broader workflow families such as dialogs and cloud flows remain outside the current reopened subset
+
+## Seed Workflow BPF
+
+Path:
+- `references/examples/seed-workflow-bpf/`
+
+Purpose:
+- compact neutral source-backed seed for the reopened owner `Workflow` lane
+- useful for one single-table business process flow definition through export-backed workflow metadata, normalized stage definitions, live readback, reverse generation, package-input emission, and stable-overlap
+
+Key files and folders:
+- `unpacked/`
+- `readback/`
+
+Notes:
+- this seed keeps BPF under `Workflow` category `4`, not as a new owner family
+- it uses export-backed `Workflows/*.xaml.data.xml` plus `.xaml`, with stable BPF stage metadata preserved as normalized JSON instead of a new standalone stage authoring family
+- it proves source parsing, tracked-source summaries, reverse-generated `sourceBackedArtifacts[]`, package-input emission with root component `29`, live `workflow` plus `processstage` readback, and stable-overlap for a deterministic single-table BPF definition
+- BPF runtime instances and stage movement are still proof-only operational state; they are not part of tracked-source, reverse generation, or package rebuild
 
 ## Seed Service Endpoint Connector
 

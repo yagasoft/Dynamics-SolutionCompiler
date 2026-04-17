@@ -1159,6 +1159,39 @@ public sealed class StableOverlapDriftComparerTests
             && finding.Description.Contains(ArtifactPropertyKeys.XamlHash, StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void Compare_reports_business_process_flow_stage_definition_mismatch()
+    {
+        var sourceArtifact = ReadFixture("seed-workflow-bpf").Artifacts.Single(artifact => artifact.Family == ComponentFamily.Workflow);
+        var source = new CanonicalSolution(
+            new SolutionIdentity("workflow", "Workflow", "1.0.0.0", LayeringIntent.Hybrid),
+            new PublisherDefinition("dsc", "dsc", "dsc", "Dataverse Solution Compiler"),
+            [sourceArtifact],
+            [],
+            [],
+            []);
+        var live = MatchingSnapshot(source) with
+        {
+            Artifacts =
+            [
+                sourceArtifact with
+                {
+                    Evidence = EvidenceKind.Readback,
+                    Properties = new Dictionary<string, string>(sourceArtifact.Properties!, StringComparer.Ordinal)
+                    {
+                        [ArtifactPropertyKeys.ProcessStagesJson] = "[{\"id\":\"44444444-4444-4444-4444-444444444444\",\"name\":\"Prospect\"}]"
+                    }
+                }
+            ]
+        };
+
+        var report = new StableOverlapDriftComparer().Compare(source, live, new CompareRequest());
+
+        report.Findings.Should().ContainSingle(finding =>
+            finding.Category == DriftCategory.Mismatch
+            && finding.Description.Contains(ArtifactPropertyKeys.ProcessStagesJson, StringComparison.Ordinal));
+    }
+
     private static CanonicalSolution ReadFixture(string fixtureName)
     {
         if (string.Equals(fixtureName, "seed-code-plugin-classic", StringComparison.OrdinalIgnoreCase)
